@@ -1,0 +1,14 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace LinnworksAPI.V2
+{
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum APIResultStatus
+    {
+        NOTSET,
+        SUCCESSFUL,
+        PARTIALLY_SUCCESSFUL,
+        FAILED,
+    }
+}

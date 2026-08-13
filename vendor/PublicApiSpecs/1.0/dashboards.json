@@ -1,0 +1,565 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "dashboards",
+    "title": "Dashboards API"
+  },
+  "host": "eu-ext.linnworks.net",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/Dashboards/GetLowStockLevel": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "GetLowStockLevel",
+        "description": "Use this call to retrieve report about \"Low stock in location\"\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "GetLowStockLevel",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "query",
+            "description": "Used to specify report location id or null for combined",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "numRows",
+            "in": "query",
+            "description": "Used to specify number of returned rows",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LowStockLevel"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/Dashboards/GetPerformanceTableData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "GetPerformanceTableData",
+        "description": "Use this call to retrieve report about \"Performance table\"\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "GetPerformanceTableData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Used to specify report number of months",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PerfomanceData"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/Dashboards/GetPerformanceDetail": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "GetPerformanceDetail",
+        "description": "Use this call to retrieve report about \"Performance through time chart\"\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "GetPerformanceDetail",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Used to specify report number of months",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "timeScale",
+            "in": "query",
+            "description": "time scale",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/PerfomanceDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/Dashboards/GetTopProducts": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "GetTopProducts",
+        "description": "Use this call to retrieve report about \"Top ordered products\" for top \"10\" products\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "GetTopProducts",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Used to specify type of report: 1 - group result by quantity, 2 - group result by turnover",
+            "type": "string",
+            "enum": [
+              "GroupedByQuantity",
+              "GroupedByTurnover"
+            ]
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Used to specify report number of months",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "numRows",
+            "in": "query",
+            "description": "Number of rows required",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "orderStatus",
+            "in": "query",
+            "description": "Order status",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TopProductData"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/Dashboards/GetInventoryLocationData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "GetInventoryLocationData",
+        "description": "Use this call to retrieve report about \"Stock info for locations\"\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "GetInventoryLocationData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Used to specify report date or null for current period",
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StatsStockItemLocation"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/Dashboards/GetInventoryLocationCategoriesData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "GetInventoryLocationCategoriesData",
+        "description": "Use this call to retrieve report about \"Stock info for categories in a specific location\"\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "GetInventoryLocationCategoriesData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Used to specify report date or null for current period",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "locationId",
+            "in": "query",
+            "description": "Used to specify report location id",
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StockCategoryLocation"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/Dashboards/GetInventoryLocationProductsData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "GetInventoryLocationProductsData",
+        "description": "Use this call to retrieve report about \"Stock info for products in a specific category and location\"\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>250</b></span> / minute",
+        "operationId": "GetInventoryLocationProductsData",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Used to specify report date or null for current period",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "locationId",
+            "in": "query",
+            "description": "Used to specify report location id",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "Used to specify report category id",
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Used to specify report page number",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "entriesPerPage",
+            "in": "query",
+            "description": "Used to specify number of entries per page in report",
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PagedStockCategoryLocationProductResult"
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "LowStockLevel": {
+      "type": "object",
+      "properties": {
+        "ItemTitle": {
+          "type": "string"
+        },
+        "ItemNumber": {
+          "type": "string"
+        },
+        "Quantity": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "MinimumLevel": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "InBooks": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Location": {
+          "type": "string"
+        }
+      }
+    },
+    "PerfomanceData": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Price": {
+          "format": "double",
+          "type": "number"
+        },
+        "Currency": {
+          "type": "string"
+        }
+      }
+    },
+    "PerfomanceDetail": {
+      "type": "object",
+      "properties": {
+        "Date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Value": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "TopProductData": {
+      "type": "object",
+      "properties": {
+        "RowNum": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Quantity": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Cost": {
+          "format": "double",
+          "type": "number"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "SKU": {
+          "type": "string"
+        },
+        "Currency": {
+          "type": "string"
+        }
+      }
+    },
+    "StatsStockItemLocation": {
+      "type": "object",
+      "properties": {
+        "StockLocationId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "Location": {
+          "type": "string"
+        },
+        "StockLevel": {
+          "format": "double",
+          "type": "number"
+        },
+        "StockValue": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "StockCategoryLocation": {
+      "type": "object",
+      "properties": {
+        "StockLocationId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "CategoryName": {
+          "type": "string"
+        },
+        "CategoryId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "StockLevel": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "StockValue": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    },
+    "PagedStockCategoryLocationProductResult": {
+      "type": "object",
+      "properties": {
+        "TotalResults": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StockCategoryLocationProduct"
+          }
+        }
+      }
+    },
+    "StockCategoryLocationProduct": {
+      "type": "object",
+      "properties": {
+        "ItemNumber": {
+          "type": "string"
+        },
+        "ItemTitle": {
+          "type": "string"
+        },
+        "StockLevel": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "StockValue": {
+          "format": "double",
+          "type": "number"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "token": {
+      "type": "apiKey",
+      "description": "Authorization Header",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

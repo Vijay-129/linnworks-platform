@@ -1,0 +1,25 @@
+using System;
+
+namespace LinnworksAPI
+{
+    /// <summary>
+    /// Represents Warehouse TOTE
+    /// </summary>
+    public class WarehouseTOTE : LinnObject
+    {
+        /// <summary>
+        /// Tote Id
+        /// </summary>
+        public Int32 ToteId { get; set; }
+
+        /// <summary>
+        /// TOTE Barcode
+        /// </summary>
+        public String ToteBarcode { get; set; }
+
+        /// <summary>
+        /// Location Id of a warehouse to which TOTE belongs
+        /// </summary>
+        public Guid LocationId { get; set; }
+    }
+}

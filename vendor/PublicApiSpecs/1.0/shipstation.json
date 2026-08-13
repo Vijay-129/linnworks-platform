@@ -1,0 +1,349 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "shipstation",
+    "title": "ShipStation API"
+  },
+  "host": "eu-ext.linnworks.net",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/ShipStation/GetShipStationIntegrations": {
+      "get": {
+        "tags": [
+          "ShipStation"
+        ],
+        "summary": "GetShipStationIntegrations",
+        "description": "Used for ShipStation to get all ShipStation integrations\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "GetShipStationIntegrations",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ShipStationConfig"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/ShipStation/GetShipStationIntegration": {
+      "get": {
+        "tags": [
+          "ShipStation"
+        ],
+        "summary": "GetShipStationIntegration",
+        "description": "Used for ShipStation to get single ShipStation integration by its id\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>250</b></span> / minute",
+        "operationId": "GetShipStationIntegration",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "integrationId",
+            "in": "query",
+            "description": "Id of the integration to retrieve",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ShipStationConfig"
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/ShipStation/CreateShipStationIntegration": {
+      "post": {
+        "tags": [
+          "ShipStation"
+        ],
+        "summary": "CreateShipStationIntegration",
+        "description": "Used for ShipStation to create a new ShipStation integration\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "CreateShipStationIntegration",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "ShipStation_CreateShipStationIntegrationRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ShipStation_CreateShipStationIntegrationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ShipStationConfig"
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/ShipStation/DeleteShipStationIntegration": {
+      "post": {
+        "tags": [
+          "ShipStation"
+        ],
+        "summary": "DeleteShipStationIntegration",
+        "description": "Used for ShipStation to delete a ShipStation integration by its id\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "DeleteShipStationIntegration",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "ShipStation_DeleteShipStationIntegrationRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ShipStation_DeleteShipStationIntegrationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/ShipStation/EditShipStationIntegration": {
+      "post": {
+        "tags": [
+          "ShipStation"
+        ],
+        "summary": "EditShipStationIntegration",
+        "description": "Used for ShipStation to update a ShipStation integration\n<b>Rate limit: </b><span style=\"background-color:#0272d9;color:white;padding:4px 8px;text-align:center;border-radius:5px; font-size: small;\"><b>150</b></span> / minute",
+        "operationId": "EditShipStationIntegration",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "ShipStation_EditShipStationIntegrationRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ShipStation_EditShipStationIntegrationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        },
+        "security": [
+          {
+            "token": [
+              "token"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ShipStationConfig": {
+      "type": "object",
+      "properties": {
+        "ConfigV": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "ConfigId": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Enabled": {
+          "type": "boolean"
+        },
+        "ExportLocations": {
+          "type": "array",
+          "items": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          }
+        },
+        "ExportFolder": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "LastSync": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "AutoProcessOrdersLocation": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "ExportChildItems": {
+          "type": "boolean"
+        },
+        "ImportedOrderTag": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "DefaultShipServiceShipStation": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "DefaultShipServiceLinnworks": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "UseChannelData": {
+          "type": "boolean"
+        },
+        "ShipServices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ShipService"
+          }
+        },
+        "WeightUnit": {
+          "enum": [
+            "none",
+            "oz",
+            "lb",
+            "gm",
+            "kg"
+          ],
+          "type": "string"
+        },
+        "CustomOrderField1": {
+          "type": "string"
+        },
+        "CustomOrderField2": {
+          "type": "string"
+        },
+        "CustomOrderField3": {
+          "type": "string"
+        }
+      }
+    },
+    "ShipService": {
+      "type": "object",
+      "properties": {
+        "ShipStationServiceId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        },
+        "LinnworksServiceId": {
+          "format": "uuid",
+          "type": "string",
+          "example": "00000000-0000-0000-0000-000000000000"
+        }
+      }
+    },
+    "ShipStation_CreateShipStationIntegrationRequest": {
+      "type": "object",
+      "properties": {
+        "integration": {
+          "$ref": "#/definitions/ShipStationConfig",
+          "description": "An integration object to create"
+        }
+      }
+    },
+    "ShipStation_DeleteShipStationIntegrationRequest": {
+      "type": "object",
+      "properties": {
+        "integrationId": {
+          "description": "Id of the integration to delete",
+          "type": "string"
+        }
+      }
+    },
+    "ShipStation_EditShipStationIntegrationRequest": {
+      "type": "object",
+      "properties": {
+        "integration": {
+          "$ref": "#/definitions/ShipStationConfig",
+          "description": "An integration object to update"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "token": {
+      "type": "apiKey",
+      "description": "Authorization Header",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
