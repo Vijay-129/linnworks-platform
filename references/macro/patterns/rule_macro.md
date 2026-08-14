@@ -16,6 +16,23 @@ Same `Api.*` surface as any macro (`references/macro/linnworks-api/overview.md`)
 The distinguishing thing about a Rule macro isn't the API it calls, it's its
 `Execute` signature and per-order processing shape.
 
+## A macro is Rule *or* Scheduled - never both
+
+**A macro has exactly one `Execute` method.** Don't write two `Execute` overloads
+(one taking `Guid[] OrderIds` for rule-trigger, another taking scalar config
+params for schedule-trigger) in the same macro class expecting Linnworks to pick
+the right one depending on how it's invoked - that's not how macro resolution
+works; a macro is registered as one trigger type with one signature, not both.
+(Confirmed by the team 2026-08-14, after a submitted macro,
+`StaleShippingLabelGuardian.cs`, did exactly this - see
+`references/standards/macro_conventions.md` section 1.1.)
+
+If a requirement could plausibly go either way (a user describes both "run it on
+a schedule" and "trigger it from a rule" language), pick one deliberately based
+on the actual trigger semantics the requirement describes, state which one and
+why, and write a single macro for it. If genuinely ambiguous, ask which one
+before writing code - don't hedge by writing both into one file.
+
 ## Gotchas
 
 - **Entry point signature**: the Rules Engine passes matched orders as

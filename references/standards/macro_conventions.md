@@ -90,6 +90,29 @@ All three golden examples follow this shape. Deviating from it (e.g. no top-leve
 try/catch, logic scattered across the entry point instead of delegated to private
 methods) is a red flag when reviewing or generating a macro.
 
+## 1.1 One `Execute` method - a macro is Rule *or* Scheduled, never both
+
+**A macro has exactly one `Execute` method.** Linnworks resolves a macro as one
+trigger type with one signature - it does not pick between overloads depending on
+how the macro was invoked. Don't write both
+`Execute(Guid[] OrderIds, ...)` (rule-triggered) and
+`Execute(string someParam = "", ...)` (scheduled) as overloads on the same class
+expecting Linnworks to route to the right one.
+
+Confirmed by the team 2026-08-14: a submitted macro (`StaleShippingLabelGuardian.cs`)
+had exactly this shape - two `Execute` overloads, one per trigger type - which is
+invalid. It compiles as valid C# (overloading is a language feature), but that
+doesn't mean Linnworks' macro engine treats it as a dual-mode macro; it isn't one.
+
+**When a requirement doesn't specify Rule vs Scheduled, decide - don't hedge by
+writing both.** Read the actual trigger semantics being described (a condition on
+individual orders as they arrive → Rule; "check this recurring state periodically"
+→ Scheduled) and pick one. State which one you picked and why before writing code
+(see the platform's general "announce your plan first" convention). If the
+requirement is genuinely ambiguous even after reading it carefully, ask which one
+instead of guessing or writing both. See `references/macro/patterns/rule_macro.md`
+and `scheduled_macro.md` for the two shapes.
+
 ## 2. Two logs are mandatory: start and end
 
 Every macro must log once at the very start of `Execute` and once at the very end

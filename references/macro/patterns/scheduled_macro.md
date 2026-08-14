@@ -16,6 +16,14 @@ Same `Api.*` surface as any macro (`references/macro/linnworks-api/overview.md`)
 The distinguishing concerns are pagination, rate-limit safety at volume, and
 overlap/idempotency across runs - not any particular controller.
 
+## A macro is Scheduled *or* Rule - never both
+
+Same hard rule as `rule_macro.md`: **one `Execute` method per macro.** Don't add a
+second `Execute(Guid[] OrderIds, ...)` overload to a scheduled macro "just in
+case" it's also useful as a rule macro - write a separate macro if you actually
+need both trigger types. See `references/standards/macro_conventions.md` section
+1.1 for why (a real submitted macro got this wrong).
+
 ## Gotchas
 
 - **Entry point signature has no `OrderIds`** — scalar config parameters only (a
