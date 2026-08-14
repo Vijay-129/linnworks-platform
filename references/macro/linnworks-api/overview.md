@@ -91,17 +91,29 @@ from the session.
 var ctx = new ApiContext(session.Token, session.Server);
 var mgr = new ApiObjectManager(ctx);
 
+// locationId here MUST be a real location's StockLocationId, fetched from
+// Inventory.GetStockLocations() - see the warning below.
 var openOrders = mgr.OpenOrders.GetOpenOrders(new GetOpenOrdersRequest
 {
     ViewId = 1,           // a real view id from the account - 0 is not a valid default,
                             // it will fail server-side (confirmed live)
-    LocationId = Guid.Empty, // Guid.Empty commonly means "no location filter" for
-                              // location-scoped calls, but not universally - check
-                              // the specific endpoint's doc if unsure
+    LocationId = locationId,
     EntriesPerPage = 10,
     PageNumber = 1,
 });
 ```
+
+> **`Guid.Empty` is not "all locations" - it's the real ID of whichever location is
+> named "Default" in this account.** Live-tested 2026-08-14 on a 30-location
+> account: `GetOpenOrders(LocationId = Guid.Empty)` returned 1,871 orders, exactly
+> matching a call scoped to the "Default" location explicitly - the true sum
+> across all 30 locations was 23,520. Code that does `locationId ?? Guid.Empty`
+> to mean "unfiltered" is silently dropping the other 92% of records. If you want
+> every location, call `Inventory.GetStockLocations()` once and loop, issuing one
+> scoped call per location - don't rely on an empty/default GUID meaning "no
+> filter." See `references/standards/macro_conventions.md` section 0.1 for the
+> full evidence and the real macro (`golden_examples/03_PickListMonitoring.cs`)
+> that had this exact bug.
 
 `ApiObjectManager` exposes one property per ported controller (`.Orders`, `.Stock`,
 `.Inventory`, `.PostalServices`, ...). Look up which controller/method you need with

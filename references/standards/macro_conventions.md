@@ -1,10 +1,63 @@
 # Macro Conventions
 
-Derived from `golden_examples/` (3 real approved macros, supplied 2026-08-13) by
-comparing them against each other — every rule below cites which example
-demonstrates it and which example(s) violate it. Read `golden_examples/README.md`
-for the full per-file breakdown; this file is the checklist to write new macros
-against.
+Derived from `golden_examples/` (real approved macros) by comparing them against
+each other — every rule below cites which example demonstrates it and which
+example(s) violate it. Read `golden_examples/README.md` for the full per-file
+breakdown; this file is the checklist to write new macros against.
+
+## 0. Language features: macros compile separately from LinnworksAPI itself
+
+`LinnworksAPI/LinnworksAPI.csproj` targets netstandard2.0/C# 7.3 (no nullable
+reference types, no `init`, etc.) - but that constraint is about the **SDK
+library**, not about what a macro file itself can use. Linnworks' own macro
+engine compiles macro source separately, and real approved macros already use
+features far newer than C# 7.3:
+
+- **Nullable reference types** (`#nullable enable`, `string?`) - used throughout
+  `02_ContainerEtaFolderSync.cs` and `03_PickListMonitoring.cs`.
+- **`init`-only setters** (C# 9) - used throughout `02`'s internal record-like
+  classes (`PurchaseOrderEtaSnapshot`, `FolderChangePlan`, etc).
+
+Don't apply the SDK's C# 7.3 constraint to macro code - it doesn't apply. What
+*hasn't* been confirmed yet (no real example uses them): `record`/`record struct`
+declarations, `required` members, collection expressions (`[1, 2, 3]`), raw
+string literals. If you want to use one of these in a real macro, the safe move
+is a small standalone test macro exercising just that feature, run once against
+a real account, before relying on it in production code - don't assume based on
+the C# 7.3 SDK constraint, and don't assume based on the confirmed features above
+either (a feature working doesn't mean every newer feature does).
+
+## 0.1 GUIDs default to `Guid.Empty` - and `Guid.Empty` is a REAL location, not "all"
+
+**Do not write `locationId ?? Guid.Empty` (or any equivalent) expecting that to mean
+"no location filter" / "all locations".** Live-tested 2026-08-14 against a real
+30-location account:
+
+| Call | `TotalEntries` |
+|---|---|
+| `GetOpenOrders(LocationId = Guid.Empty)` | **1,871** |
+| `GetOpenOrders(LocationId = <the account's "Default" location's real ID>)` | **1,871** (identical) |
+| Sum of `GetOpenOrders` called once per real location (30 locations) | **23,520** |
+
+`Guid.Empty` is not a wildcard - it happens to be the literal `StockLocationId` of
+whatever location is named "Default" in this account (confirmed separately via
+`Locations.GetLocation(Guid.Empty)`, which returns that specific location's
+record, not an error or a merged view). Passing it as a filter silently limits
+you to that one location - **92% of this account's open orders were invisible**
+to a macro that did this.
+
+This is not hypothetical: **`golden_examples/03_PickListMonitoring.cs` has this
+exact bug.** Its own doc comment says `location` - *"Leave empty to scan all
+locations"* - but its implementation
+(`LocationId = locationId ?? Guid.Empty`, in `FetchOpenOrderIds`) does the
+opposite. See `golden_examples/README.md` for the annotation.
+
+**The correct pattern**: if "all locations" is the actual intent, call
+`Inventory.GetStockLocations()` once and loop, issuing one scoped call per real
+location (or per relevant subset) - never rely on an empty/default Guid to mean
+"unfiltered." This generalizes beyond `GetOpenOrders` - treat any location-typed
+(or similarly-typed) filter parameter with the same suspicion until checked; the
+API doesn't reliably use "empty means unset" semantics.
 
 ## 1. Structure
 
@@ -168,3 +221,33 @@ overlapping executions racing on the same order. Any scheduled macro that mutate
 orders needs an idempotency check — a scheduled macro that reprocesses the same
 record every run because it has no memory of prior runs is a bug waiting to
 duplicate a note, an email, or a state change.
+
+## 7. A macro run is a ~5 minute budget - design for it, don't just hope
+
+A macro isn't a long-lived service; it runs, stops, and gets invoked again later
+(on a schedule, or on the next rule trigger). Everything below follows from
+treating that window as a hard constraint, not an afterthought:
+
+- **Fetch rarely-changing reference data once, at the top of the run, not per
+  record.** Countries, payment methods, shipping methods, views, the location
+  list - anything that isn't going to change mid-run. A macro that calls
+  `Api.Orders.GetPaymentMethods()` (or similar) inside a per-order loop is
+  spending API calls and wall-clock time on the same answer, repeatedly, inside a
+  budget that's already tight. Fetch once before the loop, pass the result in.
+- **Use a batch/bulk endpoint instead of one-call-per-record wherever the SDK has
+  one.** `Api.Orders.GetOrdersById(List<Guid>)` instead of looping
+  `GetOrderById` per order; `AssignToFolder`/`UnassignToFolder` given a batch of
+  order IDs instead of one order at a time - `02`'s folder-change logic groups by
+  target folder and applies each group in one batched call rather than looping
+  per order. Check `search_api`/`get_endpoint` (MCP) for a `...ByIds`/batch
+  variant before writing a per-record loop against a single-record endpoint.
+- **Prefer `List<T>`/`Dictionary<K,V>` over a bespoke class/enum/struct for
+  macro-internal data shapes.** `LinnworksAPI` already provides the domain types
+  (`OrderDetails`, `OpenOrder`, etc.) - a macro is a short-run script working with
+  those, not a long-lived application that benefits from its own rich domain
+  model. Introducing a new `enum`/`struct`/class to represent something a
+  `Dictionary<string, string>` or a tuple could hold adds a maintenance surface
+  for no benefit in a script that runs for a few minutes and exits. This is a
+  judgment call, not an absolute - a real state machine with named outcomes (e.g.
+  `03`'s `ProcessingOutcome` enum, used for control flow and logging) earns its
+  keep; a one-off snapshot struct usually doesn't.

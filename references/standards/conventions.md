@@ -32,8 +32,13 @@ rules are derived from real approved macros in `golden_examples/`, not guessed a
   no shared base needed since v2 has its own generator).
 - Optional value-type fields are `Type?` (`Guid?`, `Int32?`, `DateTime?`,
   `Boolean?`). Optional reference-type fields (`String`, `List<T>`) are just the
-  bare type — this project targets C# 7.3/netstandard2.0, which has no nullable
-  reference type annotations, so `String?` is a compile error, not a style choice.
+  bare type — this project (`LinnworksAPI/`, the SDK library) targets C#
+  7.3/netstandard2.0, which has no nullable reference type annotations, so
+  `String?` is a compile error here, not a style choice. **This constraint is
+  specific to the SDK library project, not to macros** — Linnworks' macro engine
+  compiles macro files separately, and real approved macros already use
+  `#nullable enable`/`string?` successfully (confirmed - see
+  `macro_conventions.md` section 0). Don't apply this rule outside `LinnworksAPI/`.
 - Enums use `[JsonConverter(typeof(StringEnumConverter))]` so they serialize as
   their string name, not an integer, matching how Linnworks' API represents them.
 

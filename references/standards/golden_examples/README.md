@@ -76,3 +76,12 @@ idempotency.
   individual `Api.*` call the way 02 does. For a macro that makes many calls per
   candidate (this one does — multiple reads/writes per order pair), add 02's
   `PaceApiCall()` pattern too, not just the retry.
+- **Real bug, confirmed live 2026-08-14**: `FetchOpenOrderIds` does
+  `LocationId = locationId ?? Guid.Empty` when no location is specified - but its
+  own doc comment says `location` - *"Leave empty to scan all locations."* It
+  doesn't. `Guid.Empty` is the real `StockLocationId` of the account's "Default"
+  location, not a wildcard - on a 30-location test account this returned 1,871
+  orders instead of the true total of 23,520 (8% of the actual data). See
+  `../macro_conventions.md` section 0.1. **Do not copy this pattern** - if "all
+  locations" is genuinely intended, fetch `Inventory.GetStockLocations()` once and
+  loop, issuing one scoped call per location.
