@@ -145,11 +145,45 @@ def main():
     parser.add_argument("--http", action="store_true", help="Run as a network service (streamable-http) instead of stdio")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8787)
+    parser.add_argument(
+        "--allowed-host",
+        action="append",
+        default=[],
+        help="Lock DNS-rebinding protection to this exact Host header value "
+        "(repeatable). Only useful with a stable hostname (a named tunnel/domain). "
+        "Omit this for a Cloudflare quick tunnel, whose hostname is random every "
+        "restart - DNS-rebinding protection is disabled by default in that case "
+        "(see the TransportSecuritySettings note in this file).",
+    )
     args = parser.parse_args()
 
     if args.http:
         mcp.settings.host = args.host
         mcp.settings.port = args.port
+
+        if args.allowed_host:
+            # Explicit allow-list: keep DNS-rebinding protection on, scoped to the
+            # given host(s). This is the secure path once you have a stable domain.
+            from mcp.server.transport_security import TransportSecuritySettings
+
+            mcp.settings.transport_security = TransportSecuritySettings(
+                enable_dns_rebinding_protection=True,
+                allowed_hosts=args.allowed_host,
+                allowed_origins=[f"https://{h}" for h in args.allowed_host],
+            )
+        else:
+            # No stable host known (e.g. a Cloudflare quick tunnel - random
+            # hostname every restart, so an allow-list isn't practical). Disabling
+            # this specific protection is an acceptable tradeoff here: this server
+            # is read-only, has no secrets, and is meant to be reached from
+            # anywhere - it is NOT a substitute for the auth work tracked as TODO
+            # in README.md, which is the actual access control for this service.
+            from mcp.server.transport_security import TransportSecuritySettings
+
+            mcp.settings.transport_security = TransportSecuritySettings(
+                enable_dns_rebinding_protection=False
+            )
+
         mcp.run(transport="streamable-http")
     else:
         mcp.run(transport="stdio")
