@@ -51,10 +51,14 @@ scripts/
 └── generate_v2_controller.py      Same, plus a full controller class (derives method names when
                                     operationId is missing in the spec)
 
-mcp-server/                Read-only MCP server over references/ + migration/STATUS.md -
-                            the "works in any MCP-compatible AI" layer (Claude, Cursor,
-                            Antigravity, VS Code Copilot). Local/stdio only for now.
-                            See mcp-server/README.md to run it.
+mcp-server/                 Full internal MCP server: API lookup + macro conventions +
+                            golden examples + standards linting. stdio only - for your
+                            own IDE/AI clients, not for sharing externally.
+
+mcp-server-api/             Public-safe subset: API lookup only (search_api/get_endpoint/
+                            get_model/list_controllers), nothing about macro conventions
+                            or golden examples. Supports stdio AND streamable-http (for
+                            hosting) - see mcp-server-api/README.md.
 ```
 
 ## Rules
