@@ -107,45 +107,53 @@ def get_model(name: str = Query(...), version: Optional[str] = Query(default=Non
 
 
 # ---- Macro guidance ----
+# Descriptions below are fixed, short strings (verified <=300 chars each), not
+# macro_server.X.__doc__ - ChatGPT's Action importer enforces a hard 300-char
+# limit per operation description and rejects the whole schema if any operation
+# exceeds it (hit in the GPT Builder UI 2026-08-20; several real docstrings here
+# run past 2000 chars). Using literal strings instead of the docstrings also
+# means this can't silently break again if a docstring in mcp-server/server.py
+# grows past 300 chars later - the full docstring is still one call away via the
+# tool itself, this is just what the GPT sees before deciding to call it.
 
 @app.get("/get_macro_conventions", operation_id="get_macro_conventions",
          summary="Get macro-authoring conventions (structure, logging, rate limits, idempotency)",
-         description=macro_server.get_macro_conventions.__doc__)
+         description="Macro-authoring conventions derived from real approved macros: mandatory structure, start/end logging, human-readable IDs only (never raw GUIDs), the required rate-limit-safe API pattern, server-side filter selection, and idempotency rules. Read before writing or reviewing any macro.")
 def get_macro_conventions() -> str:
     return macro_server.get_macro_conventions()
 
 
 @app.get("/get_macro_calling_guide", operation_id="get_macro_calling_guide",
          summary="How a macro reaches LinnworksAPI (inside Linnworks' engine vs standalone)",
-         description=macro_server.get_macro_calling_guide.__doc__)
+         description="How a macro reaches LinnworksAPI: running inside Linnworks' macro engine (pre-authenticated Api property) vs standalone code (manual auth), session lifetime, and how errors surface. Read before writing macro code that calls the SDK.")
 def get_macro_calling_guide() -> str:
     return macro_server.get_macro_calling_guide()
 
 
 @app.get("/get_standards", operation_id="get_standards",
          summary="Get SDK-layer coding conventions",
-         description=macro_server.get_standards.__doc__)
+         description="Coding conventions macros/plugins generated against this platform should follow: naming, error handling, logging.")
 def get_standards() -> str:
     return macro_server.get_standards()
 
 
 @app.get("/get_macro_integration", operation_id="get_macro_integration",
          summary="Get FTP/SFTP/Email/Dropbox/raw-HTTP integration reference for macros",
-         description=macro_server.get_macro_integration.__doc__)
+         description="Macro integration reference for FTP/SFTP/Email/Dropbox/raw-HTTP: the IProxyHelper contract, request/response types, and real working call-site code. category is one of: ftp, ftps, sftp, email, dropbox, web.")
 def get_macro_integration(category: str = Query(..., description="ftp, ftps, sftp, email, dropbox, or web")) -> str:
     return macro_server.get_macro_integration(category)
 
 
 @app.get("/list_macro_patterns", operation_id="list_macro_patterns",
          summary="List hand-written macro pattern docs",
-         description=macro_server.list_macro_patterns.__doc__)
+         description="List hand-written macro pattern docs - things a developer figured out that aren't derivable from code or the API spec alone (gotchas, non-obvious sequencing, workarounds). Call get_macro_pattern to read one.")
 def list_macro_patterns() -> str:
     return macro_server.list_macro_patterns()
 
 
 @app.get("/get_macro_pattern", operation_id="get_macro_pattern",
          summary="Read one hand-written macro pattern doc by name",
-         description=macro_server.get_macro_pattern.__doc__)
+         description="Read one hand-written macro pattern doc by name (see list_macro_patterns for available names).")
 def get_macro_pattern(name: str = Query(...)) -> str:
     return macro_server.get_macro_pattern(name)
 
@@ -154,28 +162,28 @@ def get_macro_pattern(name: str = Query(...)) -> str:
 
 @app.get("/list_golden_examples", operation_id="list_golden_examples",
          summary="List real approved macros kept as reference examples",
-         description=macro_server.list_golden_examples.__doc__)
+         description="List real, approved macros kept as reference examples, with a one-line summary of what each demonstrates. Call get_golden_example to read one, or get_golden_example_notes for what to copy or fix in each.")
 def list_golden_examples() -> str:
     return macro_server.list_golden_examples()
 
 
 @app.get("/get_golden_example", operation_id="get_golden_example",
          summary="Read one golden example macro's full source by name",
-         description=macro_server.get_golden_example.__doc__)
+         description="Read one golden example macro's full source by name (see list_golden_examples). Not all are fully compliant with get_macro_conventions - call get_golden_example_notes for what to copy vs fix before using one as a template.")
 def get_golden_example(name: str = Query(...)) -> str:
     return macro_server.get_golden_example(name)
 
 
 @app.get("/get_golden_example_notes", operation_id="get_golden_example_notes",
          summary="What to copy vs fix in each golden example macro",
-         description=macro_server.get_golden_example_notes.__doc__)
+         description="Annotated breakdown of every golden example macro: what each demonstrates well (copy this) and where it violates get_macro_conventions (fix this if reusing). Read before using any golden example as a template - none are perfect.")
 def get_golden_example_notes() -> str:
     return macro_server.get_golden_example_notes()
 
 
 @app.get("/search_golden_examples", operation_id="search_golden_examples",
          summary="Find the closest existing golden example macro to a new requirement",
-         description=macro_server.search_golden_examples.__doc__)
+         description="Find the closest existing golden example macro to a new requirement without knowing its filename. Searches each example's full write-up, not just the name. Call get_golden_example(name) to read the match's full source.")
 def search_golden_examples(query: str = Query(...), max_results: int = Query(default=5)) -> str:
     return macro_server.search_golden_examples(query, max_results)
 
@@ -190,7 +198,7 @@ class ScaffoldRequest(BaseModel):
 
 @app.post("/scaffold_macro", operation_id="scaffold_macro",
           summary="Generate a starting skeleton with the mandatory macro structure filled in",
-          description=macro_server.scaffold_macro.__doc__)
+          description="Generate a starting macro skeleton with the mandatory structure filled in: start/end logging, try/catch, and the rate-limit-safe ExecuteApi wrapper. trigger is 'rule' or 'scheduled' - never both. Business logic is left as TODOs, not a finished macro.")
 def scaffold_macro(body: ScaffoldRequest) -> str:
     return macro_server.scaffold_macro(body.macro_name, body.trigger, body.config_params)
 
@@ -201,14 +209,14 @@ class CodeRequest(BaseModel):
 
 @app.post("/check_against_standards", operation_id="check_against_standards",
           summary="Lint a C# macro snippet against mechanically-checkable convention rules",
-          description=macro_server.check_against_standards.__doc__)
+          description="Lint a C# macro snippet against mechanically-checkable convention rules: nullable reference types, missing StringEnumConverter, interface naming, SDK-layer logging, empty catches, async usage. A regex linter, not a compiler - can miss things.")
 def check_against_standards(body: CodeRequest) -> str:
     return macro_server.check_against_standards(body.code)
 
 
 @app.post("/check_macro_compiles", operation_id="check_macro_compiles",
           summary="Really compile a macro (dotnet build) against LinnworksAPI + LinnworksMacroHelpers",
-          description=macro_server.check_macro_compiles.__doc__)
+          description="Really compile a macro (dotnet build) against LinnworksAPI + LinnworksMacroHelpers, net10.0/C# latest/nullable enabled - the confirmed macro engine target. Catches real errors a linter can't. code must be a complete, compilable macro file.")
 def check_macro_compiles(body: CodeRequest) -> str:
     return macro_server.check_macro_compiles(body.code)
 
