@@ -2,8 +2,8 @@
 
 # Listings (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/listings.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/listings.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -87,12 +87,12 @@ Use this call to create wireup to create templates in bulk Permissions Required:
 
 Use this call to get ebay listing bulk creation operations Permissions Required: GlobalPermissions.Settings.ListingConfigurators.GetListingConfiguratorsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `request.locationId` | query | `string` | False |
-| `request.pageNumber` | query | `integer` | False |
-| `request.entriesPerPage` | query | `integer` | False |
-| `request.channelIds` | query | `array` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `request.locationId` | query | `string` | False |  |
+| `request.pageNumber` | query | `integer` | False |  |
+| `request.entriesPerPage` | query | `integer` | False |  |
+| `request.channelIds` | query | `array` | False |  |
 
 ### POST `/api/Listings/CancelListingBulkOperation`
 
@@ -206,436 +206,436 @@ Use this call to delete a Big Commerce template.
 
 ### `AmazonConfig`
 
-| Property | Type |
-|---|---|
-| `FulfillmentType` | `string` |
-| `Fulfillment_ExtendedPropertyName` | `string` |
-| `pkConfigId` | `string` |
-| `ConfigName` | `string` |
-| `Version` | `integer` |
-| `Site` | `string` |
-| `Category` | `string` |
-| `SubType` | `string` |
-| `AssociatedTemplates` | `integer` |
-| `AssociatedVariations` | `integer` |
-| `PictureAttributes` | `AmazonAttribute[]` |
-| `Attributes` | `AmazonAttribute[]` |
-| `VariationThemeAttribute` | `AmazonAttribute` |
-| `ParentageAttribute` | `AmazonAttribute` |
-| `VariationTheme` | `string` |
-| `Variations` | `AmazonAttribute[]` |
-| `BrowseNodes` | `AmazonBNode[]` |
-| `ContainsBrowseNodes` | `boolean` |
-| `FirstBrowseNode_ExtendedProperty` | `string` |
-| `SecondBrowseNode_ExtendedProperty` | `string` |
-| `VariationTitle_ExtendedProperty` | `string` |
-| `IsConfiguratorEdited` | `boolean` |
-| `ShowInInventory` | `boolean` |
-| `LastUpdateTime` | `integer` |
-| `LastUpdateSessionId` | `string` |
-| `ShippingOverrideMethod` | `string` |
-| `ShippingOption` | `SimpleShipping` |
-| `Shippings` | `AmazonShipping[]` |
-| `UseMainItemImages` | `boolean` |
-| `IgnoreIncorrectVariationChildren` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `FulfillmentType` | `string` |  |
+| `Fulfillment_ExtendedPropertyName` | `string` |  |
+| `pkConfigId` | `string` |  |
+| `ConfigName` | `string` |  |
+| `Version` | `integer` |  |
+| `Site` | `string` |  |
+| `Category` | `string` |  |
+| `SubType` | `string` |  |
+| `AssociatedTemplates` | `integer` |  |
+| `AssociatedVariations` | `integer` |  |
+| `PictureAttributes` | `AmazonAttribute[]` |  |
+| `Attributes` | `AmazonAttribute[]` |  |
+| `VariationThemeAttribute` | `AmazonAttribute` |  |
+| `ParentageAttribute` | `AmazonAttribute` |  |
+| `VariationTheme` | `string` |  |
+| `Variations` | `AmazonAttribute[]` |  |
+| `BrowseNodes` | `AmazonBNode[]` |  |
+| `ContainsBrowseNodes` | `boolean` |  |
+| `FirstBrowseNode_ExtendedProperty` | `string` |  |
+| `SecondBrowseNode_ExtendedProperty` | `string` |  |
+| `VariationTitle_ExtendedProperty` | `string` |  |
+| `IsConfiguratorEdited` | `boolean` |  |
+| `ShowInInventory` | `boolean` |  |
+| `LastUpdateTime` | `integer` |  |
+| `LastUpdateSessionId` | `string` |  |
+| `ShippingOverrideMethod` | `string` |  |
+| `ShippingOption` | `SimpleShipping` |  |
+| `Shippings` | `AmazonShipping[]` |  |
+| `UseMainItemImages` | `boolean` |  |
+| `IgnoreIncorrectVariationChildren` | `boolean` |  |
 
 ### `BigCommerceConfigurator`
 
-| Property | Type |
-|---|---|
-| `Attributes` | `BigCommerceConfigAttributes[]` |
-| `OptionSetName` | `string` |
-| `VarAttributes` | `VarAttribute[]` |
-| `UserAttributes` | `ConfigUserAttributes[]` |
-| `pkConfigid` | `string` |
-| `Categories` | `ConfigCategory[]` |
-| `Site` | `string` |
-| `ConfigName` | `string` |
-| `CategoryExtendedProperty` | `string` |
-| `ManageStock` | `boolean` |
-| `ShowInInventory` | `boolean` |
-| `IsChanged` | `boolean` |
-| `LastUpdateTime` | `integer` |
-| `LastUpdateSessionId` | `string` |
-| `AssociatedSingle` | `integer` |
-| `AssociatedVariation` | `integer` |
-| `TotalAttributes` | `integer` |
-| `TotalVarAttributes` | `integer` |
-| `VarTitleExtProperty` | `string` |
-| `UseMainItemImages` | `boolean` |
-| `GltConfiguratorId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Attributes` | `BigCommerceConfigAttributes[]` |  |
+| `OptionSetName` | `string` |  |
+| `VarAttributes` | `VarAttribute[]` |  |
+| `UserAttributes` | `ConfigUserAttributes[]` |  |
+| `pkConfigid` | `string` |  |
+| `Categories` | `ConfigCategory[]` |  |
+| `Site` | `string` |  |
+| `ConfigName` | `string` |  |
+| `CategoryExtendedProperty` | `string` |  |
+| `ManageStock` | `boolean` |  |
+| `ShowInInventory` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `LastUpdateTime` | `integer` |  |
+| `LastUpdateSessionId` | `string` |  |
+| `AssociatedSingle` | `integer` |  |
+| `AssociatedVariation` | `integer` |  |
+| `TotalAttributes` | `integer` |  |
+| `TotalVarAttributes` | `integer` |  |
+| `VarTitleExtProperty` | `string` |  |
+| `UseMainItemImages` | `boolean` |  |
+| `GltConfiguratorId` | `integer` |  |
 
 ### `EbayConfig`
 
-| Property | Type |
-|---|---|
-| `pkConfigId` | `string` |
-| `ConfigName` | `string` |
-| `EbayAccount` | `string` |
-| `Site` | `string` |
-| `OriginalConfigId` | `string` |
-| `OriginalSite` | `string` |
-| `IsOutOfStockFeatureEnabled` | `boolean` |
-| `MaxQuantity` | `integer` |
-| `MinQuantity` | `integer` |
-| `MaxQuantityPerBuyer` | `integer` |
-| `IsMaxQuantityPerBuyerEnabled` | `boolean` |
-| `ShowInInventory` | `boolean` |
-| `AssociatedTemplates` | `integer` |
-| `AssociatedVariations` | `integer` |
-| `ListingType` | `string` |
-| `ListingDuration` | `string` |
-| `Currency` | `string` |
-| `ProductLocationCountry` | `string` |
-| `ProductLocation` | `string` |
-| `PostalCode` | `string` |
-| `ProductLocationCountryExtendedProperty` | `string` |
-| `ProductLocationExtendedProperty` | `string` |
-| `PostalCodeExtendedProperty` | `string` |
-| `PaymentMethods` | `KeyValue[]` |
-| `PaypalEmail` | `string` |
-| `CODCost` | `number` |
-| `IsImmediatePaymentRequired` | `boolean` |
-| `InStorePickup` | `boolean` |
-| `SoldOneBay` | `boolean` |
-| `ReturnAccepted` | `KeyValue` |
-| `ReturnRefund` | `KeyValue` |
-| `ReturnPaidBy` | `KeyValue` |
-| `ReturnWithin` | `KeyValue` |
-| `RestockingFee` | `KeyValue` |
-| `ReturnPolicy` | `string` |
-| `AdditionalCheckoutInstructions` | `string` |
-| `Description` | `string` |
-| `GlobalShippingProgram` | `boolean` |
-| `PromotionalShippingDiscount` | `boolean` |
-| `InternationalPromotionalShippingDiscount` | `boolean` |
-| `DomesticShippingRateTable` | `boolean` |
-| `InternationalShippingRateTable` | `boolean` |
-| `DomesticShippingProfileId` | `string` |
-| `InternationalShippingProfileId` | `string` |
-| `DomesticShippingProfileId_ExtendedProperty` | `string` |
-| `InternationalShippingProfileId_ExtendedProperty` | `string` |
-| `MaximumDispatchTime` | `KeyValue` |
-| `MaximumDispatchTime_ExtendedProperty` | `string` |
-| `DomesticShippings` | `Shipping[]` |
-| `InternationalShippings` | `Shipping[]` |
-| `FlatCalculatedShipping` | `string` |
-| `ShippingPackageType` | `string` |
-| `ExcludedLocations` | `string[]` |
-| `ShippingLocations` | `string[]` |
-| `FreeCalculatedShippingServiceId` | `string` |
-| `IsExtendedPropertySplittable` | `boolean` |
-| `IsAutoMappingExtPropToSpecEnabled` | `boolean` |
-| `IsVariationSpecificationLimitIncreased` | `boolean` |
-| `IsCatalog` | `boolean` |
-| `IsPrivateListingEnabled` | `boolean` |
-| `IsListInternationallyEnabled` | `boolean` |
-| `IsBestOfferEnabled` | `boolean` |
-| `IsTaxTableEnabled` | `boolean` |
-| `IsVATEnabled` | `boolean` |
-| `VAT` | `number` |
-| `VatExtendedProperty` | `string` |
-| `Categories` | `LinnworksEbayCategory[]` |
-| `StoreCategories` | `LinnworksEbayCategory[]` |
-| `OldCategories` | `LinnworksEbayCategory[]` |
-| `UseSuggestedCategory` | `boolean` |
-| `AutoConvertCategories` | `boolean` |
-| `PrimaryCategory_ExtendedProperty` | `string` |
-| `SecondaryCategory_ExtendedProperty` | `string` |
-| `StorePrimaryCategory_ExtendedProperty` | `string` |
-| `StoreSecondaryCategory_ExtendedProperty` | `string` |
-| `VariationTitle_ExtendedProperty` | `string` |
-| `Condition` | `KeyValue` |
-| `Condition_ExtendedProperty` | `string` |
-| `ConditionNote_ExtendedProperty` | `string` |
-| `Barcode_ExtendedProperty` | `string` |
-| `MultipleIdentifiersEnabled` | `boolean` |
-| `MultipleProductIdentifiers` | `string[]` |
-| `Specifications` | `EbaySpecification[]` |
-| `Variations` | `EbaySpecification[]` |
-| `DontUseVariationPictures` | `boolean` |
-| `PhotoDisplayCodeType` | `string` |
-| `AutoSelectImages` | `boolean` |
-| `CharityOrganisationId` | `string` |
-| `CharityDonationPercent` | `number` |
-| `LastUpdateTime` | `integer` |
-| `LastUpdateSessionId` | `string` |
-| `PaymentProfile` | `EbaySellerProfile` |
-| `ReturnProfile` | `EbaySellerProfile` |
-| `ShippingProfile` | `EbaySellerProfile` |
-| `PickupLocationTimes` | `PickupLocationTime[]` |
-| `IsConfiguratorEdited` | `boolean` |
-| `IsMappingConfigurator` | `boolean` |
-| `SchedulingEnabled` | `boolean` |
-| `UseLotsEnabled` | `boolean` |
-| `UseNewApi` | `boolean` |
-| `ChannelLocationIdentifier` | `string` |
-| `DimensionMeasure` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkConfigId` | `string` |  |
+| `ConfigName` | `string` |  |
+| `EbayAccount` | `string` |  |
+| `Site` | `string` |  |
+| `OriginalConfigId` | `string` |  |
+| `OriginalSite` | `string` |  |
+| `IsOutOfStockFeatureEnabled` | `boolean` |  |
+| `MaxQuantity` | `integer` |  |
+| `MinQuantity` | `integer` |  |
+| `MaxQuantityPerBuyer` | `integer` |  |
+| `IsMaxQuantityPerBuyerEnabled` | `boolean` |  |
+| `ShowInInventory` | `boolean` |  |
+| `AssociatedTemplates` | `integer` |  |
+| `AssociatedVariations` | `integer` |  |
+| `ListingType` | `string` |  |
+| `ListingDuration` | `string` |  |
+| `Currency` | `string` |  |
+| `ProductLocationCountry` | `string` |  |
+| `ProductLocation` | `string` |  |
+| `PostalCode` | `string` |  |
+| `ProductLocationCountryExtendedProperty` | `string` |  |
+| `ProductLocationExtendedProperty` | `string` |  |
+| `PostalCodeExtendedProperty` | `string` |  |
+| `PaymentMethods` | `KeyValue[]` |  |
+| `PaypalEmail` | `string` |  |
+| `CODCost` | `number` |  |
+| `IsImmediatePaymentRequired` | `boolean` |  |
+| `InStorePickup` | `boolean` |  |
+| `SoldOneBay` | `boolean` |  |
+| `ReturnAccepted` | `KeyValue` |  |
+| `ReturnRefund` | `KeyValue` |  |
+| `ReturnPaidBy` | `KeyValue` |  |
+| `ReturnWithin` | `KeyValue` |  |
+| `RestockingFee` | `KeyValue` |  |
+| `ReturnPolicy` | `string` |  |
+| `AdditionalCheckoutInstructions` | `string` |  |
+| `Description` | `string` |  |
+| `GlobalShippingProgram` | `boolean` |  |
+| `PromotionalShippingDiscount` | `boolean` |  |
+| `InternationalPromotionalShippingDiscount` | `boolean` |  |
+| `DomesticShippingRateTable` | `boolean` |  |
+| `InternationalShippingRateTable` | `boolean` |  |
+| `DomesticShippingProfileId` | `string` |  |
+| `InternationalShippingProfileId` | `string` |  |
+| `DomesticShippingProfileId_ExtendedProperty` | `string` |  |
+| `InternationalShippingProfileId_ExtendedProperty` | `string` |  |
+| `MaximumDispatchTime` | `KeyValue` |  |
+| `MaximumDispatchTime_ExtendedProperty` | `string` |  |
+| `DomesticShippings` | `Shipping[]` |  |
+| `InternationalShippings` | `Shipping[]` |  |
+| `FlatCalculatedShipping` | `string` |  |
+| `ShippingPackageType` | `string` |  |
+| `ExcludedLocations` | `string[]` |  |
+| `ShippingLocations` | `string[]` |  |
+| `FreeCalculatedShippingServiceId` | `string` |  |
+| `IsExtendedPropertySplittable` | `boolean` |  |
+| `IsAutoMappingExtPropToSpecEnabled` | `boolean` |  |
+| `IsVariationSpecificationLimitIncreased` | `boolean` |  |
+| `IsCatalog` | `boolean` |  |
+| `IsPrivateListingEnabled` | `boolean` |  |
+| `IsListInternationallyEnabled` | `boolean` |  |
+| `IsBestOfferEnabled` | `boolean` |  |
+| `IsTaxTableEnabled` | `boolean` |  |
+| `IsVATEnabled` | `boolean` |  |
+| `VAT` | `number` |  |
+| `VatExtendedProperty` | `string` |  |
+| `Categories` | `LinnworksEbayCategory[]` |  |
+| `StoreCategories` | `LinnworksEbayCategory[]` |  |
+| `OldCategories` | `LinnworksEbayCategory[]` |  |
+| `UseSuggestedCategory` | `boolean` |  |
+| `AutoConvertCategories` | `boolean` |  |
+| `PrimaryCategory_ExtendedProperty` | `string` |  |
+| `SecondaryCategory_ExtendedProperty` | `string` |  |
+| `StorePrimaryCategory_ExtendedProperty` | `string` |  |
+| `StoreSecondaryCategory_ExtendedProperty` | `string` |  |
+| `VariationTitle_ExtendedProperty` | `string` |  |
+| `Condition` | `KeyValue` |  |
+| `Condition_ExtendedProperty` | `string` |  |
+| `ConditionNote_ExtendedProperty` | `string` |  |
+| `Barcode_ExtendedProperty` | `string` |  |
+| `MultipleIdentifiersEnabled` | `boolean` |  |
+| `MultipleProductIdentifiers` | `string[]` |  |
+| `Specifications` | `EbaySpecification[]` |  |
+| `Variations` | `EbaySpecification[]` |  |
+| `DontUseVariationPictures` | `boolean` |  |
+| `PhotoDisplayCodeType` | `string` |  |
+| `AutoSelectImages` | `boolean` |  |
+| `CharityOrganisationId` | `string` |  |
+| `CharityDonationPercent` | `number` |  |
+| `LastUpdateTime` | `integer` |  |
+| `LastUpdateSessionId` | `string` |  |
+| `PaymentProfile` | `EbaySellerProfile` |  |
+| `ReturnProfile` | `EbaySellerProfile` |  |
+| `ShippingProfile` | `EbaySellerProfile` |  |
+| `PickupLocationTimes` | `PickupLocationTime[]` |  |
+| `IsConfiguratorEdited` | `boolean` |  |
+| `IsMappingConfigurator` | `boolean` |  |
+| `SchedulingEnabled` | `boolean` |  |
+| `UseLotsEnabled` | `boolean` |  |
+| `UseNewApi` | `boolean` |  |
+| `ChannelLocationIdentifier` | `string` |  |
+| `DimensionMeasure` | `string` |  |
 
 ### `Listings_CancelListingBulkOperationRequest`
 
-| Property | Type |
-|---|---|
-| `pkOperationId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOperationId` | `integer` |  |
 
 ### `Listings_CreateAmazonConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `AmazonConfig[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `AmazonConfig[]` |  |
 
 ### `Listings_CreateAmazonTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `ProcessTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `ProcessTemplatesParameters` |  |
 
 ### `Listings_CreateBigcommerceConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `BigCommerceConfigurator[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `BigCommerceConfigurator[]` |  |
 
 ### `Listings_CreateBigcommerceTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `ProcessTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `ProcessTemplatesParameters` |  |
 
 ### `Listings_CreateEbayTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `ProcessTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `ProcessTemplatesParameters` |  |
 
 ### `Listings_CreateMagentoConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `MagentoConfig[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `MagentoConfig[]` |  |
 
 ### `Listings_CreateMagentoTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `ProcessTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `ProcessTemplatesParameters` |  |
 
 ### `Listings_CreateTemplatesFromViewInBulkRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `CreateTemplatesInBulkParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `CreateTemplatesInBulkParameters` |  |
 
 ### `Listings_CreateeBayConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `EbayConfig[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `EbayConfig[]` |  |
 
 ### `Listings_DeleteAmazonConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `string[]` |  |
 
 ### `Listings_DeleteAmazonTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `templateIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `templateIds` | `string[]` |  |
 
 ### `Listings_DeleteBigcommerceConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `string[]` |  |
 
 ### `Listings_DeleteBigcommerceTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `templateIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `templateIds` | `string[]` |  |
 
 ### `Listings_DeleteEbayTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `templateIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `templateIds` | `string[]` |  |
 
 ### `Listings_DeleteMagentoConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `string[]` |  |
 
 ### `Listings_DeleteMagentoTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `templateIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `templateIds` | `string[]` |  |
 
 ### `Listings_DeleteeBayConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `string[]` |  |
 
 ### `Listings_EndListingsPendingRelistRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `EndListingsPendingRelistRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `EndListingsPendingRelistRequest` |  |
 
 ### `Listings_GetAmazonTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `GetTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `GetTemplatesParameters` |  |
 
 ### `Listings_GetBigCommerceTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `GetTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `GetTemplatesParameters` |  |
 
 ### `Listings_GetMagentoTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `GetTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `GetTemplatesParameters` |  |
 
 ### `Listings_GeteBayTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `GetTemplatesParameters` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `GetTemplatesParameters` |  |
 
 ### `Listings_ProcessAmazonListingsRequest`
 
-| Property | Type |
-|---|---|
-| `items` | `AmazonListing[]` |
+| Property | Type | Description |
+|---|---|---|
+| `items` | `AmazonListing[]` |  |
 
 ### `Listings_ProcessBigcommerceListingsRequest`
 
-| Property | Type |
-|---|---|
-| `items` | `BigCommerceListing[]` |
-| `force` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `items` | `BigCommerceListing[]` |  |
+| `force` | `boolean` |  |
 
 ### `Listings_ProcessMagentoListingsRequest`
 
-| Property | Type |
-|---|---|
-| `items` | `MagentoListing[]` |
-| `force` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `items` | `MagentoListing[]` |  |
+| `force` | `boolean` |  |
 
 ### `Listings_ProcesseBayListingsRequest`
 
-| Property | Type |
-|---|---|
-| `items` | `EbayListing[]` |
-| `force` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `items` | `EbayListing[]` |  |
+| `force` | `boolean` |  |
 
 ### `Listings_SetListingStrikeOffStateRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SetListingStrikeOffStateRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SetListingStrikeOffStateRequest` |  |
 
 ### `Listings_UpdateAmazonConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `AmazonConfig[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `AmazonConfig[]` |  |
 
 ### `Listings_UpdateBigcommerceConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `BigCommerceConfigurator[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `BigCommerceConfigurator[]` |  |
 
 ### `Listings_UpdateMagentoConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `MagentoConfig[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `MagentoConfig[]` |  |
 
 ### `Listings_UpdateeBayConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `configs` | `EbayConfig[]` |
+| Property | Type | Description |
+|---|---|---|
+| `configs` | `EbayConfig[]` |  |
 
 ### `MagentoConfig`
 
-| Property | Type |
-|---|---|
-| `ManageImages` | `boolean` |
-| `Store` | `string` |
-| `AttributeSetName` | `string` |
-| `AttributeSetId` | `string` |
-| `UpSellsExtendedProperty` | `string` |
-| `CreateUpSellBacklink` | `boolean` |
-| `RelatedExtendedProperty` | `string` |
-| `CreateRelatedBacklink` | `boolean` |
-| `CrossSellsExtendedProperty` | `string` |
-| `CreateCrossSellBacklink` | `boolean` |
-| `GroupedExtendedProperty` | `string` |
-| `CreateGroupedBacklink` | `boolean` |
-| `Attributes` | `MagentoConfigAttributes[]` |
-| `VarAttributes` | `MagentoVariationsAttributes[]` |
-| `IsChildrenImages` | `boolean` |
-| `pkConfigid` | `string` |
-| `Categories` | `ConfigCategory[]` |
-| `Site` | `string` |
-| `ConfigName` | `string` |
-| `CategoryExtendedProperty` | `string` |
-| `ManageStock` | `boolean` |
-| `ShowInInventory` | `boolean` |
-| `IsChanged` | `boolean` |
-| `LastUpdateTime` | `integer` |
-| `LastUpdateSessionId` | `string` |
-| `AssociatedSingle` | `integer` |
-| `AssociatedVariation` | `integer` |
-| `TotalAttributes` | `integer` |
-| `TotalVarAttributes` | `integer` |
-| `VarTitleExtProperty` | `string` |
-| `UseMainItemImages` | `boolean` |
-| `GltConfiguratorId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `ManageImages` | `boolean` |  |
+| `Store` | `string` |  |
+| `AttributeSetName` | `string` |  |
+| `AttributeSetId` | `string` |  |
+| `UpSellsExtendedProperty` | `string` |  |
+| `CreateUpSellBacklink` | `boolean` |  |
+| `RelatedExtendedProperty` | `string` |  |
+| `CreateRelatedBacklink` | `boolean` |  |
+| `CrossSellsExtendedProperty` | `string` |  |
+| `CreateCrossSellBacklink` | `boolean` |  |
+| `GroupedExtendedProperty` | `string` |  |
+| `CreateGroupedBacklink` | `boolean` |  |
+| `Attributes` | `MagentoConfigAttributes[]` |  |
+| `VarAttributes` | `MagentoVariationsAttributes[]` |  |
+| `IsChildrenImages` | `boolean` |  |
+| `pkConfigid` | `string` |  |
+| `Categories` | `ConfigCategory[]` |  |
+| `Site` | `string` |  |
+| `ConfigName` | `string` |  |
+| `CategoryExtendedProperty` | `string` |  |
+| `ManageStock` | `boolean` |  |
+| `ShowInInventory` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `LastUpdateTime` | `integer` |  |
+| `LastUpdateSessionId` | `string` |  |
+| `AssociatedSingle` | `integer` |  |
+| `AssociatedVariation` | `integer` |  |
+| `TotalAttributes` | `integer` |  |
+| `TotalVarAttributes` | `integer` |  |
+| `VarTitleExtProperty` | `string` |  |
+| `UseMainItemImages` | `boolean` |  |
+| `GltConfiguratorId` | `integer` |  |
 
 ### `PagedResult_AmazonListing`
 
-| Property | Type |
-|---|---|
-| `Items` | `AmazonListing[]` |
-| `TotalItems` | `integer` |
-| `CurrentPage` | `integer` |
-| `EntriesPerPage` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `AmazonListing[]` |  |
+| `TotalItems` | `integer` |  |
+| `CurrentPage` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
 
 ### `PagedResult_BigCommerceListing`
 
-| Property | Type |
-|---|---|
-| `Items` | `BigCommerceListing[]` |
-| `TotalItems` | `integer` |
-| `CurrentPage` | `integer` |
-| `EntriesPerPage` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `BigCommerceListing[]` |  |
+| `TotalItems` | `integer` |  |
+| `CurrentPage` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
 
 ### `PagedResult_EbayListing`
 
-| Property | Type |
-|---|---|
-| `Items` | `EbayListing[]` |
-| `TotalItems` | `integer` |
-| `CurrentPage` | `integer` |
-| `EntriesPerPage` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `EbayListing[]` |  |
+| `TotalItems` | `integer` |  |
+| `CurrentPage` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
 
 ### `PagedResult_MagentoListing`
 
-| Property | Type |
-|---|---|
-| `Items` | `MagentoListing[]` |
-| `TotalItems` | `integer` |
-| `CurrentPage` | `integer` |
-| `EntriesPerPage` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `MagentoListing[]` |  |
+| `TotalItems` | `integer` |  |
+| `CurrentPage` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |

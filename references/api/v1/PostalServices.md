@@ -2,8 +2,8 @@
 
 # PostalServices (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/postalservices.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/postalservices.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -35,76 +35,76 @@ Changes an existing postal service in the database Permissions Required: GlobalP
 
 Returns Channel Service Link Information Permissions Required: GlobalPermissions.ShippingService.PostalServicesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `postalServiceId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `postalServiceId` | query | `string` | False | Postal service ID |
 
 ## Models
 
 ### `ChannelServiceLinks`
 
-| Property | Type |
-|---|---|
-| `Channel` | `string` |
-| `ChannelName` | `string` |
-| `ChannelService` | `string` |
-| `ChannelTag` | `string` |
-| `Site` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Channel` | `string` | ChannelName/Source (e.g. EBAY) |
+| `ChannelName` | `string` | Subsource (e.g. EBAY1) |
+| `ChannelService` | `string` | Channel shipping service name |
+| `ChannelTag` | `string` | Channel shpping service tag |
+| `Site` | `string` | Channel site |
 
 ### `PostalService`
 
-| Property | Type |
-|---|---|
-| `PostalServiceName` | `string` |
-| `PostalServiceTag` | `string` |
-| `ServiceCountry` | `string` |
-| `PostalServiceCode` | `string` |
-| `Vendor` | `string` |
-| `PrintModule` | `string` |
-| `PrintModuleTitle` | `string` |
-| `pkPostalServiceId` | `string` |
-| `TrackingNumberRequired` | `boolean` |
-| `WeightRequired` | `boolean` |
-| `IgnorePackagingGroup` | `boolean` |
-| `fkShippingAPIConfigId` | `integer` |
-| `IntegratedServiceId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `PostalServiceName` | `string` |  |
+| `PostalServiceTag` | `string` |  |
+| `ServiceCountry` | `string` |  |
+| `PostalServiceCode` | `string` |  |
+| `Vendor` | `string` |  |
+| `PrintModule` | `string` |  |
+| `PrintModuleTitle` | `string` |  |
+| `pkPostalServiceId` | `string` | Postal service ID |
+| `TrackingNumberRequired` | `boolean` | If tracking number required for this service |
+| `WeightRequired` | `boolean` | If weight required for this service |
+| `IgnorePackagingGroup` | `boolean` | If packaging group can be ignored |
+| `fkShippingAPIConfigId` | `integer` |  |
+| `IntegratedServiceId` | `string` |  |
 
 ### `PostalService_WithChannelAndShippingLinks`
 
-| Property | Type |
-|---|---|
-| `id` | `string` |
-| `hasMappedShippingService` | `boolean` |
-| `Channels` | `Channel[]` |
-| `ShippingServices` | `ShippingService[]` |
-| `PostalServiceName` | `string` |
-| `PostalServiceTag` | `string` |
-| `ServiceCountry` | `string` |
-| `PostalServiceCode` | `string` |
-| `Vendor` | `string` |
-| `PrintModule` | `string` |
-| `PrintModuleTitle` | `string` |
-| `pkPostalServiceId` | `string` |
-| `TrackingNumberRequired` | `boolean` |
-| `WeightRequired` | `boolean` |
-| `IgnorePackagingGroup` | `boolean` |
-| `fkShippingAPIConfigId` | `integer` |
-| `IntegratedServiceId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `id` | `string` | Postal service ID |
+| `hasMappedShippingService` | `boolean` | If there is channel linking with shipping service |
+| `Channels` | `Channel[]` | Channel information |
+| `ShippingServices` | `ShippingService[]` | Shipping service information |
+| `PostalServiceName` | `string` |  |
+| `PostalServiceTag` | `string` |  |
+| `ServiceCountry` | `string` |  |
+| `PostalServiceCode` | `string` |  |
+| `Vendor` | `string` |  |
+| `PrintModule` | `string` |  |
+| `PrintModuleTitle` | `string` |  |
+| `pkPostalServiceId` | `string` |  |
+| `TrackingNumberRequired` | `boolean` |  |
+| `WeightRequired` | `boolean` |  |
+| `IgnorePackagingGroup` | `boolean` |  |
+| `fkShippingAPIConfigId` | `integer` |  |
+| `IntegratedServiceId` | `string` |  |
 
 ### `PostalServices_CreatePostalServiceRequest`
 
-| Property | Type |
-|---|---|
-| `PostalServiceDetails` | `PostalService_WithChannelAndShippingLinks` |
+| Property | Type | Description |
+|---|---|---|
+| `PostalServiceDetails` | `PostalService_WithChannelAndShippingLinks` |  |
 
 ### `PostalServices_DeletePostalServiceRequest`
 
-| Property | Type |
-|---|---|
-| `idToDelete` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `idToDelete` | `string` |  |
 
 ### `PostalServices_UpdatePostalServiceRequest`
 
-| Property | Type |
-|---|---|
-| `PostalServiceDetails` | `PostalService` |
+| Property | Type | Description |
+|---|---|---|
+| `PostalServiceDetails` | `PostalService` |  |

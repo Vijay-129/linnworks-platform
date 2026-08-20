@@ -31,7 +31,15 @@ Claude Desktop config (claude_desktop_config.json), local stdio form:
 import argparse
 import re
 import pathlib
+import shutil
+import subprocess
+import sys
+import threading
 from typing import Optional
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "mcp-shared"))
+import reference_tools  # noqa: E402
+from transport import add_http_args, configure_transport_security  # noqa: E402
 
 from mcp.server.fastmcp import FastMCP
 
@@ -40,6 +48,13 @@ API_DIR = PLATFORM_ROOT / "references" / "api"
 MACRO_DIR = PLATFORM_ROOT / "references" / "macro"
 STANDARDS_DIR = PLATFORM_ROOT / "references" / "standards"
 STATUS_FILE = PLATFORM_ROOT / "migration" / "STATUS.md"
+_read = reference_tools.read_text
+_find_by_stem = reference_tools.find_by_stem
+COMPILE_CHECK_DIR = pathlib.Path(__file__).resolve().parent / "compile_check"
+COMPILE_CHECK_PROJ = COMPILE_CHECK_DIR / "CompileCheck.csproj"
+COMPILE_CHECK_SRC = COMPILE_CHECK_DIR / "Macro.cs"
+_COMPILE_ERROR_RE = re.compile(r"Macro\.cs\((\d+),(\d+)\):\s+error\s+(CS\d+):\s+(.+?)\s+\[")
+_compile_lock = threading.Lock()
 
 mcp = FastMCP(
     "linnworks-platform",
@@ -53,108 +68,18 @@ mcp = FastMCP(
 )
 
 
-def _read(path: pathlib.Path) -> str:
-    return path.read_text(encoding="utf-8", errors="replace")
-
-
-def _find_controller_file(controller: str, version: str) -> Optional[pathlib.Path]:
-    version_dir = API_DIR / version
-    if not version_dir.exists():
-        return None
-    for f in version_dir.glob("*.md"):
-        if f.stem.lower() == controller.lower():
-            return f
-    return None
-
-
 @mcp.tool()
 def list_controllers(status: Optional[str] = None) -> str:
     """List every Linnworks API controller tracked in migration/STATUS.md, with its
     API version and migration status. Optionally filter by status
     (done / generated / in-review / todo). Use this to discover what's available
     before calling get_endpoint."""
-    if not STATUS_FILE.exists():
-        return "migration/STATUS.md not found."
-    rows = []
-    for line in _read(STATUS_FILE).splitlines():
-        if not line.startswith("|") or line.startswith("|---") or line.startswith("| Controller"):
-            continue
-        cols = [c.strip() for c in line.strip("|").split("|")]
-        if len(cols) != 6:
-            continue
-        controller, spec_version, api_version, last_synced, row_status, notes = cols
-        if status and row_status.lower() != status.lower():
-            continue
-        rows.append(f"{controller} ({api_version}) - {row_status}" + (f" - {notes}" if notes else ""))
-    return "\n".join(rows) if rows else f"No controllers found with status={status!r}."
+    return reference_tools.list_controllers_impl(status, include_notes=True)
 
 
-@mcp.tool()
-def get_endpoint(controller: str, version: str = "v1") -> str:
-    """Get the full endpoint reference for one controller: every HTTP method/path,
-    rate limits, parameters, and referenced models. version is "v1" or "v2".
-    Controller name is case-insensitive (e.g. "orders", "Orders", "ORDERS")."""
-    f = _find_controller_file(controller, version)
-    if not f:
-        available = sorted(p.stem for p in (API_DIR / version).glob("*.md")) if (API_DIR / version).exists() else []
-        return f'No {version} controller named "{controller}". Available: {", ".join(available)}'
-    return _read(f)
-
-
-@mcp.tool()
-def search_api(query: str, version: Optional[str] = None, max_results: int = 15) -> str:
-    """Full-text search across every controller's endpoint reference (both v1 and v2
-    unless version is specified). Matches endpoint paths, method names, model names,
-    and descriptions. Use this when you don't know which controller an endpoint lives
-    in - e.g. search_api("fulfillment status") or search_api("stock take")."""
-    versions = [version] if version else ["v1", "v2"]
-    pattern = re.compile(re.escape(query), re.IGNORECASE)
-    results = []
-    for v in versions:
-        vdir = API_DIR / v
-        if not vdir.exists():
-            continue
-        for f in sorted(vdir.glob("*.md")):
-            for i, line in enumerate(_read(f).splitlines(), start=1):
-                if pattern.search(line):
-                    results.append(f"{f.stem} ({v}):{i}: {line.strip()}")
-                    if len(results) >= max_results:
-                        break
-            if len(results) >= max_results:
-                break
-        if len(results) >= max_results:
-            break
-    if not results:
-        return f'No matches for "{query}".'
-    return "\n".join(results)
-
-
-@mcp.tool()
-def get_model(name: str, version: Optional[str] = None) -> str:
-    """Get one model/schema's field table by name (e.g. "StockLocation",
-    "GetOrdersResponse"). Searches every controller's docs since a model can be
-    referenced from more than one. Returns every match if the same name appears in
-    multiple controllers' docs."""
-    versions = [version] if version else ["v1", "v2"]
-    heading_re = re.compile(r"^### `?" + re.escape(name) + r"`?\s*$")
-    matches = []
-    for v in versions:
-        vdir = API_DIR / v
-        if not vdir.exists():
-            continue
-        for f in sorted(vdir.glob("*.md")):
-            lines = _read(f).splitlines()
-            for i, line in enumerate(lines):
-                if heading_re.match(line.strip()):
-                    section = [line]
-                    for j in range(i + 1, len(lines)):
-                        if lines[j].startswith("## ") or lines[j].startswith("### "):
-                            break
-                        section.append(lines[j])
-                    matches.append(f"--- from {f.stem} ({v}) ---\n" + "\n".join(section).strip())
-    if not matches:
-        return f'No model named "{name}" found.'
-    return "\n\n".join(matches)
+mcp.tool()(reference_tools.get_endpoint)
+mcp.tool()(reference_tools.search_api)
+mcp.tool()(reference_tools.get_model)
 
 
 @mcp.tool()
@@ -177,8 +102,8 @@ def get_macro_integration(category: str) -> str:
     """Get macro integration reference for FTP/SFTP/Email/Dropbox/raw-HTTP: the
     IProxyHelper contract, request/response types, and real working call-site code
     from LinnMacroCustomer. category is one of: ftp, ftps, sftp, email, dropbox, web."""
-    f = MACRO_DIR / "integrations" / f"{category.lower()}.md"
-    if not f.exists():
+    f = _find_by_stem(MACRO_DIR / "integrations", category)
+    if not f:
         available = sorted(p.stem for p in (MACRO_DIR / "integrations").glob("*.md"))
         return f'No macro integration named "{category}". Available: {", ".join(available)}'
     return _read(f)
@@ -199,8 +124,8 @@ def list_macro_patterns() -> str:
 @mcp.tool()
 def get_macro_pattern(name: str) -> str:
     """Read one hand-written macro pattern doc by name (see list_macro_patterns)."""
-    f = MACRO_DIR / "patterns" / f"{name}.md"
-    if not f.exists():
+    f = _find_by_stem(MACRO_DIR / "patterns", name)
+    if not f:
         return f'No macro pattern named "{name}". Call list_macro_patterns for available names.'
     return _read(f)
 
@@ -267,6 +192,317 @@ def get_golden_example_notes() -> str:
     if not f.exists():
         return "references/standards/golden_examples/README.md not found."
     return _read(f)
+
+
+_GOLDEN_EXAMPLE_SECTION_RE = re.compile(r"(?m)^## (.+\.cs)\s*$")
+
+
+@mcp.tool()
+def search_golden_examples(query: str, max_results: int = 5) -> str:
+    """Find the closest existing golden example macro to a new requirement, without
+    already knowing its filename. Searches the full annotated write-up of every
+    golden example (golden_examples/README.md - what it demonstrates, what to copy,
+    what to fix), not just the filename, so e.g. search_golden_examples("rate
+    limit"), search_golden_examples("idempotency"), or search_golden_examples("folder
+    sync") all find the relevant example even if you don't know its name. Ranked by
+    match count in each example's section. Call get_golden_example(name) to read the
+    full source of whichever one comes back, or get_golden_example_notes() to read
+    every example's write-up at once instead of searching."""
+    f = STANDARDS_DIR / "golden_examples" / "README.md"
+    if not f.exists():
+        return "references/standards/golden_examples/README.md not found."
+    text = _read(f)
+    pieces = _GOLDEN_EXAMPLE_SECTION_RE.split(text)
+    # pieces[0] is the preamble before the first "## X.cs" heading; then it
+    # alternates heading, body, heading, body, ...
+    entries = [(pieces[i], pieces[i + 1]) for i in range(1, len(pieces) - 1, 2)]
+
+    # Word-level, substring-within-word matching - not a literal phrase search.
+    # "rate limit" needs to match text that says "rate-limit" (hyphen, not space)
+    # and "folder sync" needs to match "Syncs order folders" (plural/tense
+    # mismatch) - both failed under plain substring matching during testing.
+    query_words = re.findall(r"[a-z0-9]+", query.lower())
+    if not query_words:
+        return 'Empty query - pass at least one word, e.g. search_golden_examples("rate limit").'
+
+    def _word_matches(query_word: str, doc_word: str) -> bool:
+        # Prefix relation, not "contains anywhere" - the latter false-positived on
+        # short common words (e.g. "is") being trivially a substring of an unrelated
+        # query word (e.g. "nonexistent" contains "is") during testing. Require
+        # length >= 3 before allowing a prefix match at all, so single/double-letter
+        # doc words can never drive a match.
+        if query_word == doc_word:
+            return True
+        if len(query_word) < 3 or len(doc_word) < 3:
+            return False
+        return doc_word.startswith(query_word) or query_word.startswith(doc_word)
+
+    def _word_hits(section_text: str) -> int:
+        doc_words = re.findall(r"[a-z0-9]+", section_text.lower())
+        return sum(1 for qw in query_words if any(_word_matches(qw, dw) for dw in doc_words))
+
+    scored = []
+    for heading, body in entries:
+        heading_hits = _word_hits(heading)
+        body_hits = _word_hits(body)
+        score = heading_hits * 3 + body_hits
+        if score > 0:
+            scored.append((score, heading, body.strip()))
+    if not scored:
+        return (
+            f'No golden example matches "{query}". Call list_golden_examples() to see '
+            f"all of them, or get_golden_example_notes() to read every write-up."
+        )
+    scored.sort(key=lambda item: -item[0])
+
+    results = []
+    for score, heading, body in scored[:max_results]:
+        snippet = body if len(body) <= 600 else body[:600].rstrip() + "..."
+        results.append(f"--- {heading} (match score {score}) ---\n{snippet}")
+    return "\n\n".join(results)
+
+
+_MACRO_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+# Rate-limit wrapper is macro_conventions.md rule 4's exact reference pattern
+# (ExecuteApi/PaceApiCall from 02_ContainerEtaFolderSync.cs) - copied verbatim, not
+# reworded, so scaffold_macro's output matches what get_macro_conventions() documents
+# as mandatory rather than a paraphrase that could drift from it over time.
+_RATE_LIMIT_HELPERS = '''\
+        private static readonly object RateLimitLock = new();
+        private static DateTime _lastApiCallUtc = DateTime.MinValue;
+        private const int MinimumApiSpacingMilliseconds = 550;
+
+        private static void PaceApiCall()
+        {
+            lock (RateLimitLock)
+            {
+                var elapsed = (DateTime.UtcNow - _lastApiCallUtc).TotalMilliseconds;
+                if (elapsed < MinimumApiSpacingMilliseconds)
+                    Thread.Sleep(MinimumApiSpacingMilliseconds - (int)elapsed);
+                _lastApiCallUtc = DateTime.UtcNow;
+            }
+        }
+
+        private T ExecuteApi<T>(string operationName, Func<T> operation)
+        {
+            const int maxAttempts = 5;
+            var retryDelaysSeconds = new[] { 5, 15, 30, 60 };
+            for (var attempt = 1; attempt <= maxAttempts; attempt++)
+            {
+                PaceApiCall();
+                try { return operation(); }
+                catch (Exception ex) when (IsHttp429(ex) && attempt < maxAttempts)
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(retryDelaysSeconds[attempt - 1]));
+                }
+            }
+            throw new InvalidOperationException($"{operationName} failed without returning a result.");
+        }
+
+        private static bool IsHttp429(Exception exception)
+        {
+            for (var current = exception; current != null; current = current.InnerException)
+            {
+                if (current is WebException webEx && webEx.Response is HttpWebResponse http && (int)http.StatusCode == 429)
+                    return true;
+                if (current.Message.Contains("error 429", StringComparison.OrdinalIgnoreCase) ||
+                    current.Message.Contains("Too Many Requests", StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+'''
+
+# Rule shape mirrors rule_macro.md's own example: Guid[] OrderIds first param,
+# per-order try/catch delegated to a helper (one bad order can't stop the batch),
+# distinct-order loop. ExecuteApi wraps the one real Api.* call already present.
+_RULE_TEMPLATE = '''\
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using LinnworksMacroHelpers;
+
+namespace __MACRO_NAME__
+{
+    public class __MACRO_NAME__ : LinnworksMacroBase
+    {
+        public void Execute(Guid[] OrderIds)
+        {
+            Logger.WriteInfo("__MACRO_NAME__ started.");
+
+            try
+            {
+                if (OrderIds == null || OrderIds.Length == 0)
+                {
+                    Logger.WriteInfo("No OrderIds supplied. Macro exiting.");
+                    return;
+                }
+
+                foreach (var orderId in OrderIds.Distinct())
+                {
+                    ProcessOrder(orderId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteError($"Unhandled macro error: {ex.Message}");
+            }
+            finally
+            {
+                Logger.WriteInfo("__MACRO_NAME__ finished.");
+            }
+        }
+
+        private void ProcessOrder(Guid orderId)
+        {
+            try
+            {
+                var order = ExecuteApi("GetOrderById", () => Api.Orders.GetOrderById(orderId));
+                if (order == null)
+                {
+                    Logger.WriteError($"Order not found. NumOrderId lookup unavailable for {orderId}.");
+                    return;
+                }
+
+                // TODO: idempotency check before any mutation - see macro_conventions.md
+                // rule 6 and 01_ShopifyPaymentMethodMapping.cs's
+                // EnsureProcessedIdentifierExists for the reference pattern.
+
+                // TODO: actual macro logic here. Log order.NumOrderId in every line,
+                // never orderId (macro_conventions.md rule 3).
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteError($"Error processing order: {ex.Message}");
+            }
+        }
+
+__RATE_LIMIT_HELPERS__
+    }
+}
+'''
+
+# Scheduled shape mirrors scheduled_macro.md's own example: no OrderIds, scalar
+# config params only, elapsed-time + processed-count in the final log line.
+_SCHEDULED_TEMPLATE = '''\
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading;
+using LinnworksMacroHelpers;
+
+namespace __MACRO_NAME__
+{
+    public class __MACRO_NAME__ : LinnworksMacroBase
+    {
+        private const int PageSize = 200;
+
+        public void Execute(__CONFIG_PARAMS__)
+        {
+            var startedUtc = DateTime.UtcNow;
+            var processed = 0;
+
+            try
+            {
+                Logger.WriteInfo("__MACRO_NAME__ started.");
+
+                // TODO: load this macro's working set, paged (PageNumber/EntriesPerPage,
+                // looping until a short page signals the end) - never fetch "all X" in
+                // one unbounded call (macro_conventions.md rule 7). See
+                // 02_ContainerEtaFolderSync.cs / 03_PickListMonitoring.cs for real
+                // paging, and macro_conventions.md rule 5 for choosing a server-side
+                // filter/endpoint before writing this loop.
+
+                // TODO: for each record -
+                //   - idempotency check before any mutation (macro_conventions.md rule 6)
+                //   - actual macro logic, every Api.* call routed through ExecuteApi
+                //   - log a human-readable id (e.g. order.NumOrderId), never a raw Guid
+                //   - processed++;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteError($"__MACRO_NAME__ failed: {ex}");
+            }
+            finally
+            {
+                var elapsed = DateTime.UtcNow - startedUtc;
+                Logger.WriteInfo($"__MACRO_NAME__ finished in {elapsed.TotalSeconds:N1}s. Processed: {processed}.");
+            }
+        }
+
+__RATE_LIMIT_HELPERS__
+    }
+}
+'''
+
+
+@mcp.tool()
+def scaffold_macro(macro_name: str, trigger: str, config_params: str = "") -> str:
+    """Generate a starting skeleton for a new macro that already has the mandatory
+    structure from get_macro_conventions() filled in, instead of leaving the caller
+    to reproduce it from prose each time: start/end logging (rule 2), top-level
+    try/catch/finally (rule 1), per-order error isolation for Rule macros, and the
+    full rate-limit-safe ExecuteApi/PaceApiCall wrapper (rule 4 - proactive pacing +
+    HTTP 429 retry with exponential backoff, copied verbatim from
+    02_ContainerEtaFolderSync.cs, the reference implementation). The business logic
+    is left as TODO comments pointing at the relevant convention/golden-example -
+    this removes the boilerplate a macro is required to have, it does not write the
+    macro's actual purpose for you.
+
+    macro_name: PascalCase identifier used as both the namespace and class name
+    (e.g. "OrderSyncMacro"). Real approved macros each use their own distinct name
+    (see golden_examples/ - "Shopify_PaymentMethod_Mapping_MacroGraphQL",
+    "ContainerEtaFolderSync") - there is no fixed platform-wide macro class name to
+    match, so name this for what the macro actually does, don't default to a
+    placeholder like "LinnworksMacro".
+
+    trigger: "rule" or "scheduled" - decides the Execute signature. A macro is one
+    or the other, never both (macro_conventions.md rule 1.1 - a real submitted
+    macro got this wrong with two Execute overloads). If genuinely unclear which
+    one a requirement calls for, read rule_macro.md/scheduled_macro.md and decide
+    based on the actual trigger semantics described, or ask - don't guess and don't
+    hedge by writing both into one macro.
+
+    config_params: scheduled macros only - comma-separated scalar parameter names
+    (e.g. "locationName,folderPrefix"), each generated as an optional `string`
+    parameter. Ignored for a rule macro, which always takes Guid[] OrderIds first.
+    Leave blank for a parameterless scheduled macro (still generates one
+    placeholder param, since every real scheduled golden example takes at least
+    one).
+
+    This is a starting point, not a finished macro - run check_against_standards
+    and check_macro_compiles on the result after filling in the TODOs, same as any
+    other macro."""
+    if not _MACRO_NAME_RE.match(macro_name):
+        return (
+            f'"{macro_name}" is not a valid C# identifier - macro_name must start with '
+            f"a letter or underscore and contain only letters/digits/underscores "
+            f'(e.g. "OrderSyncMacro"), since it is used as both the namespace and class name.'
+        )
+
+    trigger_normalized = trigger.strip().lower()
+    if trigger_normalized not in ("rule", "scheduled"):
+        return f'trigger must be "rule" or "scheduled", got "{trigger}".'
+
+    if trigger_normalized == "rule":
+        template = _RULE_TEMPLATE
+    else:
+        param_names = [p.strip() for p in config_params.split(",") if p.strip()]
+        if not param_names:
+            param_names = ["someParam"]
+        for p in param_names:
+            if not _MACRO_NAME_RE.match(p):
+                return f'"{p}" in config_params is not a valid C# parameter name.'
+        params_declaration = ", ".join(f'string {p} = ""' for p in param_names)
+        template = _SCHEDULED_TEMPLATE.replace("__CONFIG_PARAMS__", params_declaration)
+
+    code = (
+        template.replace("__RATE_LIMIT_HELPERS__", _RATE_LIMIT_HELPERS)
+        .replace("__MACRO_NAME__", macro_name)
+    )
+    return code
 
 
 # Rules below are only the ones from references/standards/conventions.md that are
@@ -346,40 +582,87 @@ def check_against_standards(code: str) -> str:
     return "\n".join(findings)
 
 
+@mcp.tool()
+def check_macro_compiles(code: str) -> str:
+    """Actually compile a macro (a real `dotnet build`) against the real LinnworksAPI
+    and LinnworksMacroHelpers assemblies. Catches real errors check_against_standards
+    can't, since that's only a regex linter: calling a method/property that doesn't
+    exist (e.g. a typo'd SDK method name), wrong argument types or counts, wrong
+    namespace, missing usings.
+
+    Compiles as net10.0/C# latest with nullable reference types enabled - the macro
+    engine's own confirmed target, NOT LinnworksAPI/'s netstandard2.0/C# 7.3 (that
+    constraint is SDK-library-only). Confirmed 2026-08-19 against a real account: a
+    16-feature probe (records, record structs, required members, collection
+    expressions, raw string literals, nullable reference types, pattern matching,
+    target-typed new, null-coalescing assignment, index/range operators, using
+    declarations, params collections, System.Threading.Lock, field-backed
+    properties, null-conditional assignment, extension members) ran to completion -
+    see references/standards/macro_conventions.md section 0 for the full results,
+    including one thing NOT safe despite compiling fine locally (`file`-scoped
+    types - use `internal` instead) and an unrelated open question about Rule- vs
+    Scheduled-macro triggering.
+
+    `code` must be a complete, compilable macro file - full using directives, a
+    namespace, and a class deriving LinnworksMacroBase with its Execute method (see
+    get_golden_example for the real shape) - not a bare snippet. Slower than
+    check_against_standards (invokes the real compiler, a few seconds per call) - run
+    this once a macro looks structurally right and passes check_against_standards, not
+    on every draft. A clean result means the code builds and (for the 16 features
+    above) matches what Linnworks' real macro engine accepts - it does not mean the
+    code is logically correct or follows get_macro_conventions(), and it doesn't
+    extend to language features outside that confirmed set.
+
+    Requires the .NET SDK on this machine (the same one LinnworksAPI/ builds with);
+    reports plainly if it's missing rather than failing silently."""
+    if shutil.which("dotnet") is None:
+        return "dotnet SDK not found on PATH - install it (https://dotnet.microsoft.com/download) to use this tool."
+
+    with _compile_lock:
+        COMPILE_CHECK_DIR.mkdir(parents=True, exist_ok=True)
+        COMPILE_CHECK_SRC.write_text(code, encoding="utf-8")
+        try:
+            result = subprocess.run(
+                ["dotnet", "build", str(COMPILE_CHECK_PROJ), "--nologo", "-v", "quiet"],
+                capture_output=True,
+                text=True,
+                timeout=120,
+                cwd=str(COMPILE_CHECK_DIR),
+            )
+        except subprocess.TimeoutExpired:
+            return "dotnet build timed out after 120s."
+
+    if result.returncode == 0:
+        return (
+            "Compiles clean against LinnworksAPI + LinnworksMacroHelpers (net10.0, C# "
+            "latest, nullable enabled - the macro engine's confirmed target as of "
+            "2026-08-19, see macro_conventions.md section 0). This confirms the code "
+            "builds - it doesn't confirm it's logically correct, follows "
+            "get_macro_conventions(), or that it uses only language features within "
+            "the confirmed set (avoid `file`-scoped types specifically - see this "
+            "tool's own docstring)."
+        )
+
+    output = result.stdout + result.stderr
+    # dotnet repeats every error line in its trailing "Build FAILED" summary -
+    # dedupe while preserving first-seen order.
+    matches = list(dict.fromkeys(_COMPILE_ERROR_RE.findall(output)))
+    if not matches:
+        return "Build failed but no parseable compiler errors were found - raw output:\n" + output[-4000:]
+
+    lines = [f"Macro.cs({ln},{col}): {code_} - {msg}" for ln, col, code_, msg in matches]
+    return f"{len(lines)} compile error(s):\n" + "\n".join(lines)
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--http", action="store_true", help="Run as a network service (streamable-http) instead of stdio")
-    parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument("--port", type=int, default=8788)
-    parser.add_argument(
-        "--allowed-host",
-        action="append",
-        default=[],
-        help="Lock DNS-rebinding protection to this exact Host header value "
-        "(repeatable). Only useful with a stable hostname (a named tunnel/domain). "
-        "Omit this for a Cloudflare quick tunnel, whose hostname is random every "
-        "restart - DNS-rebinding protection is disabled by default in that case "
-        "(see mcp-server-api/server.py for the same pattern, first fixed there).",
-    )
+    add_http_args(parser, default_port=8788)
     args = parser.parse_args()
 
     if args.http:
         mcp.settings.host = args.host
         mcp.settings.port = args.port
-
-        from mcp.server.transport_security import TransportSecuritySettings
-
-        if args.allowed_host:
-            mcp.settings.transport_security = TransportSecuritySettings(
-                enable_dns_rebinding_protection=True,
-                allowed_hosts=args.allowed_host,
-                allowed_origins=[f"https://{h}" for h in args.allowed_host],
-            )
-        else:
-            mcp.settings.transport_security = TransportSecuritySettings(
-                enable_dns_rebinding_protection=False
-            )
-
+        configure_transport_security(mcp, args.allowed_host)
         mcp.run(transport="streamable-http")
     else:
         mcp.run(transport="stdio")

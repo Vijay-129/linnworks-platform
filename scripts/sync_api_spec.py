@@ -23,6 +23,9 @@ import pathlib
 import re
 import sys
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from enrich_api_descriptions import load_descriptions  # noqa: E402
+
 PLATFORM_ROOT = pathlib.Path(__file__).resolve().parent.parent
 DEFAULT_OLD_REPO = PLATFORM_ROOT / "vendor"
 SPEC_SUBDIR = "PublicApiSpecs"
@@ -163,6 +166,7 @@ def normalize_endpoints(spec: dict):
                             "in": p.get("in"),
                             "type": param_type(p),
                             "required": p.get("required", False),
+                            "description": clean_description(p.get("description", ""))[0],
                         }
                         for p in params
                     ],
@@ -179,8 +183,15 @@ def get_definitions(spec: dict) -> dict:
     return spec.get("components", {}).get("schemas", {})
 
 
-def model_properties(defn: dict):
+def model_properties(defn: dict, model_name: str, sdk_descriptions: dict):
+    """Returns (name, type, description) triples. description comes from
+    vendor/LinnworksNetSDK/ClassBase/<model_name>.cs's XML doc comments (see
+    scripts/enrich_api_descriptions.py) - the JSON spec itself carries no
+    per-property description, so this is the only source for it. Empty string if
+    that model/property isn't in the SDK source (roughly half of models aren't
+    documented there either - not every gap here is a parsing bug)."""
     props = defn.get("properties", {})
+    model_desc = sdk_descriptions.get("models", {}).get(model_name, {})
     out = []
     for name, p in props.items():
         if "$ref" in p:
@@ -190,7 +201,7 @@ def model_properties(defn: dict):
             t = (ref_name(items["$ref"]) if "$ref" in items else items.get("type", "object")) + "[]"
         else:
             t = p.get("type", "object")
-        out.append((name, t))
+        out.append((name, t, model_desc.get(name, "")))
     return out
 
 
@@ -201,7 +212,7 @@ def generated_banner():
     )
 
 
-def render_markdown(controller: str, version: str, spec_file: pathlib.Path, spec: dict, endpoints: list, extra_note: str = ""):
+def render_markdown(controller: str, version: str, spec_file: pathlib.Path, spec: dict, endpoints: list, sdk_descriptions: dict, extra_note: str = ""):
     defs = get_definitions(spec)
     referenced = set()
     for e in endpoints:
@@ -209,6 +220,8 @@ def render_markdown(controller: str, version: str, spec_file: pathlib.Path, spec
             if m:
                 for name in m.split(" | "):
                     referenced.add(name.replace("[]", ""))
+
+    sdk_methods = sdk_descriptions.get("methods", {}).get(controller, {})
 
     out = [generated_banner()]
     out.append(f"# {controller} ({version})\n")
@@ -228,13 +241,21 @@ def render_markdown(controller: str, version: str, spec_file: pathlib.Path, spec
 
     for e in endpoints:
         out.append(f"### {e['method']} `{e['path']}`\n")
-        if e["description"]:
-            out.append(e["description"] + "\n")
+        sdk_method = sdk_methods.get(e["operation_id"], {})
+        # JSON spec description first; fall back to the SDK's XML doc summary only
+        # when the spec itself has nothing (see vendor/LinnworksNetSDK/README.md -
+        # in practice the spec usually already has this, so the fallback rarely
+        # fires, but costs nothing when it doesn't).
+        description = e["description"] or sdk_method.get("summary", "")
+        if description:
+            out.append(description + "\n")
         if e["params"]:
-            out.append("| Param | In | Type | Required |")
-            out.append("|---|---|---|---|")
+            out.append("| Param | In | Type | Required | Description |")
+            out.append("|---|---|---|---|---|")
+            sdk_params = sdk_method.get("params", {})
             for p in e["params"]:
-                out.append(f"| `{p['name']}` | {p['in']} | `{p['type']}` | {p['required']} |")
+                desc = p["description"] or sdk_params.get(p["name"], "")
+                out.append(f"| `{p['name']}` | {p['in']} | `{p['type']}` | {p['required']} | {desc} |")
             out.append("")
 
     if referenced:
@@ -244,12 +265,12 @@ def render_markdown(controller: str, version: str, spec_file: pathlib.Path, spec
             if not defn:
                 continue
             out.append(f"### `{name}`\n")
-            props = model_properties(defn)
+            props = model_properties(defn, name, sdk_descriptions)
             if props:
-                out.append("| Property | Type |")
-                out.append("|---|---|")
-                for pname, ptype in props:
-                    out.append(f"| `{pname}` | `{ptype}` |")
+                out.append("| Property | Type | Description |")
+                out.append("|---|---|---|")
+                for pname, ptype, pdesc in props:
+                    out.append(f"| `{pname}` | `{ptype}` | {pdesc} |")
                 out.append("")
 
     return "\n".join(out)
@@ -286,7 +307,7 @@ def update_status_md(synced: dict):
     return updated
 
 
-def sync_file(spec_path: pathlib.Path, version: str, out_dir: pathlib.Path, old_repo: pathlib.Path, only_controller: str = None):
+def sync_file(spec_path: pathlib.Path, version: str, out_dir: pathlib.Path, old_repo: pathlib.Path, sdk_descriptions: dict, only_controller: str = None):
     stem = spec_path.stem  # e.g. "orders", "orders-v2", "warehousetransfer-new"
     lookup_key = stem
     extra_note = ""
@@ -308,7 +329,7 @@ def sync_file(spec_path: pathlib.Path, version: str, out_dir: pathlib.Path, old_
 
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     endpoints = normalize_endpoints(spec)
-    md = render_markdown(controller, version, spec_path.relative_to(old_repo), spec, endpoints, extra_note)
+    md = render_markdown(controller, version, spec_path.relative_to(old_repo), spec, endpoints, sdk_descriptions, extra_note)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{out_name}.md"
@@ -339,6 +360,10 @@ def main():
         print(f"Spec root not found at {spec_root}", file=sys.stderr)
         sys.exit(1)
 
+    sdk_descriptions = load_descriptions()
+    n_models_described = len(sdk_descriptions.get("models", {}))
+    print(f"Loaded SDK descriptions: {n_models_described} models (vendor/LinnworksNetSDK/)\n")
+
     version_dirs = {"v1": spec_root / "1.0", "v2": spec_root / "2.0"}
     synced_for_status = {}
     results = []
@@ -348,7 +373,7 @@ def main():
             continue
         out_dir = PLATFORM_ROOT / "references" / "api" / version
         for spec_path in sorted(vdir.glob("*.json")):
-            result = sync_file(spec_path, version, out_dir, old_repo, args.controller)
+            result = sync_file(spec_path, version, out_dir, old_repo, sdk_descriptions, args.controller)
             if result is None:
                 continue
             results.append(result)

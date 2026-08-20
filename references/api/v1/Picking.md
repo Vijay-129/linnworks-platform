@@ -2,8 +2,8 @@
 
 # Picking (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/picking.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/picking.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -28,49 +28,49 @@ _Last synced: 2026-08-13_
 
 Get a list of all pickwaves Permissions Required: GlobalPermissions.OrderBook.OpenOrders.PickingWaves.AllPickingWavesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `state` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `detailLevel` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `state` | query | `string` | False | Pickwave state (optional), if not supplied then all states. |
+| `locationId` | query | `string` | False | Location id for waves |
+| `detailLevel` | query | `string` | False | Detail level, if not supplied then all is assumed |
 
 ### GET `/api/Picking/GetMyPickingWaveHeaders`
 
 Get a list of list of pickwaves for the current user Permissions Required: GlobalPermissions.OrderBook.OpenOrders.PickingWavesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `state` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `detailLevel` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `state` | query | `string` | False | Pickwave state (optional), if not supplied then all states. |
+| `locationId` | query | `string` | False | Location id for waves |
+| `detailLevel` | query | `string` | False | Detail level, if not supplied then all is assumed |
 
 ### GET `/api/Picking/GetAllPickingWaves`
 
 Get a list of all pickwaves Permissions Required: GlobalPermissions.OrderBook.OpenOrders.PickingWaves.AllPickingWavesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `state` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `detailLevel` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `state` | query | `string` | False | Pickwave state (optional), if not supplied then all states. |
+| `locationId` | query | `string` | False | Location id for waves |
+| `detailLevel` | query | `string` | False | Detail level, if not supplied then all is assumed |
 
 ### GET `/api/Picking/GetMyPickingWaves`
 
 Get a list of list of pickwaves for the current user Permissions Required: GlobalPermissions.OrderBook.OpenOrders.PickingWavesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `state` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `detailLevel` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `state` | query | `string` | False | Pickwave state (optional), if not supplied then all states. |
+| `locationId` | query | `string` | False | Location id for waves |
+| `detailLevel` | query | `string` | False | Detail level, if not supplied then all is assumed |
 
 ### GET `/api/Picking/GetPickingWave`
 
 Get a specific pickwave by id Permissions Required: GlobalPermissions.OrderBook.OpenOrders.PickingWavesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pickingWaveId` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pickingWaveId` | query | `integer` | False | Pickwave id |
 
 ### POST `/api/Picking/UpdatePickingWaveItem`
 
@@ -92,11 +92,11 @@ Check a list of Linnworks order ids to see if they can be added to a pickwave Pe
 
 Returns a list of pickwaves as well as dummy entries for users who have permissions to complete pickwaves, but don't currently have any assigned. These entries will have a PickwaveId of 0. Permissions Required: GlobalPermissions.OrderBook.OpenOrders.PickingWaves.GeneratePickingWavesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `state` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `detailLevel` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `state` | query | `string` | False | Pickwave state (optional), if not supplied then all states. |
+| `locationId` | query | `string` | False | Location id for waves |
+| `detailLevel` | query | `string` | False | Detail level, if not supplied then all is assumed |
 
 ### POST `/api/Picking/DeleteOrdersFromPickingWaves`
 
@@ -106,12 +106,12 @@ Delete one or more orders from a pickwave Permissions Required: GlobalPermission
 
 Returns a list of places that the requested item can be found, other than the location already suggested. Permissions Required: GlobalPermissions.OrderBook.OpenOrders.PickingWavesNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
-| `stockLocationId` | query | `string` | False |
-| `currentBinRackSuggestion` | query | `string` | False |
-| `includeNonPickLocations` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Stock item Id |
+| `stockLocationId` | query | `string` | False | Linnworks stock location Id |
+| `currentBinRackSuggestion` | query | `string` | False | The name of the location that is currently set to pick from |
+| `includeNonPickLocations` | query | `boolean` | False | If true, the response will also contain binracks that cannot be selected to pick from |
 
 ### POST `/api/Picking/UpdatePickingWaveItemWithNewBinrack`
 
@@ -125,101 +125,101 @@ Updates the batch/binrack for allocated pickwave item. Only applicable to pickwa
 
 ### `CheckAllocatableToPickwaveResponse`
 
-| Property | Type |
-|---|---|
-| `Results` | `PickWaveAllocateCheckResult[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Results` | `PickWaveAllocateCheckResult[]` | List of results |
 
 ### `DeleteOrdersFromPickingWavesResponse`
 
-| Property | Type |
-|---|---|
-| `ProcessedOrderIds` | `integer[]` |
-| `NoPickwaves` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ProcessedOrderIds` | `integer[]` | Order Ids that had pickwaves deleted from them |
+| `NoPickwaves` | `integer[]` | OrderIds where there was no pickwave found against them |
 
 ### `GeneratePickingWaveResponse`
 
-| Property | Type |
-|---|---|
-| `ValidationResults` | `PickWaveAllocateCheckResult[]` |
-| `PickingWaves` | `PickingWaveDetailed[]` |
-| `Skus` | `StockItemInfo[]` |
-| `Bins` | `BinRackStockItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ValidationResults` | `PickWaveAllocateCheckResult[]` | Validation errors if generate fails. |
+| `PickingWaves` | `PickingWaveDetailed[]` |  |
+| `Skus` | `StockItemInfo[]` |  |
+| `Bins` | `BinRackStockItem[]` |  |
 
 ### `GetItemBinracksResponse`
 
-| Property | Type |
-|---|---|
-| `AlternateLocations` | `StockItemBatch[]` |
-| `PickableBins` | `BinRackStockItem[]` |
-| `NonPickableBins` | `BinRackStockItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `AlternateLocations` | `StockItemBatch[]` | A list of other batches that are available in the given linnworks stock location |
+| `PickableBins` | `BinRackStockItem[]` | A list of stock that is available to pick from |
+| `NonPickableBins` | `BinRackStockItem[]` | A list of stock that cannot directly be picked from |
 
 ### `GetPickingWaveHeadersResponse`
 
-| Property | Type |
-|---|---|
-| `PickwaveHeaders` | `PickingWave[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PickwaveHeaders` | `PickingWave[]` | List of pickingwave headers without order details |
 
 ### `GetPickingWavesResponse`
 
-| Property | Type |
-|---|---|
-| `PickingWaves` | `PickingWaveDetailed[]` |
-| `Skus` | `StockItemInfo[]` |
-| `Bins` | `BinRackStockItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaves` | `PickingWaveDetailed[]` | Pickwaves |
+| `Skus` | `StockItemInfo[]` | List of SKUs. |
+| `Bins` | `BinRackStockItem[]` | List of bins and batches of items in the bins. |
 
 ### `GetPickwaveUsersWithSummaryResponse`
 
-| Property | Type |
-|---|---|
-| `PickingWaves` | `PickingWave[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaves` | `PickingWave[]` |  |
 
 ### `PickingWaveGenerate`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
-| `UserId` | `integer` |
-| `SortingType` | `string` |
-| `Orders` | `PickingWaveGenerateOrder[]` |
-| `Pickwaves` | `PickingWaveGenerateMulti[]` |
-| `GroupType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` | Location Id |
+| `UserId` | `integer` | Allocated user id |
+| `SortingType` | `string` |  |
+| `Orders` | `PickingWaveGenerateOrder[]` | Pickwave items |
+| `Pickwaves` | `PickingWaveGenerateMulti[]` | Collection of pickwaves and their orders to generate. All order singular or composite child row ids must be provided, if batches exist on the order item then batch id must be supplied); |
+| `GroupType` | `string` | Pickwave group type |
 
 ### `PickingWaveUpdateRequest`
 
-| Property | Type |
-|---|---|
-| `PickingWaveId` | `integer` |
-| `UserId` | `integer` |
-| `State` | `string` |
-| `StartTime` | `string` |
-| `EndTime` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveId` | `integer` | Pickwave id |
+| `UserId` | `integer` | Allocated user id, null will keep the current assigned user, -1 will de-allocated the user from the pickwave. |
+| `State` | `string` | Current state of pickwave |
+| `StartTime` | `string` | Start date time of pickwave |
+| `EndTime` | `string` | End date time of pickwave |
 
 ### `Picking_CheckAllocatableToPickwaveRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CheckAllocatableToPickwaveRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CheckAllocatableToPickwaveRequest` |  |
 
 ### `Picking_DeleteOrdersFromPickingWavesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteOrdersFromPickingWavesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteOrdersFromPickingWavesRequest` |  |
 
 ### `Picking_UpdatePickingWaveItemRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `PickingWaveItemUpdateRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `PickingWaveItemUpdateRequest` |  |
 
 ### `Picking_UpdatePickingWaveItemWithNewBinrackRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdatePickingWaveItemWithNewBinrackRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdatePickingWaveItemWithNewBinrackRequest` |  |
 
 ### `UpdatePickedItemDeltaRequest`
 
-| Property | Type |
-|---|---|
-| `Deltas` | `UpdatePickedItemDeltaRequestItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Deltas` | `UpdatePickedItemDeltaRequestItem[]` |  |

@@ -2,8 +2,8 @@
 
 # WarehouseTransfer (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/warehousetransfer-new.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/warehousetransfer-new.json`  
+_Last synced: 2026-08-20_
 
 > Draft/alternate spec (warehousetransfer-new.json) alongside the canonical `warehousetransfer.json`. Not reflected in migration/STATUS.md automatically - confirm which spec is authoritative before promoting.
 
@@ -112,446 +112,446 @@ _Last synced: 2026-08-13_
 
 Used to get shipment by idDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}`
 
 Used to update shipmentDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/inbound`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/approve`
 
 Used to approve shipmentDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/ship`
 
 Used to mark as shippedDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/approve`
 
 Approves all shipmentsDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### DELETE `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/void`
 
 Used to void shipmentDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/withshipmentitems`
 
 this method is used to get shipments for a specific shipping planDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/name`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### DELETE `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/amazon-shipment-items`
 
 Used to delete shipment items in batch on amazon and in dbDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentItemId` | query | `integer[]` | False |
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentItemId` | query | `integer[]` | False |  |
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxes`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxes`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxes`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### DELETE `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxes/{shipmentBoxId}`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentBoxId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentBoxId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxes/pallets`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
-| `shipmentId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
+| `shipmentId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxitems`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### DELETE `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxitems`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentBoxItemIds` | query | `integer[]` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentBoxItemIds` | query | `integer[]` | False |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/boxitems/withboxandpallet`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/feeds`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/feeds/error-message`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### POST `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems`
 
 Used to create shipment items in batchDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### DELETE `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems`
 
 Used to delete shipment items in batchDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems`
 
 Used to get shipment items by shipping plan idDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipmentitems`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shippingItemId` | query | `integer[]` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shippingItemId` | query | `integer[]` | False |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/{shipmentItemId}/quantity`
 
 Used to update quantity to ship in shipment itemDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
-| `shipmentItemId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
+| `shipmentItemId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/{shipmentItemId}/pack-size`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/{shipmentItemId}/pack-quantity`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/{shipmentItemId}`
 
 Used to update shipment itemDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentItemId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentItemId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/update-shipment-item-prep-instruction`
 
 update all prep instructions for shipment itemDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/update-shipping-plan-prep-instruction`
 
 Used to retrieve prepare instructions for sku list from Amazon and saves to dbDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/prep-instruction`
 
 Used to retrieve prepare instructions for sku listDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/prep-instruction-by-shipmentitemids`
 
 Used to retrieve prepare instructions for sku listDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemIds` | query | `integer[]` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemIds` | query | `integer[]` | False |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/update-shipment-item-prep-instruction-owner`
 
 update prep owner for shipment itemDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/{shipmentItemId}/amazon-quantity`
 
 Used to update quantity to ship in shipment item and on amazonDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/{shipmentItemId}/amazon-pack-quantity`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/shipmentitems/batches`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/pallets`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/pallets`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/pallets`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### DELETE `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/pallets/{shipmentPalletId}`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentPalletId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentPalletId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transport`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transport/estimate`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transport/confirm`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transport/uniquepackagelabels/{pageType}`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `pageType` | path | `AmazonPageType` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `pageType` | path | `AmazonPageType` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transport/billoflading`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transport/palletlabels/{pageType}`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `pageType` | path | `AmazonPageType` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `pageType` | path | `AmazonPageType` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transport/void`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transportdetail`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/shipments/{shipmentId}/transportdetail`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/fbashippinglocations/countries`
 
@@ -561,9 +561,9 @@ Used to get list of contriesDeprecated - please use v2 - [API Docs v2](https://a
 
 Used to get shipping location addressDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockLocationId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockLocationId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/fbashippinglocations/contact`
 
@@ -577,82 +577,82 @@ Used to create shipping plan with default shipmentDeprecated - please use v2 - [
 
 Used to delete just shipping plan without related infoDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{id}`
 
 Used to get shipping plan with shipments and shipping itemsDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{id}`
 
 Used to update shipping planDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/submit`
 
 Used to update shipping plan items (sellerSku and quantity)Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/topleveldomain`
 
 Used to get amazon top level domain from shipping planDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/sellercentralurl`
 
 Used to get seller central url from shipping planDeprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/packing-type`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/to-location`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/from-location`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fbainbound/shippingplans/{shippingPlanId}/batches`
 
 Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `stockItemIds` | query | `integer[]` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `stockItemIds` | query | `integer[]` | False |  |
 
 ### GET `/warehousetransfer/fbainbound/fbatransfercards/shippingplancards`
 
@@ -676,55 +676,55 @@ Deprecated - please use v2 - [API Docs v2](https://apidocs.linnworks.net/v2/)
 
 ### POST `/warehousetransfer/Import/upload/{importType}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `importType` | path | `ImportType` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `importType` | path | `ImportType` | True |  |
 
 ### POST `/warehousetransfer/Import/importshipmentitems/{shippingPlanId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
 
 ### POST `/warehousetransfer/Import/importstockrequestitems/{transferId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `transferId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `transferId` | path | `string` | True |  |
 
 ### POST `/warehousetransfer/Import/importstocktransferitems/{transferId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `transferId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `transferId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/stock`
 
 Used to get shipment items by shipping plan id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `keyword` | query | `string` | False |
-| `fromLocationId` | query | `string` | False |
-| `channelId` | query | `integer` | False |
-| `sortColumn` | query | `string` | False |
-| `sortDirection` | query | `string` | False |
-| `entriesPerPage` | query | `integer` | False |
-| `pageNumber` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `keyword` | query | `string` | False |  |
+| `fromLocationId` | query | `string` | False |  |
+| `channelId` | query | `integer` | False |  |
+| `sortColumn` | query | `string` | False |  |
+| `sortDirection` | query | `string` | False |  |
+| `entriesPerPage` | query | `integer` | False |  |
+| `pageNumber` | query | `integer` | False |  |
 
 ### GET `/warehousetransfer/stock/FindWarehouseTransferStockItems`
 
 Used to get stock items for warehouse transfer
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `keyword` | query | `string` | False |
-| `fromLocationId` | query | `string` | False |
-| `toLocationId` | query | `string` | False |
-| `entriesPerPage` | query | `integer` | False |
-| `pageNumber` | query | `integer` | False |
-| `sortColumn` | query | `string` | False |
-| `sortDirection` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `keyword` | query | `string` | False |  |
+| `fromLocationId` | query | `string` | False |  |
+| `toLocationId` | query | `string` | False |  |
+| `entriesPerPage` | query | `integer` | False |  |
+| `pageNumber` | query | `integer` | False |  |
+| `sortColumn` | query | `string` | False |  |
+| `sortDirection` | query | `string` | False |  |
 
 ### PUT `/warehousetransfer/transfers/AddItem`
 
@@ -756,9 +756,9 @@ Use this call to delete a stock transfer
 
 Use this call to retrieve a list of items on the order and request/sent/received levels. This method will return multiple entries for a single item if the item exists in multiple bins.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `ids` | query | `integer[]` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `ids` | query | `integer[]` | False | The Ids to load |
 
 ### GET `/warehousetransfer/transfers/GetTransferCards`
 
@@ -766,25 +766,25 @@ Getting all warehouse transfers with stock item details for searching
 
 ### GET `/warehousetransfer/transfers/GetTransferCardsByLocation`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `locationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `locationId` | query | `string` | False |  |
 
 ### GET `/warehousetransfer/transfers/GetTransferItemBatches/{transferId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `transferId` | path | `integer` | True |
-| `stockItemIds` | query | `integer[]` | False |
-| `locationType` | query | `TransferLocationType` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `transferId` | path | `integer` | True |  |
+| `stockItemIds` | query | `integer[]` | False |  |
+| `locationType` | query | `TransferLocationType` | False |  |
 
 ### PUT `/warehousetransfer/transfers/GetTransferItems`
 
 Getting warehouse transfers for appropriate location with stock item details for searching
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `integer` | False | pkTransferId for transfer requiring status change |
 
 ### PUT `/warehousetransfer/transfers/UpdateFromLocation`
 
@@ -820,342 +820,342 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 
 ### `AddShipmentBoxesResponse`
 
-| Property | Type |
-|---|---|
-| `shipmentBoxId` | `integer` |
-| `shipmentId` | `integer` |
-| `shipmentPalletId` | `integer` |
-| `name` | `string` |
-| `height` | `number` |
-| `depth` | `number` |
-| `width` | `number` |
-| `weight` | `number` |
-| `trackingNumber` | `string` |
-| `shipmentDimensionUnit` | `AmazonShipmentDimensionUnit` |
-| `shipmentWeightUnit` | `AmazonShipmentWeightUnit` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentBoxId` | `integer` |  |
+| `shipmentId` | `integer` |  |
+| `shipmentPalletId` | `integer` |  |
+| `name` | `string` |  |
+| `height` | `number` |  |
+| `depth` | `number` |  |
+| `width` | `number` |  |
+| `weight` | `number` |  |
+| `trackingNumber` | `string` |  |
+| `shipmentDimensionUnit` | `AmazonShipmentDimensionUnit` |  |
+| `shipmentWeightUnit` | `AmazonShipmentWeightUnit` |  |
 
 ### `AddShipmentPalletsResponse`
 
-| Property | Type |
-|---|---|
-| `shipmentPalletId` | `integer` |
-| `name` | `string` |
-| `height` | `number` |
-| `depth` | `number` |
-| `width` | `number` |
-| `shipmentDimensionUnitId` | `integer` |
-| `weight` | `number` |
-| `shipmentWeightUnitId` | `integer` |
-| `isStacked` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentPalletId` | `integer` |  |
+| `name` | `string` |  |
+| `height` | `number` |  |
+| `depth` | `number` |  |
+| `width` | `number` |  |
+| `shipmentDimensionUnitId` | `integer` |  |
+| `weight` | `number` |  |
+| `shipmentWeightUnitId` | `integer` |  |
+| `isStacked` | `boolean` |  |
 
 ### `AmazonTransportDocumentResponseModel`
 
-| Property | Type |
-|---|---|
-| `pdfDocuments` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pdfDocuments` | `string[]` |  |
 
 ### `ApproveShipmentResponse`
 
-| Property | Type |
-|---|---|
-| `shipmentId` | `integer` |
-| `statusId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentId` | `integer` |  |
+| `statusId` | `integer` |  |
 
 ### `GetBatchesByShippingPlanIdResponse`
 
-| Property | Type |
-|---|---|
-| `batches` | `StockItemBatchResponse[]` |
+| Property | Type | Description |
+|---|---|---|
+| `batches` | `StockItemBatchResponse[]` |  |
 
 ### `GetBatchesByWarehouseTransferIdResponse`
 
-| Property | Type |
-|---|---|
-| `batches` | `StockItemBatchResponse[]` |
+| Property | Type | Description |
+|---|---|---|
+| `batches` | `StockItemBatchResponse[]` |  |
 
 ### `GetCartonInformationFeedErrorResponse`
 
-| Property | Type |
-|---|---|
-| `documentId` | `integer` |
-| `errorMessage` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `documentId` | `integer` |  |
+| `errorMessage` | `string` |  |
 
 ### `GetCountriesResponse`
 
-| Property | Type |
-|---|---|
-| `countryCode` | `string` |
-| `id` | `string` |
-| `name` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `countryCode` | `string` |  |
+| `id` | `string` |  |
+| `name` | `string` |  |
 
 ### `GetPrepInstructionsByShipmentItemIdsResponse`
 
-| Property | Type |
-|---|---|
-| `skuPrepInstructionsList` | `SkuPrepInstructionItem[]` |
-| `shippingPlanId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `skuPrepInstructionsList` | `SkuPrepInstructionItem[]` |  |
+| `shippingPlanId` | `integer` |  |
 
 ### `GetPrepInstructionsByShippingPlanIdResponse`
 
-| Property | Type |
-|---|---|
-| `skuPrepInstructionsList` | `SkuPrepInstructionItem[]` |
-| `shippingPlanId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `skuPrepInstructionsList` | `SkuPrepInstructionItem[]` |  |
+| `shippingPlanId` | `integer` |  |
 
 ### `GetShipmentBoxesResponse`
 
-| Property | Type |
-|---|---|
-| `shipmentBoxes` | `ShipmentBoxModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentBoxes` | `ShipmentBoxModel[]` |  |
 
 ### `GetShipmentItemsWithBoxAndPalletResponse`
 
-| Property | Type |
-|---|---|
-| `items` | `ShipmentItemWithBoxAndPalletViewModel[]` |
-| `weightUnit` | `ShipmentWeightUnit` |
-| `dimensionUnit` | `ShipmentDimensionUnit` |
+| Property | Type | Description |
+|---|---|---|
+| `items` | `ShipmentItemWithBoxAndPalletViewModel[]` |  |
+| `weightUnit` | `ShipmentWeightUnit` |  |
+| `dimensionUnit` | `ShipmentDimensionUnit` |  |
 
 ### `GetShippingPlanByIdResponse`
 
-| Property | Type |
-|---|---|
-| `channelId` | `integer` |
-| `defaultShipmentId` | `string` |
-| `fromLocation` | `string` |
-| `id` | `integer` |
-| `packingType` | `integer` |
-| `planId` | `string` |
-| `shipmentItemsCount` | `integer` |
-| `shipments` | `ShipmentResponse[]` |
-| `status` | `integer` |
-| `toLocation` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `channelId` | `integer` |  |
+| `defaultShipmentId` | `string` |  |
+| `fromLocation` | `string` |  |
+| `id` | `integer` |  |
+| `packingType` | `integer` |  |
+| `planId` | `string` |  |
+| `shipmentItemsCount` | `integer` |  |
+| `shipments` | `ShipmentResponse[]` |  |
+| `status` | `integer` |  |
+| `toLocation` | `string` |  |
 
 ### `GetShippingPlanCardsResponse`
 
-| Property | Type |
-|---|---|
-| `channelId` | `integer` |
-| `createDate` | `string` |
-| `updateDate` | `string` |
-| `fromLocation` | `string` |
-| `id` | `integer` |
-| `shippingPlanId` | `integer` |
-| `packingType` | `integer` |
-| `planId` | `string` |
-| `shipmentId` | `string` |
-| `shipmentItemsCount` | `integer` |
-| `shipmentReceived` | `integer` |
-| `shipmentShipped` | `integer` |
-| `shipTo` | `string` |
-| `status` | `integer` |
-| `toLocation` | `string` |
-| `type` | `integer` |
-| `items` | `StockItemSearchModel[]` |
-| `shipments` | `ShipmentSearchModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `channelId` | `integer` |  |
+| `createDate` | `string` |  |
+| `updateDate` | `string` |  |
+| `fromLocation` | `string` |  |
+| `id` | `integer` |  |
+| `shippingPlanId` | `integer` |  |
+| `packingType` | `integer` |  |
+| `planId` | `string` |  |
+| `shipmentId` | `string` |  |
+| `shipmentItemsCount` | `integer` |  |
+| `shipmentReceived` | `integer` |  |
+| `shipmentShipped` | `integer` |  |
+| `shipTo` | `string` |  |
+| `status` | `integer` |  |
+| `toLocation` | `string` |  |
+| `type` | `integer` |  |
+| `items` | `StockItemSearchModel[]` |  |
+| `shipments` | `ShipmentSearchModel[]` |  |
 
 ### `GetTransportDetailResponse`
 
-| Property | Type |
-|---|---|
-| `shipmentId` | `integer` |
-| `shipmentCarrierId` | `integer` |
-| `shipmentType` | `AmazonShipmentType` |
-| `transportationStatus` | `ShipmentTransportationStatus` |
-| `shipmentSellerFreightId` | `integer` |
-| `contactName` | `string` |
-| `contactPhone` | `string` |
-| `contactEmail` | `string` |
-| `contactFax` | `string` |
-| `sellerFreightDate` | `string` |
-| `proNumber` | `string` |
-| `sellerDeclaredCurrency` | `string` |
-| `sellerDeclaredValue` | `number` |
-| `partneredEstimatedCurrencyCode` | `string` |
-| `partneredEstimatedValue` | `number` |
-| `partneredEstimatedConfirmDeadline` | `string` |
-| `partneredEstimatedVoidDeadline` | `string` |
-| `siteCode` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentId` | `integer` |  |
+| `shipmentCarrierId` | `integer` |  |
+| `shipmentType` | `AmazonShipmentType` |  |
+| `transportationStatus` | `ShipmentTransportationStatus` |  |
+| `shipmentSellerFreightId` | `integer` |  |
+| `contactName` | `string` |  |
+| `contactPhone` | `string` |  |
+| `contactEmail` | `string` |  |
+| `contactFax` | `string` |  |
+| `sellerFreightDate` | `string` |  |
+| `proNumber` | `string` |  |
+| `sellerDeclaredCurrency` | `string` |  |
+| `sellerDeclaredValue` | `number` |  |
+| `partneredEstimatedCurrencyCode` | `string` |  |
+| `partneredEstimatedValue` | `number` |  |
+| `partneredEstimatedConfirmDeadline` | `string` |  |
+| `partneredEstimatedVoidDeadline` | `string` |  |
+| `siteCode` | `string` |  |
 
 ### `GetViewMetaDataResponse`
 
-| Property | Type |
-|---|---|
-| `packingTypes` | `Int32StringKeyValuePair[]` |
-| `shipmentStatuses` | `Int32StringKeyValuePair[]` |
-| `shippingPlanStatuses` | `Int32StringKeyValuePair[]` |
-| `prepOwners` | `Int32StringKeyValuePair[]` |
-| `whoPrepares` | `Int32StringKeyValuePair[]` |
-| `importMetaFields` | `ShipmentItemsImportMetaFields` |
-| `amazonShipmentTypes` | `ShipmentTypeModel[]` |
-| `amazonShipmentCarriers` | `ShipmentCarrierModel[]` |
-| `amazonShipmentSellerFreights` | `ShipmentSellerFreightModel[]` |
-| `amazonShipmentPackageLabelTypes` | `ShipmentPackageLabelTypeModel[]` |
-| `amazonPartneredCarrierSupportedCountries` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `packingTypes` | `Int32StringKeyValuePair[]` |  |
+| `shipmentStatuses` | `Int32StringKeyValuePair[]` |  |
+| `shippingPlanStatuses` | `Int32StringKeyValuePair[]` |  |
+| `prepOwners` | `Int32StringKeyValuePair[]` |  |
+| `whoPrepares` | `Int32StringKeyValuePair[]` |  |
+| `importMetaFields` | `ShipmentItemsImportMetaFields` |  |
+| `amazonShipmentTypes` | `ShipmentTypeModel[]` |  |
+| `amazonShipmentCarriers` | `ShipmentCarrierModel[]` |  |
+| `amazonShipmentSellerFreights` | `ShipmentSellerFreightModel[]` |  |
+| `amazonShipmentPackageLabelTypes` | `ShipmentPackageLabelTypeModel[]` |  |
+| `amazonPartneredCarrierSupportedCountries` | `string[]` |  |
 
 ### `ImportProductsToShipmentResponse`
 
-| Property | Type |
-|---|---|
-| `insertedIds` | `integer[]` |
-| `updatedIds` | `integer[]` |
-| `notImportedItems` | `FailedShippingItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `insertedIds` | `integer[]` |  |
+| `updatedIds` | `integer[]` |  |
+| `notImportedItems` | `FailedShippingItem[]` |  |
 
 ### `ImportProductsToStockRequestResponse`
 
-| Property | Type |
-|---|---|
-| `insertedIds` | `integer[]` |
-| `updatedIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `insertedIds` | `integer[]` |  |
+| `updatedIds` | `integer[]` |  |
 
 ### `ImportProductsToStockTransferResponse`
 
-| Property | Type |
-|---|---|
-| `insertedIds` | `integer[]` |
-| `updatedIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `insertedIds` | `integer[]` |  |
+| `updatedIds` | `integer[]` |  |
 
 ### `ReceiveSelectedTransferItemsForWmsResponse`
 
-| Property | Type |
-|---|---|
-| `results` | `ItemReceiveResult[]` |
+| Property | Type | Description |
+|---|---|---|
+| `results` | `ItemReceiveResult[]` |  |
 
 ### `ShipmentItemResponse`
 
-| Property | Type |
-|---|---|
-| `available` | `integer` |
-| `batches` | `ShipmentItemBatchResponse[]` |
-| `batchType` | `integer` |
-| `fbaAvailable` | `integer` |
-| `fbaStockLevel` | `integer` |
-| `fbaTotalStock` | `integer` |
-| `id` | `integer` |
-| `packQuantity` | `integer` |
-| `packSize` | `integer` |
-| `quantityToShip` | `integer` |
-| `receivedQty` | `integer` |
-| `asin` | `string` |
-| `sellerSku` | `string` |
-| `shipmentId` | `integer` |
-| `shippedQty` | `integer` |
-| `sku` | `string` |
-| `stockItemId` | `integer` |
-| `stockItemIdGuid` | `string` |
-| `thumbnailSource` | `string` |
-| `title` | `string` |
-| `prepInstructions` | `AmazonPrepInstructionItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `available` | `integer` |  |
+| `batches` | `ShipmentItemBatchResponse[]` |  |
+| `batchType` | `integer` |  |
+| `fbaAvailable` | `integer` |  |
+| `fbaStockLevel` | `integer` |  |
+| `fbaTotalStock` | `integer` |  |
+| `id` | `integer` |  |
+| `packQuantity` | `integer` |  |
+| `packSize` | `integer` |  |
+| `quantityToShip` | `integer` |  |
+| `receivedQty` | `integer` |  |
+| `asin` | `string` |  |
+| `sellerSku` | `string` |  |
+| `shipmentId` | `integer` |  |
+| `shippedQty` | `integer` |  |
+| `sku` | `string` |  |
+| `stockItemId` | `integer` |  |
+| `stockItemIdGuid` | `string` |  |
+| `thumbnailSource` | `string` |  |
+| `title` | `string` |  |
+| `prepInstructions` | `AmazonPrepInstructionItem[]` |  |
 
 ### `ShipmentResponse`
 
-| Property | Type |
-|---|---|
-| `createDate` | `string` |
-| `id` | `integer` |
-| `name` | `string` |
-| `shipmentId` | `string` |
-| `shippingItems` | `ShipmentItemResponse[]` |
-| `shippingPlanId` | `integer` |
-| `shipTo` | `string` |
-| `statusId` | `integer` |
-| `whoPreps` | `WhoPreps` |
-| `updateDate` | `string` |
-| `warehouseAddress` | `string` |
-| `isConvertedToSendToAmazon` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `createDate` | `string` |  |
+| `id` | `integer` |  |
+| `name` | `string` |  |
+| `shipmentId` | `string` |  |
+| `shippingItems` | `ShipmentItemResponse[]` |  |
+| `shippingPlanId` | `integer` |  |
+| `shipTo` | `string` |  |
+| `statusId` | `integer` |  |
+| `whoPreps` | `WhoPreps` |  |
+| `updateDate` | `string` |  |
+| `warehouseAddress` | `string` |  |
+| `isConvertedToSendToAmazon` | `boolean` |  |
 
 ### `ShippingLocationModel`
 
-| Property | Type |
-|---|---|
-| `stockLocationId` | `string` |
-| `name` | `string` |
-| `company` | `string` |
-| `country` | `string` |
-| `region` | `string` |
-| `city` | `string` |
-| `address1` | `string` |
-| `address2` | `string` |
-| `postcode` | `string` |
-| `phoneNumber` | `string` |
-| `countryCode` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `stockLocationId` | `string` |  |
+| `name` | `string` |  |
+| `company` | `string` |  |
+| `country` | `string` |  |
+| `region` | `string` |  |
+| `city` | `string` |  |
+| `address1` | `string` |  |
+| `address2` | `string` |  |
+| `postcode` | `string` |  |
+| `phoneNumber` | `string` |  |
+| `countryCode` | `string` |  |
 
 ### `StockItemModelGenericPagedResult`
 
-| Property | Type |
-|---|---|
-| `pageNumber` | `integer` |
-| `entriesPerPage` | `integer` |
-| `totalEntries` | `integer` |
-| `totalPages` | `integer` |
-| `data` | `StockItemModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pageNumber` | `integer` |  |
+| `entriesPerPage` | `integer` |  |
+| `totalEntries` | `integer` |  |
+| `totalPages` | `integer` |  |
+| `data` | `StockItemModel[]` |  |
 
 ### `TransferItemViewModel`
 
-| Property | Type |
-|---|---|
-| `pkTransferItemId` | `integer` |
-| `fkStockItemIntId` | `integer` |
-| `fkStockItemId` | `string` |
-| `sku` | `string` |
-| `itemTitle` | `string` |
-| `sentQuantity` | `integer` |
-| `receivedQuantity` | `integer` |
-| `requestedQuantity` | `integer` |
-| `inFromLocationQuantity` | `integer` |
-| `inToLocationQuantity` | `integer` |
-| `dueFromLocationQuantity` | `integer` |
-| `thumbnailSource` | `string` |
-| `batchType` | `integer` |
-| `fromLocationBatches` | `TransferItemBatchViewModel[]` |
-| `toLocationBatches` | `TransferItemBatchViewModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferItemId` | `integer` |  |
+| `fkStockItemIntId` | `integer` |  |
+| `fkStockItemId` | `string` |  |
+| `sku` | `string` |  |
+| `itemTitle` | `string` |  |
+| `sentQuantity` | `integer` |  |
+| `receivedQuantity` | `integer` |  |
+| `requestedQuantity` | `integer` |  |
+| `inFromLocationQuantity` | `integer` |  |
+| `inToLocationQuantity` | `integer` |  |
+| `dueFromLocationQuantity` | `integer` |  |
+| `thumbnailSource` | `string` |  |
+| `batchType` | `integer` |  |
+| `fromLocationBatches` | `TransferItemBatchViewModel[]` |  |
+| `toLocationBatches` | `TransferItemBatchViewModel[]` |  |
 
 ### `UpdateQuantityResult`
 
-| Property | Type |
-|---|---|
-| `shipmentId` | `integer` |
-| `isStockLevelChanged` | `boolean` |
-| `quantityDiff` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentId` | `integer` |  |
+| `isStockLevelChanged` | `boolean` |  |
+| `quantityDiff` | `integer` |  |
 
 ### `UpdateToLocationResponse`
 
-| Property | Type |
-|---|---|
-| `channelId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `channelId` | `integer` |  |
 
 ### `UploadCsvResponse`
 
-| Property | Type |
-|---|---|
-| `fileId` | `string` |
-| `expirationDate` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fileId` | `string` |  |
+| `expirationDate` | `string` |  |
 
 ### `WarehouseTransferStockItemModelGenericPagedResult`
 
-| Property | Type |
-|---|---|
-| `pageNumber` | `integer` |
-| `entriesPerPage` | `integer` |
-| `totalEntries` | `integer` |
-| `totalPages` | `integer` |
-| `data` | `WarehouseTransferStockItemModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pageNumber` | `integer` |  |
+| `entriesPerPage` | `integer` |  |
+| `totalEntries` | `integer` |  |
+| `totalPages` | `integer` |  |
+| `data` | `WarehouseTransferStockItemModel[]` |  |
 
 ### `WarehouseTransferViewModel`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `integer` |
-| `fromLocationId` | `string` |
-| `toLocationId` | `string` |
-| `fromLocation` | `string` |
-| `toLocation` | `string` |
-| `status` | `TransferStatus` |
-| `transferType` | `TransferType` |
-| `referenceNumber` | `string` |
-| `createDate` | `string` |
-| `updateDate` | `string` |
-| `numberOfItems` | `integer` |
-| `totalRequestedQuantity` | `integer` |
-| `totalReceivedQuantity` | `integer` |
-| `totalSentQuantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `integer` |  |
+| `fromLocationId` | `string` |  |
+| `toLocationId` | `string` |  |
+| `fromLocation` | `string` |  |
+| `toLocation` | `string` |  |
+| `status` | `TransferStatus` |  |
+| `transferType` | `TransferType` |  |
+| `referenceNumber` | `string` |  |
+| `createDate` | `string` |  |
+| `updateDate` | `string` |  |
+| `numberOfItems` | `integer` |  |
+| `totalRequestedQuantity` | `integer` |  |
+| `totalReceivedQuantity` | `integer` |  |
+| `totalSentQuantity` | `integer` |  |

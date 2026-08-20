@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Scratch project for the check_macro_compiles MCP tool (../server.py). Not part of
+    the shipped SDK - it exists only so a pasted macro can be built for real against
+    the actual LinnworksAPI/LinnworksMacroHelpers assemblies. Macro.cs in this folder
+    is overwritten on every tool call and is gitignored; only this .csproj is tracked.
+
+    Deliberately NOT netstandard2.0/C# 7.3 - that's LinnworksAPI/'s own SDK-library
+    constraint (see references/standards/conventions.md), not the macro engine's.
+    net10.0/LangVersion latest/Nullable enable is confirmed, not a guess: a 16-feature
+    probe macro (records, record structs, required members, collection expressions,
+    raw string literals, nullable reference types, pattern matching, target-typed new,
+    null-coalescing assignment, index/range operators, using declarations, params
+    collections, System.Threading.Lock, field-backed properties, null-conditional
+    assignment, extension members) ran to completion against a real account
+    2026-08-19 - see references/standards/macro_conventions.md section 0 for the full
+    results, including one thing NOT safe to use (`file`-scoped types) and an open
+    question about Rule- vs Scheduled-macro triggering unrelated to this csproj.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\LinnworksAPI\LinnworksAPI.csproj" />
+    <ProjectReference Include="..\..\LinnworksMacroHelpers\LinnworksMacroHelpers.csproj" />
+  </ItemGroup>
+
+</Project>

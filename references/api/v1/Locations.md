@@ -3,7 +3,7 @@
 # Locations (v1)
 
 Source: `PublicApiSpecs/1.0/locations.json`  
-_Last synced: 2026-08-13_
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -20,9 +20,9 @@ _Last synced: 2026-08-13_
 
 Use this call to retrieve a location and basic information about it from your Linnworks account.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkStockLocationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkStockLocationId` | query | `string` | False | The pkStockLocationId which identifies the location |
 
 ### POST `/api/Locations/AddLocation`
 
@@ -48,64 +48,64 @@ Delete existing Tote from location Permissions Required: GlobalPermissions.Inven
 
 ### `DeleteWarehouseToteResponse`
 
-| Property | Type |
-|---|---|
-| `DeletedToteIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `DeletedToteIds` | `integer[]` | deleted list of totes |
 
 ### `GetWarehouseTotesRequest`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
-| `ToteBarcode` | `string` |
-| `TotId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` | Location Id of the TOTs |
+| `ToteBarcode` | `string` | (Optional) Barcode of the TOT. If provided the response will contain one record that matches exactly to the TotBarcode or returns an empty response if nothing is found. If not provided, empty string or null and TotId is null or not specified all TOTs for the warehouse will be returned. |
+| `TotId` | `integer` | (Optional) Id of the TOT, if specified TotBarcode is ignored. If null and TotBarcode not specified then returns all tots in the warehouse |
 
 ### `GetWarehouseTotesResponse`
 
-| Property | Type |
-|---|---|
-| `Totes` | `WarehouseTOTE[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Totes` | `WarehouseTOTE[]` |  |
 
 ### `Locations_AddLocationRequest`
 
-| Property | Type |
-|---|---|
-| `location` | `StockLocation` |
+| Property | Type | Description |
+|---|---|---|
+| `location` | `StockLocation` |  |
 
 ### `Locations_DeleteLocationRequest`
 
-| Property | Type |
-|---|---|
-| `pkStockLocationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkStockLocationId` | `string` |  |
 
 ### `Locations_DeleteWarehouseTOTERequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteWarehouseToteRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteWarehouseToteRequest` |  |
 
 ### `Locations_UpdateLocationRequest`
 
-| Property | Type |
-|---|---|
-| `location` | `StockLocation` |
+| Property | Type | Description |
+|---|---|---|
+| `location` | `StockLocation` |  |
 
 ### `StockLocation`
 
-| Property | Type |
-|---|---|
-| `Address1` | `string` |
-| `Address2` | `string` |
-| `City` | `string` |
-| `County` | `string` |
-| `Country` | `string` |
-| `ZipCode` | `string` |
-| `IsNotTrackable` | `boolean` |
-| `LocationTag` | `string` |
-| `CountInOrderUntilAcknowledgement` | `boolean` |
-| `FulfilmentCenterDeductStockWhenProcessed` | `boolean` |
-| `IsWarehouseManaged` | `boolean` |
-| `StockLocationId` | `string` |
-| `LocationName` | `string` |
-| `IsFulfillmentCenter` | `boolean` |
-| `StockLocationIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `City` | `string` |  |
+| `County` | `string` |  |
+| `Country` | `string` |  |
+| `ZipCode` | `string` |  |
+| `IsNotTrackable` | `boolean` |  |
+| `LocationTag` | `string` |  |
+| `CountInOrderUntilAcknowledgement` | `boolean` |  |
+| `FulfilmentCenterDeductStockWhenProcessed` | `boolean` |  |
+| `IsWarehouseManaged` | `boolean` |  |
+| `StockLocationId` | `string` |  |
+| `LocationName` | `string` |  |
+| `IsFulfillmentCenter` | `boolean` |  |
+| `StockLocationIntId` | `integer` |  |

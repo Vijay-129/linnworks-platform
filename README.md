@@ -51,14 +51,19 @@ scripts/
 └── generate_v2_controller.py      Same, plus a full controller class (derives method names when
                                     operationId is missing in the spec)
 
-mcp-server/                 Full internal MCP server: API lookup + macro conventions +
-                            golden examples + standards linting. stdio only - for your
-                            own IDE/AI clients, not for sharing externally.
+mcp-shared/                 API-lookup logic (list_controllers/get_endpoint/search_api/
+                            get_model) and --http transport setup shared between the two
+                            servers below - both are internal-only in practice, so this
+                            was judged safe. Nothing macro/golden-example-related lives
+                            here.
 
-mcp-server-api/             Public-safe subset: API lookup only (search_api/get_endpoint/
-                            get_model/list_controllers), nothing about macro conventions
-                            or golden examples. Supports stdio AND streamable-http (for
-                            hosting) - see mcp-server-api/README.md.
+mcp-server/                 Full internal MCP server: mcp-shared/'s API lookup + macro
+                            conventions + golden examples + standards linting + real
+                            dotnet-compile validation. stdio and --http.
+
+mcp-server-api/             Narrower subset built on the same mcp-shared/ lookup tools,
+                            nothing about macro conventions or golden examples. stdio and
+                            --http - see mcp-server-api/README.md.
 ```
 
 ## Rules

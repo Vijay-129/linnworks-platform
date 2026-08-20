@@ -2,8 +2,8 @@
 
 # PostSale (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/postsale.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/postsale.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -16,9 +16,9 @@ _Last synced: 2026-08-13_
 
 This method is used to validate whether a channel cancellation can be submitted for a given order Permissions Required: GlobalPermissions.OrderBook.OpenOrders.CancellationsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | The relevant order ID |
 
 ### POST `/api/PostSale/CreateCancellation`
 
@@ -28,39 +28,39 @@ This method is used to further validate and create a cancellation in Linnworks, 
 
 ### `CancellationOptions`
 
-| Property | Type |
-|---|---|
-| `CanCancelInternally` | `boolean` |
-| `AutomaticRefundOnCancel` | `boolean` |
-| `CanCancel` | `boolean` |
-| `CanCancelOrderLines` | `boolean` |
-| `CanCancelPartially` | `boolean` |
-| `CanCancelFreeText` | `boolean` |
-| `CancelFreeTextOrNoteMaxLength` | `integer` |
-| `CancellationReasons` | `ChannelReason[]` |
-| `Order` | `OrderDetails` |
-| `CancellationHeader` | `OrderRefundHeader` |
-| `AllowRefundOnCancel` | `boolean` |
-| `Errors` | `string[]` |
-| `OrderIsLockedOnUnhandledError` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `CanCancelInternally` | `boolean` |  |
+| `AutomaticRefundOnCancel` | `boolean` |  |
+| `CanCancel` | `boolean` |  |
+| `CanCancelOrderLines` | `boolean` |  |
+| `CanCancelPartially` | `boolean` |  |
+| `CanCancelFreeText` | `boolean` |  |
+| `CancelFreeTextOrNoteMaxLength` | `integer` |  |
+| `CancellationReasons` | `ChannelReason[]` |  |
+| `Order` | `OrderDetails` |  |
+| `CancellationHeader` | `OrderRefundHeader` |  |
+| `AllowRefundOnCancel` | `boolean` |  |
+| `Errors` | `string[]` |  |
+| `OrderIsLockedOnUnhandledError` | `boolean` |  |
 
 ### `PostSale_CreateCancellationRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CancellationRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CancellationRequest` |  |
 
 ### `ValidatedCancellation`
 
-| Property | Type |
-|---|---|
-| `Status` | `string` |
-| `SubStatus` | `PostSaleSubStatus` |
-| `ChannelExistingCancellations` | `ChannelExistingCancellation[]` |
-| `NeedsConfirmation` | `boolean` |
-| `RefundReference` | `string` |
-| `Errors` | `string[]` |
-| `Order` | `OrderDetails` |
-| `CancellationHeader` | `OrderRefundHeader` |
-| `AllowRefundOnCancel` | `boolean` |
-| `OrderIsLockedOnUnhandledError` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `Status` | `string` |  |
+| `SubStatus` | `PostSaleSubStatus` |  |
+| `ChannelExistingCancellations` | `ChannelExistingCancellation[]` |  |
+| `NeedsConfirmation` | `boolean` |  |
+| `RefundReference` | `string` |  |
+| `Errors` | `string[]` |  |
+| `Order` | `OrderDetails` |  |
+| `CancellationHeader` | `OrderRefundHeader` |  |
+| `AllowRefundOnCancel` | `boolean` |  |
+| `OrderIsLockedOnUnhandledError` | `boolean` |  |

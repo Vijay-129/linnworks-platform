@@ -2,8 +2,8 @@
 
 # Orders (v2)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/2.0/orders-v2.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/2.0/orders-v2.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -19,25 +19,25 @@ _Last synced: 2026-08-13_
 
 Get orders
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | query | `string[]` | False |
-| `fromDate` | query | `string` | False |
-| `entriesPerPage` | query | `integer` | False |
-| `includeProcessed` | query | `boolean` | False |
-| `onlyPaid` | query | `boolean` | False |
-| `locationId` | query | `string` | False |
-| `searchToken` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | query | `string[]` | False | Order IDs to fetch. If included, all other request parameters will be disregarded. |
+| `fromDate` | query | `string` | False | The datetime to start retrieving orders from, based on when the orders were last updated |
+| `entriesPerPage` | query | `integer` | False | The maximum number of orders to be returned in the response |
+| `includeProcessed` | query | `boolean` | False | If true the response will also include orders that have been processed; else the response will only contain open orders |
+| `onlyPaid` | query | `boolean` | False | If true the response will only contain paid orders; else the response will also include unpaid orders |
+| `locationId` | query | `string` | False | The ID of location if the response should only contain orders that are specific to that location |
+| `searchToken` | query | `string` | False | The search token for the previous page of results. Can be found on the response object of the call to GetOrder prior to this one. |
 
 ### GET `/orders/fulfillment-status`
 
 Get fulfillment status for requested order ids
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | query | `string[]` | False |
-| `locationId` | query | `string` | False |
-| `fulfillmentStatus` | query | `FulfillmentStatus` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | query | `string[]` | False | Order IDs to fetch. |
+| `locationId` | query | `string` | False | Only return IDs of orders within this location |
+| `fulfillmentStatus` | query | `FulfillmentStatus` | False | Only return IDs of orders with this fulfillment status |
 
 ### POST `/orders/fulfillment-status`
 
@@ -47,51 +47,51 @@ Update fulfillment status for requested order ids
 
 Get fulfillment status for requested order id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | path | `string` | True | Order Id to request |
 
 ### PUT `/orders/{orderId}/fulfillment-status`
 
 Update fulfillment status for requested order id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | path | `string` | True | Order id to update |
 
 ## Models
 
 ### `AnonymousGetOrdersResponse`
 
-| Property | Type |
-|---|---|
-| `OpenOrders` | `AnonymousOrder[]` |
-| `ProcessedOrders` | `AnonymousProcessedOrder[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OpenOrders` | `AnonymousOrder[]` |  |
+| `ProcessedOrders` | `AnonymousProcessedOrder[]` |  |
 
 ### `FulfillmentStatusRequest`
 
-| Property | Type |
-|---|---|
-| `FulfillmentStatus` | `FulfillmentStatus` |
+| Property | Type | Description |
+|---|---|---|
+| `FulfillmentStatus` | `FulfillmentStatus` |  |
 
 ### `GetOrdersResponse`
 
-| Property | Type |
-|---|---|
-| `OpenOrders` | `Order[]` |
-| `ProcessedOrders` | `ProcessedOrder[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OpenOrders` | `Order[]` |  |
+| `ProcessedOrders` | `ProcessedOrder[]` |  |
 
 ### `OrderFulfillmentStatus`
 
-| Property | Type |
-|---|---|
-| `OrderId` | `string` |
-| `FulfillmentStatus` | `FulfillmentStatus` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` |  |
+| `FulfillmentStatus` | `FulfillmentStatus` |  |
 
 ### `UpdateFulfillmentStatusesResponse`
 
-| Property | Type |
-|---|---|
-| `Results` | `APIResultResponse_OrderFulfillmentStatus[]` |
-| `TotalResults` | `integer` |
-| `ResultStatus` | `APIResultStatus` |
+| Property | Type | Description |
+|---|---|---|
+| `Results` | `APIResultResponse_OrderFulfillmentStatus[]` |  |
+| `TotalResults` | `integer` |  |
+| `ResultStatus` | `APIResultStatus` |  |

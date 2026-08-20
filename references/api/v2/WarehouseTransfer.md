@@ -2,8 +2,8 @@
 
 # WarehouseTransfer (v2)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/2.0/warehousetransfer-v2.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/2.0/warehousetransfer-v2.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -59,226 +59,226 @@ _Last synced: 2026-08-13_
 
 ### GET `/warehousetransfer/fba-inbound/operations/{operationId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `operationId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `operationId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/packing-groups`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/packing-options`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/packing-options/{optionId}/confirm`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `optionId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `optionId` | path | `string` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/packing-options/generate`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/placement-options`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/placement-options/{optionId}/confirm`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `optionId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `optionId` | path | `string` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/placement-options/generate`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/boxes`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/boxes`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/boxes`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### DELETE `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/boxes/{shipmentBoxId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentBoxId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentBoxId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/box-items`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/box-items`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### DELETE `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/box-items`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentBoxItemIds` | query | `integer[]` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentBoxItemIds` | query | `integer[]` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/box-items/packing-groups/{packingGroupId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `packingGroupId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `packingGroupId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/{shipmentId}/delivery-window-options`
 
 Retrieves all delivery window options for a shipment
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/{shipmentId}/delivery-window-options/generate`
 
 Generates available delivery window options for a given shipment
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/{shipmentId}/delivery-window-options/{deliveryWindowOptionId}/confirm`
 
 Confirms the delivery window option for chosen shipment within an inbound plan
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentId` | path | `integer` | True |
-| `deliveryWindowOptionId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentId` | path | `integer` | True |  |
+| `deliveryWindowOptionId` | path | `string` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items`
 
 Used to create shipment items in batch
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### DELETE `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items`
 
 Used to delete shipment items in batch
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items`
 
 Used to get shipment items by shipping plan id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemId` | query | `integer[]` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemId` | query | `integer[]` | False |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items/{shipmentItemId}`
 
 Used to update shipment item
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemId` | path | `integer` | True |  |
 
 ### PATCH `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items/{shipmentItemId}/quantity`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `shipmentItemId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `shipmentItemId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items/prep-instructions`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items/prep-instructions/prep-owner`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `string` | True |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items/prep-instructions/label-owner`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/items/batches`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/{shipmentId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/{shipmentId}/labels`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `pageType` | query | `AmazonPageType` | False |
-| `labelType` | query | `AmazonLabelType` | False |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `pageType` | query | `AmazonPageType` | False |  |
+| `labelType` | query | `AmazonLabelType` | False |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments/{shipmentId}/bill-of-lading`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shipmentId` | path | `integer` | True |
-| `shippingPlanId` | path | `string` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shipmentId` | path | `integer` | True |  |
+| `shippingPlanId` | path | `string` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/shipments`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans`
 
@@ -288,52 +288,52 @@ Used to create shipping plan with default shipment
 
 Used to delete just shipping plan without related info
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}`
 
 Used to get shipping plan with shipments and shipping items
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}`
 
 Used to update shipping plan
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### PUT `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/submit`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### POST `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/packing-information`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/shipping-plans/{shippingPlanId}/stock-items/batches`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
-| `stockItemIds` | query | `integer[]` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
+| `stockItemIds` | query | `integer[]` | False |  |
 
 ### GET `/warehousetransfer/fba-inbound/transfer-cards/shipping-plans`
 
 ### GET `/warehousetransfer/fba-inbound/transfer-cards/shipping-plans/{shippingPlanId}`
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `shippingPlanId` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `shippingPlanId` | path | `integer` | True |  |
 
 ### GET `/warehousetransfer/fba-inbound/transfer-cards/shipments`
 
@@ -343,263 +343,263 @@ Used to update shipping plan
 
 Retrieves a specific transfer by unique id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | path | `integer` | True |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | path | `integer` | True | Transfer unique id |
 
 ## Models
 
 ### `GetBillOfLadingByShipmentIdResponse`
 
-| Property | Type |
-|---|---|
-| `billOfLadingUrl` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `billOfLadingUrl` | `string` |  |
 
 ### `GetLabelByShipmentIdResponse`
 
-| Property | Type |
-|---|---|
-| `labelUrl` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `labelUrl` | `string` |  |
 
 ### `GetPackingGroupModel`
 
-| Property | Type |
-|---|---|
-| `id` | `integer` |
-| `shippingPlanId` | `integer` |
-| `amazonPackingGroupId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `id` | `integer` |  |
+| `shippingPlanId` | `integer` |  |
+| `amazonPackingGroupId` | `string` |  |
 
 ### `GetShipmentBoxItemsResponse`
 
-| Property | Type |
-|---|---|
-| `boxItems` | `ShipmentBoxItemExtendedModel[]` |
-| `weightUnit` | `UnitOfWeight` |
-| `dimensionUnit` | `UnitOfMeasurement` |
+| Property | Type | Description |
+|---|---|---|
+| `boxItems` | `ShipmentBoxItemExtendedModel[]` |  |
+| `weightUnit` | `UnitOfWeight` |  |
+| `dimensionUnit` | `UnitOfMeasurement` |  |
 
 ### `GetShipmentCardsResponse`
 
-| Property | Type |
-|---|---|
-| `cards` | `ShipmentCardModel[]` |
-| `lastUpdateDate` | `string` |
-| `amazonConfigErrors` | `AmazonConfigErrorResponse[]` |
+| Property | Type | Description |
+|---|---|---|
+| `cards` | `ShipmentCardModel[]` |  |
+| `lastUpdateDate` | `string` |  |
+| `amazonConfigErrors` | `AmazonConfigErrorResponse[]` |  |
 
 ### `GetShippingPlanByIdResponse`
 
-| Property | Type |
-|---|---|
-| `channelId` | `integer` |
-| `defaultShipmentId` | `string` |
-| `fromLocation` | `string` |
-| `id` | `integer` |
-| `isPackingInfoKnown` | `boolean` |
-| `planId` | `string` |
-| `shipmentItemsCount` | `integer` |
-| `shipments` | `ShipmentResponse[]` |
-| `status` | `ShippingPlanStatus` |
-| `toLocation` | `string` |
-| `placementOptionId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `channelId` | `integer` |  |
+| `defaultShipmentId` | `string` |  |
+| `fromLocation` | `string` |  |
+| `id` | `integer` |  |
+| `isPackingInfoKnown` | `boolean` |  |
+| `planId` | `string` |  |
+| `shipmentItemsCount` | `integer` |  |
+| `shipments` | `ShipmentResponse[]` |  |
+| `status` | `ShippingPlanStatus` |  |
+| `toLocation` | `string` |  |
+| `placementOptionId` | `string` |  |
 
 ### `GetShippingPlanCardsResponse`
 
-| Property | Type |
-|---|---|
-| `channelId` | `integer` |
-| `createDate` | `string` |
-| `updateDate` | `string` |
-| `fromLocation` | `string` |
-| `id` | `integer` |
-| `shippingPlanId` | `integer` |
-| `inboundPlanId` | `string` |
-| `isPackingInfoKnown` | `boolean` |
-| `planId` | `string` |
-| `shipmentItemsCount` | `integer` |
-| `shipmentReceived` | `integer` |
-| `shipmentShipped` | `integer` |
-| `status` | `ShippingPlanStatus` |
-| `toLocation` | `string` |
-| `type` | `TransferCard` |
-| `items` | `StockItemSearchModel[]` |
-| `shipments` | `ShipmentSearchModel[]` |
-| `placementOptionId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `channelId` | `integer` |  |
+| `createDate` | `string` |  |
+| `updateDate` | `string` |  |
+| `fromLocation` | `string` |  |
+| `id` | `integer` |  |
+| `shippingPlanId` | `integer` |  |
+| `inboundPlanId` | `string` |  |
+| `isPackingInfoKnown` | `boolean` |  |
+| `planId` | `string` |  |
+| `shipmentItemsCount` | `integer` |  |
+| `shipmentReceived` | `integer` |  |
+| `shipmentShipped` | `integer` |  |
+| `status` | `ShippingPlanStatus` |  |
+| `toLocation` | `string` |  |
+| `type` | `TransferCard` |  |
+| `items` | `StockItemSearchModel[]` |  |
+| `shipments` | `ShipmentSearchModel[]` |  |
+| `placementOptionId` | `string` |  |
 
 ### `GetViewMetaDataResponse`
 
-| Property | Type |
-|---|---|
-| `prepOwners` | `Int32StringKeyValuePair[]` |
-| `labelOwners` | `Int32StringKeyValuePair[]` |
+| Property | Type | Description |
+|---|---|---|
+| `prepOwners` | `Int32StringKeyValuePair[]` |  |
+| `labelOwners` | `Int32StringKeyValuePair[]` |  |
 
 ### `ListDeliveryWindowOptionResponse`
 
-| Property | Type |
-|---|---|
-| `availabilityType` | `AvailabilityType` |
-| `deliveryWindowOptionId` | `string` |
-| `endDate` | `string` |
-| `startDate` | `string` |
-| `validUntil` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `availabilityType` | `AvailabilityType` |  |
+| `deliveryWindowOptionId` | `string` |  |
+| `endDate` | `string` |  |
+| `startDate` | `string` |  |
+| `validUntil` | `string` |  |
 
 ### `OperationModel`
 
-| Property | Type |
-|---|---|
-| `id` | `string` |
-| `entityId` | `integer` |
-| `status` | `OperationStatus` |
-| `type` | `OperationType` |
-| `createdDate` | `string` |
-| `problems` | `OperationProblemModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `id` | `string` |  |
+| `entityId` | `integer` |  |
+| `status` | `OperationStatus` |  |
+| `type` | `OperationType` |  |
+| `createdDate` | `string` |  |
+| `problems` | `OperationProblemModel[]` |  |
 
 ### `PackingOptionModel`
 
-| Property | Type |
-|---|---|
-| `packingOptionId` | `string` |
-| `expirationDate` | `string` |
-| `status` | `OptionStatus` |
-| `packingGroups` | `PackingGroupModel[]` |
-| `fees` | `IncentiveModel[]` |
-| `discounts` | `IncentiveModel[]` |
-| `shippingConfigurations` | `ShippingConfigurationModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `packingOptionId` | `string` |  |
+| `expirationDate` | `string` |  |
+| `status` | `OptionStatus` |  |
+| `packingGroups` | `PackingGroupModel[]` |  |
+| `fees` | `IncentiveModel[]` |  |
+| `discounts` | `IncentiveModel[]` |  |
+| `shippingConfigurations` | `ShippingConfigurationModel[]` |  |
 
 ### `PlacementOptionModel`
 
-| Property | Type |
-|---|---|
-| `placementOptionId` | `string` |
-| `expirationDate` | `string` |
-| `status` | `OptionStatus` |
-| `fees` | `IncentiveModel[]` |
-| `discounts` | `IncentiveModel[]` |
-| `shipments` | `ShipmentAmazonModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `placementOptionId` | `string` |  |
+| `expirationDate` | `string` |  |
+| `status` | `OptionStatus` |  |
+| `fees` | `IncentiveModel[]` |  |
+| `discounts` | `IncentiveModel[]` |  |
+| `shipments` | `ShipmentAmazonModel[]` |  |
 
 ### `ShipmentBoxItemModel`
 
-| Property | Type |
-|---|---|
-| `shipmentBoxItemId` | `integer` |
-| `shipmentId` | `integer` |
-| `packingGroupId` | `integer` |
-| `stockItemId` | `integer` |
-| `quantity` | `integer` |
-| `shipmentBoxId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentBoxItemId` | `integer` |  |
+| `shipmentId` | `integer` |  |
+| `packingGroupId` | `integer` |  |
+| `stockItemId` | `integer` |  |
+| `quantity` | `integer` |  |
+| `shipmentBoxId` | `integer` |  |
 
 ### `ShipmentBoxModel`
 
-| Property | Type |
-|---|---|
-| `shipmentBoxId` | `integer` |
-| `shipmentId` | `integer` |
-| `packingGroupId` | `integer` |
-| `name` | `string` |
-| `height` | `number` |
-| `length` | `number` |
-| `width` | `number` |
-| `shipmentMeasurementUnit` | `UnitOfMeasurement` |
-| `weight` | `number` |
-| `shipmentWeightUnit` | `UnitOfWeight` |
-| `quantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentBoxId` | `integer` |  |
+| `shipmentId` | `integer` |  |
+| `packingGroupId` | `integer` |  |
+| `name` | `string` |  |
+| `height` | `number` |  |
+| `length` | `number` |  |
+| `width` | `number` |  |
+| `shipmentMeasurementUnit` | `UnitOfMeasurement` |  |
+| `weight` | `number` |  |
+| `shipmentWeightUnit` | `UnitOfWeight` |  |
+| `quantity` | `integer` |  |
 
 ### `ShipmentItemPrepInstructionModel`
 
-| Property | Type |
-|---|---|
-| `shipmentItemId` | `integer` |
-| `barcodeInstruction` | `SkuPrepBarcodeInstruction` |
-| `prepGuidance` | `SkuPrepGuidance` |
-| `prepInstructionList` | `AmazonPrepInstructionItem[]` |
-| `feeAmountPerUnit` | `object` |
-| `totalFeeAmount` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `shipmentItemId` | `integer` |  |
+| `barcodeInstruction` | `SkuPrepBarcodeInstruction` |  |
+| `prepGuidance` | `SkuPrepGuidance` |  |
+| `prepInstructionList` | `AmazonPrepInstructionItem[]` |  |
+| `feeAmountPerUnit` | `object` |  |
+| `totalFeeAmount` | `object` |  |
 
 ### `ShipmentItemResponse`
 
-| Property | Type |
-|---|---|
-| `available` | `integer` |
-| `batches` | `ShipmentItemBatchResponse[]` |
-| `batchType` | `integer` |
-| `fbaAvailable` | `integer` |
-| `fbaStockLevel` | `integer` |
-| `fbaTotalStock` | `integer` |
-| `id` | `integer` |
-| `quantityToShip` | `integer` |
-| `receivedQty` | `integer` |
-| `asin` | `string` |
-| `sellerSku` | `string` |
-| `shipmentId` | `integer` |
-| `shippedQty` | `integer` |
-| `sku` | `string` |
-| `stockItemId` | `integer` |
-| `stockItemIdGuid` | `string` |
-| `thumbnailSource` | `string` |
-| `title` | `string` |
-| `labelOwner` | `LabelOwner` |
-| `prepInstructions` | `AmazonPrepInstructionItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `available` | `integer` |  |
+| `batches` | `ShipmentItemBatchResponse[]` |  |
+| `batchType` | `integer` |  |
+| `fbaAvailable` | `integer` |  |
+| `fbaStockLevel` | `integer` |  |
+| `fbaTotalStock` | `integer` |  |
+| `id` | `integer` |  |
+| `quantityToShip` | `integer` |  |
+| `receivedQty` | `integer` |  |
+| `asin` | `string` |  |
+| `sellerSku` | `string` |  |
+| `shipmentId` | `integer` |  |
+| `shippedQty` | `integer` |  |
+| `sku` | `string` |  |
+| `stockItemId` | `integer` |  |
+| `stockItemIdGuid` | `string` |  |
+| `thumbnailSource` | `string` |  |
+| `title` | `string` |  |
+| `labelOwner` | `LabelOwner` |  |
+| `prepInstructions` | `AmazonPrepInstructionItem[]` |  |
 
 ### `ShipmentModel`
 
-| Property | Type |
-|---|---|
-| `id` | `integer` |
-| `name` | `string` |
-| `shippingPlanId` | `integer` |
-| `amazonShipmentId` | `string` |
-| `warehouseAddress` | `string` |
-| `status` | `ShipmentStatus` |
-| `updateDate` | `string` |
-| `createDate` | `string` |
-| `items` | `ShipmentItemModel[]` |
-| `contactName` | `string` |
-| `contactEmail` | `string` |
-| `contactPhoneNumber` | `string` |
-| `readyToShipWindow` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `id` | `integer` |  |
+| `name` | `string` |  |
+| `shippingPlanId` | `integer` |  |
+| `amazonShipmentId` | `string` |  |
+| `warehouseAddress` | `string` |  |
+| `status` | `ShipmentStatus` |  |
+| `updateDate` | `string` |  |
+| `createDate` | `string` |  |
+| `items` | `ShipmentItemModel[]` |  |
+| `contactName` | `string` |  |
+| `contactEmail` | `string` |  |
+| `contactPhoneNumber` | `string` |  |
+| `readyToShipWindow` | `string` |  |
 
 ### `ShipmentResponse`
 
-| Property | Type |
-|---|---|
-| `createDate` | `string` |
-| `id` | `integer` |
-| `name` | `string` |
-| `amazonShipmentId` | `string` |
-| `shippingItems` | `ShipmentItemResponse[]` |
-| `shippingPlanId` | `integer` |
-| `status` | `string` |
-| `updateDate` | `string` |
-| `warehouseAddress` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `createDate` | `string` |  |
+| `id` | `integer` |  |
+| `name` | `string` |  |
+| `amazonShipmentId` | `string` |  |
+| `shippingItems` | `ShipmentItemResponse[]` |  |
+| `shippingPlanId` | `integer` |  |
+| `status` | `string` |  |
+| `updateDate` | `string` |  |
+| `warehouseAddress` | `string` |  |
 
 ### `StockItemBatchResponse`
 
-| Property | Type |
-|---|---|
-| `fkBinRackId` | `integer` |
-| `batchId` | `integer` |
-| `batchInventoryId` | `integer` |
-| `binRackType` | `BinRackResponse` |
-| `binRack` | `string` |
-| `expiresOn` | `string` |
-| `number` | `string` |
-| `prioritySequence` | `integer` |
-| `available` | `integer` |
-| `quantity` | `integer` |
-| `sellBy` | `string` |
-| `status` | `string` |
-| `stockItemIntId` | `integer` |
-| `stockItemId` | `string` |
-| `stockLocationId` | `string` |
-| `stockValue` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `fkBinRackId` | `integer` |  |
+| `batchId` | `integer` |  |
+| `batchInventoryId` | `integer` |  |
+| `binRackType` | `BinRackResponse` |  |
+| `binRack` | `string` |  |
+| `expiresOn` | `string` |  |
+| `number` | `string` |  |
+| `prioritySequence` | `integer` |  |
+| `available` | `integer` |  |
+| `quantity` | `integer` |  |
+| `sellBy` | `string` |  |
+| `status` | `string` |  |
+| `stockItemIntId` | `integer` |  |
+| `stockItemId` | `string` |  |
+| `stockLocationId` | `string` |  |
+| `stockValue` | `number` |  |
 
 ### `WarehouseTransferModel`
 
-| Property | Type |
-|---|---|
-| `createDate` | `string` |
-| `fromLocationId` | `string` |
-| `referenceNumber` | `string` |
-| `status` | `TransferStatus` |
-| `toLocationId` | `string` |
-| `transferId` | `integer` |
-| `transferType` | `TransferType` |
-| `updateDate` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `createDate` | `string` |  |
+| `fromLocationId` | `string` |  |
+| `referenceNumber` | `string` |  |
+| `status` | `TransferStatus` |  |
+| `toLocationId` | `string` |  |
+| `transferId` | `integer` |  |
+| `transferType` | `TransferType` |  |
+| `updateDate` | `string` |  |

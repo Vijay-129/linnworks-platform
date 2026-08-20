@@ -2,8 +2,8 @@
 
 # ReturnsRefunds (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/returnsrefunds.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/returnsrefunds.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -158,128 +158,128 @@ Delete a refund item Permissions Required: GlobalPermissions.OrderBook.ReturnsRe
 
 Gets the refundable amount of an order Permissions Required: GlobalPermissions.OrderBook.ReturnsRefundsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `fkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `fkOrderId` | query | `string` | False | unique order ID of the order |
 
 ### GET `/api/ReturnsRefunds/SearchReturnsRefundsPaged`
 
 Searches through returns/refunds history that meets the parameters' criteria Permissions Required: GlobalPermissions.OrderBook.ReturnsRefundsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `from` | query | `string` | False |
-| `to` | query | `string` | False |
-| `dateType` | query | `string` | False |
-| `searchField` | query | `string` | False |
-| `exactMatch` | query | `boolean` | False |
-| `searchTerm` | query | `string` | False |
-| `pageNum` | query | `integer` | False |
-| `numEntriesPerPage` | query | `integer` | False |
-| `historyType` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `from` | query | `string` | False | The lower end of the date range to search. Can be null if searching for 'all dates'. Maximum range is 3 months. |
+| `to` | query | `string` | False | The upper end of the date range to search. Can be null if searching for 'all dates'. Maximum range is 3 months. |
+| `dateType` | query | `string` | False | The search type (e.g. ALLDATES) |
+| `searchField` | query | `string` | False | The field to search by. Can be found by calling GetSearchTypes. |
+| `exactMatch` | query | `boolean` | False | Set to true if an exact match is required for the search data. |
+| `searchTerm` | query | `string` | False | The term which you are searching for. |
+| `pageNum` | query | `integer` | False | The page number of the request. |
+| `numEntriesPerPage` | query | `integer` | False | The number of entries required on a page. Maximum 200. |
+| `historyType` | query | `string` | False | Search type. Allow RETURNS or REFUNDS |
 
 ### GET `/api/ReturnsRefunds/CreateReturnsRefundsCSV`
 
 Creates a CSV file of the search result for download Permissions Required: GlobalPermissions.OrderBook.ReturnsRefundsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `from` | query | `string` | False |
-| `to` | query | `string` | False |
-| `dateType` | query | `string` | False |
-| `searchField` | query | `string` | False |
-| `exactMatch` | query | `boolean` | False |
-| `searchTerm` | query | `string` | False |
-| `sortColumn` | query | `string` | False |
-| `sortDirection` | query | `boolean` | False |
-| `historyType` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `from` | query | `string` | False | The lower end of the date range to search. Can be null if searching for 'all dates'. Maximum range is 3 months. |
+| `to` | query | `string` | False | The upper end of the date range to search. Can be null if searching for 'all dates'. Maximum range is 3 months. |
+| `dateType` | query | `string` | False | The search type (e.g. ALLDATES) |
+| `searchField` | query | `string` | False | The field to search by. Can be found by calling GetSearchTypes. |
+| `exactMatch` | query | `boolean` | False | Set to true if an exact match is required for the search data. |
+| `searchTerm` | query | `string` | False | The term which you are searching for. |
+| `sortColumn` | query | `string` | False | The column to sort by |
+| `sortDirection` | query | `boolean` | False | The sort direction (true = ascending, false = descending). |
+| `historyType` | query | `string` | False | Search type. Allow RETURNS or REFUNDS |
 
 ### GET `/api/ReturnsRefunds/GetSearchTypes`
 
 Gets a list of valid search types. These are needed to search processed orders. Permissions Required: GlobalPermissions.OrderBook.ReturnsRefundsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `historyType` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `historyType` | query | `string` | False | Search type. Allow RETURNS or REFUNDS |
 
 ## Models
 
 ### `AcknowledgeRMAErrorsResponse`
 
-| Property | Type |
-|---|---|
-| `EntireRMAHeaderSetToErrorAcked` | `boolean` |
-| `RMAHeaderId` | `integer` |
-| `Items` | `VerifiedRMAItem[]` |
-| `Errors` | `string[]` |
-| `Info` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `EntireRMAHeaderSetToErrorAcked` | `boolean` | Determines whether the entire RMA header was set to "ERROR_ACKED" state as a result of this call (will be found in the History tab) |
+| `RMAHeaderId` | `integer` |  |
+| `Items` | `VerifiedRMAItem[]` |  |
+| `Errors` | `string[]` |  |
+| `Info` | `string[]` |  |
 
 ### `AcknowledgeRefundErrorsResponse`
 
-| Property | Type |
-|---|---|
-| `EntireRefundHeaderSetToErrorAcked` | `boolean` |
-| `RefundHeaderId` | `integer` |
-| `RefundReference` | `string` |
-| `Status` | `PostSaleStatus` |
-| `CannotRefundReason` | `string` |
-| `Errors` | `string[]` |
-| `RefundLines` | `VerifiedRefund[]` |
+| Property | Type | Description |
+|---|---|---|
+| `EntireRefundHeaderSetToErrorAcked` | `boolean` | Determines whether the entire refund header was set to "ERROR_ACKED" state as a result of this call (will be found in the History tab) |
+| `RefundHeaderId` | `integer` |  |
+| `RefundReference` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `CannotRefundReason` | `string` |  |
+| `Errors` | `string[]` |  |
+| `RefundLines` | `VerifiedRefund[]` |  |
 
 ### `ActionRMABookingResponse`
 
-| Property | Type |
-|---|---|
-| `RefundHeaderId` | `integer` |
-| `Status` | `PostSaleStatus` |
-| `SuccessfullyActioned` | `boolean` |
-| `RMAHeaderId` | `integer` |
-| `Items` | `VerifiedRMAItem[]` |
-| `Errors` | `string[]` |
-| `Info` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | If a refund was created as part of accepting the return/exchange booking, this identifies the created header |
+| `Status` | `PostSaleStatus` | For the header that was actioned, returns its status |
+| `SuccessfullyActioned` | `boolean` | Determines whether the header was marked as actioned in the database |
+| `RMAHeaderId` | `integer` |  |
+| `Items` | `VerifiedRMAItem[]` |  |
+| `Errors` | `string[]` |  |
+| `Info` | `string[]` |  |
 
 ### `ActionRefundResponse`
 
-| Property | Type |
-|---|---|
-| `SuccessfullyActioned` | `boolean` |
-| `RefundHeaderId` | `integer` |
-| `RefundReference` | `string` |
-| `Status` | `PostSaleStatus` |
-| `CannotRefundReason` | `string` |
-| `Errors` | `string[]` |
-| `RefundLines` | `VerifiedRefund[]` |
+| Property | Type | Description |
+|---|---|---|
+| `SuccessfullyActioned` | `boolean` | Determines whether the header was marked as actioned in the database |
+| `RefundHeaderId` | `integer` |  |
+| `RefundReference` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `CannotRefundReason` | `string` |  |
+| `Errors` | `string[]` |  |
+| `RefundLines` | `VerifiedRefund[]` |  |
 
 ### `BookedReturnsExchangeOrder`
 
-| Property | Type |
-|---|---|
-| `pkOrderID` | `string` |
-| `nOrderId` | `integer` |
-| `ReferenceNum` | `string` |
-| `SecondaryReference` | `string` |
-| `cFullName` | `string` |
-| `ReturnDate` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderID` | `string` | Order ID (unique order identifier) |
+| `nOrderId` | `integer` | Linnworks order number |
+| `ReferenceNum` | `string` | Order reference number |
+| `SecondaryReference` | `string` | Order seconary reference (Comes from the channel) |
+| `cFullName` | `string` | Customer full name |
+| `ReturnDate` | `string` | Return date time |
 
 ### `CreateRMABookingResponse`
 
-| Property | Type |
-|---|---|
-| `RMAHeaderId` | `integer` |
-| `Items` | `VerifiedRMAItem[]` |
-| `Errors` | `string[]` |
-| `Info` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `RMAHeaderId` | `integer` |  |
+| `Items` | `VerifiedRMAItem[]` |  |
+| `Errors` | `string[]` |  |
+| `Info` | `string[]` |  |
 
 ### `CreateRefundResponse`
 
-| Property | Type |
-|---|---|
-| `RefundHeaderId` | `integer` |
-| `RefundReference` | `string` |
-| `Status` | `PostSaleStatus` |
-| `CannotRefundReason` | `string` |
-| `Errors` | `string[]` |
-| `RefundLines` | `VerifiedRefund[]` |
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` |  |
+| `RefundReference` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `CannotRefundReason` | `string` |  |
+| `Errors` | `string[]` |  |
+| `RefundLines` | `VerifiedRefund[]` |  |
 
 ### `DeleteRMAResponse`
 
@@ -287,289 +287,289 @@ Gets a list of valid search types. These are needed to search processed orders. 
 
 ### `GenericPagedResult_ReturnsRefundsWeb`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `ReturnsRefundsWeb[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `ReturnsRefundsWeb[]` |  |
 
 ### `GetActionableRMAHeadersResponse`
 
-| Property | Type |
-|---|---|
-| `Page` | `integer` |
-| `TotalHeaders` | `integer` |
-| `HeadersPerPage` | `integer` |
-| `RMAHeaders` | `OrderRMAHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number returned |
+| `TotalHeaders` | `integer` | A count of the total number of RMA headers matching the filter set by the request |
+| `HeadersPerPage` | `integer` | A count of the number of RMA headers returned per page |
+| `RMAHeaders` | `OrderRMAHeader[]` | A collection of RMA headers matching the filter set by the request |
 
 ### `GetActionableRefundHeadersResponse`
 
-| Property | Type |
-|---|---|
-| `Page` | `integer` |
-| `TotalHeaders` | `integer` |
-| `HeadersPerPage` | `integer` |
-| `RefundHeaders` | `OrderRefundHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number returned |
+| `TotalHeaders` | `integer` | A count of the total number of refund headers matching the filter set by the request |
+| `HeadersPerPage` | `integer` | A count of the number of refund headers returned per page |
+| `RefundHeaders` | `OrderRefundHeader[]` | A collection of refund headers matching the filter set by the request |
 
 ### `GetProcessedOrAckedErrorRMAHeadersResponse`
 
-| Property | Type |
-|---|---|
-| `Page` | `integer` |
-| `TotalHeaders` | `integer` |
-| `HeadersPerPage` | `integer` |
-| `RMAHeaders` | `OrderRMAHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number returned |
+| `TotalHeaders` | `integer` | A count of the total number of RMA headers matching the filter set by the request |
+| `HeadersPerPage` | `integer` | A count of the number of RMA headers returned per page |
+| `RMAHeaders` | `OrderRMAHeader[]` | A collection of RMA headers matching the filter set by the request |
 
 ### `GetProcessedOrAckedErrorRefundHeadersResponse`
 
-| Property | Type |
-|---|---|
-| `Page` | `integer` |
-| `TotalHeaders` | `integer` |
-| `HeadersPerPage` | `integer` |
-| `RefundHeaders` | `OrderRefundHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number returned |
+| `TotalHeaders` | `integer` | A count of the total number of refund headers matching the filter set by the request |
+| `HeadersPerPage` | `integer` | A count of the number of refund headers returned per page |
+| `RefundHeaders` | `OrderRefundHeader[]` | A collection of refund headers matching the filter set by the request |
 
 ### `GetRMAHeadersByOrderIdResponse`
 
-| Property | Type |
-|---|---|
-| `RMAHeaders` | `OrderRMAHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `RMAHeaders` | `OrderRMAHeader[]` |  |
 
 ### `GetRefundHeadersByOrderIdResponse`
 
-| Property | Type |
-|---|---|
-| `RefundHeaders` | `OrderRefundHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaders` | `OrderRefundHeader[]` |  |
 
 ### `GetRefundLinesByHeaderIdResponse`
 
-| Property | Type |
-|---|---|
-| `RefundHeaderId` | `integer` |
-| `RefundLines` | `VerifiedRefund[]` |
-| `RefundOptions` | `RefundOptions` |
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | The unique identifier for the loaded refund |
+| `RefundLines` | `VerifiedRefund[]` | A collection of all refunds associated with the loaded header |
+| `RefundOptions` | `RefundOptions` | Channel-specific information about refund requirements, e.g. accepted refund reasons |
 
 ### `GetRefundOptionsResponse`
 
-| Property | Type |
-|---|---|
-| `RefundOptions` | `RefundOptions` |
+| Property | Type | Description |
+|---|---|---|
+| `RefundOptions` | `RefundOptions` |  |
 
 ### `GetReturnOptionsResponse`
 
-| Property | Type |
-|---|---|
-| `ReturnOptions` | `ReturnOptions` |
+| Property | Type | Description |
+|---|---|---|
+| `ReturnOptions` | `ReturnOptions` |  |
 
 ### `RefundOrder`
 
-| Property | Type |
-|---|---|
-| `pkOrderID` | `string` |
-| `nOrderId` | `integer` |
-| `cFullName` | `string` |
-| `Source` | `string` |
-| `SubSource` | `string` |
-| `Amount` | `number` |
-| `IssueRefundUrl` | `string` |
-| `cCurrency` | `string` |
-| `ReferenceNum` | `string` |
-| `SecondaryReference` | `string` |
-| `RefundReference` | `string` |
-| `RefundDate` | `string` |
-| `SubTotal` | `number` |
-| `Total` | `number` |
-| `TaxRate` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderID` | `string` | Order ID (unique order identifier) |
+| `nOrderId` | `integer` | Linnworks order ID |
+| `cFullName` | `string` | Customer name |
+| `Source` | `string` | ChannelName/Source (e.g. AMAZON) |
+| `SubSource` | `string` |  |
+| `Amount` | `number` | Refund amount |
+| `IssueRefundUrl` | `string` | Refund URL |
+| `cCurrency` | `string` | Refund currency |
+| `ReferenceNum` | `string` | Order reference number |
+| `SecondaryReference` | `string` | Order secondary reference number |
+| `RefundReference` | `string` | Refund reference number |
+| `RefundDate` | `string` | Date when refund were made |
+| `SubTotal` | `number` |  |
+| `Total` | `number` |  |
+| `TaxRate` | `number` |  |
 
 ### `ReturnsRefunds_AcknowledgeRMAErrorsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AcknowledgeRMAErrorsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AcknowledgeRMAErrorsRequest` |  |
 
 ### `ReturnsRefunds_AcknowledgeRefundErrorsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AcknowledgeRefundErrorsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AcknowledgeRefundErrorsRequest` |  |
 
 ### `ReturnsRefunds_ActionBookedOrderRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `bookedItems` | `BookedReturnsExchangeItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `bookedItems` | `BookedReturnsExchangeItem[]` |  |
 
 ### `ReturnsRefunds_ActionRMABookingRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `ActionRMABookingRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `ActionRMABookingRequest` |  |
 
 ### `ReturnsRefunds_ActionRefundRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `ActionRefundRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `ActionRefundRequest` |  |
 
 ### `ReturnsRefunds_CreateRMABookingRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CreateRMABookingRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CreateRMABookingRequest` |  |
 
 ### `ReturnsRefunds_CreateRefundRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CreateRefundRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CreateRefundRequest` |  |
 
 ### `ReturnsRefunds_DeleteBookedItemRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `pkReturnId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `pkReturnId` | `integer` |  |
 
 ### `ReturnsRefunds_DeleteBookedOrderRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
 
 ### `ReturnsRefunds_DeletePendingRefundItemRequest`
 
-| Property | Type |
-|---|---|
-| `fkOrderId` | `string` |
-| `pkRefundRowId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fkOrderId` | `string` |  |
+| `pkRefundRowId` | `string` |  |
 
 ### `ReturnsRefunds_DeleteRMARequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteRMARequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteRMARequest` |  |
 
 ### `ReturnsRefunds_DeleteRefundRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteRefundRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteRefundRequest` |  |
 
 ### `ReturnsRefunds_EditBookedItemInfoRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `bookedReturnsExchangeItem` | `BookedReturnsExchangeItem` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `bookedReturnsExchangeItem` | `BookedReturnsExchangeItem` |  |
 
 ### `ReturnsRefunds_GetActionableRMAHeadersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetActionableRMAHeadersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetActionableRMAHeadersRequest` |  |
 
 ### `ReturnsRefunds_GetActionableRefundHeadersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetActionableRefundHeadersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetActionableRefundHeadersRequest` |  |
 
 ### `ReturnsRefunds_GetProcessedOrAckedErrorRMAHeadersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetProcessedOrAckedErrorRMAHeadersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetProcessedOrAckedErrorRMAHeadersRequest` |  |
 
 ### `ReturnsRefunds_GetProcessedOrAckedErrorRefundHeadersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetProcessedOrAckedErrorRefundHeadersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetProcessedOrAckedErrorRefundHeadersRequest` |  |
 
 ### `ReturnsRefunds_GetRMAHeadersByOrderIdRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetRMAHeadersByOrderIdRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetRMAHeadersByOrderIdRequest` |  |
 
 ### `ReturnsRefunds_GetRefundHeadersByOrderIdRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetRefundHeadersByOrderIdRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetRefundHeadersByOrderIdRequest` |  |
 
 ### `ReturnsRefunds_GetRefundLinesByHeaderIdRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetRefundLinesByHeaderIdRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetRefundLinesByHeaderIdRequest` |  |
 
 ### `ReturnsRefunds_GetRefundOptionsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetRefundOptionsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetRefundOptionsRequest` |  |
 
 ### `ReturnsRefunds_GetReturnOptionsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetReturnOptionsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetReturnOptionsRequest` |  |
 
 ### `ReturnsRefunds_RefundOrderRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `refundReference` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `refundReference` | `string` |  |
 
 ### `ReturnsRefunds_UpdateRMABookingRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdateRMABookingRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdateRMABookingRequest` |  |
 
 ### `ReturnsRefunds_UpdateRefundRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdateRefundRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdateRefundRequest` |  |
 
 ### `SearchField`
 
-| Property | Type |
-|---|---|
-| `Field` | `string` |
-| `Name` | `string` |
-| `AllowForAllDates` | `boolean` |
-| `ExactSearchOptional` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `Field` | `string` | Search field |
+| `Name` | `string` | Name |
+| `AllowForAllDates` | `boolean` | If search for all dates |
+| `ExactSearchOptional` | `boolean` | If search is exact |
 
 ### `UpdateRMABookingResponse`
 
-| Property | Type |
-|---|---|
-| `RMAHeaderId` | `integer` |
-| `Items` | `VerifiedRMAItem[]` |
-| `Errors` | `string[]` |
-| `Info` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `RMAHeaderId` | `integer` |  |
+| `Items` | `VerifiedRMAItem[]` |  |
+| `Errors` | `string[]` |  |
+| `Info` | `string[]` |  |
 
 ### `UpdateRefundResponse`
 
-| Property | Type |
-|---|---|
-| `RefundHeaderId` | `integer` |
-| `RefundReference` | `string` |
-| `Status` | `PostSaleStatus` |
-| `CannotRefundReason` | `string` |
-| `Errors` | `string[]` |
-| `RefundLines` | `VerifiedRefund[]` |
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` |  |
+| `RefundReference` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `CannotRefundReason` | `string` |  |
+| `Errors` | `string[]` |  |
+| `RefundLines` | `VerifiedRefund[]` |  |
 
 ### `WarehouseLocation`
 
-| Property | Type |
-|---|---|
-| `LocationName` | `string` |
-| `pkStockLocationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationName` | `string` | Location name |
+| `pkStockLocationId` | `string` | Stock location ID |

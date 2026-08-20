@@ -2,8 +2,8 @@
 
 # ProcessedOrders (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/processedorders.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/processedorders.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -70,26 +70,26 @@ Use this call to check if it is possible to do an automated full-order refund.
 
 Use this call to get information about manual/automated refunds (which kinds of refunds are possible) for a given order.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The id of the order |
 
 ### GET `/api/ProcessedOrders/GetRefundableServiceItems`
 
 Use this call to get a list of service items which can be refunded.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The id of the order which the service items belong to. |
 
 ### GET `/api/ProcessedOrders/GetTotalRefunds`
 
 Use this call to retrieve the total value of refunds against an order.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
-| `includeBookings` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The id of the order |
+| `includeBookings` | query | `boolean` | False | If true, pending refunds against return bookings and exchange bookings will be included. (Optional, default is false.) |
 
 ### POST `/api/ProcessedOrders/IsRefundValid`
 
@@ -99,50 +99,50 @@ Use this call to determine if the refunds in a given return set are valid.
 
 Use this call to determine if validation of refunds or returns/exchanges with refund components is required for a given order.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id of the order which requires validation |
 
 ### GET `/api/ProcessedOrders/GetChannelRefundReasons`
 
 Use this call to get a list of valid channel refund reasons for a given order. These are needed for channel refunds.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id to get reasons for |
 
 ### GET `/api/ProcessedOrders/GetReturnsExchanges`
 
 Use this call to get a basic list of returns, exchanges and resends for an order.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id to get the returns for |
 
 ### GET `/api/ProcessedOrders/GetReturnItemsInfo`
 
 Use this call to get a list of all items on an order, including return quantities and resend quantities. The information can be used to calculate how many items has already been returned.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id to get the returns for |
 
 ### GET `/api/ProcessedOrders/GetReturnOrderInfo`
 
 Use this call to get basic information about a processed order (e.g. source, subsource, address) as seen on the Returns/Refunds screens.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
-| `includeRefundLink` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The id of the order. |
+| `includeRefundLink` | query | `boolean` | False | Is a refund link required (not available for all channels). |
 
 ### GET `/api/ProcessedOrders/GetOrderInfo`
 
 Use this call to retrieve detailed information about a processed order (header level).
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The id of the order. |
 
 ### POST `/api/ProcessedOrders/GetOrderTrackingURLs`
 
@@ -176,33 +176,33 @@ Use this call to delete an existing return category.
 
 Use this call to get a list of related orders.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id |
 
 ### GET `/api/ProcessedOrders/GetPackageSplit`
 
 Use this call to get split packaging information for an order
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id |
 
 ### GET `/api/ProcessedOrders/GetProcessedAuditTrail`
 
 Use this call to get an order's audit trail information
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id |
 
 ### GET `/api/ProcessedOrders/GetProcessedOrderExtendedProperties`
 
 Use this call to retrieve a list of order-level extended properties.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id |
 
 ### GET `/api/ProcessedOrders/GetReturnCategories`
 
@@ -212,9 +212,9 @@ Use this call to retrieve a list of return categories. Used for refunds, resends
 
 Use this call to get a list of order notes for a given order
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | The order id |
 
 ### POST `/api/ProcessedOrders/AddOrderNote`
 
@@ -240,480 +240,480 @@ Creates a resend
 
 Gets all refund order items for an order
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | Primary key for order |
 
 ### GET `/api/ProcessedOrders/CheckOrderFullyReturned`
 
 Checks if order was fully returned
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | Primary key for an order |
 
 ## Models
 
 ### `AuditEntry`
 
-| Property | Type |
-|---|---|
-| `sid_history` | `integer` |
-| `fkOrderId` | `string` |
-| `HistoryNote` | `string` |
-| `fkOrderHistoryTypeId` | `string` |
-| `DateStamp` | `string` |
-| `Tag` | `string` |
-| `UpdatedBy` | `string` |
-| `TypeDescription` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `sid_history` | `integer` | Audit record ID |
+| `fkOrderId` | `string` | Order ID (pkOrdeID) |
+| `HistoryNote` | `string` | Note text |
+| `fkOrderHistoryTypeId` | `string` | Record type ID |
+| `DateStamp` | `string` | Record time and date |
+| `Tag` | `string` | Audit record tag |
+| `UpdatedBy` | `string` | User who made audited change |
+| `TypeDescription` | `string` | Audit trail record type |
 
 ### `ChannelRefundReason`
 
-| Property | Type |
-|---|---|
-| `Tag` | `string` |
-| `DisplayName` | `string` |
-| `SubReasons` | `ChannelRefundSubReason[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` | Refund reason tag |
+| `DisplayName` | `string` | Order item record row ID |
+| `SubReasons` | `ChannelRefundSubReason[]` | List of refund reasons |
 
 ### `DownloadOrdersToCSVResponse`
 
-| Property | Type |
-|---|---|
-| `Url` | `string` |
-| `DownloadProgress` | `number` |
-| `UploadProgress` | `number` |
-| `Id` | `string` |
-| `CreationDate` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Url` | `string` |  |
+| `DownloadProgress` | `number` |  |
+| `UploadProgress` | `number` |  |
+| `Id` | `string` |  |
+| `CreationDate` | `string` |  |
 
 ### `ExistingRefundTotal`
 
-| Property | Type |
-|---|---|
-| `Amount` | `number` |
-| `TotalCharge` | `number` |
-| `Refundable` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `Amount` | `number` | Amount refunded |
+| `TotalCharge` | `number` | Total order charge |
+| `Refundable` | `number` | Refundable amount |
 
 ### `GenericPagedResult_ProcessedOrderWeb`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `ProcessedOrderWeb[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `ProcessedOrderWeb[]` |  |
 
 ### `GetOrderTrackingURLsRequest`
 
-| Property | Type |
-|---|---|
-| `Items` | `TrackingURLRequestItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `TrackingURLRequestItem[]` |  |
 
 ### `GetOrderTrackingURLsResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `TrackingURLResponseItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `TrackingURLResponseItem[]` |  |
 
 ### `OrderExtendedProperty`
 
-| Property | Type |
-|---|---|
-| `rowid` | `string` |
-| `PropertyName` | `string` |
-| `PropertyValue` | `string` |
-| `PropertyType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `rowid` | `string` | Extended property record row ID |
+| `PropertyName` | `string` | Property name |
+| `PropertyValue` | `string` | Property value |
+| `PropertyType` | `string` | Property type |
 
 ### `OrderItemReturnInfo`
 
-| Property | Type |
-|---|---|
-| `ChildItems` | `OrderItemReturnInfo[]` |
-| `Batches` | `OrderItemReturnInfoBatched[]` |
-| `OrderId` | `string` |
-| `fkOrderItemRowId` | `string` |
-| `ParentRowId` | `string` |
-| `ReturnableQty` | `integer` |
-| `OrderQty` | `integer` |
-| `ReturnedQty` | `integer` |
-| `SKU` | `string` |
-| `ItemTitle` | `string` |
-| `UnitValue` | `number` |
-| `TaxRate` | `number` |
-| `TaxCostInclusive` | `boolean` |
-| `Currency` | `string` |
-| `IsCompositeParent` | `boolean` |
-| `IsPartialCompositeReturn` | `boolean` |
-| `ParentRatio` | `integer` |
-| `pkStockItemId` | `string` |
-| `ResentQty` | `integer` |
-| `fkRefundRowId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ChildItems` | `OrderItemReturnInfo[]` | List of child items (populated if the return is a composite item) |
+| `Batches` | `OrderItemReturnInfoBatched[]` | Order Item Batches |
+| `OrderId` | `string` |  |
+| `fkOrderItemRowId` | `string` |  |
+| `ParentRowId` | `string` |  |
+| `ReturnableQty` | `integer` |  |
+| `OrderQty` | `integer` |  |
+| `ReturnedQty` | `integer` |  |
+| `SKU` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `UnitValue` | `number` |  |
+| `TaxRate` | `number` |  |
+| `TaxCostInclusive` | `boolean` |  |
+| `Currency` | `string` |  |
+| `IsCompositeParent` | `boolean` |  |
+| `IsPartialCompositeReturn` | `boolean` |  |
+| `ParentRatio` | `integer` |  |
+| `pkStockItemId` | `string` |  |
+| `ResentQty` | `integer` |  |
+| `fkRefundRowId` | `string` |  |
 
 ### `OrderReturnCategory`
 
-| Property | Type |
-|---|---|
-| `pkItemId` | `integer` |
-| `CategoryName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkItemId` | `integer` | Stock item ID |
+| `CategoryName` | `string` | Category name |
 
 ### `ProcessedOrderNote`
 
-| Property | Type |
-|---|---|
-| `pkOrderNoteId` | `string` |
-| `fkOrderId` | `string` |
-| `Note` | `string` |
-| `NoteEntryDate` | `string` |
-| `NoteUserName` | `string` |
-| `Internal` | `boolean` |
-| `NoteTypeId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderNoteId` | `string` |  |
+| `fkOrderId` | `string` |  |
+| `Note` | `string` |  |
+| `NoteEntryDate` | `string` |  |
+| `NoteUserName` | `string` |  |
+| `Internal` | `boolean` |  |
+| `NoteTypeId` | `integer` |  |
 
 ### `ProcessedOrderRelation`
 
-| Property | Type |
-|---|---|
-| `ParentOrderPkOrderId` | `string` |
-| `ChildOrderPkOrderId` | `string` |
-| `ParentOrderId` | `integer` |
-| `ChildOrderId` | `integer` |
-| `RelationType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ParentOrderPkOrderId` | `string` | Parent order ID |
+| `ChildOrderPkOrderId` | `string` | Child order ID |
+| `ParentOrderId` | `integer` | Parent order number |
+| `ChildOrderId` | `integer` | Child order number |
+| `RelationType` | `string` | Relation type |
 
 ### `ProcessedOrderWeb`
 
-| Property | Type |
-|---|---|
-| `pkOrderID` | `string` |
-| `cShippingAddress` | `string` |
-| `dReceivedDate` | `string` |
-| `dProcessedOn` | `string` |
-| `timeDiff` | `number` |
-| `fPostageCost` | `number` |
-| `fTotalCharge` | `number` |
-| `PostageCostExTax` | `number` |
-| `Subtotal` | `number` |
-| `fTax` | `number` |
-| `TotalDiscount` | `number` |
-| `ProfitMargin` | `number` |
-| `CountryTaxRate` | `number` |
-| `nOrderId` | `integer` |
-| `nStatus` | `integer` |
-| `cCurrency` | `string` |
-| `PostalTrackingNumber` | `string` |
-| `cCountry` | `string` |
-| `Source` | `string` |
-| `PostalServiceName` | `string` |
-| `PostalServiceCode` | `string` |
-| `Vendor` | `string` |
-| `BillingEmailAddress` | `string` |
-| `ReferenceNum` | `string` |
-| `SecondaryReference` | `string` |
-| `ExternalReference` | `string` |
-| `Address1` | `string` |
-| `Address2` | `string` |
-| `Address3` | `string` |
-| `Town` | `string` |
-| `Region` | `string` |
-| `BuyerPhoneNumber` | `string` |
-| `Company` | `string` |
-| `SubSource` | `string` |
-| `ChannelBuyerName` | `string` |
-| `AccountName` | `string` |
-| `cFullName` | `string` |
-| `cEmailAddress` | `string` |
-| `cPostCode` | `string` |
-| `dPaidOn` | `string` |
-| `dCancelledOn` | `string` |
-| `PackageCategory` | `string` |
-| `PackageTitle` | `string` |
-| `ItemWeight` | `number` |
-| `TotalWeight` | `number` |
-| `FolderCollection` | `string` |
-| `cBillingAddress` | `string` |
-| `BillingName` | `string` |
-| `BillingCompany` | `string` |
-| `BillingAddress1` | `string` |
-| `BillingAddress2` | `string` |
-| `BillingAddress3` | `string` |
-| `BillingTown` | `string` |
-| `BillingRegion` | `string` |
-| `BillingPostCode` | `string` |
-| `BillingCountryName` | `string` |
-| `BillingPhoneNumber` | `string` |
-| `HoldOrCancel` | `boolean` |
-| `IsResend` | `boolean` |
-| `IsExchange` | `boolean` |
-| `TaxId` | `string` |
-| `FulfilmentLocationName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderID` | `string` | Order ID |
+| `cShippingAddress` | `string` | Customer's shipping address |
+| `dReceivedDate` | `string` | Date when order was received on a channel |
+| `dProcessedOn` | `string` | Date when order was processed |
+| `timeDiff` | `number` | Days elapsed between order received and order processed |
+| `fPostageCost` | `number` | Order postage cost |
+| `fTotalCharge` | `number` | Order total charge |
+| `PostageCostExTax` | `number` | Postage cost excluding tax |
+| `Subtotal` | `number` | Order subtotal |
+| `fTax` | `number` | Order tax |
+| `TotalDiscount` | `number` | Total discount |
+| `ProfitMargin` | `number` | Profit margin |
+| `CountryTaxRate` | `number` | Country specific tax rate |
+| `nOrderId` | `integer` | Linnworks order ID |
+| `nStatus` | `integer` | Order status |
+| `cCurrency` | `string` | Order currency |
+| `PostalTrackingNumber` | `string` | Postal tracking number |
+| `cCountry` | `string` | Country |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `PostalServiceName` | `string` | Postal service name (e.g. Next day delivery) |
+| `PostalServiceCode` | `string` | Postal service code |
+| `Vendor` | `string` | Courier name (e.g. DPD) |
+| `BillingEmailAddress` | `string` |  |
+| `ReferenceNum` | `string` | Order reference number |
+| `SecondaryReference` | `string` | An additional reference number for the order |
+| `ExternalReference` | `string` | This is an additional reference number from the sales channel, typically used by eBay |
+| `Address1` | `string` | Order first line of address |
+| `Address2` | `string` | Order second line of address |
+| `Address3` | `string` | Order third line of address |
+| `Town` | `string` | Town |
+| `Region` | `string` | Region, county, area |
+| `BuyerPhoneNumber` | `string` | Buyer phone number |
+| `Company` | `string` | Company |
+| `SubSource` | `string` | Order subsource (e.g. EBAY1) |
+| `ChannelBuyerName` | `string` | Channel specific name used to identify the buyer, such as a username, normally used for eBay |
+| `AccountName` | `string` | Customer channel account name |
+| `cFullName` | `string` | Customer full name |
+| `cEmailAddress` | `string` | Customer email address |
+| `cPostCode` | `string` | Post Code |
+| `dPaidOn` | `string` | When order was marked as PAID |
+| `dCancelledOn` | `string` | When order was cancelled |
+| `PackageCategory` | `string` | Package category |
+| `PackageTitle` | `string` | Package name |
+| `ItemWeight` | `number` | Items weight |
+| `TotalWeight` | `number` | Total order weight |
+| `FolderCollection` | `string` | Folder name of an order |
+| `cBillingAddress` | `string` | Customer billing address |
+| `BillingName` | `string` | Customer billing name |
+| `BillingCompany` | `string` | Customer billing company |
+| `BillingAddress1` | `string` | Billing address line one |
+| `BillingAddress2` | `string` | Billing address line two |
+| `BillingAddress3` | `string` | Billing address line three |
+| `BillingTown` | `string` | Billing town |
+| `BillingRegion` | `string` | Billing region, area, county |
+| `BillingPostCode` | `string` | Billing postcode |
+| `BillingCountryName` | `string` | Billing country |
+| `BillingPhoneNumber` | `string` | Billing phone number |
+| `HoldOrCancel` | `boolean` | If order on hold or cancelled. |
+| `IsResend` | `boolean` | If order was created from a resend |
+| `IsExchange` | `boolean` | If order was created from an exchange |
+| `TaxId` | `string` | Order tax id |
+| `FulfilmentLocationName` | `string` | Order fulfilment location |
 
 ### `ProcessedOrders_AddOrderNoteRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderID` | `string` |
-| `noteText` | `string` |
-| `isInternal` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderID` | `string` |  |
+| `noteText` | `string` |  |
+| `isInternal` | `boolean` |  |
 
 ### `ProcessedOrders_AddReturnCategoryRequest`
 
-| Property | Type |
-|---|---|
-| `categoryName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `categoryName` | `string` |  |
 
 ### `ProcessedOrders_ChangeOrderNoteRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderNoteId` | `string` |
-| `noteText` | `string` |
-| `isInternal` | `boolean` |
-| `noteTypeId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderNoteId` | `string` |  |
+| `noteText` | `string` |  |
+| `isInternal` | `boolean` |  |
+| `noteTypeId` | `integer` |  |
 
 ### `ProcessedOrders_CreateExchangeRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `exchangeItems` | `RowQty[]` |
-| `despatchLocation` | `string` |
-| `returnLocation` | `string` |
-| `channelReason` | `string` |
-| `channelSubReason` | `string` |
-| `category` | `string` |
-| `reason` | `string` |
-| `isBooking` | `boolean` |
-| `ignoredValidation` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `exchangeItems` | `RowQty[]` |  |
+| `despatchLocation` | `string` |  |
+| `returnLocation` | `string` |  |
+| `channelReason` | `string` |  |
+| `channelSubReason` | `string` |  |
+| `category` | `string` |  |
+| `reason` | `string` |  |
+| `isBooking` | `boolean` |  |
+| `ignoredValidation` | `boolean` |  |
 
 ### `ProcessedOrders_CreateFullResendRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `despatchLocation` | `string` |
-| `category` | `string` |
-| `reason` | `string` |
-| `additionalCost` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `despatchLocation` | `string` |  |
+| `category` | `string` |  |
+| `reason` | `string` |  |
+| `additionalCost` | `number` |  |
 
 ### `ProcessedOrders_CreateResendRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `resendItems` | `RowQty[]` |
-| `despatchLocation` | `string` |
-| `category` | `string` |
-| `reason` | `string` |
-| `additionalCost` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `resendItems` | `RowQty[]` |  |
+| `despatchLocation` | `string` |  |
+| `category` | `string` |  |
+| `reason` | `string` |  |
+| `additionalCost` | `number` |  |
 
 ### `ProcessedOrders_DeleteOrderNoteRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderNoteId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderNoteId` | `string` |  |
 
 ### `ProcessedOrders_DeleteReturnCategoryRequest`
 
-| Property | Type |
-|---|---|
-| `pkItemId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkItemId` | `integer` |  |
 
 ### `ProcessedOrders_DownloadOrdersToCSVRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DownloadOrdersToCSVRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DownloadOrdersToCSVRequest` |  |
 
 ### `ProcessedOrders_IsRefundValidRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `refundItems` | `RefundItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `refundItems` | `RefundItem[]` |  |
 
 ### `ProcessedOrders_MarkManualRefundsAsActionedRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
 
 ### `ProcessedOrders_RefundFreeTextRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `refundItems` | `RefundItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `refundItems` | `RefundItem[]` |  |
 
 ### `ProcessedOrders_RefundServicesRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `refundItems` | `RefundItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `refundItems` | `RefundItem[]` |  |
 
 ### `ProcessedOrders_RefundShippingRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
 
 ### `ProcessedOrders_RenameReturnCategoryRequest`
 
-| Property | Type |
-|---|---|
-| `pkItemId` | `integer` |
-| `newName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkItemId` | `integer` |  |
+| `newName` | `string` |  |
 
 ### `ProcessedOrders_SearchProcessedOrdersPagedRequest`
 
-| Property | Type |
-|---|---|
-| `from` | `string` |
-| `to` | `string` |
-| `dateType` | `string` |
-| `searchField` | `string` |
-| `exactMatch` | `boolean` |
-| `searchTerm` | `string` |
-| `pageNum` | `integer` |
-| `numEntriesPerPage` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `from` | `string` |  |
+| `to` | `string` |  |
+| `dateType` | `string` |  |
+| `searchField` | `string` |  |
+| `exactMatch` | `boolean` |  |
+| `searchTerm` | `string` |  |
+| `pageNum` | `integer` |  |
+| `numEntriesPerPage` | `integer` |  |
 
 ### `ProcessedOrders_SearchProcessedOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SearchProcessedOrdersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SearchProcessedOrdersRequest` |  |
 
 ### `ProcessedOrders_ValidateCompleteOrderRefundRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
 
 ### `RefundInfo`
 
-| Property | Type |
-|---|---|
-| `pkRefundRowId` | `string` |
-| `SKU` | `string` |
-| `ItemTitle` | `string` |
-| `IsItem` | `boolean` |
-| `IsService` | `boolean` |
-| `Amount` | `number` |
-| `Reason` | `string` |
-| `Actioned` | `boolean` |
-| `ActionDate` | `string` |
-| `ReturnReference` | `string` |
-| `Cost` | `number` |
-| `RefundStatus` | `string` |
-| `IgnoredValidation` | `boolean` |
-| `fkOrderItemRowId` | `string` |
-| `ShouldSerializeChannelReason` | `boolean` |
-| `ChannelReason` | `string` |
-| `ShouldSerializeChannelReasonSec` | `boolean` |
-| `ChannelReasonSec` | `string` |
-| `IsNew` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRefundRowId` | `string` | Refund record ID |
+| `SKU` | `string` | Product SKU |
+| `ItemTitle` | `string` | Product title |
+| `IsItem` | `boolean` | If its an item that is refunded |
+| `IsService` | `boolean` | If its a service that is refunded |
+| `Amount` | `number` | Refund amount |
+| `Reason` | `string` | Reason for a refund |
+| `Actioned` | `boolean` | If refund has been actioned |
+| `ActionDate` | `string` | When refund was actioned |
+| `ReturnReference` | `string` | return reference number |
+| `Cost` | `number` | Cost |
+| `RefundStatus` | `string` |  |
+| `IgnoredValidation` | `boolean` | Status of refund |
+| `fkOrderItemRowId` | `string` | Order item record ID |
+| `ShouldSerializeChannelReason` | `boolean` |  |
+| `ChannelReason` | `string` | Channel refund reason |
+| `ShouldSerializeChannelReasonSec` | `boolean` |  |
+| `ChannelReasonSec` | `string` | Secondary channel reason for a refund |
+| `IsNew` | `boolean` |  |
 
 ### `RefundScreenOptions`
 
-| Property | Type |
-|---|---|
-| `FreeTextOption` | `string` |
-| `CanRefundShipping` | `boolean` |
-| `OrderHasServiceItems` | `boolean` |
-| `IsShippingRefundAutomated` | `boolean` |
-| `IsServiceRefundAutomated` | `boolean` |
-| `SupportsAutomatedRefunds` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `FreeTextOption` | `string` | Information about channel refund functionality |
+| `CanRefundShipping` | `boolean` | If shipping can be refunded |
+| `OrderHasServiceItems` | `boolean` | If order got service items |
+| `IsShippingRefundAutomated` | `boolean` | If order shipping cost refund automated |
+| `IsServiceRefundAutomated` | `boolean` | AIf order service refund autoamted |
+| `SupportsAutomatedRefunds` | `boolean` | If automated refund is supported |
 
 ### `ReturnInfo`
 
-| Property | Type |
-|---|---|
-| `pkReturnId` | `integer` |
-| `RowType` | `string` |
-| `ReturnReference` | `string` |
-| `fkOrderId` | `string` |
-| `fkOrderItemRowId` | `string` |
-| `OrderItemBatchId` | `integer` |
-| `nOrderId` | `integer` |
-| `SKU` | `string` |
-| `ItemTitle` | `string` |
-| `BatchNumber` | `string` |
-| `Reason` | `string` |
-| `ChannelReason` | `string` |
-| `ChannelReasonSec` | `string` |
-| `Category` | `string` |
-| `ReturnQty` | `integer` |
-| `fkReturnLocationId` | `string` |
-| `Scrapped` | `boolean` |
-| `ScrapQty` | `integer` |
-| `LastState` | `string` |
-| `LastDate` | `string` |
-| `Completed` | `boolean` |
-| `fkNewOrderId` | `string` |
-| `fkNewOrderItemRowId` | `string` |
-| `fkNewStockItemId` | `string` |
-| `NewQty` | `integer` |
-| `NewOrderId` | `integer` |
-| `NewOrderCancelled` | `boolean` |
-| `NewSKU` | `string` |
-| `NewItemTitle` | `string` |
-| `NewOrderProcessedOn` | `string` |
-| `AdditionalCost` | `number` |
-| `fkRefundRowId` | `string` |
-| `RefundedAmount` | `number` |
-| `PendingRefund` | `number` |
-| `ReturnDate` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkReturnId` | `integer` | Return ID |
+| `RowType` | `string` | return type (e.g. EXCHANGE) |
+| `ReturnReference` | `string` | Return reference |
+| `fkOrderId` | `string` | Order ID |
+| `fkOrderItemRowId` | `string` | Order item record row ID |
+| `OrderItemBatchId` | `integer` | Order item batch id |
+| `nOrderId` | `integer` | Linnworks order number |
+| `SKU` | `string` | Product SKU |
+| `ItemTitle` | `string` | Product title |
+| `BatchNumber` | `string` | Batch number |
+| `Reason` | `string` | Return reason |
+| `ChannelReason` | `string` | Return reason set on a channel |
+| `ChannelReasonSec` | `string` | Secondary return reason on a channel |
+| `Category` | `string` | Category |
+| `ReturnQty` | `integer` | Returned quantity |
+| `fkReturnLocationId` | `string` | Return location ID |
+| `Scrapped` | `boolean` | If returned item was scrapped |
+| `ScrapQty` | `integer` | Scrapped quantity |
+| `LastState` | `string` | Last state |
+| `LastDate` | `string` | Last date |
+| `Completed` | `boolean` | If return is completed |
+| `fkNewOrderId` | `string` | New order ID for return |
+| `fkNewOrderItemRowId` | `string` | New order item record row ID |
+| `fkNewStockItemId` | `string` | New stock item ID |
+| `NewQty` | `integer` | New return quantity |
+| `NewOrderId` | `integer` | New order ID |
+| `NewOrderCancelled` | `boolean` | If new order were cancelled |
+| `NewSKU` | `string` | new product SKU |
+| `NewItemTitle` | `string` | New product title |
+| `NewOrderProcessedOn` | `string` | When new order was processed |
+| `AdditionalCost` | `number` | Additional costs involved |
+| `fkRefundRowId` | `string` | Refund record row ID |
+| `RefundedAmount` | `number` | Amount refunded |
+| `PendingRefund` | `number` | Refund pending |
+| `ReturnDate` | `string` | Return date |
 
 ### `ReturnOrderHeader`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
-| `nOrderId` | `integer` |
-| `Source` | `string` |
-| `SubSource` | `string` |
-| `PostalServiceName` | `string` |
-| `cShippingAddress` | `string` |
-| `cCurrency` | `string` |
-| `dReceivedDate` | `string` |
-| `dProcessedOn` | `string` |
-| `fTotalCharge` | `number` |
-| `RefundLink` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` | Order ID |
+| `nOrderId` | `integer` | Linnworks order number |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Subsource (e.g. EBAY1) |
+| `PostalServiceName` | `string` | Postal service name (e.g. Next day delivery) |
+| `cShippingAddress` | `string` | Shipping address |
+| `cCurrency` | `string` | Currency |
+| `dReceivedDate` | `string` | Order received date. When order was downloaded from the channel |
+| `dProcessedOn` | `string` | When order was processed |
+| `fTotalCharge` | `number` | OrdOrder total charge |
+| `RefundLink` | `string` | Link to order refund |
 
 ### `SearchProcessedOrdersResponse`
 
-| Property | Type |
-|---|---|
-| `ProcessedOrders` | `GenericPagedResult_ProcessedOrderWeb` |
+| Property | Type | Description |
+|---|---|---|
+| `ProcessedOrders` | `GenericPagedResult_ProcessedOrderWeb` |  |
 
 ### `ServiceItem`
 
-| Property | Type |
-|---|---|
-| `pkOrderItemRowId` | `string` |
-| `ServiceName` | `string` |
-| `ServiceCost` | `number` |
-| `DefaultChannelReason` | `ChannelRefundReason` |
-| `DefaultChannelSubReason` | `ChannelRefundSubReason` |
-| `ItemNumber` | `string` |
-| `AllowsAutomatedRefund` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderItemRowId` | `string` | Order item record row ID |
+| `ServiceName` | `string` | Service name |
+| `ServiceCost` | `number` | Service cost |
+| `DefaultChannelReason` | `ChannelRefundReason` | Channel refund reason |
+| `DefaultChannelSubReason` | `ChannelRefundSubReason` | Channel refund subreason |
+| `ItemNumber` | `string` | Item number |
+| `AllowsAutomatedRefund` | `boolean` | If automatic refunds allowed |
 
 ### `SplitPackaging`
 
-| Property | Type |
-|---|---|
-| `pkBinId` | `string` |
-| `fkOrderItemRowId` | `string` |
-| `PackageTitle` | `string` |
-| `SKU` | `string` |
-| `ItemTitle` | `string` |
-| `Quantity` | `integer` |
-| `Weight` | `number` |
-| `TrackingNumber` | `string` |
-| `BinIndex` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkBinId` | `string` | Split bin ID |
+| `fkOrderItemRowId` | `string` | Order item row record ID |
+| `PackageTitle` | `string` | Package name |
+| `SKU` | `string` | Product SKU |
+| `ItemTitle` | `string` | Item Title |
+| `Quantity` | `integer` | Quantity |
+| `Weight` | `number` | Item weight |
+| `TrackingNumber` | `string` | Tracking number |
+| `BinIndex` | `integer` | Bin split index |
 
 ### `ValidationResult`
 
-| Property | Type |
-|---|---|
-| `Type` | `string` |
-| `InvalidItems` | `RefundItem[]` |
-| `AdditionalInformation` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` | Validation result |
+| `InvalidItems` | `RefundItem[]` | List of affected items |
+| `AdditionalInformation` | `string` | Additional information |

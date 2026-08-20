@@ -2,8 +2,8 @@
 
 # ImportExport (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/importexport.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/importexport.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -33,9 +33,9 @@ Put the specific import immediately in the queue Permissions Required: GlobalPer
 
 Get an import configuration Permissions Required: GlobalPermissions.Settings.ImportExport.ImportNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | query | `integer` | False | Id of the import to get |
 
 ### POST `/api/ImportExport/DeleteImport`
 
@@ -45,9 +45,9 @@ Delete an import configuration Permissions Required: GlobalPermissions.Settings.
 
 Gets fulfillment center settings Permissions Required: GlobalPermissions.Settings.ImportExportNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `fkStockLocationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `fkStockLocationId` | query | `string` | False | Stock location id |
 
 ### POST `/api/ImportExport/EnableExport`
 
@@ -61,9 +61,9 @@ Put the specific export immediately in the queue Permissions Required: GlobalPer
 
 Get an export configuration Permissions Required: GlobalPermissions.Settings.ImportExport.ExportNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | query | `integer` | False | Id of the export to get |
 
 ### POST `/api/ImportExport/DeleteExport`
 
@@ -81,119 +81,119 @@ Get all existing exports Permissions Required: GlobalPermissions.Settings.Import
 
 ### `Export`
 
-| Property | Type |
-|---|---|
-| `Specification` | `ExportSpecification` |
-| `Register` | `ExportRegister` |
-| `Schedules` | `Schedule[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Specification` | `ExportSpecification` |  |
+| `Register` | `ExportRegister` |  |
+| `Schedules` | `Schedule[]` |  |
 
 ### `ExportRegister`
 
-| Property | Type |
-|---|---|
-| `LastQueryExecuted` | `string` |
-| `LastExportStatus` | `boolean` |
-| `Id` | `integer` |
-| `Type` | `string` |
-| `FriendlyName` | `string` |
-| `Executing` | `boolean` |
-| `justOnce` | `boolean` |
-| `Started` | `string` |
-| `Completed` | `string` |
-| `IsQueued` | `boolean` |
-| `Enabled` | `boolean` |
-| `IsNew` | `boolean` |
-| `AllSchedulesDisabled` | `boolean` |
-| `TimeZoneOffset` | `number` |
-| `NextSchedule` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `LastQueryExecuted` | `string` |  |
+| `LastExportStatus` | `boolean` |  |
+| `Id` | `integer` |  |
+| `Type` | `string` |  |
+| `FriendlyName` | `string` |  |
+| `Executing` | `boolean` |  |
+| `justOnce` | `boolean` |  |
+| `Started` | `string` |  |
+| `Completed` | `string` |  |
+| `IsQueued` | `boolean` |  |
+| `Enabled` | `boolean` |  |
+| `IsNew` | `boolean` |  |
+| `AllSchedulesDisabled` | `boolean` |  |
+| `TimeZoneOffset` | `number` |  |
+| `NextSchedule` | `string` |  |
 
 ### `FulfilmentCenterImportExportSettings`
 
-| Property | Type |
-|---|---|
-| `fkStockLocationId` | `string` |
-| `fkOrdersExportId` | `integer` |
-| `fkOrdersImportId` | `integer` |
-| `fkInventoryImportId` | `integer` |
-| `OrdersExportEnabled` | `boolean` |
-| `OrdersImportEnabled` | `boolean` |
-| `InventoryImportEnabled` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `fkStockLocationId` | `string` | Stock location ID. |
+| `fkOrdersExportId` | `integer` | ID of Order Export if enabled. |
+| `fkOrdersImportId` | `integer` | ID of Order Import if enabled. |
+| `fkInventoryImportId` | `integer` | ID of Inventory Import if enabled. |
+| `OrdersExportEnabled` | `boolean` | True if Order Export is enabled. |
+| `OrdersImportEnabled` | `boolean` | True if Order Import is enabled. |
+| `InventoryImportEnabled` | `boolean` | True if Inventory Import is enabled. |
 
 ### `GetExportListResponse`
 
-| Property | Type |
-|---|---|
-| `register` | `ExportRegisterPublicSchedules[]` |
+| Property | Type | Description |
+|---|---|---|
+| `register` | `ExportRegisterPublicSchedules[]` |  |
 
 ### `GetImportListResponse`
 
-| Property | Type |
-|---|---|
-| `register` | `ImportRegisterPublicSchedules[]` |
+| Property | Type | Description |
+|---|---|---|
+| `register` | `ImportRegisterPublicSchedules[]` |  |
 
 ### `Import`
 
-| Property | Type |
-|---|---|
-| `Specification` | `Specification_ImportGenericFeed_ImportColumn` |
-| `Register` | `ImportRegister` |
-| `Schedules` | `Schedule[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Specification` | `Specification_ImportGenericFeed_ImportColumn` |  |
+| `Register` | `ImportRegister` |  |
+| `Schedules` | `Schedule[]` |  |
 
 ### `ImportExport_DeleteExportRequest`
 
-| Property | Type |
-|---|---|
-| `id` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `id` | `integer` |  |
 
 ### `ImportExport_DeleteImportRequest`
 
-| Property | Type |
-|---|---|
-| `id` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `id` | `integer` |  |
 
 ### `ImportExport_EnableExportRequest`
 
-| Property | Type |
-|---|---|
-| `exportId` | `integer` |
-| `enable` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `exportId` | `integer` |  |
+| `enable` | `boolean` |  |
 
 ### `ImportExport_EnableImportRequest`
 
-| Property | Type |
-|---|---|
-| `importId` | `integer` |
-| `enable` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `importId` | `integer` |  |
+| `enable` | `boolean` |  |
 
 ### `ImportExport_RunNowExportRequest`
 
-| Property | Type |
-|---|---|
-| `exportId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `exportId` | `integer` |  |
 
 ### `ImportExport_RunNowImportRequest`
 
-| Property | Type |
-|---|---|
-| `importId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `importId` | `integer` |  |
 
 ### `ImportRegister`
 
-| Property | Type |
-|---|---|
-| `LastFileChecksum` | `string` |
-| `ImportStatus` | `string` |
-| `ImportSkipped` | `boolean` |
-| `Id` | `integer` |
-| `Type` | `string` |
-| `FriendlyName` | `string` |
-| `Executing` | `boolean` |
-| `justOnce` | `boolean` |
-| `Started` | `string` |
-| `Completed` | `string` |
-| `IsQueued` | `boolean` |
-| `Enabled` | `boolean` |
-| `IsNew` | `boolean` |
-| `AllSchedulesDisabled` | `boolean` |
-| `TimeZoneOffset` | `number` |
-| `NextSchedule` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `LastFileChecksum` | `string` |  |
+| `ImportStatus` | `string` | Current import status |
+| `ImportSkipped` | `boolean` | If import was skipped |
+| `Id` | `integer` |  |
+| `Type` | `string` |  |
+| `FriendlyName` | `string` |  |
+| `Executing` | `boolean` |  |
+| `justOnce` | `boolean` |  |
+| `Started` | `string` |  |
+| `Completed` | `string` |  |
+| `IsQueued` | `boolean` |  |
+| `Enabled` | `boolean` |  |
+| `IsNew` | `boolean` |  |
+| `AllSchedulesDisabled` | `boolean` |  |
+| `TimeZoneOffset` | `number` |  |
+| `NextSchedule` | `string` |  |

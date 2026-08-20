@@ -2,8 +2,8 @@
 
 # Macro (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/macro.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/macro.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -24,25 +24,25 @@ Get all the macro configurations for the user account Permissions Required: Glob
 
 ### `GetInstalledMacrosResponse`
 
-| Property | Type |
-|---|---|
-| `Macros` | `InstalledMacro[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Macros` | `InstalledMacro[]` |  |
 
 ### `MacroRegister`
 
-| Property | Type |
-|---|---|
-| `MacroId` | `integer` |
-| `ApplicationName` | `string` |
-| `MacroName` | `string` |
-| `FriendlyName` | `string` |
-| `Enabled` | `boolean` |
-| `Started` | `string` |
-| `Completed` | `string` |
-| `Executing` | `boolean` |
-| `CurrentState` | `string` |
-| `Parameters` | `MacroParameter[]` |
-| `Specification` | `NamedScheduleConfiguration[]` |
-| `TimeZoneOffset` | `number` |
-| `MacroType` | `string` |
-| `Migrated` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `MacroId` | `integer` |  |
+| `ApplicationName` | `string` |  |
+| `MacroName` | `string` |  |
+| `FriendlyName` | `string` |  |
+| `Enabled` | `boolean` |  |
+| `Started` | `string` |  |
+| `Completed` | `string` |  |
+| `Executing` | `boolean` |  |
+| `CurrentState` | `string` |  |
+| `Parameters` | `MacroParameter[]` |  |
+| `Specification` | `NamedScheduleConfiguration[]` |  |
+| `TimeZoneOffset` | `number` |  |
+| `MacroType` | `string` |  |
+| `Migrated` | `integer` | DST migration flag. 0 - not migrated; 1 - migrated; 2 - migration failed; |

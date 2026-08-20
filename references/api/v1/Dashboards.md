@@ -2,8 +2,8 @@
 
 # Dashboards (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/dashboards.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/dashboards.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -21,122 +21,122 @@ _Last synced: 2026-08-13_
 
 Use this call to retrieve report about "Low stock in location"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `locationId` | query | `string` | False |
-| `numRows` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `locationId` | query | `string` | False | Used to specify report location id or null for combined |
+| `numRows` | query | `integer` | False | Used to specify number of returned rows |
 
 ### GET `/api/Dashboards/GetPerformanceTableData`
 
 Use this call to retrieve report about "Performance table"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `period` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `period` | query | `integer` | False | Used to specify report number of months |
 
 ### GET `/api/Dashboards/GetPerformanceDetail`
 
 Use this call to retrieve report about "Performance through time chart"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `period` | query | `integer` | False |
-| `timeScale` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `period` | query | `integer` | False | Used to specify report number of months |
+| `timeScale` | query | `integer` | False | time scale |
 
 ### GET `/api/Dashboards/GetTopProducts`
 
 Use this call to retrieve report about "Top ordered products" for top "10" products
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `type` | query | `string` | False |
-| `period` | query | `integer` | False |
-| `numRows` | query | `integer` | False |
-| `orderStatus` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `type` | query | `string` | False | Used to specify type of report: 1 - group result by quantity, 2 - group result by turnover |
+| `period` | query | `integer` | False | Used to specify report number of months |
+| `numRows` | query | `integer` | False | Number of rows required |
+| `orderStatus` | query | `integer` | False | Order status |
 
 ### GET `/api/Dashboards/GetInventoryLocationData`
 
 Use this call to retrieve report about "Stock info for locations"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `date` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `date` | query | `string` | False | Used to specify report date or null for current period |
 
 ### GET `/api/Dashboards/GetInventoryLocationCategoriesData`
 
 Use this call to retrieve report about "Stock info for categories in a specific location"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `date` | query | `string` | False |
-| `locationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `date` | query | `string` | False | Used to specify report date or null for current period |
+| `locationId` | query | `string` | False | Used to specify report location id |
 
 ### GET `/api/Dashboards/GetInventoryLocationProductsData`
 
 Use this call to retrieve report about "Stock info for products in a specific category and location"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `date` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `categoryId` | query | `string` | False |
-| `pageNumber` | query | `integer` | False |
-| `entriesPerPage` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `date` | query | `string` | False | Used to specify report date or null for current period |
+| `locationId` | query | `string` | False | Used to specify report location id |
+| `categoryId` | query | `string` | False | Used to specify report category id |
+| `pageNumber` | query | `integer` | False | Used to specify report page number |
+| `entriesPerPage` | query | `integer` | False | Used to specify number of entries per page in report |
 
 ## Models
 
 ### `LowStockLevel`
 
-| Property | Type |
-|---|---|
-| `ItemTitle` | `string` |
-| `ItemNumber` | `string` |
-| `Quantity` | `integer` |
-| `MinimumLevel` | `integer` |
-| `InBooks` | `integer` |
-| `Location` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ItemTitle` | `string` |  |
+| `ItemNumber` | `string` |  |
+| `Quantity` | `integer` |  |
+| `MinimumLevel` | `integer` |  |
+| `InBooks` | `integer` |  |
+| `Location` | `string` |  |
 
 ### `PagedStockCategoryLocationProductResult`
 
-| Property | Type |
-|---|---|
-| `TotalResults` | `integer` |
-| `Results` | `StockCategoryLocationProduct[]` |
+| Property | Type | Description |
+|---|---|---|
+| `TotalResults` | `integer` |  |
+| `Results` | `StockCategoryLocationProduct[]` |  |
 
 ### `PerfomanceData`
 
-| Property | Type |
-|---|---|
-| `Name` | `string` |
-| `Price` | `number` |
-| `Currency` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `Price` | `number` |  |
+| `Currency` | `string` |  |
 
 ### `StatsStockItemLocation`
 
-| Property | Type |
-|---|---|
-| `StockLocationId` | `string` |
-| `Location` | `string` |
-| `StockLevel` | `number` |
-| `StockValue` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `StockLocationId` | `string` |  |
+| `Location` | `string` |  |
+| `StockLevel` | `number` |  |
+| `StockValue` | `number` |  |
 
 ### `StockCategoryLocation`
 
-| Property | Type |
-|---|---|
-| `StockLocationId` | `string` |
-| `CategoryName` | `string` |
-| `CategoryId` | `string` |
-| `StockLevel` | `integer` |
-| `StockValue` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `StockLocationId` | `string` |  |
+| `CategoryName` | `string` |  |
+| `CategoryId` | `string` |  |
+| `StockLevel` | `integer` |  |
+| `StockValue` | `number` |  |
 
 ### `TopProductData`
 
-| Property | Type |
-|---|---|
-| `RowNum` | `integer` |
-| `Quantity` | `integer` |
-| `Cost` | `number` |
-| `Title` | `string` |
-| `SKU` | `string` |
-| `Currency` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `RowNum` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `Cost` | `number` |  |
+| `Title` | `string` |  |
+| `SKU` | `string` |  |
+| `Currency` | `string` |  |

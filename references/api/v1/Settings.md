@@ -2,8 +2,8 @@
 
 # Settings (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/settings.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/settings.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -21,10 +21,10 @@ _Last synced: 2026-08-13_
 
 Get Currency Conversion Rates
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `getCurrenciesFromOrders` | query | `boolean` | False |
-| `currency` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `getCurrenciesFromOrders` | query | `boolean` | False | If you want to get currencies from orders |
+| `currency` | query | `string` | False | Currency |
 
 ### GET `/api/Settings/GetAvailableTimeZones`
 
@@ -48,53 +48,53 @@ Get user measures units from the database
 
 Gets latest conversion rates for all known currencies. The rate is updated every couple of hours.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `baseCurrency` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `baseCurrency` | query | `string` | False | Base currency for conversion rates, if null, USD is used |
 
 ## Models
 
 ### `CurrencyConversionRate`
 
-| Property | Type |
-|---|---|
-| `Currency` | `string` |
-| `ConversionRate` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `Currency` | `string` | Currency code (e.g. GBP) |
+| `ConversionRate` | `number` | Currency conversion rate to default currency |
 
 ### `GetAvailableTimeZonesResponse`
 
-| Property | Type |
-|---|---|
-| `TimeZones` | `AvailableTimeZone[]` |
+| Property | Type | Description |
+|---|---|---|
+| `TimeZones` | `AvailableTimeZone[]` |  |
 
 ### `GetLatestCurrencyRateResponse`
 
-| Property | Type |
-|---|---|
-| `BaseCurrency` | `string` |
-| `Rates` | `CurrencyRate[]` |
+| Property | Type | Description |
+|---|---|---|
+| `BaseCurrency` | `string` |  |
+| `Rates` | `CurrencyRate[]` |  |
 
 ### `Measures`
 
-| Property | Type |
-|---|---|
-| `Dimension` | `string` |
-| `Weight` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Dimension` | `string` | Dimension measures |
+| `Weight` | `string` | Weight measures |
 
 ### `Settings_DeleteCurrencyConversionRatesRequest`
 
-| Property | Type |
-|---|---|
-| `currencies` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `currencies` | `string[]` |  |
 
 ### `Settings_InsertCurrencyConversionRatesRequest`
 
-| Property | Type |
-|---|---|
-| `rates` | `CurrencyConversionRate[]` |
+| Property | Type | Description |
+|---|---|---|
+| `rates` | `CurrencyConversionRate[]` |  |
 
 ### `Settings_UpdateCurrencyConversionRatesRequest`
 
-| Property | Type |
-|---|---|
-| `rates` | `CurrencyConversionRate[]` |
+| Property | Type | Description |
+|---|---|---|
+| `rates` | `CurrencyConversionRate[]` |  |

@@ -2,8 +2,8 @@
 
 # ShippingService (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/shippingservice.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/shippingservice.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -27,26 +27,26 @@ Permissions Required: GlobalPermissions.ShippingService.PostShipmentUploadNode
 
 Get paged list of consignments for a specific vendor, account id and manifest id. Use /ShippingService/GetFiledManifestsByVendor for input arguments.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `vendor` | query | `string` | False |
-| `accountId` | query | `string` | False |
-| `pkManifestId` | query | `integer` | False |
-| `externalManifestId` | query | `string` | False |
-| `manifestDate` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `vendor` | query | `string` | False | Vendor name |
+| `accountId` | query | `string` | False | Account id |
+| `pkManifestId` | query | `integer` | False | Manifest id |
+| `externalManifestId` | query | `string` | False | External manifest id. If is null, all consignments for this account will be returned |
+| `manifestDate` | query | `string` | False | The date at which the manifest was filed. Leave empty. |
 
 ### GET `/api/ShippingService/GetFiledManifestsByVendor`
 
 Gets a paged list of filed manifest by vendor between two dates. Use /ShippingService/GetIntegrations to get all vendors and friendly names
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `vendor` | query | `string` | False |
-| `vendorFriendlyName` | query | `string` | False |
-| `from` | query | `string` | False |
-| `to` | query | `string` | False |
-| `pageNumber` | query | `integer` | False |
-| `entriesPerPage` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `vendor` | query | `string` | False | Vendor name |
+| `vendorFriendlyName` | query | `string` | False | Vendor friendly name |
+| `from` | query | `string` | False | From date |
+| `to` | query | `string` | False | To date |
+| `pageNumber` | query | `integer` | False | Page number |
+| `entriesPerPage` | query | `integer` | False | Entries per page |
 
 ### POST `/api/ShippingService/CancelOrderShippingLabel`
 
@@ -56,60 +56,60 @@ Cancels the shipping label for an order Permissions Required: GlobalPermissions.
 
 ### `CancelOrderShippingLabelResponse`
 
-| Property | Type |
-|---|---|
-| `LabelCanceled` | `boolean` |
-| `MustCancelManually` | `boolean` |
-| `IsError` | `boolean` |
-| `ErrorMessage` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `LabelCanceled` | `boolean` | Identifies that the label is canceled successfully in the courier system |
+| `MustCancelManually` | `boolean` | Identifies that the label is canceled in Linnworks Only and must also be canceled manually with the courier. This normally indicates that the courier does not support label cancelation. |
+| `IsError` | `boolean` | Is error |
+| `ErrorMessage` | `string` | Error Message if IsError is true |
 
 ### `GenericPagedResult_Consignment`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `Consignment[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `Consignment[]` |  |
 
 ### `GenericPagedResult_FiledManifest`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `FiledManifest[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `FiledManifest[]` |  |
 
 ### `PostShipmentUploadRequest`
 
-| Property | Type |
-|---|---|
-| `FileUploadItems` | `FileUploadItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `FileUploadItems` | `FileUploadItem[]` |  |
 
 ### `ShippingService_CancelOrderShippingLabelRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CancelOrderShippingLabelRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CancelOrderShippingLabelRequest` |  |
 
 ### `System_ShippingAPI_Config`
 
-| Property | Type |
-|---|---|
-| `pkShippingAPIConfigId` | `integer` |
-| `Vendor` | `string` |
-| `VendorFriendlyName` | `string` |
-| `VendorIcon` | `string` |
-| `AccountId` | `string` |
-| `LabelFormat` | `string` |
-| `Services` | `integer` |
-| `ManifestPending` | `boolean` |
-| `LastManifestWithErrorId` | `integer` |
-| `ReadOnly` | `boolean` |
-| `Status` | `string` |
-| `PrinterConfig` | `PrinterConfig` |
-| `QuoteEnabled` | `boolean` |
-| `QuoteOnlyIncludedServices` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkShippingAPIConfigId` | `integer` |  |
+| `Vendor` | `string` |  |
+| `VendorFriendlyName` | `string` |  |
+| `VendorIcon` | `string` |  |
+| `AccountId` | `string` |  |
+| `LabelFormat` | `string` |  |
+| `Services` | `integer` |  |
+| `ManifestPending` | `boolean` |  |
+| `LastManifestWithErrorId` | `integer` |  |
+| `ReadOnly` | `boolean` |  |
+| `Status` | `string` |  |
+| `PrinterConfig` | `PrinterConfig` |  |
+| `QuoteEnabled` | `boolean` |  |
+| `QuoteOnlyIncludedServices` | `boolean` |  |

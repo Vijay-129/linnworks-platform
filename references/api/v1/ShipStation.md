@@ -2,8 +2,8 @@
 
 # ShipStation (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/shipstation.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/shipstation.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -23,9 +23,9 @@ Used for ShipStation to get all ShipStation integrations
 
 Used for ShipStation to get single ShipStation integration by its id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `integrationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `integrationId` | query | `string` | False | Id of the integration to retrieve |
 
 ### POST `/api/ShipStation/CreateShipStationIntegration`
 
@@ -43,41 +43,41 @@ Used for ShipStation to update a ShipStation integration
 
 ### `ShipStationConfig`
 
-| Property | Type |
-|---|---|
-| `ConfigV` | `integer` |
-| `ConfigId` | `string` |
-| `Name` | `string` |
-| `Enabled` | `boolean` |
-| `ExportLocations` | `string[]` |
-| `ExportFolder` | `string` |
-| `LastSync` | `string` |
-| `AutoProcessOrdersLocation` | `string` |
-| `ExportChildItems` | `boolean` |
-| `ImportedOrderTag` | `integer` |
-| `DefaultShipServiceShipStation` | `string` |
-| `DefaultShipServiceLinnworks` | `string` |
-| `UseChannelData` | `boolean` |
-| `ShipServices` | `ShipService[]` |
-| `WeightUnit` | `string` |
-| `CustomOrderField1` | `string` |
-| `CustomOrderField2` | `string` |
-| `CustomOrderField3` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ConfigV` | `integer` | Config version (for legacy purposes) |
+| `ConfigId` | `string` | A unique identifier for the config within Linnworks |
+| `Name` | `string` | An identifier for the config within Linnworks |
+| `Enabled` | `boolean` | Defines whether the config is enabled |
+| `ExportLocations` | `string[]` | The order locations to look for orders in |
+| `ExportFolder` | `string` | The order folder to export orders from |
+| `LastSync` | `string` | The last sync date with ShipStation |
+| `AutoProcessOrdersLocation` | `string` | The location to process orders from |
+| `ExportChildItems` | `boolean` | Toggles whether or not to export child items |
+| `ImportedOrderTag` | `integer` | The order tag to assign ShipStation imported orders |
+| `DefaultShipServiceShipStation` | `string` | The default ShipStation shipping service |
+| `DefaultShipServiceLinnworks` | `string` | The default Linnworks shipping service |
+| `UseChannelData` | `boolean` | Toggles between sending channel SKU/Title or linnworks SKU/Title to ShipStation |
+| `ShipServices` | `ShipService[]` | A list of assigned shipping services |
+| `WeightUnit` | `string` | The weight unit for order items |
+| `CustomOrderField1` | `string` | A custom field allowing user to pass custom information about the order |
+| `CustomOrderField2` | `string` | A custom field allowing user to pass custom information about the order |
+| `CustomOrderField3` | `string` | A custom field allowing user to pass custom information about the order |
 
 ### `ShipStation_CreateShipStationIntegrationRequest`
 
-| Property | Type |
-|---|---|
-| `integration` | `ShipStationConfig` |
+| Property | Type | Description |
+|---|---|---|
+| `integration` | `ShipStationConfig` |  |
 
 ### `ShipStation_DeleteShipStationIntegrationRequest`
 
-| Property | Type |
-|---|---|
-| `integrationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `integrationId` | `string` |  |
 
 ### `ShipStation_EditShipStationIntegrationRequest`
 
-| Property | Type |
-|---|---|
-| `integration` | `ShipStationConfig` |
+| Property | Type | Description |
+|---|---|---|
+| `integration` | `ShipStationConfig` |  |

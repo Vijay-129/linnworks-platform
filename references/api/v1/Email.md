@@ -2,8 +2,8 @@
 
 # Email (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/email.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/email.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -22,9 +22,9 @@ Get the whole list of email header templates Permissions Required: GlobalPermiss
 
 Get the full data of a specific email template Permissions Required: GlobalPermissions.Email.Templates.GetEmailTemplateNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkEmailTemplateRowId` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkEmailTemplateRowId` | query | `integer` | False | Id of the email template to retrieve |
 
 ### POST `/api/Email/GenerateAdhocEmail`
 
@@ -38,60 +38,60 @@ Generate a custom email Permissions Required: GlobalPermissions.Email.SendEmails
 
 ### `EmailTemplate`
 
-| Property | Type |
-|---|---|
-| `pkEmailTemplateRowId` | `integer` |
-| `Name` | `string` |
-| `Enabled` | `boolean` |
-| `TemplateType` | `string` |
-| `TemplateTypeDefinition` | `EmailTemplateType` |
-| `Subject` | `string` |
-| `Condition` | `string` |
-| `PreviewBeforeGenerating` | `boolean` |
-| `HTML` | `boolean` |
-| `AttachPDF` | `boolean` |
-| `Body` | `string` |
-| `fkEmailAccountRowId` | `integer` |
-| `PromptPreviewReferenceNumber` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkEmailTemplateRowId` | `integer` | Row id |
+| `Name` | `string` | Tempalte friendly name |
+| `Enabled` | `boolean` | Template enabled or not |
+| `TemplateType` | `string` | Template type. Used to map database field |
+| `TemplateTypeDefinition` | `EmailTemplateType` | Template type definition. It's part of this entity because we always need the definition when we get the EmailTemplate entity. To change it, set the "TemplateType" property |
+| `Subject` | `string` | Subject of the email |
+| `Condition` | `string` | Condition to evaluate what template to use |
+| `PreviewBeforeGenerating` | `boolean` | Preview email before send it |
+| `HTML` | `boolean` | Indicate if the email is HTML |
+| `AttachPDF` | `boolean` | Indicate if the email will have an invoice attached |
+| `Body` | `string` | Email body content |
+| `fkEmailAccountRowId` | `integer` | Row Id of the email account used to send the email |
+| `PromptPreviewReferenceNumber` | `string` | Text to be shown to the customer when he want to preview an order |
 
 ### `EmailTemplateHeader`
 
-| Property | Type |
-|---|---|
-| `pkEmailTemplateRowId` | `integer` |
-| `Name` | `string` |
-| `TemplateType` | `string` |
-| `IsConditions` | `boolean` |
-| `Condition` | `string` |
-| `Enabled` | `boolean` |
-| `fkEmailAccountRowId` | `integer` |
-| `AccountName` | `string` |
-| `AttachPDF` | `boolean` |
-| `IsAdhoc` | `boolean` |
-| `HTML` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkEmailTemplateRowId` | `integer` | Row Id |
+| `Name` | `string` | Template friendly name |
+| `TemplateType` | `string` | Template type |
+| `IsConditions` | `boolean` | Indicate if the template has conditions defined |
+| `Condition` | `string` | Template condition defined |
+| `Enabled` | `boolean` | Indicate if the template is enabled or not |
+| `fkEmailAccountRowId` | `integer` | Row Id of the email account used to send the email |
+| `AccountName` | `string` | Name of the email account used to send the email |
+| `AttachPDF` | `boolean` | Indicate if this template has attachments enabled |
+| `IsAdhoc` | `boolean` | Indicates if the email type is adhoc |
+| `HTML` | `boolean` | Indicates whether the email is a HTML email |
 
 ### `Email_GenerateAdhocEmailRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GenerateAdhocEmailRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GenerateAdhocEmailRequest` |  |
 
 ### `Email_GenerateFreeTextEmailRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GenerateFreeTextEmailRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GenerateFreeTextEmailRequest` |  |
 
 ### `GenerateAdhocEmailResponse`
 
-| Property | Type |
-|---|---|
-| `isComplete` | `boolean` |
-| `FailedRecipients` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `isComplete` | `boolean` | Send custom emails completed |
+| `FailedRecipients` | `string[]` | List of failed recipients |
 
 ### `GenerateFreeTextEmailResponse`
 
-| Property | Type |
-|---|---|
-| `isComplete` | `boolean` |
-| `FailedRecipients` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `isComplete` | `boolean` | Send custom emails completed |
+| `FailedRecipients` | `string[]` | List of failed recipients |

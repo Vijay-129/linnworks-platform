@@ -2,8 +2,8 @@
 
 # Orders (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/orders.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/orders.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -115,17 +115,17 @@ _Last synced: 2026-08-13_
 
 Retrieves the order detail for a given order numeric id. If not found empty class is returned. For working with open orders recommended to use OpenOrders/GetOpenOrdersDetails Permissions Required: GlobalPermissions.OrderBook.ViewOrderDetailsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `OrderId` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `OrderId` | query | `integer` | False | Order Id (numeric) |
 
 ### GET `/api/Orders/GetOrderById`
 
 Retrieves the order detail for a unique system order id identifier (pkOrderId) For working with open orders recommended to use OpenOrders/GetOpenOrdersDetails Permissions Required: GlobalPermissions.OrderBook.ViewOrderDetailsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkOrderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkOrderId` | query | `string` | False | pkOrderId |
 
 ### POST `/api/Orders/GetOrdersById`
 
@@ -217,11 +217,11 @@ Run Rules Engine on Open Orders
 
 Get the detail (composition) of a specific order item
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
-| `stockItemId` | query | `string` | False |
-| `fulfilmentCenter` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
+| `stockItemId` | query | `string` | False | Stock item id |
+| `fulfilmentCenter` | query | `string` | False | Location to get the order item composition for |
 
 ### POST `/api/Orders/ChangeOrderTag`
 
@@ -247,17 +247,17 @@ Unassign a list of orders to a specific folder. This operation can not be execut
 
 Get order XML received from channel
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
 
 ### GET `/api/Orders/GetOrderXml`
 
 Get order XML received from channel
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
 
 ### POST `/api/Orders/ChangeShippingMethod`
 
@@ -307,9 +307,9 @@ Get available packaging groups
 
 Get the extended properties for a specific order
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
 
 ### GET `/api/Orders/GetExtendedPropertyTypes`
 
@@ -339,9 +339,9 @@ Get list of open orders
 
 Get order audit trail
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
 
 ### POST `/api/Orders/GetOrderAuditTrailsByIds`
 
@@ -351,9 +351,9 @@ Returns a list of audit trails for the provided order ids
 
 Get the order notes
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
 
 ### POST `/api/Orders/GetOrdersNotes`
 
@@ -367,9 +367,9 @@ Set the order notes for a specific order SetOrderNotes overwrites the existing o
 
 Get order relations
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
 
 ### POST `/api/Orders/GetOrdersRelations`
 
@@ -379,18 +379,18 @@ Get order relations for a list of orders.
 
 Get order items
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
-| `fulfilmentCenter` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
+| `fulfilmentCenter` | query | `string` | False | Current fulfilment center |
 
 ### GET `/api/Orders/GetOpenOrderItemsSuppliers`
 
 Get items suppliers list for a specific order
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
 
 ### POST `/api/Orders/AddOrderItem`
 
@@ -508,10 +508,10 @@ Get open order views
 
 Get a specific open order view
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkViewId` | query | `integer` | False |
-| `markAsLatestViewed` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkViewId` | query | `integer` | False | View id |
+| `markAsLatestViewed` | query | `boolean` | False | Mark it in the database as latest viewer |
 
 ### POST `/api/Orders/SaveOrderView`
 
@@ -521,18 +521,18 @@ Update a open order view
 
 Get a list of possible addresses based on a search
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `field` | query | `string` | False |
-| `txt` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `field` | query | `string` | False | Field to search by |
+| `txt` | query | `string` | False | Text to find |
 
 ### GET `/api/Orders/GetLinkedItems`
 
 Get linked items to another one
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `itemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `itemId` | query | `string` | False | Item id (pkStockItemId) |
 
 ### POST `/api/Orders/UpdateLinkItem`
 
@@ -546,10 +546,10 @@ Create a new item and link it to a specific stock item
 
 Get a possible order split by packaging
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `orderId` | query | `string` | False |
-| `openOrdersOnly` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `orderId` | query | `string` | False | Order id |
+| `openOrdersOnly` | query | `boolean` | False | Whether to search open orders only, or all orders |
 
 ### POST `/api/Orders/SetOrderPackagingSplit`
 
@@ -571,975 +571,975 @@ Get orders by order item barcode Permissions Required: GlobalPermissions.OrderBo
 
 Retrieves a list of order details for a given order reference number, returns maximum of 50 orders. For eBay orders, if Sellling Manager Pro sales number is available the order can be retrived by this number Permissions Required: GlobalPermissions.OrderBook.ViewOrderDetailsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `ReferenceId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `ReferenceId` | query | `string` | False | Order reference id, or SecondaryReferenceNumber |
 
 ## Models
 
 ### `AddExtendedPropertiesResponse`
 
-| Property | Type |
-|---|---|
-| `ExtendedPropertiesInserted` | `integer` |
-| `Errors` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ExtendedPropertiesInserted` | `integer` | The number of extended properties that were added |
+| `Errors` | `string[]` | An array of errors created when attempting to add |
 
 ### `CalcOrderHeader`
 
-| Property | Type |
-|---|---|
-| `pkOrderID` | `string` |
-| `nOrderId` | `integer` |
-| `fkPostalServiceId` | `string` |
-| `fkCountryId` | `string` |
-| `cCountry` | `string` |
-| `ItemWeight` | `number` |
-| `fkPackagingGroupId` | `string` |
-| `fkPackagingTypeId` | `string` |
-| `IsSplitPackaging` | `boolean` |
-| `PackagingWeight` | `number` |
-| `TotalWeight` | `number` |
-| `TotalWidth` | `number` |
-| `TotalHeight` | `number` |
-| `TotalDepth` | `number` |
-| `ManualAdjust` | `boolean` |
-| `CanAutoSplit` | `boolean` |
-| `IsAutoSplit` | `boolean` |
-| `SplitPackageCount` | `integer` |
-| `LabelPrinted` | `boolean` |
-| `CalculationHints` | `string[]` |
-| `Items` | `CalcOrderItem[]` |
-| `Bins` | `CalcBin[]` |
-| `ThreeDimPackaging` | `PackingResult` |
-| `DimMethod` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderID` | `string` | Order id |
+| `nOrderId` | `integer` | Numeric order id |
+| `fkPostalServiceId` | `string` | Shipping service id |
+| `fkCountryId` | `string` | Country Id |
+| `cCountry` | `string` | Country Name |
+| `ItemWeight` | `number` | Total Item weight in the order |
+| `fkPackagingGroupId` | `string` | Packaging Group Id |
+| `fkPackagingTypeId` | `string` | Calculated packaging type for the order |
+| `IsSplitPackaging` | `boolean` | Is the packaging split? |
+| `PackagingWeight` | `number` | Packaging weight |
+| `TotalWeight` | `number` | Total weight, items + packaging weight |
+| `TotalWidth` | `number` | Total width of the order packaging. If null the recalculation was not performed yet. See documentation about how the dimensions of the order calculated. |
+| `TotalHeight` | `number` | Total Height of the order packaging. If null the recalculation was not performed yet. See documentation about how the dimensions of the order calculated. |
+| `TotalDepth` | `number` | Total Depth of the order packaging. If null the recalculation was not performed yet. See documentation about how the dimensions of the order calculated. |
+| `ManualAdjust` | `boolean` | Inidicates that order weights, packaging dimensions has been manually adjusted by the user and therefore automatic recalculation should not be performed for this order |
+| `CanAutoSplit` | `boolean` |  |
+| `IsAutoSplit` | `boolean` | Was the packaging automatically split? Usually by the 3D Packaging method. |
+| `SplitPackageCount` | `integer` | Indicates the number of split packaging bins. If null, or 0 - no split packaging |
+| `LabelPrinted` | `boolean` | Is Label Printed |
+| `CalculationHints` | `string[]` | Calculation comments. The recalculation routine will output some basic comments about how the calculation was performed in English. |
+| `Items` | `CalcOrderItem[]` | List of order items (excluding composite parents) |
+| `Bins` | `CalcBin[]` | List of bins (split packaging) |
+| `ThreeDimPackaging` | `PackingResult` | Result for volumetric packaging |
+| `DimMethod` | `string` | Dimension Calculation method |
 
 ### `CouponValidationResult`
 
-| Property | Type |
-|---|---|
-| `ValidationText` | `string` |
-| `DeductVisible` | `boolean` |
-| `DeductText` | `string` |
-| `BalanceVisible` | `boolean` |
-| `BalanceText` | `string` |
-| `ValueText` | `string` |
-| `DiscountType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ValidationText` | `string` | Validation note |
+| `DeductVisible` | `boolean` | If deduction is visible |
+| `DeductText` | `string` | Deduction note |
+| `BalanceVisible` | `boolean` | If balance is visible |
+| `BalanceText` | `string` | Balance record |
+| `ValueText` | `string` | Value |
+| `DiscountType` | `string` | Discount type |
 
 ### `CreateSerialisedValuesForOrderItemsRequest`
 
-| Property | Type |
-|---|---|
-| `OrderItemSerialData` | `OrderItemSerialModel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemSerialData` | `OrderItemSerialModel[]` |  |
 
 ### `CustomerAddress`
 
-| Property | Type |
-|---|---|
-| `EmailAddress` | `string` |
-| `Address1` | `string` |
-| `Address2` | `string` |
-| `Address3` | `string` |
-| `Town` | `string` |
-| `Region` | `string` |
-| `PostCode` | `string` |
-| `Country` | `string` |
-| `Continent` | `string` |
-| `FullName` | `string` |
-| `Company` | `string` |
-| `PhoneNumber` | `string` |
-| `CountryId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `EmailAddress` | `string` | Customer's email address. |
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `Address3` | `string` |  |
+| `Town` | `string` |  |
+| `Region` | `string` |  |
+| `PostCode` | `string` |  |
+| `Country` | `string` |  |
+| `Continent` | `string` |  |
+| `FullName` | `string` |  |
+| `Company` | `string` |  |
+| `PhoneNumber` | `string` |  |
+| `CountryId` | `string` |  |
 
 ### `ExtendedProperty`
 
-| Property | Type |
-|---|---|
-| `RowId` | `string` |
-| `Name` | `string` |
-| `Value` | `string` |
-| `Type` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `string` | Record row ID |
+| `Name` | `string` |  |
+| `Value` | `string` |  |
+| `Type` | `string` |  |
 
 ### `GenericPagedResult_OpenOrder`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `OpenOrder[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `OpenOrder[]` |  |
 
 ### `GetOrderAuditTrailsByIdsRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` | List of order ids |
 
 ### `GetOrderAuditTrailsByIdsResponse`
 
-| Property | Type |
-|---|---|
-| `AuditTrails` | `OrderAuditTrailExtended[]` |
+| Property | Type | Description |
+|---|---|---|
+| `AuditTrails` | `OrderAuditTrailExtended[]` |  |
 
 ### `GetOrderItemBatchesByOrderIdsRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderIds` | `string[]` |  |
 
 ### `GetOrderItemBatchesByOrderIdsResponse`
 
-| Property | Type |
-|---|---|
-| `OrderBatches` | `OrderItemBatchExtended[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderBatches` | `OrderItemBatchExtended[]` |  |
 
 ### `GetOrderItemRowSerialValuesByOrderIdsRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` |  |
 
 ### `GetOrderPackagingCalculationRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderIds` | `string[]` |
-| `Recalculate` | `boolean` |
-| `SaveRecalculation` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderIds` | `string[]` | List of order ids for which the packaging information should be returned, recalculated, saved |
+| `Recalculate` | `boolean` | Flag to indicate that recalculation is necessary |
+| `SaveRecalculation` | `boolean` | Flag to indicate that after recalculation the results should be saved back to the database |
 
 ### `GetSerialisedValuesForOrdersResponse`
 
-| Property | Type |
-|---|---|
-| `OrderItemRowSerialValuesByOrderIds` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowSerialValuesByOrderIds` | `object` |  |
 
 ### `KeyValuePair_Guid_Guid`
 
-| Property | Type |
-|---|---|
-| `Key` | `string` |
-| `Value` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `string` |  |
 
 ### `KeyValuePair_Guid_String`
 
-| Property | Type |
-|---|---|
-| `Key` | `string` |
-| `Value` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `string` |  |
 
 ### `KeyValuePair_List_OrderSummary_String`
 
-| Property | Type |
-|---|---|
-| `Key` | `OrderSummary[]` |
-| `Value` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `OrderSummary[]` |  |
+| `Value` | `string` |  |
 
 ### `LinkedItem`
 
-| Property | Type |
-|---|---|
-| `pkStockId` | `string` |
-| `ItemNumber` | `string` |
-| `ItemName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkStockId` | `string` | Country ID |
+| `ItemNumber` | `string` | Product SKU |
+| `ItemName` | `string` | Product title |
 
 ### `MoveToLocationResult`
 
-| Property | Type |
-|---|---|
-| `Errors` | `string[]` |
-| `OrdersMoved` | `string[]` |
-| `KeyedErrors` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `Errors` | `string[]` | List of errors |
+| `OrdersMoved` | `string[]` | List of orders that were moved |
+| `KeyedErrors` | `object` | Dictionary of keyed errors. These are the same errors as per the Errors property, but indexable by orderId |
 
 ### `OpenOrder`
 
-| Property | Type |
-|---|---|
-| `NumOrderId` | `integer` |
-| `GeneralInfo` | `OrderGeneralInfo` |
-| `ShippingInfo` | `OrderShippingInfo` |
-| `CustomerInfo` | `OrderCustomerInfo` |
-| `TotalsInfo` | `OrderTotalsInfo` |
-| `TaxInfo` | `OrderTaxInfo` |
-| `FolderName` | `string[]` |
-| `IsPostFilteredOut` | `boolean` |
-| `CanFulfil` | `boolean` |
-| `Fulfillment` | `OrderFulfillmentState` |
-| `Items` | `OrderItem[]` |
-| `HasItems` | `boolean` |
-| `TotalItemsSum` | `integer` |
-| `OrderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `NumOrderId` | `integer` | Linnworks order number |
+| `GeneralInfo` | `OrderGeneralInfo` | General information about an order |
+| `ShippingInfo` | `OrderShippingInfo` | Order shipping information |
+| `CustomerInfo` | `OrderCustomerInfo` | Order customer information |
+| `TotalsInfo` | `OrderTotalsInfo` | Linnworks order totals information |
+| `TaxInfo` | `OrderTaxInfo` |  |
+| `FolderName` | `string[]` | Folder name of an order if any assigned |
+| `IsPostFilteredOut` | `boolean` |  |
+| `CanFulfil` | `boolean` |  |
+| `Fulfillment` | `OrderFulfillmentState` |  |
+| `Items` | `OrderItem[]` |  |
+| `HasItems` | `boolean` |  |
+| `TotalItemsSum` | `integer` |  |
+| `OrderId` | `string` |  |
 
 ### `OrderAuditTrail`
 
-| Property | Type |
-|---|---|
-| `Date` | `string` |
-| `Type` | `string` |
-| `Note` | `string` |
-| `User` | `string` |
-| `fkOrderHistoryTypeId` | `string` |
-| `Tag` | `string` |
-| `TypeDescription` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Date` | `string` | Date and time when audit record was added |
+| `Type` | `string` | Note type |
+| `Note` | `string` | Actual audit trail note |
+| `User` | `string` | User who left an audit trail record |
+| `fkOrderHistoryTypeId` | `string` | Note type ID |
+| `Tag` | `string` | Audit trail record tag |
+| `TypeDescription` | `string` | Note type description |
 
 ### `OrderCountry`
 
-| Property | Type |
-|---|---|
-| `CountryId` | `string` |
-| `CountryName` | `string` |
-| `CountryCode` | `string` |
-| `Continent` | `string` |
-| `CustomsRequired` | `boolean` |
-| `TaxRate` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `CountryId` | `string` | Country ID |
+| `CountryName` | `string` | Country name |
+| `CountryCode` | `string` | Country code |
+| `Continent` | `string` | Country continent |
+| `CustomsRequired` | `boolean` | If customs required |
+| `TaxRate` | `number` | Country tax rate |
 
 ### `OrderDetails`
 
-| Property | Type |
-|---|---|
-| `OrderId` | `string` |
-| `NumOrderId` | `integer` |
-| `Processed` | `boolean` |
-| `ProcessedDateTime` | `string` |
-| `FulfilmentLocationId` | `string` |
-| `GeneralInfo` | `OrderGeneralInfo` |
-| `ShippingInfo` | `OrderShippingInfo` |
-| `CustomerInfo` | `OrderCustomerInfo` |
-| `TotalsInfo` | `OrderTotalsInfo` |
-| `ExtendedProperties` | `ExtendedProperty[]` |
-| `FolderName` | `string[]` |
-| `Items` | `OrderItem[]` |
-| `Notes` | `OrderNote[]` |
-| `PaidDateTime` | `string` |
-| `TaxId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order ID (pkOrderId) |
+| `NumOrderId` | `integer` | Linnworks order number |
+| `Processed` | `boolean` | If order is processed |
+| `ProcessedDateTime` | `string` | Date and time when order was processed |
+| `FulfilmentLocationId` | `string` | Location ID |
+| `GeneralInfo` | `OrderGeneralInfo` | General information about order |
+| `ShippingInfo` | `OrderShippingInfo` | Order shipping information |
+| `CustomerInfo` | `OrderCustomerInfo` | Order Customer information (Name, email etc) |
+| `TotalsInfo` | `OrderTotalsInfo` | Order totals information |
+| `ExtendedProperties` | `ExtendedProperty[]` | Extended properties of an order |
+| `FolderName` | `string[]` | Folder names assigned to an order |
+| `Items` | `OrderItem[]` | List of order items |
+| `Notes` | `OrderNote[]` | List of order notes |
+| `PaidDateTime` | `string` | Date and time when the order was marked as paid |
+| `TaxId` | `string` | Buyer's tax number. |
 
 ### `OrderFolder`
 
-| Property | Type |
-|---|---|
-| `pkFolderId` | `string` |
-| `FolderName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkFolderId` | `string` | Folder ID |
+| `FolderName` | `string` | Folder name |
 
 ### `OrderItem`
 
-| Property | Type |
-|---|---|
-| `ItemId` | `string` |
-| `ItemNumber` | `string` |
-| `SKU` | `string` |
-| `ItemSource` | `string` |
-| `Title` | `string` |
-| `Quantity` | `integer` |
-| `CategoryName` | `string` |
-| `CompositeAvailablity` | `integer` |
-| `StockLevelsSpecified` | `boolean` |
-| `OnOrder` | `integer` |
-| `OnPurchaseOrder` | `OrderItemOnOrder` |
-| `InOrderBook` | `integer` |
-| `Level` | `integer` |
-| `MinimumLevel` | `integer` |
-| `AvailableStock` | `integer` |
-| `PricePerUnit` | `number` |
-| `UnitCost` | `number` |
-| `DespatchStockUnitCost` | `number` |
-| `Discount` | `number` |
-| `Tax` | `number` |
-| `TaxRate` | `number` |
-| `Cost` | `number` |
-| `CostIncTax` | `number` |
-| `CompositeSubItems` | `OrderItem[]` |
-| `IsService` | `boolean` |
-| `SalesTax` | `number` |
-| `TaxCostInclusive` | `boolean` |
-| `PartShipped` | `boolean` |
-| `Weight` | `number` |
-| `BarcodeNumber` | `string` |
-| `Market` | `integer` |
-| `ChannelSKU` | `string` |
-| `ChannelTitle` | `string` |
-| `DiscountValue` | `number` |
-| `HasImage` | `boolean` |
-| `ImageId` | `string` |
-| `AdditionalInfo` | `OrderItemOption[]` |
-| `StockLevelIndicator` | `integer` |
-| `ShippingCost` | `number` |
-| `PartShippedQty` | `integer` |
-| `ItemName` | `string` |
-| `BatchNumberScanRequired` | `boolean` |
-| `SerialNumberScanRequired` | `boolean` |
-| `BinRack` | `string` |
-| `BinRacks` | `OrderItemBinRack[]` |
-| `InventoryTrackingType` | `integer` |
-| `isBatchedStockItem` | `boolean` |
-| `IsWarehouseManaged` | `boolean` |
-| `IsUnlinked` | `boolean` |
-| `StockItemIntId` | `integer` |
-| `Boxes` | `StockItemBoxConfiguration[]` |
-| `AddedDate` | `string` |
-| `RowId` | `string` |
-| `OrderId` | `string` |
-| `StockItemId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ItemId` | `string` | Stock Item ID |
+| `ItemNumber` | `string` | Item number as on channel |
+| `SKU` | `string` | Product SKU |
+| `ItemSource` | `string` | Item source / channel name |
+| `Title` | `string` | Item title |
+| `Quantity` | `integer` | Quantity |
+| `CategoryName` | `string` | Product category |
+| `CompositeAvailablity` | `integer` | Composite availability |
+| `StockLevelsSpecified` | `boolean` | If stock level specified |
+| `OnOrder` | `integer` | Level due in purchase orders |
+| `OnPurchaseOrder` | `OrderItemOnOrder` | Purchase order bound to this item |
+| `InOrderBook` | `integer` | Quantity currently in open orders |
+| `Level` | `integer` | Current stock level |
+| `MinimumLevel` | `integer` | Minimum level |
+| `AvailableStock` | `integer` | Currently available stock level (Level-InOrderBook) |
+| `PricePerUnit` | `number` | Unit price |
+| `UnitCost` | `number` | Unit cost |
+| `DespatchStockUnitCost` | `number` | Despatch stock unit cost |
+| `Discount` | `number` | Percentage (0%, 10%, 20%, etc...) |
+| `Tax` | `number` | Actual tax value on an item |
+| `TaxRate` | `number` | Tax rate |
+| `Cost` | `number` | Total item cost (exc tax) |
+| `CostIncTax` | `number` | Total item cost (inc tax) |
+| `CompositeSubItems` | `OrderItem[]` | List of order items |
+| `IsService` | `boolean` | if item is a service |
+| `SalesTax` | `number` | Sales Tax |
+| `TaxCostInclusive` | `boolean` | If tax is included in a cost |
+| `PartShipped` | `boolean` | If order is partly shipped |
+| `Weight` | `number` | Order weight |
+| `BarcodeNumber` | `string` | Product barcode |
+| `Market` | `integer` | Market |
+| `ChannelSKU` | `string` | Channel product SKU |
+| `ChannelTitle` | `string` | Channel product title |
+| `DiscountValue` | `number` |  |
+| `HasImage` | `boolean` | If item got an image |
+| `ImageId` | `string` | Image ID |
+| `AdditionalInfo` | `OrderItemOption[]` | List of order item options |
+| `StockLevelIndicator` | `integer` | Stock level indicator |
+| `ShippingCost` | `number` | If batch number scan required |
+| `PartShippedQty` | `integer` | ShippingCost |
+| `ItemName` | `string` | PartShippedQty |
+| `BatchNumberScanRequired` | `boolean` | ItemName |
+| `SerialNumberScanRequired` | `boolean` | If serial number scan required |
+| `BinRack` | `string` | Binrack location |
+| `BinRacks` | `OrderItemBinRack[]` | List of BinRacks used for OrderItem |
+| `InventoryTrackingType` | `integer` | Identifies whether the item has a sell by date or other defined order in which inventory is to be sold |
+| `isBatchedStockItem` | `boolean` | If item has batches |
+| `IsWarehouseManaged` | `boolean` |  |
+| `IsUnlinked` | `boolean` |  |
+| `StockItemIntId` | `integer` |  |
+| `Boxes` | `StockItemBoxConfiguration[]` |  |
+| `AddedDate` | `string` |  |
+| `RowId` | `string` |  |
+| `OrderId` | `string` |  |
+| `StockItemId` | `string` |  |
 
 ### `OrderItemBatch`
 
-| Property | Type |
-|---|---|
-| `OrderItemBatchId` | `integer` |
-| `OrderItemRowId` | `string` |
-| `BatchInventoryId` | `integer` |
-| `Quantity` | `integer` |
-| `Batch` | `StockItemBatch` |
-| `DespatchUnitValue` | `number` |
-| `AssignmentType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemBatchId` | `integer` |  |
+| `OrderItemRowId` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `Batch` | `StockItemBatch` |  |
+| `DespatchUnitValue` | `number` |  |
+| `AssignmentType` | `string` |  |
 
 ### `OrderItemBatchInfo`
 
-| Property | Type |
-|---|---|
-| `pkOrderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
 
 ### `OrderNote`
 
-| Property | Type |
-|---|---|
-| `OrderNoteId` | `string` |
-| `OrderId` | `string` |
-| `NoteDate` | `string` |
-| `Internal` | `boolean` |
-| `Note` | `string` |
-| `CreatedBy` | `string` |
-| `NoteTypeId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderNoteId` | `string` | Order note ID |
+| `OrderId` | `string` | Order Id |
+| `NoteDate` | `string` | Date and time when note was added |
+| `Internal` | `boolean` | order note type (Internal or External) |
+| `Note` | `string` | Note's text |
+| `CreatedBy` | `string` | User that created note |
+| `NoteTypeId` | `integer` |  |
 
 ### `OrderNoteType`
 
-| Property | Type |
-|---|---|
-| `NoteTypeId` | `integer` |
-| `NoteType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `NoteTypeId` | `integer` |  |
+| `NoteType` | `string` |  |
 
 ### `OrderPackagingSplit`
 
-| Property | Type |
-|---|---|
-| `pkBinId` | `string` |
-| `pkPostalServiceId` | `string` |
-| `PackagingWeight` | `number` |
-| `fkPackagingTypeId` | `string` |
-| `Items` | `OrderPackagingSplitItem[]` |
-| `TotalWeight` | `number` |
-| `Width` | `number` |
-| `Height` | `number` |
-| `Depth` | `number` |
-| `TrackingNumbers` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkBinId` | `string` | Bin ID |
+| `pkPostalServiceId` | `string` | Postal service ID |
+| `PackagingWeight` | `number` | Order packaging weight |
+| `fkPackagingTypeId` | `string` | Order packaging type |
+| `Items` | `OrderPackagingSplitItem[]` | List of items |
+| `TotalWeight` | `number` | Total weight |
+| `Width` | `number` | Width |
+| `Height` | `number` | Height |
+| `Depth` | `number` | Depth |
+| `TrackingNumbers` | `string` | Tracking number |
 
 ### `OrderRelation`
 
-| Property | Type |
-|---|---|
-| `ParentOrderId` | `string` |
-| `ChildOrderId` | `string` |
-| `Parent` | `integer` |
-| `Child` | `integer` |
-| `Type` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ParentOrderId` | `string` | Parent order GUID |
+| `ChildOrderId` | `string` | Child order GUID |
+| `Parent` | `integer` | Parent order ID |
+| `Child` | `integer` | Child order ID |
+| `Type` | `string` | Relation type |
 
 ### `OrderTotalsInfo`
 
-| Property | Type |
-|---|---|
-| `Subtotal` | `number` |
-| `PostageCost` | `number` |
-| `PostageCostExTax` | `number` |
-| `Tax` | `number` |
-| `TotalCharge` | `number` |
-| `PaymentMethod` | `string` |
-| `PaymentMethodId` | `string` |
-| `ProfitMargin` | `number` |
-| `TotalDiscount` | `number` |
-| `Currency` | `string` |
-| `CountryTaxRate` | `number` |
-| `ConversionRate` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `Subtotal` | `number` | Order subtotal |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost ex. tax |
+| `Tax` | `number` | Tax |
+| `TotalCharge` | `number` | Total charge |
+| `PaymentMethod` | `string` | Payment method |
+| `PaymentMethodId` | `string` | Payment method ID |
+| `ProfitMargin` | `number` | Profit margin |
+| `TotalDiscount` | `number` | Total discount applied to the order |
+| `Currency` | `string` | Order currency |
+| `CountryTaxRate` | `number` | Country tax rate |
+| `ConversionRate` | `number` | Currency conversion rate. Set at point of save by the currency |
 
 ### `OrderXML`
 
-| Property | Type |
-|---|---|
-| `LineTag` | `string` |
-| `Type` | `string` |
-| `XML` | `string` |
-| `XMLDoc` | `object[]` |
+| Property | Type | Description |
+|---|---|---|
+| `LineTag` | `string` |  |
+| `Type` | `string` |  |
+| `XML` | `string` |  |
+| `XMLDoc` | `object[]` |  |
 
 ### `Orders_AddCouponRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `barcode` | `string` |
-| `couponData` | `CouponValidationResult` |
-| `fulfilmentCenter` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `barcode` | `string` |  |
+| `couponData` | `CouponValidationResult` |  |
+| `fulfilmentCenter` | `string` |  |
 
 ### `Orders_AddExtendedPropertiesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AddExtendedPropertiesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AddExtendedPropertiesRequest` |  |
 
 ### `Orders_AddOrderItemRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `itemId` | `string` |
-| `channelSKU` | `string` |
-| `fulfilmentCenter` | `string` |
-| `quantity` | `integer` |
-| `linePricing` | `LinePricingRequest` |
-| `createdDate` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `itemId` | `string` |  |
+| `channelSKU` | `string` |  |
+| `fulfilmentCenter` | `string` |  |
+| `quantity` | `integer` |  |
+| `linePricing` | `LinePricingRequest` |  |
+| `createdDate` | `string` |  |
 
 ### `Orders_AddOrderServiceRequest`
 
-| Property | Type |
-|---|---|
-| `OrderId` | `string` |
-| `Service` | `string` |
-| `Cost` | `number` |
-| `TaxRate` | `number` |
-| `FulfilmentCenter` | `string` |
-| `Quantity` | `integer` |
-| `DiscountPercentage` | `number` |
-| `AddedDate` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order id |
+| `Service` | `string` | Service |
+| `Cost` | `number` | Price Per Unit of each service item |
+| `TaxRate` | `number` | Tax rate. Optional, defaults to 0. |
+| `FulfilmentCenter` | `string` | Current fulfilment center |
+| `Quantity` | `integer` | Quantity of the service item. Optional, defaults to 1. |
+| `DiscountPercentage` | `number` | Discount percentage applied to the service item. Optional, defaults to 0. |
+| `AddedDate` | `string` | Holds the datetime that the service was added to the order |
 
 ### `Orders_AssignOrderItemBatchesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AssignOrderItemBatches` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AssignOrderItemBatches` |  |
 
 ### `Orders_AssignStockToOrderRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AssignStockToOrderRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AssignStockToOrderRequest` |  |
 
 ### `Orders_AssignToFolderRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `folder` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `folder` | `string` |  |
 
 ### `Orders_CancelOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `fulfilmentCenter` | `string` |
-| `refund` | `number` |
-| `note` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `fulfilmentCenter` | `string` |  |
+| `refund` | `number` |  |
+| `note` | `string` |  |
 
 ### `Orders_ChangeOrderTagRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `tag` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `tag` | `integer` |  |
 
 ### `Orders_ChangeShippingMethodRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `shippingMethod` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `shippingMethod` | `string` |  |
 
 ### `Orders_ChangeStatusRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `status` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `status` | `integer` |  |
 
 ### `Orders_ClearInvoicePrintedRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
 
 ### `Orders_ClearPickListPrintedRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
 
 ### `Orders_ClearShippingLabelInfoRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `withoutConfirmation` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `withoutConfirmation` | `boolean` |  |
 
 ### `Orders_CompleteOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
 
 ### `Orders_CreateNewItemAndLinkRequest`
 
-| Property | Type |
-|---|---|
-| `pkStockItemId` | `string` |
-| `itemTitle` | `string` |
-| `source` | `string` |
-| `subSource` | `string` |
-| `channelSKU` | `string` |
-| `locationId` | `string` |
-| `initialQuantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkStockItemId` | `string` |  |
+| `itemTitle` | `string` |  |
+| `source` | `string` |  |
+| `subSource` | `string` |  |
+| `channelSKU` | `string` |  |
+| `locationId` | `string` |  |
+| `initialQuantity` | `integer` |  |
 
 ### `Orders_CreateNewOrderRequest`
 
-| Property | Type |
-|---|---|
-| `fulfilmentCenter` | `string` |
-| `createAsDraft` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `fulfilmentCenter` | `string` |  |
+| `createAsDraft` | `boolean` |  |
 
 ### `Orders_CreateOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `orders` | `ChannelOrder[]` |
-| `location` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orders` | `ChannelOrder[]` |  |
+| `location` | `string` |  |
 
 ### `Orders_DeleteOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
 
 ### `Orders_GetAllAvailableOrderItemBatchsByOrderIdRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `AvailableOrderItemBatchsInfo` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `AvailableOrderItemBatchsInfo` |  |
 
 ### `Orders_GetAllOpenOrdersBetweenIndexRequest`
 
-| Property | Type |
-|---|---|
-| `fromIndex` | `integer` |
-| `toIndex` | `integer` |
-| `filters` | `FieldsFilter` |
-| `sorting` | `FieldSorting[]` |
-| `fulfilmentCenter` | `string` |
-| `additionalFilter` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fromIndex` | `integer` |  |
+| `toIndex` | `integer` |  |
+| `filters` | `FieldsFilter` |  |
+| `sorting` | `FieldSorting[]` |  |
+| `fulfilmentCenter` | `string` |  |
+| `additionalFilter` | `string` |  |
 
 ### `Orders_GetAllOpenOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `filters` | `FieldsFilter` |
-| `sorting` | `FieldSorting[]` |
-| `fulfilmentCenter` | `string` |
-| `additionalFilter` | `string` |
-| `exactMatch` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `filters` | `FieldsFilter` |  |
+| `sorting` | `FieldSorting[]` |  |
+| `fulfilmentCenter` | `string` |  |
+| `additionalFilter` | `string` |  |
+| `exactMatch` | `boolean` |  |
 
 ### `Orders_GetAssignedOrderItemBatchesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetAssignedOrderItemBatchesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetAssignedOrderItemBatchesRequest` |  |
 
 ### `Orders_GetOpenOrderIdByOrderOrReferenceIdRequest`
 
-| Property | Type |
-|---|---|
-| `orderOrReferenceId` | `string` |
-| `filters` | `FieldsFilter` |
-| `locationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderOrReferenceId` | `string` |  |
+| `filters` | `FieldsFilter` |  |
+| `locationId` | `string` |  |
 
 ### `Orders_GetOpenOrdersByItemBarcodeRequest`
 
-| Property | Type |
-|---|---|
-| `productBarcode` | `string` |
-| `filters` | `FieldsFilter` |
-| `locationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `productBarcode` | `string` |  |
+| `filters` | `FieldsFilter` |  |
+| `locationId` | `string` |  |
 
 ### `Orders_GetOpenOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `entriesPerPage` | `integer` |
-| `pageNumber` | `integer` |
-| `filters` | `FieldsFilter` |
-| `sorting` | `FieldSorting[]` |
-| `fulfilmentCenter` | `string` |
-| `additionalFilter` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `entriesPerPage` | `integer` |  |
+| `pageNumber` | `integer` |  |
+| `filters` | `FieldsFilter` |  |
+| `sorting` | `FieldSorting[]` |  |
+| `fulfilmentCenter` | `string` |  |
+| `additionalFilter` | `string` |  |
 
 ### `Orders_GetOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `fulfilmentLocationId` | `string` |
-| `loadItems` | `boolean` |
-| `loadAdditionalInfo` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `fulfilmentLocationId` | `string` |  |
+| `loadItems` | `boolean` |  |
+| `loadAdditionalInfo` | `boolean` |  |
 
 ### `Orders_GetOrdersByIdRequest`
 
-| Property | Type |
-|---|---|
-| `pkOrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderIds` | `string[]` |  |
 
 ### `Orders_GetOrdersNotesRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
 
 ### `Orders_GetOrdersRelationsRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
 
 ### `Orders_GetOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `ordersIds` | `string[]` |
-| `fulfilmentLocationId` | `string` |
-| `loadItems` | `boolean` |
-| `loadAdditionalInfo` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `ordersIds` | `string[]` |  |
+| `fulfilmentLocationId` | `string` |  |
+| `loadItems` | `boolean` |  |
+| `loadAdditionalInfo` | `boolean` |  |
 
 ### `Orders_LockOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `lockOrder` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `lockOrder` | `boolean` |  |
 
 ### `Orders_MergeOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `ordersToMerge` | `string[]` |
-| `fulfilmentCenter` | `string` |
-| `pkPostalServiceId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ordersToMerge` | `string[]` |  |
+| `fulfilmentCenter` | `string` |  |
+| `pkPostalServiceId` | `string` |  |
 
 ### `Orders_MoveToLocationRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `pkStockLocationId` | `string` |
-| `fulfillmentStatusToApply` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `pkStockLocationId` | `string` |  |
+| `fulfillmentStatusToApply` | `string` |  |
 
 ### `Orders_ProcessFulfilmentCentreOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
 
 ### `Orders_ProcessOrderByOrderOrReferenceIdRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `ProcessOrderByOrderIdOrReferenceRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `ProcessOrderByOrderIdOrReferenceRequest` |  |
 
 ### `Orders_ProcessOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `scanPerformed` | `boolean` |
-| `locationId` | `string` |
-| `context` | `ClientContext` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `scanPerformed` | `boolean` |  |
+| `locationId` | `string` |  |
+| `context` | `ClientContext` |  |
 
 ### `Orders_ProcessOrder_RequiredBatchScansRequest`
 
-| Property | Type |
-|---|---|
-| `BatchAssignment` | `BatchAssignmentForOrderItems` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchAssignment` | `BatchAssignmentForOrderItems` |  |
 
 ### `Orders_ProcessOrdersInBatchRequest`
 
-| Property | Type |
-|---|---|
-| `ordersIds` | `string[]` |
-| `locationId` | `string` |
-| `context` | `ClientContext` |
+| Property | Type | Description |
+|---|---|---|
+| `ordersIds` | `string[]` |  |
+| `locationId` | `string` |  |
+| `context` | `ClientContext` |  |
 
 ### `Orders_RecalculateSingleOrderPackagingRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CalcOrderHeader` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CalcOrderHeader` |  |
 
 ### `Orders_RemoveOrderItemRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `rowid` | `string` |
-| `fulfilmentCenter` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `rowid` | `string` |  |
+| `fulfilmentCenter` | `string` |  |
 
 ### `Orders_RunRulesEngineRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `ruleId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `ruleId` | `integer` |  |
 
 ### `Orders_SaveOrderViewRequest`
 
-| Property | Type |
-|---|---|
-| `pkViewId` | `integer` |
-| `viewName` | `string` |
-| `OrderViewDetailJSON` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkViewId` | `integer` |  |
+| `viewName` | `string` |  |
+| `OrderViewDetailJSON` | `string` |  |
 
 ### `Orders_SetAdditionalInfoRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `rowId` | `string` |
-| `additionalInfo` | `OrderItemOption[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `rowId` | `string` |  |
+| `additionalInfo` | `OrderItemOption[]` |  |
 
 ### `Orders_SetAvailableFoldersRequest`
 
-| Property | Type |
-|---|---|
-| `folders` | `OrderFolder[]` |
+| Property | Type | Description |
+|---|---|---|
+| `folders` | `OrderFolder[]` |  |
 
 ### `Orders_SetDefaultPaymentMethodIdForNewOrderRequest`
 
-| Property | Type |
-|---|---|
-| `paymentMethod` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `paymentMethod` | `string` |  |
 
 ### `Orders_SetExtendedPropertiesRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `extendedProperties` | `ExtendedProperty[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `extendedProperties` | `ExtendedProperty[]` |  |
 
 ### `Orders_SetInvoicesPrintedRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
 
 ### `Orders_SetLabelsPrintedRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
 
 ### `Orders_SetOrderCustomerInfoRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `info` | `OrderCustomerInfo` |
-| `saveToCrm` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `info` | `OrderCustomerInfo` |  |
+| `saveToCrm` | `boolean` |  |
 
 ### `Orders_SetOrderGeneralInfoRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `info` | `OrderGeneralInfo` |
-| `wasDraft` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `info` | `OrderGeneralInfo` |  |
+| `wasDraft` | `boolean` |  |
 
 ### `Orders_SetOrderNotesRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `orderNotes` | `OrderNote[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `orderNotes` | `OrderNote[]` |  |
 
 ### `Orders_SetOrderPackagingRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SetOrderPackagingRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SetOrderPackagingRequest` |  |
 
 ### `Orders_SetOrderPackagingSplitRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `packagingSplit` | `OrderPackagingSplit[]` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `packagingSplit` | `OrderPackagingSplit[]` |  |
 
 ### `Orders_SetOrderShippingInfoRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `info` | `UpdateOrderShippingInfoRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `info` | `UpdateOrderShippingInfoRequest` |  |
 
 ### `Orders_SetOrderSplitPackagingManualOverwriteRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CalcOrderHeader` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CalcOrderHeader` |  |
 
 ### `Orders_SetOrderTotalsInfoRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `info` | `OrderTotalsInfo` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `info` | `OrderTotalsInfo` |  |
 
 ### `Orders_SetPaymentMethodsRequest`
 
-| Property | Type |
-|---|---|
-| `paymentMethods` | `PaymentMethod[]` |
+| Property | Type | Description |
+|---|---|---|
+| `paymentMethods` | `PaymentMethod[]` |  |
 
 ### `Orders_SetPickListPrintedRequest`
 
-| Property | Type |
-|---|---|
-| `Request` | `SetPickListPrintedRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `Request` | `SetPickListPrintedRequest` |  |
 
 ### `Orders_SplitOrderRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `newOrders` | `OrderSplit[]` |
-| `type` | `string` |
-| `fulfilmentLocationId` | `string` |
-| `recalcPackaging` | `boolean` |
-| `fulfillmentStatus` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `newOrders` | `OrderSplit[]` |  |
+| `type` | `string` |  |
+| `fulfilmentLocationId` | `string` |  |
+| `recalcPackaging` | `boolean` |  |
+| `fulfillmentStatus` | `string` |  |
 
 ### `Orders_UnassignToFolderRequest`
 
-| Property | Type |
-|---|---|
-| `orderIds` | `string[]` |
-| `folder` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderIds` | `string[]` |  |
+| `folder` | `string` |  |
 
 ### `Orders_UpdateAdditionalInfoRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdateAdditionalInfoRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdateAdditionalInfoRequest` |  |
 
 ### `Orders_UpdateBillingAddressRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `billingAddress` | `CustomerAddress` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `billingAddress` | `CustomerAddress` |  |
 
 ### `Orders_UpdateLinkItemRequest`
 
-| Property | Type |
-|---|---|
-| `pkStockId` | `string` |
-| `pkStockItemId` | `string` |
-| `source` | `string` |
-| `subSource` | `string` |
-| `channelSKU` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkStockId` | `string` |  |
+| `pkStockItemId` | `string` |  |
+| `source` | `string` |  |
+| `subSource` | `string` |  |
+| `channelSKU` | `string` |  |
 
 ### `Orders_UpdateOrderItemRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `orderItem` | `OrderItem` |
-| `fulfilmentCenter` | `string` |
-| `source` | `string` |
-| `subSource` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `orderItem` | `OrderItem` |  |
+| `fulfilmentCenter` | `string` |  |
+| `source` | `string` |  |
+| `subSource` | `string` |  |
 
 ### `Orders_ValidateCouponRequest`
 
-| Property | Type |
-|---|---|
-| `orderId` | `string` |
-| `barcode` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` |  |
+| `barcode` | `string` |  |
 
 ### `PackageGroup`
 
-| Property | Type |
-|---|---|
-| `PackageCategoryID` | `string` |
-| `PackageCategory` | `string` |
-| `rowguid` | `string` |
-| `PackageTypes` | `PackageType[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PackageCategoryID` | `string` | Package category ID |
+| `PackageCategory` | `string` | Package category name |
+| `rowguid` | `string` | Record row ID |
+| `PackageTypes` | `PackageType[]` | List of packaging types |
 
 ### `PaymentMethod`
 
-| Property | Type |
-|---|---|
-| `Name` | `string` |
-| `CanDelete` | `boolean` |
-| `PaymentMethodId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` | Payment method name |
+| `CanDelete` | `boolean` | If it can be deleted |
+| `PaymentMethodId` | `string` | Payment method ID |
 
 ### `ProcessOrderByOrderIdOrReferenceResponse`
 
-| Property | Type |
-|---|---|
-| `ProcessedState` | `string` |
-| `Message` | `string` |
-| `Response` | `object` |
-| `OrderId` | `string` |
-| `OrderSummary` | `OrderSummary` |
-| `Items` | `OrderItem[]` |
-| `BatchInformation` | `StockItemBatch[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ProcessedState` | `string` | The processed state |
+| `Message` | `string` | A message - Provided if there have been errors |
+| `Response` | `object` | A response object used if further action is required |
+| `OrderId` | `string` | The ID of the order - Guid empty if not found |
+| `OrderSummary` | `OrderSummary` | Used when an order has been processed |
+| `Items` | `OrderItem[]` | The items that need to be scanned - If any |
+| `BatchInformation` | `StockItemBatch[]` | The batched items |
 
 ### `ProcessOrderResult`
 
-| Property | Type |
-|---|---|
-| `OrderId` | `string` |
-| `Processed` | `boolean` |
-| `Error` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order ID (pkOrderId) |
+| `Processed` | `boolean` | Order was processed |
+| `Error` | `string` | There was ab error during processing |
 
 ### `ShippingMethod`
 
-| Property | Type |
-|---|---|
-| `Vendor` | `string` |
-| `PostalServices` | `PostageService[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Vendor` | `string` | Courier name |
+| `PostalServices` | `PostageService[]` | List of postal services |
 
 ### `StockItemBatch`
 
-| Property | Type |
-|---|---|
-| `BatchId` | `integer` |
-| `SKU` | `string` |
-| `InventoryTrackingType` | `integer` |
-| `StockItemId` | `string` |
-| `BatchNumber` | `string` |
-| `ExpiresOn` | `string` |
-| `SellBy` | `string` |
-| `Inventory` | `StockItemBatchInventory[]` |
-| `IsDeleted` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchId` | `integer` | Batch ID |
+| `SKU` | `string` | Product SKU |
+| `InventoryTrackingType` | `integer` | 0 - None, 1 - Order by sell by date, 2 - Ordered by priority sequence |
+| `StockItemId` | `string` | Product ID |
+| `BatchNumber` | `string` | Batch number |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
+| `Inventory` | `StockItemBatchInventory[]` | Batch records |
+| `IsDeleted` | `boolean` | Is the batch deleted |
 
 ### `UpdateOrderItemResult`
 
-| Property | Type |
-|---|---|
-| `TotalsInfo` | `OrderTotalsInfo` |
-| `Item` | `OrderItem` |
-| `ItemWeight` | `number` |
-| `TotalWeight` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `TotalsInfo` | `OrderTotalsInfo` | Order figures |
+| `Item` | `OrderItem` | Order items information |
+| `ItemWeight` | `number` | Order item weight |
+| `TotalWeight` | `number` | Order total weight |
 
 ### `UpdateTotalsResult`
 
-| Property | Type |
-|---|---|
-| `TotalsInfo` | `OrderTotalsInfo` |
-| `ShippingInfo` | `OrderShippingInfo` |
+| Property | Type | Description |
+|---|---|---|
+| `TotalsInfo` | `OrderTotalsInfo` |  |
+| `ShippingInfo` | `OrderShippingInfo` |  |
 
 ### `UserOrderView`
 
-| Property | Type |
-|---|---|
-| `pkViewId` | `integer` |
-| `ViewName` | `string` |
-| `OwnerName` | `string` |
-| `AllowModify` | `boolean` |
-| `JSONDetail` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkViewId` | `integer` | View ID |
+| `ViewName` | `string` | View name |
+| `OwnerName` | `string` | View owner name |
+| `AllowModify` | `boolean` | Can be modified |
+| `JSONDetail` | `string` |  |

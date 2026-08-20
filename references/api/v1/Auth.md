@@ -2,8 +2,8 @@
 
 # Auth (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/auth.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/auth.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -24,59 +24,59 @@ Generates a sesssion and provide Authorization Token and server in response.
 
 ### `ApplicationProfileResponse`
 
-| Property | Type |
-|---|---|
-| `PlanTag` | `string` |
-| `PlanName` | `string` |
-| `ActivationDate` | `string` |
-| `LastPaymentDate` | `string` |
-| `NextPaymentDate` | `string` |
-| `ProfileExpires` | `string` |
-| `IsProfileActive` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `PlanTag` | `string` | Plan Tag as defined in your Application Configuration |
+| `PlanName` | `string` | Plan Name as defined in your application Configuration |
+| `ActivationDate` | `string` | Date when the profile was signed up for, or resubscribed |
+| `LastPaymentDate` | `string` | Last Payment date |
+| `NextPaymentDate` | `string` | Next payment date |
+| `ProfileExpires` | `string` | When profile is due to expire |
+| `IsProfileActive` | `boolean` | Indicates whether the payment profile is active for the application, if this is set to false it means the customer canceled the profile but the profile is still active due last payment made in the last month. |
 
 ### `Auth_GetApplicationProfileBySecretKeyRequest`
 
-| Property | Type |
-|---|---|
-| `applicationId` | `string` |
-| `applicationSecret` | `string` |
-| `userId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `applicationId` | `string` |  |
+| `applicationSecret` | `string` |  |
+| `userId` | `string` |  |
 
 ### `AuthorizeByApplicationRequest`
 
-| Property | Type |
-|---|---|
-| `ApplicationId` | `string` |
-| `ApplicationSecret` | `string` |
-| `Token` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ApplicationId` | `string` |  |
+| `ApplicationSecret` | `string` |  |
+| `Token` | `string` |  |
 
 ### `BaseSession`
 
-| Property | Type |
-|---|---|
-| `Id` | `string` |
-| `EntityId` | `string` |
-| `DatabaseName` | `string` |
-| `DatabaseServer` | `string` |
-| `PrivateDatabaseServer` | `string` |
-| `DatabaseUser` | `string` |
-| `DatabasePassword` | `string` |
-| `AppName` | `string` |
-| `sid_registration` | `string` |
-| `UserName` | `string` |
-| `Md5Hash` | `string` |
-| `Locality` | `string` |
-| `SuperAdmin` | `boolean` |
-| `TTL` | `integer` |
-| `Token` | `string` |
-| `AccessToken` | `string` |
-| `GroupName` | `string` |
-| `Device` | `string` |
-| `DeviceType` | `string` |
-| `UserType` | `string` |
-| `Status` | `StatusDetails` |
-| `UserId` | `string` |
-| `Properties` | `object` |
-| `Email` | `string` |
-| `Server` | `string` |
-| `PushServer` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `EntityId` | `string` |  |
+| `DatabaseName` | `string` |  |
+| `DatabaseServer` | `string` |  |
+| `PrivateDatabaseServer` | `string` |  |
+| `DatabaseUser` | `string` |  |
+| `DatabasePassword` | `string` |  |
+| `AppName` | `string` |  |
+| `sid_registration` | `string` |  |
+| `UserName` | `string` |  |
+| `Md5Hash` | `string` |  |
+| `Locality` | `string` |  |
+| `SuperAdmin` | `boolean` |  |
+| `TTL` | `integer` |  |
+| `Token` | `string` |  |
+| `AccessToken` | `string` |  |
+| `GroupName` | `string` |  |
+| `Device` | `string` |  |
+| `DeviceType` | `string` |  |
+| `UserType` | `string` |  |
+| `Status` | `StatusDetails` |  |
+| `UserId` | `string` |  |
+| `Properties` | `object` |  |
+| `Email` | `string` |  |
+| `Server` | `string` |  |
+| `PushServer` | `string` |  |

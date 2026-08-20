@@ -2,8 +2,8 @@
 
 # PurchaseOrder (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/purchaseorder.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/purchaseorder.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -212,454 +212,454 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 
 ### `Add_AdditionalCostTypesResponse`
 
-| Property | Type |
-|---|---|
-| `NewAdditionalCostType` | `PurchaseOrderAdditionalCostType` |
+| Property | Type | Description |
+|---|---|---|
+| `NewAdditionalCostType` | `PurchaseOrderAdditionalCostType` | Added AdditionalCostType |
 
 ### `Add_PurchaseOrderExtendedPropertyResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `PurchaseOrderExtendedProperty[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `PurchaseOrderExtendedProperty[]` | Added purchase order extended properties |
 
 ### `CommonPurchaseOrderHeader`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseID` | `string` |
-| `fkSupplierId` | `string` |
-| `fkLocationId` | `string` |
-| `ExternalInvoiceNumber` | `string` |
-| `Status` | `string` |
-| `Currency` | `string` |
-| `SupplierReferenceNumber` | `string` |
-| `Locked` | `boolean` |
-| `UnitAmountTaxIncludedType` | `integer` |
-| `LineCount` | `integer` |
-| `DeliveredLinesCount` | `integer` |
-| `DateOfPurchase` | `string` |
-| `DateOfDelivery` | `string` |
-| `QuotedDeliveryDate` | `string` |
-| `PostagePaid` | `number` |
-| `TotalCost` | `number` |
-| `taxPaid` | `number` |
-| `ShippingTaxRate` | `number` |
-| `ConversionRate` | `number` |
-| `ConvertedShippingCost` | `number` |
-| `ConvertedShippingTax` | `number` |
-| `ConvertedOtherCost` | `number` |
-| `ConvertedOtherTax` | `number` |
-| `ConvertedGrandTotal` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseID` | `string` | Unique identifier for the purchase order. You have to use this ID for all updates to the PO |
+| `fkSupplierId` | `string` | Unique identifier for the supplier. Empty Guid is default supplier. Otherwise use Supplier API to get the names and additional data for the supplier |
+| `fkLocationId` | `string` | Unique idenfidier of the location where the PO is expected to be delivered to. Empty Guid is default location. Use Locations API methods to get the names and additional details for the locations |
+| `ExternalInvoiceNumber` | `string` | Purchase order reference number |
+| `Status` | `string` | Purchase order status. PENDING - purchase order can be changed, not yet affecting stock levels OPEN - purchase order is created and stock levels Due are reflected PARTIAL - partially delivered DELIVERED - fully delivered |
+| `Currency` | `string` | Currency of the monetary values in the purchase order |
+| `SupplierReferenceNumber` | `string` | Supplier reference number for the purchase order |
+| `Locked` | `boolean` | Identified whether the PO is locked. This is for external application use only. |
+| `UnitAmountTaxIncludedType` | `integer` | Unit amount includes,exclud or no tax. 0 - Tax Exclusive cost, 1 - Cost Inclusive of tax, 2 - No Tax |
+| `LineCount` | `integer` | Number of items in the purchase order |
+| `DeliveredLinesCount` | `integer` | Count of all purchase order lines which are delivered (lines where some but not all of the stock has been received are counted as undelivered) |
+| `DateOfPurchase` | `string` | DateTime of the purchase order UTC |
+| `DateOfDelivery` | `string` | DateTime of the purchase order delivered, will be set to DateOfPurchase until the PO is fully delivered UTC |
+| `QuotedDeliveryDate` | `string` | DateTime of the purchase order qouted/expected delivery date UTC |
+| `PostagePaid` | `number` | **DEPRECIATED** Use additional costs with Shipping flag to record shipping costs. This field remains available in the API for backward compatibility and acts pretty much like an additional cost item with type id = 0 |
+| `TotalCost` | `number` | Total purchase price of the purchase order. Calculated from all purchase order items including tax and postage. |
+| `taxPaid` | `number` | Total tax of the purchase order. Calculated from all purchase order items (excludes postage). |
+| `ShippingTaxRate` | `number` | **DEPRECIATED** Use additional costs with Shipping flag to record shipping costs. This field remains available in the API for backward compatibility and acts pretty much like an additional cost item with type id = 0 |
+| `ConversionRate` | `number` | Conversion rate of the purchase order currency. When PO is delivered Stock Value will be multipled by this conversion rate. For example if your system currency is GBP and Purchase order is in EUR the conversion rate is 0.81. |
+| `ConvertedShippingCost` | `number` | Total shipping cost of the purchase order, converted to system currency |
+| `ConvertedShippingTax` | `number` | Total shipping cost tax of the purchase order, converted to system currency |
+| `ConvertedOtherCost` | `number` | Total amount of additional costs of the purchase order, converted to system currency |
+| `ConvertedOtherTax` | `number` | Total tax amount of additional costs of the purchase order, converted to system currency |
+| `ConvertedGrandTotal` | `number` | Total amount of the purchase order, converted to system currency |
 
 ### `CreatePOsFromInventoryResponse`
 
-| Property | Type |
-|---|---|
-| `PurchaseOrders` | `object` |
-| `SkippedStockItems` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseOrders` | `object` | A dictionary where the key is supplier Id and the tuple represents the purchase order id and the external invoice number for that PO |
+| `SkippedStockItems` | `string[]` |  |
 
 ### `DeliverPurchaseOrderItemResponse`
 
-| Property | Type |
-|---|---|
-| `NewPurchaseOrderItem` | `PurchaseOrderItem` |
-| `PurchaseOrderHeader` | `PurchaseOrderHeader` |
-| `BatchInventoryId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `NewPurchaseOrderItem` | `PurchaseOrderItem` |  |
+| `PurchaseOrderHeader` | `PurchaseOrderHeader` |  |
+| `BatchInventoryId` | `integer` |  |
 
 ### `Deliver_PurchaseOrderItemAllNoBatchResponse`
 
-| Property | Type |
-|---|---|
-| `poHeaderAndItems` | `Deliver_PurchaseOrderItemAllResponse` |
-| `allItemsDelivered` | `boolean` |
-| `message` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `poHeaderAndItems` | `Deliver_PurchaseOrderItemAllResponse` | Delivered items and Recalculated purchase order header |
+| `allItemsDelivered` | `boolean` | Set to true if all items in the PO have been marked as delivered |
+| `message` | `string` | Informs customers why not all items have been marked as delivered |
 
 ### `Deliver_PurchaseOrderItemAllResponse`
 
-| Property | Type |
-|---|---|
-| `PurchaseOrderItems` | `CommonPurchaseOrderItem[]` |
-| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` |
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseOrderItems` | `CommonPurchaseOrderItem[]` | Delivered items |
+| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` | Recalculated purchase order header |
 
 ### `DownloadResponse`
 
-| Property | Type |
-|---|---|
-| `Url` | `string` |
-| `Path` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Url` | `string` |  |
+| `Path` | `string` |  |
 
 ### `FindStockItem_Response`
 
-| Property | Type |
-|---|---|
-| `Items` | `PurchaseItemFound[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `PurchaseItemFound[]` |  |
 
 ### `Get_AdditionalCostTypesResponse`
 
-| Property | Type |
-|---|---|
-| `AdditionalTypes` | `PurchaseOrderAdditionalCostType[]` |
+| Property | Type | Description |
+|---|---|---|
+| `AdditionalTypes` | `PurchaseOrderAdditionalCostType[]` | List of additional costs types |
 
 ### `Get_Additional_CostResponse`
 
-| Property | Type |
-|---|---|
-| `items` | `CommonPurchaseOrderAdditionalCost[]` |
+| Property | Type | Description |
+|---|---|---|
+| `items` | `CommonPurchaseOrderAdditionalCost[]` | List of additional cost items |
 
 ### `Get_DeliveredRecords_Response`
 
-| Property | Type |
-|---|---|
-| `Items` | `CommonPurchaseOrderDeliveredRecord[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `CommonPurchaseOrderDeliveredRecord[]` |  |
 
 ### `Get_EmailCSVFileResponse`
 
-| Property | Type |
-|---|---|
-| `Url` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Url` | `string` |  |
 
 ### `Get_EmailsSentResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `EmailSent[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `EmailSent[]` |  |
 
 ### `Get_PaymentStatementResponse`
 
-| Property | Type |
-|---|---|
-| `items` | `CommonPurchaseOrderPaymentStatement[]` |
+| Property | Type | Description |
+|---|---|---|
+| `items` | `CommonPurchaseOrderPaymentStatement[]` | List of payment statements |
 
 ### `Get_PurchaseOrderExtendedPropertyResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `PurchaseOrderExtendedProperty[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `PurchaseOrderExtendedProperty[]` | Purchase order extended properties |
 
 ### `Modify_AdditionalCostAllocationResponse`
 
-| Property | Type |
-|---|---|
-| `ModifiedItems` | `ModifiedAdditionalCostAllocationItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ModifiedItems` | `ModifiedAdditionalCostAllocationItem[]` | list of modified items with Ids matched to CostAllocationId |
 
 ### `Modify_PurchaseOrderItems_BulkResponse`
 
-| Property | Type |
-|---|---|
-| `ModifiedItems` | `ModifiedPurchaseOrderItem[]` |
-| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` |
+| Property | Type | Description |
+|---|---|---|
+| `ModifiedItems` | `ModifiedPurchaseOrderItem[]` | Modified purchase order items. Newly added items, updated items. Deleted items not returned back to the client. |
+| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` | Recalculated purchase order header |
 
 ### `PurchaseOrderAudit`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseAuditTrailId` | `string` |
-| `AuditTrailDateTimeStamp` | `string` |
-| `fkPurchaseId` | `string` |
-| `AuditTrailType` | `string` |
-| `AuditTrailTag` | `string` |
-| `AuditTrailNote` | `string` |
-| `UserName` | `string` |
-| `AuditTrailDate` | `string` |
-| `AuditTrailTime` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseAuditTrailId` | `string` | Purchase audit trail ID |
+| `AuditTrailDateTimeStamp` | `string` | When purchase order audit record was made |
+| `fkPurchaseId` | `string` | Purchase order ID |
+| `AuditTrailType` | `string` | Audit record type |
+| `AuditTrailTag` | `string` | Audit record type |
+| `AuditTrailNote` | `string` | Purchase audit record text |
+| `UserName` | `string` | User whose actions are being audited |
+| `AuditTrailDate` | `string` | Date when purchase order audit record was created |
+| `AuditTrailTime` | `string` | Time when purchase order audit record was created |
 
 ### `PurchaseOrderModify_AdditionalCostResponse`
 
-| Property | Type |
-|---|---|
-| `ModifiedItems` | `CommonModifiedAdditionalCostItem[]` |
-| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` |
+| Property | Type | Description |
+|---|---|---|
+| `ModifiedItems` | `CommonModifiedAdditionalCostItem[]` | List of modified items, added or updated. Each item has Id which was provided in the request |
+| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` | Purchase order header with recalculated total |
 
 ### `PurchaseOrderModify_PaymentStatementResponse`
 
-| Property | Type |
-|---|---|
-| `ModifiedItems` | `ModifiedPaymentStatementItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ModifiedItems` | `ModifiedPaymentStatementItem[]` | List of modified items, added or updated. Each item has Id which was provided in the request |
 
 ### `PurchaseOrderNote`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseOrderNoteId` | `string` |
-| `Note` | `string` |
-| `NoteDateTime` | `string` |
-| `UserName` | `string` |
-| `NoteDate` | `string` |
-| `NoteTime` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseOrderNoteId` | `string` | Unique identifier for the purchase order note. Use this ID in Delete/Modify calls |
+| `Note` | `string` | Note text |
+| `NoteDateTime` | `string` | Note added datetime UTC |
+| `UserName` | `string` | Username of Note author |
+| `NoteDate` | `string` | Format the Note Date |
+| `NoteTime` | `string` | Format the Note Time |
 
 ### `PurchaseOrderResponse`
 
-| Property | Type |
-|---|---|
-| `NoteCount` | `integer` |
-| `PurchaseOrderHeader` | `PurchaseOrderHeader` |
-| `PurchaseOrderItem` | `PurchaseOrderItem[]` |
-| `AdditionalCosts` | `PurchaseOrderAdditionalCost[]` |
-| `PaymentStatements` | `PurchaseOrderPaymentStatement[]` |
-| `DeliveredRecords` | `PurchaseOrderDeliveredRecord[]` |
+| Property | Type | Description |
+|---|---|---|
+| `NoteCount` | `integer` |  |
+| `PurchaseOrderHeader` | `PurchaseOrderHeader` |  |
+| `PurchaseOrderItem` | `PurchaseOrderItem[]` |  |
+| `AdditionalCosts` | `PurchaseOrderAdditionalCost[]` |  |
+| `PaymentStatements` | `PurchaseOrderPaymentStatement[]` |  |
+| `DeliveredRecords` | `PurchaseOrderDeliveredRecord[]` |  |
 
 ### `PurchaseOrder_Add_AdditionalCostTypesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Add_AdditionalCostTypesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Add_AdditionalCostTypesRequest` |  |
 
 ### `PurchaseOrder_Add_PurchaseOrderExtendedPropertyRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Add_PurchaseOrderExtendedPropertyRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Add_PurchaseOrderExtendedPropertyRequest` |  |
 
 ### `PurchaseOrder_Add_PurchaseOrderItemRequest`
 
-| Property | Type |
-|---|---|
-| `addItemParameter` | `Add_PurchaseOrderItemParameter` |
+| Property | Type | Description |
+|---|---|---|
+| `addItemParameter` | `Add_PurchaseOrderItemParameter` |  |
 
 ### `PurchaseOrder_Add_PurchaseOrderNoteRequest`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseId` | `string` |
-| `Note` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
+| `Note` | `string` |  |
 
 ### `PurchaseOrder_Change_PurchaseOrderStatusRequest`
 
-| Property | Type |
-|---|---|
-| `changeStatusParameter` | `Change_PurchaseOrderStatusParameter` |
+| Property | Type | Description |
+|---|---|---|
+| `changeStatusParameter` | `Change_PurchaseOrderStatusParameter` |  |
 
 ### `PurchaseOrder_CreatePOsFromInventoryRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CreatePOsFromInventoryRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CreatePOsFromInventoryRequest` |  |
 
 ### `PurchaseOrder_Create_PurchaseOrder_InitialRequest`
 
-| Property | Type |
-|---|---|
-| `createParameters` | `Create_PurchaseOrder_InitialParameter` |
+| Property | Type | Description |
+|---|---|---|
+| `createParameters` | `Create_PurchaseOrder_InitialParameter` |  |
 
 ### `PurchaseOrder_Delete_AdditionalCostTypesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Delete_AdditionalCostTypesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Delete_AdditionalCostTypesRequest` |  |
 
 ### `PurchaseOrder_Delete_PurchaseOrderExtendedPropertyRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Delete_PurchaseOrderExtendedPropertyRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Delete_PurchaseOrderExtendedPropertyRequest` |  |
 
 ### `PurchaseOrder_Delete_PurchaseOrderItemRequest`
 
-| Property | Type |
-|---|---|
-| `deleteItemParameter` | `Delete_PurchaseOrderItemParameter` |
+| Property | Type | Description |
+|---|---|---|
+| `deleteItemParameter` | `Delete_PurchaseOrderItemParameter` |  |
 
 ### `PurchaseOrder_Delete_PurchaseOrderNoteRequest`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseId` | `string` |
-| `pkPurchaseOrderNoteId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
+| `pkPurchaseOrderNoteId` | `string` |  |
 
 ### `PurchaseOrder_Delete_PurchaseOrderRequest`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
 
 ### `PurchaseOrder_Deliver_PurchaseItemAllRequest`
 
-| Property | Type |
-|---|---|
-| `purchaseId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `purchaseId` | `string` |  |
 
 ### `PurchaseOrder_Deliver_PurchaseItemAll_ExceptBatchItemsRequest`
 
-| Property | Type |
-|---|---|
-| `purchaseId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `purchaseId` | `string` |  |
 
 ### `PurchaseOrder_Deliver_PurchaseItemRequest`
 
-| Property | Type |
-|---|---|
-| `deliverItemParameter` | `DeliverPurchaseOrderItemRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `deliverItemParameter` | `DeliverPurchaseOrderItemRequest` |  |
 
 ### `PurchaseOrder_Deliver_PurchaseItems_WithQuantityRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeliverAllPurchaseOrderItemsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeliverAllPurchaseOrderItemsRequest` |  |
 
 ### `PurchaseOrder_ExportPurchaseOrderRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `ExportPurchaseOrderSettingModel` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `ExportPurchaseOrderSettingModel` |  |
 
 ### `PurchaseOrder_FindStockItemRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `FindStockItemRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `FindStockItemRequest` |  |
 
 ### `PurchaseOrder_GetPurchaseOrderStatusListRequest`
 
 ### `PurchaseOrder_GetPurchaseOrdersWithStockItemsRequest`
 
-| Property | Type |
-|---|---|
-| `purchaseOrder` | `PurchaseOrderWithStockItem` |
+| Property | Type | Description |
+|---|---|---|
+| `purchaseOrder` | `PurchaseOrderWithStockItem` |  |
 
 ### `PurchaseOrder_Get_AdditionalCostTypesRequest`
 
 ### `PurchaseOrder_Get_Additional_CostRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Get_Additional_CostRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Get_Additional_CostRequest` |  |
 
 ### `PurchaseOrder_Get_DeliveredRecordsRequest`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
 
 ### `PurchaseOrder_Get_EmailCSVFileRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Get_EmailCSVFileRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Get_EmailCSVFileRequest` |  |
 
 ### `PurchaseOrder_Get_EmailsSentRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Get_EmailsSentRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Get_EmailsSentRequest` |  |
 
 ### `PurchaseOrder_Get_Payment_StatementRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Get_PaymentStatementRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Get_PaymentStatementRequest` |  |
 
 ### `PurchaseOrder_Get_PurchaseOrderAuditRequest`
 
-| Property | Type |
-|---|---|
-| `auditLog` | `Search_PurchaseOrder_AuditLog` |
+| Property | Type | Description |
+|---|---|---|
+| `auditLog` | `Search_PurchaseOrder_AuditLog` |  |
 
 ### `PurchaseOrder_Get_PurchaseOrderExtendedPropertyRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Get_PurchaseOrderExtendedPropertyRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Get_PurchaseOrderExtendedPropertyRequest` |  |
 
 ### `PurchaseOrder_Get_PurchaseOrderNoteRequest`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
 
 ### `PurchaseOrder_Get_PurchaseOrderRequest`
 
-| Property | Type |
-|---|---|
-| `pkPurchaseId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
 
 ### `PurchaseOrder_Modify_AdditionalCostAllocationRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Modify_AdditionalCostAllocationRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Modify_AdditionalCostAllocationRequest` |  |
 
 ### `PurchaseOrder_Modify_AdditionalCostRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Modify_AdditionalCostRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Modify_AdditionalCostRequest` |  |
 
 ### `PurchaseOrder_Modify_PaymentStatementRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Modify_PaymentStatementRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Modify_PaymentStatementRequest` |  |
 
 ### `PurchaseOrder_Modify_PurchaseOrderItems_BulkRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Modify_PurchaseOrderItems_BulkRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Modify_PurchaseOrderItems_BulkRequest` |  |
 
 ### `PurchaseOrder_Search_PurchaseOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `searchParameter` | `Search_PurchaseOrderParameter` |
+| Property | Type | Description |
+|---|---|---|
+| `searchParameter` | `Search_PurchaseOrderParameter` |  |
 
 ### `PurchaseOrder_Update_AdditionalCostTypesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Update_AdditionalCostTypesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Update_AdditionalCostTypesRequest` |  |
 
 ### `PurchaseOrder_Update_PurchaseOrderExtendedPropertyRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `Update_PurchaseOrderExtendedPropertyRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `Update_PurchaseOrderExtendedPropertyRequest` |  |
 
 ### `PurchaseOrder_Update_PurchaseOrderHeaderRequest`
 
-| Property | Type |
-|---|---|
-| `updateParameter` | `Update_PurchaseOrderHeaderParameter` |
+| Property | Type | Description |
+|---|---|---|
+| `updateParameter` | `Update_PurchaseOrderHeaderParameter` |  |
 
 ### `PurchaseOrder_Update_PurchaseOrderItemRequest`
 
-| Property | Type |
-|---|---|
-| `updateItemParameter` | `Update_PurchaseOrderItemParameter` |
+| Property | Type | Description |
+|---|---|---|
+| `updateItemParameter` | `Update_PurchaseOrderItemParameter` |  |
 
 ### `Search_PurchaseOrder2Request`
 
-| Property | Type |
-|---|---|
-| `DateFrom` | `string` |
-| `DateTo` | `string` |
-| `Status` | `string` |
-| `SearchValue` | `string` |
-| `SearchType` | `string` |
-| `EntriesPerPage` | `integer` |
-| `PageNumber` | `integer` |
-| `Location` | `string[]` |
-| `Supplier` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `DateFrom` | `string` | Purchase order date range from (optional) |
+| `DateTo` | `string` | Purchase order date range to (optional) |
+| `Status` | `string` | Purchase order status: PENDING - purchase order can be changed, not yet affecting stock levels OPEN - purchase order is created and stock levels Due are reflected PARTIAL - partially delivered DELIVERED - fully delivered |
+| `SearchValue` | `string` | Specifies search value to filter with result set |
+| `SearchType` | `string` | Specifies search value type for search value |
+| `EntriesPerPage` | `integer` | Number of records returned, sorted by Purchase Order Date |
+| `PageNumber` | `integer` | Page Number |
+| `Location` | `string[]` | Current Location |
+| `Supplier` | `string[]` | Current Supplier |
 
 ### `Search_PurchaseOrdersResult`
 
-| Property | Type |
-|---|---|
-| `Result` | `CommonPurchaseOrderHeader[]` |
-| `TotalPages` | `integer` |
-| `CurrentPageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalNumberOfRecords` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Result` | `CommonPurchaseOrderHeader[]` | List of purchase order headers |
+| `TotalPages` | `integer` | Total number of pages |
+| `CurrentPageNumber` | `integer` | Currently request page number |
+| `EntriesPerPage` | `integer` | Requested entries per page |
+| `TotalNumberOfRecords` | `integer` | Total number of records matching the search request |
 
 ### `Update_AdditionalCostTypesResponse`
 
-| Property | Type |
-|---|---|
-| `UpdatedAdditionalCostType` | `PurchaseOrderAdditionalCostType` |
+| Property | Type | Description |
+|---|---|---|
+| `UpdatedAdditionalCostType` | `PurchaseOrderAdditionalCostType` | Update additional cost type |
 
 ### `Update_PurchaseOrderItemResponse`
 
-| Property | Type |
-|---|---|
-| `NewPurchaseOrderItem` | `CommonPurchaseOrderItem` |
-| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` |
-| `BatchInventoryId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `NewPurchaseOrderItem` | `CommonPurchaseOrderItem` | Newly added purchase order line |
+| `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` | Recalculated purchase order header |
+| `BatchInventoryId` | `integer` | If the item was batched or booked into a WMS location, this is the batch inventory id for the booked in stock. If an item was not delivered or was a non batched item, this will be null. |

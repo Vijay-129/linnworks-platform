@@ -2,8 +2,8 @@
 
 # GenericListings (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/genericlistings.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/genericlistings.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -74,136 +74,136 @@ Use this call to delete a configurator. More information on configurators can be
 
 ### `CreateConfiguratorResponse`
 
-| Property | Type |
-|---|---|
-| `CreatedConfiguratorInfo` | `object` |
-| `CreatedConfiguratorId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `CreatedConfiguratorInfo` | `object` |  |
+| `CreatedConfiguratorId` | `integer` |  |
 
 ### `CreateTemplatesResponse`
 
-| Property | Type |
-|---|---|
-| `TemplatesInfo` | `object[]` |
-| `AllCreatedIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `TemplatesInfo` | `object[]` |  |
+| `AllCreatedIds` | `integer[]` |  |
 
 ### `DeleteConfiguratorsResponse`
 
-| Property | Type |
-|---|---|
-| `DeletedIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `DeletedIds` | `integer[]` |  |
 
 ### `GenericListings_CreateConfiguratorRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CreateConfiguratorRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CreateConfiguratorRequest` |  |
 
 ### `GenericListings_CreateTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CreateTemplatesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CreateTemplatesRequest` |  |
 
 ### `GenericListings_DeleteConfiguratorsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteConfiguratorsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteConfiguratorsRequest` |  |
 
 ### `GenericListings_GetConfiguratorDataRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetConfiguratorDataRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetConfiguratorDataRequest` |  |
 
 ### `GenericListings_GetConfiguratorDescriptionRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetConfiguratorDataRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetConfiguratorDataRequest` |  |
 
 ### `GenericListings_GetConfiguratorsInfoPagedRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetConfiguratorsInfoPagedRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetConfiguratorsInfoPagedRequest` |  |
 
 ### `GenericListings_OpenTemplatesByInventoryRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `OpenTemplatesByInventoryRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `OpenTemplatesByInventoryRequest` |  |
 
 ### `GenericListings_ProcessTemplatesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `ProcessTemplatesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `ProcessTemplatesRequest` |  |
 
 ### `GenericListings_SaveConfiguratorDataRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SaveConfiguratorDataRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SaveConfiguratorDataRequest` |  |
 
 ### `GenericListings_SaveConfiguratorDescriptionRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SaveConfiguratorDescriptionRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SaveConfiguratorDescriptionRequest` |  |
 
 ### `GenericListings_SaveConfiguratorFieldsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SaveConfiguratorFieldsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SaveConfiguratorFieldsRequest` |  |
 
 ### `GenericListings_SaveTemplateFieldsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SaveTemplateFieldsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SaveTemplateFieldsRequest` |  |
 
 ### `GetConfiguratorDataResponse`
 
-| Property | Type |
-|---|---|
-| `Data` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `Data` | `object` |  |
 
 ### `GetConfiguratorDescriptionResponse`
 
-| Property | Type |
-|---|---|
-| `Data` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Data` | `string` |  |
 
 ### `GetConfiguratorsInfoResponse`
 
-| Property | Type |
-|---|---|
-| `ConfiguratorsInfo` | `object[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ConfiguratorsInfo` | `object[]` |  |
 
 ### `OpenTemplatesByInventoryResponse`
 
-| Property | Type |
-|---|---|
-| `TotalEntries` | `integer` |
-| `TemplatesInfo` | `object[]` |
+| Property | Type | Description |
+|---|---|---|
+| `TotalEntries` | `integer` |  |
+| `TemplatesInfo` | `object[]` |  |
 
 ### `ProcessTemplatesResponse`
 
 ### `SaveConfiguratorDataResponse`
 
-| Property | Type |
-|---|---|
-| `IsSaved` | `boolean` |
-| `ValidationResults` | `IValidationResults` |
+| Property | Type | Description |
+|---|---|---|
+| `IsSaved` | `boolean` |  |
+| `ValidationResults` | `IValidationResults` | Whether this particular configurator data is valid to send to channel. |
 
 ### `SaveConfiguratorDescriptionResponse`
 
-| Property | Type |
-|---|---|
-| `IsSaved` | `boolean` |
-| `ErrorMessage` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `IsSaved` | `boolean` |  |
+| `ErrorMessage` | `string` |  |
 
 ### `SaveConfiguratorFieldsResponse`
 

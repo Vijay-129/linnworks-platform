@@ -2,8 +2,8 @@
 
 # PrintService (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/printservice.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/printservice.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -39,9 +39,9 @@ Generate a PDF preview of a specific template
 
 Get list of templates for a specific type
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `templateType` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `templateType` | query | `string` | False | The template type to load (e.g. Warehouse Transfer). Empty body will return them all |
 
 ### GET `/api/PrintService/VP_GetPrinters`
 
@@ -63,109 +63,109 @@ Creates a PDF file of return shipping labels for a single order
 
 ### `CreatePDFResult`
 
-| Property | Type |
-|---|---|
-| `KeyedError` | `PrintError[]` |
-| `URL` | `string` |
-| `IdsProcessed` | `string[]` |
-| `ProcessedIds` | `object` |
-| `PageCount` | `integer` |
-| `PrintErrors` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `KeyedError` | `PrintError[]` |  |
+| `URL` | `string` | URL to PDF file |
+| `IdsProcessed` | `string[]` | List of processed order or item IDs |
+| `ProcessedIds` | `object` |  |
+| `PageCount` | `integer` |  |
+| `PrintErrors` | `string[]` | List of OrderId / Error message |
 
 ### `PermissionsUser`
 
-| Property | Type |
-|---|---|
-| `UserId` | `integer` |
-| `fkUserId` | `string` |
-| `SuperAdmin` | `boolean` |
-| `EmailAddress` | `string` |
-| `UserType` | `string` |
-| `TotpAuthenticationEnabled` | `boolean` |
-| `PasswordProblems` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `UserId` | `integer` |  |
+| `fkUserId` | `string` |  |
+| `SuperAdmin` | `boolean` |  |
+| `EmailAddress` | `string` |  |
+| `UserType` | `string` |  |
+| `TotpAuthenticationEnabled` | `boolean` |  |
+| `PasswordProblems` | `integer` |  |
 
 ### `PrintService_CreatePDFfromJobForceTemplateRequest`
 
-| Property | Type |
-|---|---|
-| `templateType` | `string` |
-| `IDs` | `string[]` |
-| `templateID` | `integer` |
-| `parameters` | `KeyValue_String_String[]` |
-| `printerName` | `string` |
-| `printZoneCode` | `string` |
-| `pageStartNumber` | `integer` |
-| `operationId` | `string` |
-| `context` | `ClientContext` |
+| Property | Type | Description |
+|---|---|---|
+| `templateType` | `string` |  |
+| `IDs` | `string[]` |  |
+| `templateID` | `integer` |  |
+| `parameters` | `KeyValue_String_String[]` |  |
+| `printerName` | `string` |  |
+| `printZoneCode` | `string` |  |
+| `pageStartNumber` | `integer` |  |
+| `operationId` | `string` |  |
+| `context` | `ClientContext` |  |
 
 ### `PrintService_CreatePDFfromJobForceTemplateStockInRequest`
 
-| Property | Type |
-|---|---|
-| `templateType` | `string` |
-| `PrintingKeys` | `PrintingKey[]` |
-| `templateID` | `integer` |
-| `parameters` | `KeyValue_String_String[]` |
-| `printerName` | `string` |
-| `printZoneCode` | `string` |
-| `pageStartNumber` | `integer` |
-| `operationId` | `string` |
-| `context` | `ClientContext` |
+| Property | Type | Description |
+|---|---|---|
+| `templateType` | `string` |  |
+| `PrintingKeys` | `PrintingKey[]` |  |
+| `templateID` | `integer` |  |
+| `parameters` | `KeyValue_String_String[]` |  |
+| `printerName` | `string` |  |
+| `printZoneCode` | `string` |  |
+| `pageStartNumber` | `integer` |  |
+| `operationId` | `string` |  |
+| `context` | `ClientContext` |  |
 
 ### `PrintService_CreatePDFfromJobForceTemplateWithQuantitiesRequest`
 
-| Property | Type |
-|---|---|
-| `templateType` | `string` |
-| `IDsAndQuantities` | `KeyValue_Guid_Int32[]` |
-| `templateID` | `integer` |
-| `parameters` | `KeyValue_String_String[]` |
-| `printerName` | `string` |
-| `printZoneCode` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `templateType` | `string` |  |
+| `IDsAndQuantities` | `KeyValue_Guid_Int32[]` |  |
+| `templateID` | `integer` |  |
+| `parameters` | `KeyValue_String_String[]` |  |
+| `printerName` | `string` |  |
+| `printZoneCode` | `string` |  |
 
 ### `PrintService_CreateReturnShippingLabelsPDFRequest`
 
-| Property | Type |
-|---|---|
-| `IDs` | `string[]` |
-| `orderItemIdsAndQuantities` | `KeyValue_Guid_Int32[]` |
-| `returnPostalServiceName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `IDs` | `string[]` |  |
+| `orderItemIdsAndQuantities` | `KeyValue_Guid_Int32[]` |  |
+| `returnPostalServiceName` | `string` |  |
 
 ### `PrintService_CreateReturnShippingLabelsPDFWithSKUsRequest`
 
-| Property | Type |
-|---|---|
-| `referenceNum` | `string` |
-| `SKUsAndQuantities` | `KeyValue_String_Int32[]` |
-| `returnPostalServiceName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `referenceNum` | `string` |  |
+| `SKUsAndQuantities` | `KeyValue_String_Int32[]` |  |
+| `returnPostalServiceName` | `string` |  |
 
 ### `PrintService_PrintTemplatePreviewRequest`
 
-| Property | Type |
-|---|---|
-| `templateId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `templateId` | `integer` |  |
 
 ### `TemplateHeader`
 
-| Property | Type |
-|---|---|
-| `pkTemplateRowId` | `integer` |
-| `TemplateId` | `string` |
-| `TemplateType` | `string` |
-| `TemplateName` | `string` |
-| `Enabled` | `boolean` |
-| `IsDefault` | `boolean` |
-| `IsEmailAttachment` | `boolean` |
-| `VisibilityCondition` | `string` |
-| `bLogicalDelete` | `boolean` |
-| `IsConditional` | `boolean` |
-| `ConditionRating` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTemplateRowId` | `integer` |  |
+| `TemplateId` | `string` |  |
+| `TemplateType` | `string` |  |
+| `TemplateName` | `string` |  |
+| `Enabled` | `boolean` |  |
+| `IsDefault` | `boolean` |  |
+| `IsEmailAttachment` | `boolean` |  |
+| `VisibilityCondition` | `string` |  |
+| `bLogicalDelete` | `boolean` |  |
+| `IsConditional` | `boolean` |  |
+| `ConditionRating` | `integer` |  |
 
 ### `VirtualPrinter`
 
-| Property | Type |
-|---|---|
-| `PrinterName` | `string` |
-| `PrinterLocationName` | `string` |
-| `PrinterLocalName` | `string` |
-| `Status` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `PrinterName` | `string` | Name used to identify the printer in linnworks |
+| `PrinterLocationName` | `string` | Name used to identify the instance of the virtual printer client |
+| `PrinterLocalName` | `string` | Printer name as seen in windows OS (e.g. Microsoft Print to PDF) |
+| `Status` | `string` | Whether the printer is online or offline |

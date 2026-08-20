@@ -2,8 +2,8 @@
 
 # Inventory (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/inventory.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/inventory.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -169,19 +169,19 @@ Use this call to get all possible price change tags for all channels
 
 Use this call to get stock item price rules by price id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemPriceId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemPriceId` | query | `string` | False | Price ID of an item |
 
 ### GET `/api/Inventory/GetInventoryItemPriceRulesBySource`
 
 Use this call to get stock item price rules by item id, source and subsource
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
-| `source` | query | `string` | False |
-| `subSource` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Stock item id |
+| `source` | query | `string` | False | Channel source |
+| `subSource` | query | `string` | False | Channel subsource |
 
 ### POST `/api/Inventory/CreateInventoryItemPricingRules`
 
@@ -199,9 +199,9 @@ Use this call to update stock item price rules Permissions Required: GlobalPermi
 
 Use this call to get stockitem Descriptions
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | stockitem id |
 
 ### POST `/api/Inventory/CreateInventoryItemDescriptions`
 
@@ -223,11 +223,11 @@ Use this call to get labels by search token
 
 Used to get batch info for stock item for all locations
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
-| `onlyAvailable` | query | `boolean` | False |
-| `stockLocationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Item id |
+| `onlyAvailable` | query | `boolean` | False | If true, only available batches will be returned |
+| `stockLocationId` | query | `string` | False |  |
 
 ### POST `/api/Inventory/GetBatchInventoryById`
 
@@ -261,9 +261,9 @@ Used to create new batches
 
 Used to check if stock item has batches
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Stock item unique identifier |
 
 ### POST `/api/Inventory/UpdateCompositeParentStockLevel`
 
@@ -277,9 +277,9 @@ Permissions Required: GlobalPermissions.Inventory.Stock.StockWrite.ChangeStockIt
 
 Use this call to get a list of Ebay Compatibility Permissions Required: GlobalPermissions.Inventory.MyInventoryNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Stock Item Id |
 
 ### POST `/api/Inventory/InsertUpdateEbayCompatibilityList`
 
@@ -361,17 +361,17 @@ Use this call to get all channels
 
 Use this call to get channels by source
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `source` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `source` | query | `string` | False | Channel source |
 
 ### GET `/api/Inventory/GetExtendedPropertyNames`
 
 Use this call to get all available extended property names
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `propertyType` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `propertyType` | query | `string` | False |  |
 
 ### GET `/api/Inventory/GetAllExtendedPropertyNames`
 
@@ -413,9 +413,9 @@ Update and return stock level records for the stock item Permissions Required: G
 
 Use this call to get all product details
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `id` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `id` | query | `string` | False |  |
 
 ### GET `/api/Inventory/GetUserSpecificViews`
 
@@ -441,10 +441,10 @@ Use this call to get pre-defined (standard) views
 
 Use this call to get total items count
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `includeDeleted` | query | `boolean` | False |
-| `includeArchived` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `includeDeleted` | query | `boolean` | False | Include deleted items |
+| `includeArchived` | query | `boolean` | False | Include archived items |
 
 ### POST `/api/Inventory/AddInventoryItem`
 
@@ -490,9 +490,9 @@ Use this call to adjust templates
 
 Use this call to get stockitem channel skus
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | stockitem id |
 
 ### POST `/api/Inventory/BatchGetInventoryItemChannelSKUs`
 
@@ -502,9 +502,9 @@ Use this call to get stock item channel skus for a list of inventory items
 
 Use this call to retrieve all stock item channel sku's with location for a given channel sku RowId
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `channelSKURowId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `channelSKURowId` | query | `string` | False | ChannelSKU record Id |
 
 ### POST `/api/Inventory/UpdateInventoryItemChannelSKUs`
 
@@ -526,11 +526,11 @@ Use this call to delete stockitem channel skus
 
 Use this call to check if ChannelSKU is linked
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `channelSKU` | query | `string` | False |
-| `source` | query | `string` | False |
-| `subSource` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `channelSKU` | query | `string` | False | Product Channel SKU |
+| `source` | query | `string` | False | ChannelName/Source (e.g. EBAY) |
+| `subSource` | query | `string` | False | Subsource (e.g. EBAY1) |
 
 ### POST `/api/Inventory/UnlinkChannelListing`
 
@@ -540,9 +540,9 @@ Use this call to unlink inventory listing from inventory item
 
 Use this call to get StockItem AuditTrail
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | StockItem unique identifier |
 
 ### POST `/api/Inventory/GetInventoryItemAuditTrailPaged`
 
@@ -568,10 +568,10 @@ Used to update batch details for stock item Permissions Required: GlobalPermissi
 
 Use this call to get inventory item images
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
-| `itemNumber` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | Conditional. If not provided, you must provide ItemNumber |
+| `itemNumber` | query | `string` | False | Conditional. if InventoryItemId is provided, ItemNumber will be ignored |
 
 ### POST `/api/Inventory/GetStockItemIdsBySKU`
 
@@ -657,17 +657,17 @@ Use this call to get all stock locations
 
 Checks whether a location is FBA or has an enabled inventory update import
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `locationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `locationId` | query | `string` | False | Location ID |
 
 ### GET `/api/Inventory/GetInventoryItemLocations`
 
 Use this call to get stock item locations bin/rack
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | Stock item ID |
 
 ### POST `/api/Inventory/AddItemLocations`
 
@@ -685,10 +685,10 @@ Use this call to delete stock item locations bin/rack Permissions Required: Glob
 
 Use this call to get all StockItem Compositions
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
-| `getFullDetail` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | Id of StockItem |
+| `getFullDetail` | query | `boolean` | False | Indicate if the method has to be recursive, going throw inner composites, getting only real items |
 
 ### POST `/api/Inventory/GetInventoryItemsCompositionByIds`
 
@@ -726,9 +726,9 @@ Use this call to delete stockitem Extended Properties Permissions Required: Glob
 
 Use this call to get stockitem Titles
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | stockitem id |
 
 ### POST `/api/Inventory/CreateInventoryItemTitles`
 
@@ -750,9 +750,9 @@ Use this call to retrieve list of all Suppliers' names
 
 Use this call to retrieve details of one Supplier Permissions Required: GlobalPermissions.Inventory.InventorySettings.SuppliersNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `supplierId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `supplierId` | query | `string` | False | Supplier ID |
 
 ### POST `/api/Inventory/AddSupplier`
 
@@ -770,17 +770,17 @@ Use this call delete Supplied by Id List of Supplier IDs Permissions Required: G
 
 Use this call to retrieve report about "item supplier stat"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | Used to specify report stock item id |
 
 ### GET `/api/Inventory/GetStockSupplierStatsBulk`
 
 Use this call to retrieve report about "item supplier stat"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemIds` | query | `array` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemIds` | query | `array` | False | Used to specify report stock item ids |
 
 ### POST `/api/Inventory/CreateStockSupplierStat`
 
@@ -798,9 +798,9 @@ Use this call to delete item supplier stat
 
 Use this call to get stock item prices by channel
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `inventoryItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `inventoryItemId` | query | `string` | False | Stock item id |
 
 ### POST `/api/Inventory/CreateInventoryItemPrices`
 
@@ -810,1291 +810,1291 @@ Use this call to create stock item prices for a specific channel Permissions Req
 
 ### `AddImageToInventoryItemResponse`
 
-| Property | Type |
-|---|---|
-| `StockItemId` | `string` |
-| `ImageId` | `string` |
-| `ImageUrl` | `string` |
-| `ImageThumbnailUrl` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | pkStockItemId of an item |
+| `ImageId` | `string` | ImageId of newly added image |
+| `ImageUrl` | `string` | Image new URL |
+| `ImageThumbnailUrl` | `string` | Image Thumbnail URL |
 
 ### `AddScrapCategoriesResponse`
 
-| Property | Type |
-|---|---|
-| `ScrapCategories` | `ScrapCategory[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ScrapCategories` | `ScrapCategory[]` |  |
 
 ### `AddScrapItemResponse`
 
-| Property | Type |
-|---|---|
-| `ScrapItem` | `ScrapItem` |
+| Property | Type | Description |
+|---|---|---|
+| `ScrapItem` | `ScrapItem` |  |
 
 ### `AnyConfig`
 
-| Property | Type |
-|---|---|
-| `SourceVersion` | `ConfigItem_String` |
-| `Enabled` | `ConfigItem_Boolean` |
-| `ChannelTag` | `ConfigItem_String` |
-| `ChannelLocationBinding` | `ConfigChannelLocationBinding` |
-| `IsMultiLocation` | `ConfigItem_Boolean` |
-| `AutoPopulatedLocations` | `ConfigItem_Boolean` |
-| `CanModifyLocationsOnChannel` | `ConfigItem_Boolean` |
-| `BopisSupported` | `ConfigItem_Boolean` |
-| `ProcessPosOrders` | `ConfigProperty_Boolean` |
-| `DespatchNotes` | `ConfigItem_Boolean` |
-| `CancellationNotes` | `ConfigItem_Boolean` |
-| `AutoRespondCancellationRequests` | `ConfigItem_Boolean` |
-| `CancellationResponseType` | `ConfigPropertySelectionList_SelectStringValueOption_String` |
-| `RefundNotes` | `ConfigItem_Boolean` |
-| `DownloadRefunds` | `ConfigItem_Boolean` |
-| `ReturnNotes` | `ConfigItem_Boolean` |
-| `DownloadReturns` | `ConfigItem_Boolean` |
-| `OrderSaveLocation` | `ConfigPropertySelectionList_SelectStringValueOption_Guid` |
-| `OrderSyncDate` | `ConfigItem_DateTime` |
-| `OrderCancellationCheckDate` | `ConfigItem_DateTime` |
-| `ConfigDiscount` | `ConfigPropertySelectionList_SelectStringValueOption_String` |
-| `OrderDownloadErrorCount` | `ConfigItem_Int32` |
-| `OrderDownloadGlobalErrorCount` | `ConfigItem_Int32` |
-| `OrderDespatchErrorCount` | `ConfigItem_Int32` |
-| `OrderDespatchGlobalErrorCount` | `ConfigItem_Int32` |
-| `OrderCancellationCheckErrorCount` | `ConfigItem_Int32` |
-| `OrderCancellationCheckGlobalErrorCount` | `ConfigItem_Int32` |
-| `RmaDownloadErrorCount` | `ConfigItem_Int32` |
-| `RmaDownloadGlobalErrorCount` | `ConfigItem_Int32` |
-| `HidesHeaderAttributes` | `ConfigProperty_Boolean` |
-| `InventorySync` | `ConfigItem_Boolean` |
-| `StockLocationBinding` | `ConfigStockLocationBinding` |
-| `MaxListed` | `ConfigItem_Int32` |
-| `StockPercentage` | `ConfigItem_Double` |
-| `EndWhen` | `ConfigItem_Int32` |
-| `InvSyncErrorCount` | `ConfigItem_Int32` |
-| `ExtractInventory` | `ConfigProperty_Boolean` |
-| `ExtractInventoryVariationMappingPropertyName` | `ConfigProperty_String` |
-| `PriceChange` | `ConfigItem_Boolean` |
-| `PriceChangeErrorCount` | `ConfigItem_Int32` |
-| `IsInventorySyncTriggerEnabled` | `ConfigProperty_Boolean` |
-| `IsListingScanRunning` | `ConfigItem_Boolean` |
-| `ListingScanStartUpdateDate` | `ConfigItem_DateTime` |
-| `LastListingUpdateDate` | `ConfigItem_DateTime` |
-| `EstimatedInventoryScanComplete` | `ConfigItem_DateTime` |
-| `IsHeaderOnly` | `boolean` |
-| `IsHidden` | `boolean` |
-| `DisplayName` | `string` |
-| `DynamicProperties` | `ConfigItemExternal[]` |
-| `ConfigDiscountTyped` | `string` |
-| `PostalServiceMapping` | `ConfigPostalServiceMapping` |
-| `PaymentMethodMapping` | `ConfigPaymentMethodMapping` |
-| `PkChannelId` | `integer` |
-| `Source` | `string` |
-| `SourceType` | `string` |
-| `FulfillmentServiceEnabled` | `boolean` |
-| `FulfillmentLocation` | `string` |
-| `ConcurrencyKey` | `string` |
-| `Rules` | `ConfigRule[]` |
-| `Buttons` | `ConfigButton[]` |
-| `SubSource` | `string` |
-| `HeaderAuditValues` | `Channel_Setting_Audit[]` |
+| Property | Type | Description |
+|---|---|---|
+| `SourceVersion` | `ConfigItem_String` |  |
+| `Enabled` | `ConfigItem_Boolean` |  |
+| `ChannelTag` | `ConfigItem_String` |  |
+| `ChannelLocationBinding` | `ConfigChannelLocationBinding` |  |
+| `IsMultiLocation` | `ConfigItem_Boolean` |  |
+| `AutoPopulatedLocations` | `ConfigItem_Boolean` |  |
+| `CanModifyLocationsOnChannel` | `ConfigItem_Boolean` |  |
+| `BopisSupported` | `ConfigItem_Boolean` |  |
+| `ProcessPosOrders` | `ConfigProperty_Boolean` |  |
+| `DespatchNotes` | `ConfigItem_Boolean` |  |
+| `CancellationNotes` | `ConfigItem_Boolean` |  |
+| `AutoRespondCancellationRequests` | `ConfigItem_Boolean` |  |
+| `CancellationResponseType` | `ConfigPropertySelectionList_SelectStringValueOption_String` |  |
+| `RefundNotes` | `ConfigItem_Boolean` |  |
+| `DownloadRefunds` | `ConfigItem_Boolean` |  |
+| `ReturnNotes` | `ConfigItem_Boolean` |  |
+| `DownloadReturns` | `ConfigItem_Boolean` |  |
+| `OrderSaveLocation` | `ConfigPropertySelectionList_SelectStringValueOption_Guid` |  |
+| `OrderSyncDate` | `ConfigItem_DateTime` |  |
+| `OrderCancellationCheckDate` | `ConfigItem_DateTime` |  |
+| `ConfigDiscount` | `ConfigPropertySelectionList_SelectStringValueOption_String` |  |
+| `OrderDownloadErrorCount` | `ConfigItem_Int32` |  |
+| `OrderDownloadGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `OrderDespatchErrorCount` | `ConfigItem_Int32` |  |
+| `OrderDespatchGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `OrderCancellationCheckErrorCount` | `ConfigItem_Int32` |  |
+| `OrderCancellationCheckGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `RmaDownloadErrorCount` | `ConfigItem_Int32` |  |
+| `RmaDownloadGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `HidesHeaderAttributes` | `ConfigProperty_Boolean` |  |
+| `InventorySync` | `ConfigItem_Boolean` |  |
+| `StockLocationBinding` | `ConfigStockLocationBinding` |  |
+| `MaxListed` | `ConfigItem_Int32` |  |
+| `StockPercentage` | `ConfigItem_Double` |  |
+| `EndWhen` | `ConfigItem_Int32` |  |
+| `InvSyncErrorCount` | `ConfigItem_Int32` |  |
+| `ExtractInventory` | `ConfigProperty_Boolean` |  |
+| `ExtractInventoryVariationMappingPropertyName` | `ConfigProperty_String` |  |
+| `PriceChange` | `ConfigItem_Boolean` |  |
+| `PriceChangeErrorCount` | `ConfigItem_Int32` |  |
+| `IsInventorySyncTriggerEnabled` | `ConfigProperty_Boolean` |  |
+| `IsListingScanRunning` | `ConfigItem_Boolean` |  |
+| `ListingScanStartUpdateDate` | `ConfigItem_DateTime` |  |
+| `LastListingUpdateDate` | `ConfigItem_DateTime` |  |
+| `EstimatedInventoryScanComplete` | `ConfigItem_DateTime` |  |
+| `IsHeaderOnly` | `boolean` |  |
+| `IsHidden` | `boolean` |  |
+| `DisplayName` | `string` |  |
+| `DynamicProperties` | `ConfigItemExternal[]` |  |
+| `ConfigDiscountTyped` | `string` |  |
+| `PostalServiceMapping` | `ConfigPostalServiceMapping` |  |
+| `PaymentMethodMapping` | `ConfigPaymentMethodMapping` |  |
+| `PkChannelId` | `integer` |  |
+| `Source` | `string` |  |
+| `SourceType` | `string` |  |
+| `FulfillmentServiceEnabled` | `boolean` |  |
+| `FulfillmentLocation` | `string` |  |
+| `ConcurrencyKey` | `string` |  |
+| `Rules` | `ConfigRule[]` |  |
+| `Buttons` | `ConfigButton[]` |  |
+| `SubSource` | `string` |  |
+| `HeaderAuditValues` | `Channel_Setting_Audit[]` |  |
 
 ### `BatchedAPIResponse_DeleteInventoryItemBulkResponse`
 
-| Property | Type |
-|---|---|
-| `Results` | `APIResultResponse_DeleteInventoryItemBulkResponse[]` |
-| `TotalResults` | `integer` |
-| `ResultStatus` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Results` | `APIResultResponse_DeleteInventoryItemBulkResponse[]` |  |
+| `TotalResults` | `integer` |  |
+| `ResultStatus` | `string` |  |
 
 ### `BatchedAPIResponse_DeleteInventoryItemImagesResponse`
 
-| Property | Type |
-|---|---|
-| `Results` | `APIResultResponse_DeleteInventoryItemImagesResponse[]` |
-| `TotalResults` | `integer` |
-| `ResultStatus` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Results` | `APIResultResponse_DeleteInventoryItemImagesResponse[]` |  |
+| `TotalResults` | `integer` |  |
+| `ResultStatus` | `string` |  |
 
 ### `BatchedAPIResponse_Guid`
 
-| Property | Type |
-|---|---|
-| `Results` | `APIResultResponse_Guid[]` |
-| `TotalResults` | `integer` |
-| `ResultStatus` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Results` | `APIResultResponse_Guid[]` |  |
+| `TotalResults` | `integer` |  |
+| `ResultStatus` | `string` |  |
 
 ### `BatchedAPIResponse_StockItemProductIdentifier`
 
-| Property | Type |
-|---|---|
-| `Results` | `APIResultResponse_StockItemProductIdentifier[]` |
-| `TotalResults` | `integer` |
-| `ResultStatus` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Results` | `APIResultResponse_StockItemProductIdentifier[]` |  |
+| `TotalResults` | `integer` |  |
+| `ResultStatus` | `string` |  |
 
 ### `BulkScrapBatchedItemsRequest`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
-| `ScrapItems` | `ScrapItemExtended[]` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` |  |
+| `ScrapItems` | `ScrapItemExtended[]` |  |
 
 ### `Country`
 
-| Property | Type |
-|---|---|
-| `CountryId` | `string` |
-| `CountryName` | `string` |
-| `CountryCode` | `string` |
-| `Continent` | `string` |
-| `Currency` | `string` |
-| `CustomsRequired` | `boolean` |
-| `TaxRate` | `number` |
-| `AddressFormat` | `string` |
-| `Regions` | `CountryRegion[]` |
-| `RegionsCount` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `CountryId` | `string` | Country ID |
+| `CountryName` | `string` | Country name |
+| `CountryCode` | `string` | Country code |
+| `Continent` | `string` | Continent |
+| `Currency` | `string` | Currency |
+| `CustomsRequired` | `boolean` | If customs required |
+| `TaxRate` | `number` | Tax rate (null - will use system default tax rate) |
+| `AddressFormat` | `string` | Address format |
+| `Regions` | `CountryRegion[]` | Country region |
+| `RegionsCount` | `integer` | Count of regions |
 
 ### `CreateCountryRegionsResponse`
 
-| Property | Type |
-|---|---|
-| `regions` | `CountryRegion[]` |
+| Property | Type | Description |
+|---|---|---|
+| `regions` | `CountryRegion[]` |  |
 
 ### `DeleteEbayCompatibilityListResponse`
 
-| Property | Type |
-|---|---|
-| `EbayCompatibilityList` | `StockItemEbayCompatibility[]` |
+| Property | Type | Description |
+|---|---|---|
+| `EbayCompatibilityList` | `StockItemEbayCompatibility[]` |  |
 
 ### `DeleteInventoryItemBulkRequest`
 
-| Property | Type |
-|---|---|
-| `InventoryItemIds` | `string[]` |
-| `ItemNumbers` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemIds` | `string[]` | List of items by ids to delete. If not provided, you must provide ItemNumbers |
+| `ItemNumbers` | `string[]` | List of items by item number to delete. If InventoryItemIds is provided, ItemNumbers will be ignored |
 
 ### `GetBatchAuditResponse`
 
-| Property | Type |
-|---|---|
-| `response` | `StockItemBatchAudit[]` |
+| Property | Type | Description |
+|---|---|---|
+| `response` | `StockItemBatchAudit[]` |  |
 
 ### `GetBatchInventoryByIdRequest`
 
-| Property | Type |
-|---|---|
-| `BatchInventoryIds` | `integer[]` |
-| `LoadRelatedInventoryLines` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryIds` | `integer[]` |  |
+| `LoadRelatedInventoryLines` | `boolean` |  |
 
 ### `GetBatchInventoryByIdResponse`
 
-| Property | Type |
-|---|---|
-| `Batches` | `StockItemBatch[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Batches` | `StockItemBatch[]` |  |
 
 ### `GetImagesInBulkResponse`
 
-| Property | Type |
-|---|---|
-| `Images` | `GetImagesInBulkResponseImage[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Images` | `GetImagesInBulkResponseImage[]` |  |
 
 ### `GetInventoryItemBatchInformationByIdsResponse`
 
-| Property | Type |
-|---|---|
-| `InventoryItemBatchInformation` | `BatchInformation[]` |
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemBatchInformation` | `BatchInformation[]` | A list of stock item batch data |
 
 ### `GetInventoryItemsCompositionByIdsResponse`
 
-| Property | Type |
-|---|---|
-| `InventoryItemsCompositionByIds` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemsCompositionByIds` | `object` |  |
 
 ### `GetProductIdentifierExtendedResponse`
 
-| Property | Type |
-|---|---|
-| `Types` | `ProductIdentifierInformation[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Types` | `ProductIdentifierInformation[]` |  |
 
 ### `GetProductIdentifierTypesRequest`
 
-| Property | Type |
-|---|---|
-| `Types` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `Types` | `object` |  |
 
 ### `GetProductIdentifiersBulkByStockItemIdRequest`
 
-| Property | Type |
-|---|---|
-| `StockItemIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemIds` | `string[]` |  |
 
 ### `GetProductIdentifiersByStockItemIdResponse`
 
-| Property | Type |
-|---|---|
-| `ProductIdentifiers` | `StockItemProductIdentifier[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ProductIdentifiers` | `StockItemProductIdentifier[]` |  |
 
 ### `GetScannableProductIdentifiersByOrderIdsRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` |  |
 
 ### `GetScannableProductIdentifiersByOrderIdsResponse`
 
-| Property | Type |
-|---|---|
-| `ScannableProductIdentifiersForStockItemsByOrderId` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `ScannableProductIdentifiersForStockItemsByOrderId` | `object` |  |
 
 ### `GetScrapCategoriesResponse`
 
-| Property | Type |
-|---|---|
-| `ScrapCategories` | `ScrapCategory[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ScrapCategories` | `ScrapCategory[]` |  |
 
 ### `GetScrapHistoryResponse`
 
-| Property | Type |
-|---|---|
-| `ScrapHistory` | `GenericPagedResult_ScrapItem` |
+| Property | Type | Description |
+|---|---|---|
+| `ScrapHistory` | `GenericPagedResult_ScrapItem` |  |
 
 ### `GetStockItemBatchesByLocationResponse`
 
-| Property | Type |
-|---|---|
-| `Batches` | `StockItemBatch[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Batches` | `StockItemBatch[]` |  |
 
 ### `GetStockItemIdsBySKU`
 
-| Property | Type |
-|---|---|
-| `Items` | `GetStockItemIdsBySKUItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `GetStockItemIdsBySKUItem[]` | Response items of StockItemId and SKU |
 
 ### `HasStockItemStockLevelResponse`
 
-| Property | Type |
-|---|---|
-| `HasStockLevel` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `HasStockLevel` | `boolean` |  |
 
 ### `HeaderConfig`
 
-| Property | Type |
-|---|---|
-| `SourceVersion` | `ConfigItem_String` |
-| `Enabled` | `ConfigItem_Boolean` |
-| `ChannelTag` | `ConfigItem_String` |
-| `ChannelLocationBinding` | `ConfigChannelLocationBinding` |
-| `IsMultiLocation` | `ConfigItem_Boolean` |
-| `AutoPopulatedLocations` | `ConfigItem_Boolean` |
-| `CanModifyLocationsOnChannel` | `ConfigItem_Boolean` |
-| `BopisSupported` | `ConfigItem_Boolean` |
-| `ProcessPosOrders` | `ConfigProperty_Boolean` |
-| `DespatchNotes` | `ConfigItem_Boolean` |
-| `CancellationNotes` | `ConfigItem_Boolean` |
-| `AutoRespondCancellationRequests` | `ConfigItem_Boolean` |
-| `CancellationResponseType` | `ConfigPropertySelectionList_SelectStringValueOption_String` |
-| `RefundNotes` | `ConfigItem_Boolean` |
-| `DownloadRefunds` | `ConfigItem_Boolean` |
-| `ReturnNotes` | `ConfigItem_Boolean` |
-| `DownloadReturns` | `ConfigItem_Boolean` |
-| `OrderSaveLocation` | `ConfigPropertySelectionList_SelectStringValueOption_Guid` |
-| `OrderSyncDate` | `ConfigItem_DateTime` |
-| `OrderCancellationCheckDate` | `ConfigItem_DateTime` |
-| `ConfigDiscount` | `ConfigPropertySelectionList_SelectStringValueOption_String` |
-| `OrderDownloadErrorCount` | `ConfigItem_Int32` |
-| `OrderDownloadGlobalErrorCount` | `ConfigItem_Int32` |
-| `OrderDespatchErrorCount` | `ConfigItem_Int32` |
-| `OrderDespatchGlobalErrorCount` | `ConfigItem_Int32` |
-| `OrderCancellationCheckErrorCount` | `ConfigItem_Int32` |
-| `OrderCancellationCheckGlobalErrorCount` | `ConfigItem_Int32` |
-| `RmaDownloadErrorCount` | `ConfigItem_Int32` |
-| `RmaDownloadGlobalErrorCount` | `ConfigItem_Int32` |
-| `HidesHeaderAttributes` | `ConfigProperty_Boolean` |
-| `InventorySync` | `ConfigItem_Boolean` |
-| `StockLocationBinding` | `ConfigStockLocationBinding` |
-| `MaxListed` | `ConfigItem_Int32` |
-| `StockPercentage` | `ConfigItem_Double` |
-| `EndWhen` | `ConfigItem_Int32` |
-| `InvSyncErrorCount` | `ConfigItem_Int32` |
-| `ExtractInventory` | `ConfigProperty_Boolean` |
-| `ExtractInventoryVariationMappingPropertyName` | `ConfigProperty_String` |
-| `PriceChange` | `ConfigItem_Boolean` |
-| `PriceChangeErrorCount` | `ConfigItem_Int32` |
-| `IsInventorySyncTriggerEnabled` | `ConfigProperty_Boolean` |
-| `IsListingScanRunning` | `ConfigItem_Boolean` |
-| `ListingScanStartUpdateDate` | `ConfigItem_DateTime` |
-| `LastListingUpdateDate` | `ConfigItem_DateTime` |
-| `EstimatedInventoryScanComplete` | `ConfigItem_DateTime` |
-| `IsHeaderOnly` | `boolean` |
-| `IsHidden` | `boolean` |
-| `DisplayName` | `string` |
-| `DynamicProperties` | `ConfigItemExternal[]` |
-| `ConfigDiscountTyped` | `string` |
-| `PostalServiceMapping` | `ConfigPostalServiceMapping` |
-| `PaymentMethodMapping` | `ConfigPaymentMethodMapping` |
-| `PkChannelId` | `integer` |
-| `Source` | `string` |
-| `SourceType` | `string` |
-| `FulfillmentServiceEnabled` | `boolean` |
-| `FulfillmentLocation` | `string` |
-| `ConcurrencyKey` | `string` |
-| `Rules` | `ConfigRule[]` |
-| `Buttons` | `ConfigButton[]` |
-| `SubSource` | `string` |
-| `HeaderAuditValues` | `Channel_Setting_Audit[]` |
+| Property | Type | Description |
+|---|---|---|
+| `SourceVersion` | `ConfigItem_String` |  |
+| `Enabled` | `ConfigItem_Boolean` |  |
+| `ChannelTag` | `ConfigItem_String` |  |
+| `ChannelLocationBinding` | `ConfigChannelLocationBinding` |  |
+| `IsMultiLocation` | `ConfigItem_Boolean` |  |
+| `AutoPopulatedLocations` | `ConfigItem_Boolean` |  |
+| `CanModifyLocationsOnChannel` | `ConfigItem_Boolean` |  |
+| `BopisSupported` | `ConfigItem_Boolean` |  |
+| `ProcessPosOrders` | `ConfigProperty_Boolean` |  |
+| `DespatchNotes` | `ConfigItem_Boolean` |  |
+| `CancellationNotes` | `ConfigItem_Boolean` |  |
+| `AutoRespondCancellationRequests` | `ConfigItem_Boolean` |  |
+| `CancellationResponseType` | `ConfigPropertySelectionList_SelectStringValueOption_String` |  |
+| `RefundNotes` | `ConfigItem_Boolean` |  |
+| `DownloadRefunds` | `ConfigItem_Boolean` |  |
+| `ReturnNotes` | `ConfigItem_Boolean` |  |
+| `DownloadReturns` | `ConfigItem_Boolean` |  |
+| `OrderSaveLocation` | `ConfigPropertySelectionList_SelectStringValueOption_Guid` |  |
+| `OrderSyncDate` | `ConfigItem_DateTime` |  |
+| `OrderCancellationCheckDate` | `ConfigItem_DateTime` |  |
+| `ConfigDiscount` | `ConfigPropertySelectionList_SelectStringValueOption_String` |  |
+| `OrderDownloadErrorCount` | `ConfigItem_Int32` |  |
+| `OrderDownloadGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `OrderDespatchErrorCount` | `ConfigItem_Int32` |  |
+| `OrderDespatchGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `OrderCancellationCheckErrorCount` | `ConfigItem_Int32` |  |
+| `OrderCancellationCheckGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `RmaDownloadErrorCount` | `ConfigItem_Int32` |  |
+| `RmaDownloadGlobalErrorCount` | `ConfigItem_Int32` |  |
+| `HidesHeaderAttributes` | `ConfigProperty_Boolean` |  |
+| `InventorySync` | `ConfigItem_Boolean` |  |
+| `StockLocationBinding` | `ConfigStockLocationBinding` |  |
+| `MaxListed` | `ConfigItem_Int32` |  |
+| `StockPercentage` | `ConfigItem_Double` |  |
+| `EndWhen` | `ConfigItem_Int32` |  |
+| `InvSyncErrorCount` | `ConfigItem_Int32` |  |
+| `ExtractInventory` | `ConfigProperty_Boolean` |  |
+| `ExtractInventoryVariationMappingPropertyName` | `ConfigProperty_String` |  |
+| `PriceChange` | `ConfigItem_Boolean` |  |
+| `PriceChangeErrorCount` | `ConfigItem_Int32` |  |
+| `IsInventorySyncTriggerEnabled` | `ConfigProperty_Boolean` |  |
+| `IsListingScanRunning` | `ConfigItem_Boolean` |  |
+| `ListingScanStartUpdateDate` | `ConfigItem_DateTime` |  |
+| `LastListingUpdateDate` | `ConfigItem_DateTime` |  |
+| `EstimatedInventoryScanComplete` | `ConfigItem_DateTime` |  |
+| `IsHeaderOnly` | `boolean` |  |
+| `IsHidden` | `boolean` |  |
+| `DisplayName` | `string` |  |
+| `DynamicProperties` | `ConfigItemExternal[]` |  |
+| `ConfigDiscountTyped` | `string` |  |
+| `PostalServiceMapping` | `ConfigPostalServiceMapping` |  |
+| `PaymentMethodMapping` | `ConfigPaymentMethodMapping` |  |
+| `PkChannelId` | `integer` |  |
+| `Source` | `string` |  |
+| `SourceType` | `string` |  |
+| `FulfillmentServiceEnabled` | `boolean` |  |
+| `FulfillmentLocation` | `string` |  |
+| `ConcurrencyKey` | `string` |  |
+| `Rules` | `ConfigRule[]` |  |
+| `Buttons` | `ConfigButton[]` |  |
+| `SubSource` | `string` |  |
+| `HeaderAuditValues` | `Channel_Setting_Audit[]` |  |
 
 ### `InsertUpdateEbayCompatibilityListResponse`
 
-| Property | Type |
-|---|---|
-| `EbayCompatibilityList` | `StockItemEbayCompatibility[]` |
+| Property | Type | Description |
+|---|---|---|
+| `EbayCompatibilityList` | `StockItemEbayCompatibility[]` |  |
 
 ### `InventoryView`
 
-| Property | Type |
-|---|---|
-| `Id` | `string` |
-| `Name` | `string` |
-| `Mode` | `string` |
-| `Source` | `string` |
-| `SubSource` | `string` |
-| `CountryCode` | `string` |
-| `CountryName` | `string` |
-| `Listing` | `string` |
-| `ShowOnlyChanged` | `boolean` |
-| `IncludeProducts` | `string` |
-| `Filters` | `Filter[]` |
-| `Columns` | `Column[]` |
-| `Channels` | `InventoryChannel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` | View ID |
+| `Name` | `string` | View name |
+| `Mode` | `string` | Show listed or not listed |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | SubSource (e.g. EBAY1) |
+| `CountryCode` | `string` | Country code |
+| `CountryName` | `string` | Country code |
+| `Listing` | `string` | What listing types to show |
+| `ShowOnlyChanged` | `boolean` | Show only changed items |
+| `IncludeProducts` | `string` | Include archived products |
+| `Filters` | `Filter[]` | View filters |
+| `Columns` | `Column[]` | View columns |
+| `Channels` | `InventoryChannel[]` | View channels |
 
 ### `Inventory_AddImageToInventoryItemRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AddImageToInventoryItemRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AddImageToInventoryItemRequest` |  |
 
 ### `Inventory_AddInventoryItemBulkRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AddInventoryItemRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AddInventoryItemRequest` |  |
 
 ### `Inventory_AddInventoryItemRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItem` | `StockItem` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItem` | `StockItem` |  |
 
 ### `Inventory_AddItemLocationsRequest`
 
-| Property | Type |
-|---|---|
-| `itemLocations` | `StockItemLocation[]` |
+| Property | Type | Description |
+|---|---|---|
+| `itemLocations` | `StockItemLocation[]` |  |
 
 ### `Inventory_AddProductIdentifiersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AddProductIdentifiersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AddProductIdentifiersRequest` |  |
 
 ### `Inventory_AddScrapCategoriesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AddScrapCategoriesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AddScrapCategoriesRequest` |  |
 
 ### `Inventory_AddScrapItemRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `AddScrapItemRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `AddScrapItemRequest` |  |
 
 ### `Inventory_AddSupplierRequest`
 
-| Property | Type |
-|---|---|
-| `supplier` | `Supplier` |
+| Property | Type | Description |
+|---|---|---|
+| `supplier` | `Supplier` |  |
 
 ### `Inventory_AdjustTemplatesInstantRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemIds` | `string[]` |
-| `source` | `string` |
-| `subSource` | `string` |
-| `adjustmentOptions` | `AdjustmentOptions` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemIds` | `string[]` |  |
+| `source` | `string` |  |
+| `subSource` | `string` |  |
+| `adjustmentOptions` | `AdjustmentOptions` |  |
 
 ### `Inventory_ArchiveInventoryItemsRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `InventoryParametersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `InventoryParametersRequest` |  |
 
 ### `Inventory_BatchGetInventoryItemChannelSKUsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemIds` | `string[]` |  |
 
 ### `Inventory_CreateBatchesRequest`
 
-| Property | Type |
-|---|---|
-| `batches` | `StockItemBatch[]` |
+| Property | Type | Description |
+|---|---|---|
+| `batches` | `StockItemBatch[]` |  |
 
 ### `Inventory_CreateCategoryRequest`
 
-| Property | Type |
-|---|---|
-| `categoryName` | `string` |
-| `categoryId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `categoryName` | `string` |  |
+| `categoryId` | `string` |  |
 
 ### `Inventory_CreateCountriesRequest`
 
-| Property | Type |
-|---|---|
-| `countries` | `Country[]` |
+| Property | Type | Description |
+|---|---|---|
+| `countries` | `Country[]` |  |
 
 ### `Inventory_CreateCountryRegionsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `CreateCountryRegionsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `CreateCountryRegionsRequest` |  |
 
 ### `Inventory_CreateInventoryItemChannelSKUsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemChannelSKUs` | `StockItemChannelSKU[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemChannelSKUs` | `StockItemChannelSKU[]` |  |
 
 ### `Inventory_CreateInventoryItemCompositionsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemCompositions` | `StockItemComposition[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemCompositions` | `StockItemComposition[]` |  |
 
 ### `Inventory_CreateInventoryItemDescriptionsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemDescriptions` | `StockItemDescription[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemDescriptions` | `StockItemDescription[]` |  |
 
 ### `Inventory_CreateInventoryItemExtendedPropertiesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemExtendedProperties` | `StockItemExtendedPropertyUpsertItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemExtendedProperties` | `StockItemExtendedPropertyUpsertItem[]` |  |
 
 ### `Inventory_CreateInventoryItemPricesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemPrices` | `StockItemPrice[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemPrices` | `StockItemPrice[]` |  |
 
 ### `Inventory_CreateInventoryItemPricingRulesRequest`
 
-| Property | Type |
-|---|---|
-| `rules` | `StockItemPricingRule[]` |
+| Property | Type | Description |
+|---|---|---|
+| `rules` | `StockItemPricingRule[]` |  |
 
 ### `Inventory_CreateInventoryItemTitlesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemTitles` | `StockItemTitle[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemTitles` | `StockItemTitle[]` |  |
 
 ### `Inventory_CreateStockSupplierStatRequest`
 
-| Property | Type |
-|---|---|
-| `itemSuppliers` | `StockItemSupplierStat[]` |
+| Property | Type | Description |
+|---|---|---|
+| `itemSuppliers` | `StockItemSupplierStat[]` |  |
 
 ### `Inventory_CreateUserSpecificViewRequest`
 
-| Property | Type |
-|---|---|
-| `view` | `InventoryView` |
+| Property | Type | Description |
+|---|---|---|
+| `view` | `InventoryView` |  |
 
 ### `Inventory_DeleteBatchInventoryInBulkRequest`
 
-| Property | Type |
-|---|---|
-| `batchInventoryIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `batchInventoryIds` | `integer[]` |  |
 
 ### `Inventory_DeleteBatchesByStockItemIdRequest`
 
-| Property | Type |
-|---|---|
-| `stockItemId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `string` |  |
 
 ### `Inventory_DeleteCategoryByIdRequest`
 
-| Property | Type |
-|---|---|
-| `categoryId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `categoryId` | `string` |  |
 
 ### `Inventory_DeleteCountriesRequest`
 
-| Property | Type |
-|---|---|
-| `countriesIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `countriesIds` | `string[]` |  |
 
 ### `Inventory_DeleteEbayCompatibilityListRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteEbayCompatibilityListRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteEbayCompatibilityListRequest` |  |
 
 ### `Inventory_DeleteImagesFromInventoryItemRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemImages` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemImages` | `object` |  |
 
 ### `Inventory_DeleteInventoryItemChannelSKUsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemChannelSKUIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemChannelSKUIds` | `string[]` |  |
 
 ### `Inventory_DeleteInventoryItemCompositionsRequest`
 
-| Property | Type |
-|---|---|
-| `stockItemId` | `string` |
-| `inventoryItemCompositionIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `string` |  |
+| `inventoryItemCompositionIds` | `string[]` |  |
 
 ### `Inventory_DeleteInventoryItemDescriptionsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemDescriptionIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemDescriptionIds` | `string[]` |  |
 
 ### `Inventory_DeleteInventoryItemExtendedPropertiesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `inventoryItemExtendedPropertyIds` | `string[]` |
-| `itemNumber` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `inventoryItemExtendedPropertyIds` | `string[]` |  |
+| `itemNumber` | `string` |  |
 
 ### `Inventory_DeleteInventoryItemImageBulkRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteInventoryItemImagesRequest[]` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteInventoryItemImagesRequest[]` |  |
 
 ### `Inventory_DeleteInventoryItemPricesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemPriceIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemPriceIds` | `string[]` |  |
 
 ### `Inventory_DeleteInventoryItemPricingRulesRequest`
 
-| Property | Type |
-|---|---|
-| `pricingRuleIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pricingRuleIds` | `integer[]` |  |
 
 ### `Inventory_DeleteInventoryItemTitlesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemTitleIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemTitleIds` | `string[]` |  |
 
 ### `Inventory_DeleteInventoryItemsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteInventoryItemsRequest` |
-| `inventoryItemIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteInventoryItemsRequest` |  |
+| `inventoryItemIds` | `string[]` |  |
 
 ### `Inventory_DeleteItemLocationsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `itemLocations` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `itemLocations` | `string[]` |  |
 
 ### `Inventory_DeleteProductIdentifiersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteProductIdentifiersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteProductIdentifiersRequest` |  |
 
 ### `Inventory_DeleteScrapCategoriesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteScrapCategoriesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteScrapCategoriesRequest` |  |
 
 ### `Inventory_DeleteStockSupplierStatRequest`
 
-| Property | Type |
-|---|---|
-| `stockItemId` | `string` |
-| `itemSupplierIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `string` |  |
+| `itemSupplierIds` | `string[]` |  |
 
 ### `Inventory_DeleteSuppliersRequest`
 
-| Property | Type |
-|---|---|
-| `suppliersIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `suppliersIds` | `string[]` |  |
 
 ### `Inventory_DeleteUserSpecificViewRequest`
 
-| Property | Type |
-|---|---|
-| `viewName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `viewName` | `string` |  |
 
 ### `Inventory_DuplicateInventoryItemRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItem` | `StockItem` |
-| `sourceItemId` | `string` |
-| `copyImages` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItem` | `StockItem` |  |
+| `sourceItemId` | `string` |  |
+| `copyImages` | `boolean` |  |
 
 ### `Inventory_GetBatchAuditRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetBatchAuditRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetBatchAuditRequest` |  |
 
 ### `Inventory_GetImagesInBulkRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetImagesInBulkRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetImagesInBulkRequest` |  |
 
 ### `Inventory_GetInventoryItemAuditTrailPagedRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetInventoryItemAuditTrailPagedRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetInventoryItemAuditTrailPagedRequest` |  |
 
 ### `Inventory_GetInventoryItemBatchInformationByIdsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetInventoryItemBatchInformationByIdsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetInventoryItemBatchInformationByIdsRequest` |  |
 
 ### `Inventory_GetInventoryItemBatchInformationRequest`
 
-| Property | Type |
-|---|---|
-| `Request` | `GetInventoryItemBatchInformationRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `Request` | `GetInventoryItemBatchInformationRequest` |  |
 
 ### `Inventory_GetInventoryItemExtendedPropertiesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `propertyParams` | `GetExtendedPropertyFilter` |
-| `itemNumber` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `propertyParams` | `GetExtendedPropertyFilter` |  |
+| `itemNumber` | `string` |  |
 
 ### `Inventory_GetInventoryItemsCompositionByIdsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetInventoryItemsCompositionByIdsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetInventoryItemsCompositionByIdsRequest` |  |
 
 ### `Inventory_GetProductIdentifiersByStockItemIdRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetProductIdentifiersByStockItemIdRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetProductIdentifiersByStockItemIdRequest` |  |
 
 ### `Inventory_GetScrapHistoryRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetScrapHistoryRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetScrapHistoryRequest` |  |
 
 ### `Inventory_GetStockItemBatchesByLocationRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetStockItemBatchesByLocationRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetStockItemBatchesByLocationRequest` |  |
 
 ### `Inventory_GetStockItemIdsBySKURequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetStockItemIdsBySKURequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetStockItemIdsBySKURequest` |  |
 
 ### `Inventory_GetStockItemLabelsRequest`
 
-| Property | Type |
-|---|---|
-| `selectedRegions` | `Tuple_Int32_Int32[]` |
-| `token` | `string` |
-| `location` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `selectedRegions` | `Tuple_Int32_Int32[]` |  |
+| `token` | `string` |  |
+| `location` | `string` |  |
 
 ### `Inventory_HasStockItemStockLevelRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `HasStockItemStockLevelRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `HasStockItemStockLevelRequest` |  |
 
 ### `Inventory_InsertUpdateEbayCompatibilityListRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `InsertUpdateEbayCompatibilityListRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `InsertUpdateEbayCompatibilityListRequest` |  |
 
 ### `Inventory_ScrapBatchedItemRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `ScrapBatchedItemRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `ScrapBatchedItemRequest` |  |
 
 ### `Inventory_SetInventoryItemImageAsMainRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `mainImageId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `mainImageId` | `string` |  |
 
 ### `Inventory_UnarchiveInventoryItemsRequest`
 
-| Property | Type |
-|---|---|
-| `parameters` | `InventoryParametersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `parameters` | `InventoryParametersRequest` |  |
 
 ### `Inventory_UnlinkChannelListingRequest`
 
-| Property | Type |
-|---|---|
-| `channelRefId` | `string` |
-| `source` | `string` |
-| `subSource` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `channelRefId` | `string` |  |
+| `source` | `string` |  |
+| `subSource` | `string` |  |
 
 ### `Inventory_UpdateBatchDetailsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdateBatchDetailsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdateBatchDetailsRequest` |  |
 
 ### `Inventory_UpdateBatchesWithInventoryRequest`
 
-| Property | Type |
-|---|---|
-| `batches` | `StockItemBatch[]` |
+| Property | Type | Description |
+|---|---|---|
+| `batches` | `StockItemBatch[]` |  |
 
 ### `Inventory_UpdateCategoryRequest`
 
-| Property | Type |
-|---|---|
-| `category` | `LinnworksCategory` |
+| Property | Type | Description |
+|---|---|---|
+| `category` | `LinnworksCategory` |  |
 
 ### `Inventory_UpdateCompositeParentStockLevelRequest`
 
-| Property | Type |
-|---|---|
-| `stockItemId` | `string` |
-| `locationId` | `string` |
-| `fieldValue` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `string` |  |
+| `locationId` | `string` |  |
+| `fieldValue` | `integer` |  |
 
 ### `Inventory_UpdateCountriesRequest`
 
-| Property | Type |
-|---|---|
-| `countries` | `Country[]` |
+| Property | Type | Description |
+|---|---|---|
+| `countries` | `Country[]` |  |
 
 ### `Inventory_UpdateCountryRegionsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdateCountryRegionsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdateCountryRegionsRequest` |  |
 
 ### `Inventory_UpdateImagesRequest`
 
-| Property | Type |
-|---|---|
-| `images` | `StockItemImageSimple[]` |
+| Property | Type | Description |
+|---|---|---|
+| `images` | `StockItemImageSimple[]` |  |
 
 ### `Inventory_UpdateInventoryItemChannelSKUsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemChannelSKUs` | `StockItemChannelSKU[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemChannelSKUs` | `StockItemChannelSKU[]` |  |
 
 ### `Inventory_UpdateInventoryItemChannelSKUsWithLocationRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemChannelSKUsWithLocation` | `StockItemChannelSKUWithLocation[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemChannelSKUsWithLocation` | `StockItemChannelSKUWithLocation[]` |  |
 
 ### `Inventory_UpdateInventoryItemCompositionsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemCompositions` | `StockItemComposition[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemCompositions` | `StockItemComposition[]` |  |
 
 ### `Inventory_UpdateInventoryItemDescriptionsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemDescriptions` | `StockItemDescription[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemDescriptions` | `StockItemDescription[]` |  |
 
 ### `Inventory_UpdateInventoryItemExtendedPropertiesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemExtendedProperties` | `StockItemExtendedPropertyWithSku[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemExtendedProperties` | `StockItemExtendedPropertyWithSku[]` |  |
 
 ### `Inventory_UpdateInventoryItemFieldRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `fieldName` | `string` |
-| `fieldValue` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `fieldName` | `string` |  |
+| `fieldValue` | `string` |  |
 
 ### `Inventory_UpdateInventoryItemLevelsRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `fieldName` | `string` |
-| `fieldValue` | `string` |
-| `locationId` | `string` |
-| `changeSource` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `fieldName` | `string` |  |
+| `fieldValue` | `string` |  |
+| `locationId` | `string` |  |
+| `changeSource` | `string` |  |
 
 ### `Inventory_UpdateInventoryItemLocationFieldRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `fieldName` | `string` |
-| `fieldValue` | `string` |
-| `locationId` | `string` |
-| `changeSource` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `fieldName` | `string` |  |
+| `fieldValue` | `string` |  |
+| `locationId` | `string` |  |
+| `changeSource` | `string` |  |
 
 ### `Inventory_UpdateInventoryItemPricesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemPrices` | `StockItemPrice[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemPrices` | `StockItemPrice[]` |  |
 
 ### `Inventory_UpdateInventoryItemPricingRulesRequest`
 
-| Property | Type |
-|---|---|
-| `rules` | `StockItemPricingRule[]` |
+| Property | Type | Description |
+|---|---|---|
+| `rules` | `StockItemPricingRule[]` |  |
 
 ### `Inventory_UpdateInventoryItemRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItem` | `UpdateInventoryItemRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItem` | `UpdateInventoryItemRequest` |  |
 
 ### `Inventory_UpdateInventoryItemStockFieldRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `fieldName` | `string` |
-| `fieldValue` | `string` |
-| `locationId` | `string` |
-| `changeSource` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `fieldName` | `string` |  |
+| `fieldValue` | `string` |  |
+| `locationId` | `string` |  |
+| `changeSource` | `string` |  |
 
 ### `Inventory_UpdateInventoryItemTitlesRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemTitles` | `StockItemTitle[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemTitles` | `StockItemTitle[]` |  |
 
 ### `Inventory_UpdateItemLocationsRequest`
 
-| Property | Type |
-|---|---|
-| `itemLocations` | `StockItemLocation[]` |
+| Property | Type | Description |
+|---|---|---|
+| `itemLocations` | `StockItemLocation[]` |  |
 
 ### `Inventory_UpdateProductIdentifiersRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdateProductIdentifiersRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdateProductIdentifiersRequest` |  |
 
 ### `Inventory_UpdateScrapCategoriesRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `UpdateScrapCategoriesRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `UpdateScrapCategoriesRequest` |  |
 
 ### `Inventory_UpdateStockSupplierStatRequest`
 
-| Property | Type |
-|---|---|
-| `itemSuppliers` | `StockItemSupplierStat[]` |
+| Property | Type | Description |
+|---|---|---|
+| `itemSuppliers` | `StockItemSupplierStat[]` |  |
 
 ### `Inventory_UpdateSupplierRequest`
 
-| Property | Type |
-|---|---|
-| `supplier` | `Supplier` |
+| Property | Type | Description |
+|---|---|---|
+| `supplier` | `Supplier` |  |
 
 ### `Inventory_UpdateUserSpecificViewRequest`
 
-| Property | Type |
-|---|---|
-| `viewName` | `string` |
-| `view` | `InventoryView` |
+| Property | Type | Description |
+|---|---|---|
+| `viewName` | `string` |  |
+| `view` | `InventoryView` |  |
 
 ### `Inventory_UploadImagesToInventoryItemRequest`
 
-| Property | Type |
-|---|---|
-| `inventoryItemId` | `string` |
-| `imageIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `inventoryItemId` | `string` |  |
+| `imageIds` | `string[]` |  |
 
 ### `KeyGuidValue`
 
-| Property | Type |
-|---|---|
-| `Key` | `string` |
-| `Value` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `string` |  |
 
 ### `LinnworksCategory`
 
-| Property | Type |
-|---|---|
-| `CategoryId` | `string` |
-| `CategoryName` | `string` |
-| `StructureCategoryId` | `integer` |
-| `ProductCategoryId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `CategoryId` | `string` | Category ID |
+| `CategoryName` | `string` | Category name |
+| `StructureCategoryId` | `integer` | Structure Category Id to which this product category is assigned to, nullable if not available |
+| `ProductCategoryId` | `integer` |  |
 
 ### `PagedResult_StockItemAuditTrail`
 
-| Property | Type |
-|---|---|
-| `Items` | `StockItemAuditTrail[]` |
-| `TotalItems` | `integer` |
-| `CurrentPage` | `integer` |
-| `EntriesPerPage` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `StockItemAuditTrail[]` |  |
+| `TotalItems` | `integer` |  |
+| `CurrentPage` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
 
 ### `PictureSource`
 
-| Property | Type |
-|---|---|
-| `PictureId` | `string` |
-| `Source` | `string` |
-| `IsMain` | `boolean` |
-| `SortOrder` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `PictureId` | `string` |  |
+| `Source` | `string` |  |
+| `IsMain` | `boolean` |  |
+| `SortOrder` | `integer` |  |
 
 ### `ScrapBatchedItemResponse`
 
-| Property | Type |
-|---|---|
-| `ScrapItem` | `ScrapItem` |
+| Property | Type | Description |
+|---|---|---|
+| `ScrapItem` | `ScrapItem` |  |
 
 ### `StockItemAuditTrail`
 
-| Property | Type |
-|---|---|
-| `AuditType` | `string` |
-| `AuditTrailDate` | `string` |
-| `AuditText` | `string` |
-| `UserName` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `AuditType` | `string` | Audit type |
+| `AuditTrailDate` | `string` | Record date and time |
+| `AuditText` | `string` | Note text |
+| `UserName` | `string` | Audit trail note author |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemBatch`
 
-| Property | Type |
-|---|---|
-| `BatchId` | `integer` |
-| `SKU` | `string` |
-| `InventoryTrackingType` | `integer` |
-| `StockItemId` | `string` |
-| `BatchNumber` | `string` |
-| `ExpiresOn` | `string` |
-| `SellBy` | `string` |
-| `Inventory` | `StockItemBatchInventory[]` |
-| `IsDeleted` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchId` | `integer` | Batch ID |
+| `SKU` | `string` | Product SKU |
+| `InventoryTrackingType` | `integer` | 0 - None, 1 - Order by sell by date, 2 - Ordered by priority sequence |
+| `StockItemId` | `string` | Product ID |
+| `BatchNumber` | `string` | Batch number |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
+| `Inventory` | `StockItemBatchInventory[]` | Batch records |
+| `IsDeleted` | `boolean` | Is the batch deleted |
 
 ### `StockItemChannelSKU`
 
-| Property | Type |
-|---|---|
-| `ChannelSKURowId` | `string` |
-| `SKU` | `string` |
-| `Source` | `string` |
-| `SubSource` | `string` |
-| `UpdateStatus` | `string` |
-| `ChannelReferenceId` | `string` |
-| `LastUpdate` | `string` |
-| `MaxListedQuantity` | `integer` |
-| `EndWhenStock` | `integer` |
-| `SubmittedQuantity` | `integer` |
-| `ListedQuantity` | `integer` |
-| `StockPercentage` | `number` |
-| `IgnoreSync` | `boolean` |
-| `IgnoreSyncMultiLocation` | `boolean` |
-| `IsMultiLocation` | `boolean` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `ChannelSKURowId` | `string` | RowId of channel SKU |
+| `SKU` | `string` | Product SKU number |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Region code |
+| `UpdateStatus` | `string` | Current update status |
+| `ChannelReferenceId` | `string` | Channel reference ID |
+| `LastUpdate` | `string` | Last update date and time |
+| `MaxListedQuantity` | `integer` | Maximum listed quantity |
+| `EndWhenStock` | `integer` | End listing when stock level |
+| `SubmittedQuantity` | `integer` | Submitted quantity |
+| `ListedQuantity` | `integer` | Listed quantity |
+| `StockPercentage` | `number` | Stock percentage |
+| `IgnoreSync` | `boolean` | Ignore sync |
+| `IgnoreSyncMultiLocation` | `boolean` | Ignore sync for multi location items |
+| `IsMultiLocation` | `boolean` | Multi location |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemChannelSKUWithLocation`
 
-| Property | Type |
-|---|---|
-| `fkRowId` | `string` |
-| `LocationId` | `integer` |
-| `LocationName` | `string` |
-| `IgnoreSync` | `boolean` |
-| `MaxListedQuantity` | `integer` |
-| `EndWhenStock` | `integer` |
-| `StockPercentage` | `number` |
-| `LastUpdate` | `string` |
-| `UpdateStatus` | `string` |
-| `SubmittedQuantity` | `integer` |
-| `ListedQuantity` | `integer` |
-| `RetryCount` | `integer` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `fkRowId` | `string` | Record row ID |
+| `LocationId` | `integer` | Location ID |
+| `LocationName` | `string` | Location name |
+| `IgnoreSync` | `boolean` | Ignored on a sync |
+| `MaxListedQuantity` | `integer` | Maximum listed quantity |
+| `EndWhenStock` | `integer` | End listing when stock level |
+| `StockPercentage` | `number` | Stock percantage |
+| `LastUpdate` | `string` | Last update date and time |
+| `UpdateStatus` | `string` | Current update status |
+| `SubmittedQuantity` | `integer` | Quantity submitted to the channel |
+| `ListedQuantity` | `integer` | Currently listed quantity |
+| `RetryCount` | `integer` | How many retries |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemChannelSkuResponse`
 
-| Property | Type |
-|---|---|
-| `StockItemId` | `string` |
-| `ChannelSkus` | `StockItemChannelSKU[]` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+| `ChannelSkus` | `StockItemChannelSKU[]` |  |
 
 ### `StockItemComposition`
 
-| Property | Type |
-|---|---|
-| `LinkedStockItemId` | `string` |
-| `ItemTitle` | `string` |
-| `SKU` | `string` |
-| `Quantity` | `integer` |
-| `PurchasePrice` | `number` |
-| `InventoryTrackingType` | `integer` |
-| `DimHeight` | `number` |
-| `DimWidth` | `number` |
-| `DimDepth` | `number` |
-| `Weight` | `number` |
-| `PackageGroupId` | `string` |
-| `TaxRate` | `number` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `LinkedStockItemId` | `string` | Stock item ID of linked product |
+| `ItemTitle` | `string` | Product title |
+| `SKU` | `string` | Product SKU |
+| `Quantity` | `integer` | Product quantity |
+| `PurchasePrice` | `number` | Item purchase price |
+| `InventoryTrackingType` | `integer` | Tracking type of an item |
+| `DimHeight` | `number` |  |
+| `DimWidth` | `number` |  |
+| `DimDepth` | `number` |  |
+| `Weight` | `number` |  |
+| `PackageGroupId` | `string` |  |
+| `TaxRate` | `number` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemDescription`
 
-| Property | Type |
-|---|---|
-| `pkRowId` | `string` |
-| `Source` | `string` |
-| `SubSource` | `string` |
-| `Description` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Record row ID (generate random GUID) |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Channel subsource (e.g EBAY1) |
+| `Description` | `string` | Product description |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemEbayCompatibility`
 
-| Property | Type |
-|---|---|
-| `FkStockItemId` | `string` |
-| `FkCompatibilityListId` | `string` |
-| `SKU` | `string` |
-| `CompatibilityNotes` | `string` |
-| `Value` | `string` |
-| `IncludeYears` | `string` |
-| `ExcludeYears` | `string` |
-| `Culture` | `string` |
-| `EbayCompitibilityType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `FkStockItemId` | `string` | StockItem unique identifier (Optional if SKU is supplied) |
+| `FkCompatibilityListId` | `string` | Compatibility list ID (Optional) |
+| `SKU` | `string` | Stock item SKU (Will be ignored fkStockItemId is supplied) |
+| `CompatibilityNotes` | `string` | Compatibility notes |
+| `Value` | `string` | Value |
+| `IncludeYears` | `string` | Years to include |
+| `ExcludeYears` | `string` | Years to exclude |
+| `Culture` | `string` | Compatibility culture, one of US, UK, DE, AU, CA, FR, IT, ES |
+| `EbayCompitibilityType` | `string` |  |
 
 ### `StockItemExtendedProperty`
 
-| Property | Type |
-|---|---|
-| `pkRowId` | `string` |
-| `fkStockItemId` | `string` |
-| `ProperyName` | `string` |
-| `PropertyValue` | `string` |
-| `PropertyType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Record row ID (generate random) |
+| `fkStockItemId` | `string` | Stock Item ID |
+| `ProperyName` | `string` | Property name |
+| `PropertyValue` | `string` | Property value |
+| `PropertyType` | `string` | Property type |
 
 ### `StockItemImage`
 
-| Property | Type |
-|---|---|
-| `Source` | `string` |
-| `FullSource` | `string` |
-| `CheckSumValue` | `string` |
-| `pkRowId` | `string` |
-| `IsMain` | `boolean` |
-| `SortOrder` | `integer` |
-| `ChecksumValue` | `string` |
-| `RawChecksum` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Source` | `string` | URL to thumnail image |
+| `FullSource` | `string` | Url to full size image |
+| `CheckSumValue` | `string` | Image check sum |
+| `pkRowId` | `string` |  |
+| `IsMain` | `boolean` |  |
+| `SortOrder` | `integer` |  |
+| `ChecksumValue` | `string` |  |
+| `RawChecksum` | `string` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemInv`
 
-| Property | Type |
-|---|---|
-| `VariationGroupName` | `string` |
-| `ItemDescription` | `string` |
-| `Quantity` | `integer` |
-| `InOrder` | `integer` |
-| `Due` | `integer` |
-| `MinimumLevel` | `integer` |
-| `Available` | `integer` |
-| `IsCompositeParent` | `boolean` |
-| `ShippedSeparately` | `boolean` |
-| `ItemNumber` | `string` |
-| `ItemTitle` | `string` |
-| `BarcodeNumber` | `string` |
-| `MetaData` | `string` |
-| `IsVariationParent` | `boolean` |
-| `isBatchedStockType` | `boolean` |
-| `PurchasePrice` | `number` |
-| `RetailPrice` | `number` |
-| `TaxRate` | `number` |
-| `PostalServiceId` | `string` |
-| `PostalServiceName` | `string` |
-| `CategoryId` | `string` |
-| `CategoryName` | `string` |
-| `PackageGroupId` | `string` |
-| `PackageGroupName` | `string` |
-| `Height` | `number` |
-| `Width` | `number` |
-| `Depth` | `number` |
-| `Weight` | `number` |
-| `CreationDate` | `string` |
-| `InventoryTrackingType` | `integer` |
-| `BatchNumberScanRequired` | `boolean` |
-| `SerialNumberScanRequired` | `boolean` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `VariationGroupName` | `string` | Variation parent group name |
+| `ItemDescription` | `string` |  |
+| `Quantity` | `integer` |  |
+| `InOrder` | `integer` |  |
+| `Due` | `integer` |  |
+| `MinimumLevel` | `integer` |  |
+| `Available` | `integer` |  |
+| `IsCompositeParent` | `boolean` |  |
+| `ShippedSeparately` | `boolean` |  |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `BarcodeNumber` | `string` |  |
+| `MetaData` | `string` |  |
+| `IsVariationParent` | `boolean` |  |
+| `isBatchedStockType` | `boolean` |  |
+| `PurchasePrice` | `number` |  |
+| `RetailPrice` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PostalServiceId` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `CategoryId` | `string` |  |
+| `CategoryName` | `string` |  |
+| `PackageGroupId` | `string` |  |
+| `PackageGroupName` | `string` |  |
+| `Height` | `number` |  |
+| `Width` | `number` |  |
+| `Depth` | `number` |  |
+| `Weight` | `number` |  |
+| `CreationDate` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `BatchNumberScanRequired` | `boolean` |  |
+| `SerialNumberScanRequired` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemLabel`
 
-| Property | Type |
-|---|---|
-| `StockItemId` | `string` |
-| `ItemNumber` | `string` |
-| `ItemTitle` | `string` |
-| `Quantity` | `integer` |
-| `BinRack` | `string` |
-| `BatchNumber` | `string` |
-| `BatchInventoryId` | `integer` |
-| `LocationId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+| `ItemNumber` | `string` | Product SKU |
+| `ItemTitle` | `string` | Item title |
+| `Quantity` | `integer` | Item quantity |
+| `BinRack` | `string` | BinRack location |
+| `BatchNumber` | `string` | Batch number |
+| `BatchInventoryId` | `integer` |  |
+| `LocationId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemLocation`
 
-| Property | Type |
-|---|---|
-| `StockLocationId` | `string` |
-| `LocationName` | `string` |
-| `BinRack` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `StockLocationId` | `string` | Stock location ID |
+| `LocationName` | `string` | Location name |
+| `BinRack` | `string` | BinRack |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemPrice`
 
-| Property | Type |
-|---|---|
-| `Rules` | `StockItemPricingRule[]` |
-| `pkRowId` | `string` |
-| `Source` | `string` |
-| `SubSource` | `string` |
-| `Price` | `number` |
-| `Tag` | `string` |
-| `UpdateStatus` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Rules` | `StockItemPricingRule[]` | Pricing rule |
+| `pkRowId` | `string` |  |
+| `Source` | `string` |  |
+| `SubSource` | `string` |  |
+| `Price` | `number` |  |
+| `Tag` | `string` |  |
+| `UpdateStatus` | `string` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemPricingRule`
 
-| Property | Type |
-|---|---|
-| `pkRowId` | `integer` |
-| `fkStockPricingId` | `string` |
-| `Type` | `string` |
-| `LowerBound` | `integer` |
-| `Value` | `number` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `integer` | Record row ID (optional) |
+| `fkStockPricingId` | `string` | Stock pricing ID |
+| `Type` | `string` | Type |
+| `LowerBound` | `integer` | Lower level |
+| `Value` | `number` | Value/Price level |
 
 ### `StockItemSupplierStat`
 
-| Property | Type |
-|---|---|
-| `IsDefault` | `boolean` |
-| `Supplier` | `string` |
-| `SupplierID` | `string` |
-| `Code` | `string` |
-| `SupplierBarcode` | `string` |
-| `LeadTime` | `integer` |
-| `PurchasePrice` | `number` |
-| `MinPrice` | `number` |
-| `MaxPrice` | `number` |
-| `AveragePrice` | `number` |
-| `AverageLeadTime` | `number` |
-| `SupplierMinOrderQty` | `integer` |
-| `SupplierPackSize` | `integer` |
-| `SupplierCurrency` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `IsDefault` | `boolean` | If supplier information is default |
+| `Supplier` | `string` | Supplier name |
+| `SupplierID` | `string` | Supplier ID |
+| `Code` | `string` | Supplier code |
+| `SupplierBarcode` | `string` | Supplier barcode |
+| `LeadTime` | `integer` | Supplier lead time |
+| `PurchasePrice` | `number` | Supplier purchase price |
+| `MinPrice` | `number` | Minimum price |
+| `MaxPrice` | `number` | Maximum price |
+| `AveragePrice` | `number` | Average price |
+| `AverageLeadTime` | `number` | Average lead time |
+| `SupplierMinOrderQty` | `integer` | Minimum order quantity from this supplier |
+| `SupplierPackSize` | `integer` | Supplier pack size |
+| `SupplierCurrency` | `string` | Supplier's default currency |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemTitle`
 
-| Property | Type |
-|---|---|
-| `pkRowId` | `string` |
-| `Source` | `string` |
-| `SubSource` | `string` |
-| `Title` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Record row id (generate random) |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | SubSource (EBAY1) |
+| `Title` | `string` | Item title |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockLocation`
 
-| Property | Type |
-|---|---|
-| `StockLocationId` | `string` |
-| `LocationName` | `string` |
-| `Address1` | `string` |
-| `Address2` | `string` |
-| `City` | `string` |
-| `County` | `string` |
-| `Country` | `string` |
-| `ZipCode` | `string` |
-| `IsNotTrackable` | `boolean` |
-| `LocationTag` | `string` |
-| `IsFulfillmentCenter` | `boolean` |
-| `CountInOrderUntilAcknowledgement` | `boolean` |
-| `FulfilmentCenterDeductStockWhenProcessed` | `boolean` |
-| `IsWarehouseManaged` | `boolean` |
-| `StockLocationIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `StockLocationId` | `string` |  |
+| `LocationName` | `string` |  |
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `City` | `string` |  |
+| `County` | `string` |  |
+| `Country` | `string` |  |
+| `ZipCode` | `string` |  |
+| `IsNotTrackable` | `boolean` |  |
+| `LocationTag` | `string` |  |
+| `IsFulfillmentCenter` | `boolean` |  |
+| `CountInOrderUntilAcknowledgement` | `boolean` |  |
+| `FulfilmentCenterDeductStockWhenProcessed` | `boolean` |  |
+| `IsWarehouseManaged` | `boolean` |  |
+| `StockLocationIntId` | `integer` |  |
 
 ### `Supplier`
 
-| Property | Type |
-|---|---|
-| `pkSupplierID` | `string` |
-| `SupplierName` | `string` |
-| `ContactName` | `string` |
-| `Address` | `string` |
-| `AlternativeAddress` | `string` |
-| `City` | `string` |
-| `Region` | `string` |
-| `Country` | `string` |
-| `PostCode` | `string` |
-| `TelephoneNumber` | `string` |
-| `SecondaryTelNumber` | `string` |
-| `FaxNumber` | `string` |
-| `Email` | `string` |
-| `WebPage` | `string` |
-| `Currency` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkSupplierID` | `string` | Supplier Id |
+| `SupplierName` | `string` | Supplier Name |
+| `ContactName` | `string` | Name of main contact |
+| `Address` | `string` | Supplier's address |
+| `AlternativeAddress` | `string` | Second line of address |
+| `City` | `string` | City |
+| `Region` | `string` | Region |
+| `Country` | `string` | Country |
+| `PostCode` | `string` | Postcode |
+| `TelephoneNumber` | `string` | Telephone number |
+| `SecondaryTelNumber` | `string` | Secondary telephone number |
+| `FaxNumber` | `string` | Fax number |
+| `Email` | `string` | E-mail |
+| `WebPage` | `string` | Web page |
+| `Currency` | `string` | Currency used |
 
 ### `UpdateBatchDatesRequest`
 
-| Property | Type |
-|---|---|
-| `Items` | `BatchDatesUpdateItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `BatchDatesUpdateItem[]` |  |
 
 ### `UpdateBatchDatesResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `BatchDatesUpdateItemResult[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `BatchDatesUpdateItemResult[]` |  |

@@ -2,8 +2,8 @@
 
 # RulesEngine (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/rulesengine.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/rulesengine.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -52,19 +52,19 @@ Use this call to get a list of valid evaluators and the groups which they belong
 
 Use this call to get a list of valid evaluation fields for a given rule type. Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `type` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `type` | query | `string` | False | The rule type. |
 
 ### GET `/api/RulesEngine/GetOptions`
 
 Use this call to get a list of valid options for a given field (and, if relevant, key). Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `fieldName` | query | `string` | False |
-| `type` | query | `string` | False |
-| `key` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `fieldName` | query | `string` | False | The field name. |
+| `type` | query | `string` | False | The rule type. |
+| `key` | query | `string` | False | The key (optional). |
 
 ### POST `/api/RulesEngine/GetMultiOptions`
 
@@ -74,10 +74,10 @@ Use this call to get a list of valid options for a given set of fields (and, if 
 
 Use this call to get a list of valid keys for a given field. Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `type` | query | `string` | False |
-| `fieldName` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `type` | query | `string` | False | The rule type |
+| `fieldName` | query | `string` | False | The field name |
 
 ### POST `/api/RulesEngine/GetMultiKeyOptions`
 
@@ -91,33 +91,33 @@ Use this call to retrieve a list of rules Permissions Required: GlobalPermission
 
 Use this call to retrieve a list of rules of a given type Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `type` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `type` | query | `string` | False | The rule type. |
 
 ### GET `/api/RulesEngine/GetRuleConditionNodes`
 
 Use this call to get information about the nodes belonging to a rule, excluding the condition items. Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkRuleId` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkRuleId` | query | `integer` | False | The rule id. |
 
 ### GET `/api/RulesEngine/GetConditionWeb`
 
 Use this call to retrieve details about a given condition. Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkConditionId` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkConditionId` | query | `integer` | False | The condition id. |
 
 ### GET `/api/RulesEngine/GetActionTypes`
 
 Use this call to retrieve a list of valid action types for the rule type Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `type` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `type` | query | `string` | False | The rule type. |
 
 ### POST `/api/RulesEngine/CreateNewCondition`
 
@@ -131,20 +131,20 @@ Use this call to update a conditon and its condition items. Permissions Required
 
 Use this call to check to see if a condition name already exists at a specific level. Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `fkRuleId` | query | `integer` | False |
-| `fkConditionId` | query | `integer` | False |
-| `excludeConditionId` | query | `integer` | False |
-| `conditionName` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `fkRuleId` | query | `integer` | False | The rule id. |
+| `fkConditionId` | query | `integer` | False | Must be specified if checking that a condition name exists under a sub-condition. If checking rule-level conditions, do not specify. |
+| `excludeConditionId` | query | `integer` | False | If the check is for renaming a condition, specify the condition id here to exclude it from the results. |
+| `conditionName` | query | `string` | False | The name to check. |
 
 ### GET `/api/RulesEngine/GetActionOptions`
 
 Use this call to get a list of valid options for a given action Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `type` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `type` | query | `string` | False | The action type |
 
 ### POST `/api/RulesEngine/UpdateAction`
 
@@ -170,17 +170,17 @@ Use this call to swap the sort order of two conditions belonging to the same par
 
 Use this call to get a list of fields and keys used by a given rule. Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkRuleId` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkRuleId` | query | `integer` | False | The rule id |
 
 ### GET `/api/RulesEngine/GetRequiredFieldsByType`
 
 Use this call to get a list of fields and keys used by a given rule type Permissions Required: GlobalPermissions.OrderBook.RulesEngineNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `type` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `type` | query | `string` | False | The rule type. |
 
 ### POST `/api/RulesEngine/TestEvaluateRule`
 
@@ -234,273 +234,273 @@ Use this call to copy an action from one condition to another condition. Actions
 
 ### `ActionTypeDescriptor`
 
-| Property | Type |
-|---|---|
-| `Value` | `string` |
-| `DisplayName` | `string` |
-| `Properties` | `ActionTypeDescriptorProperties[]` |
-| `DisplayType` | `string` |
-| `FieldType` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Value` | `string` |  |
+| `DisplayName` | `string` |  |
+| `Properties` | `ActionTypeDescriptorProperties[]` |  |
+| `DisplayType` | `string` |  |
+| `FieldType` | `string` |  |
 
 ### `ActionWeb`
 
-| Property | Type |
-|---|---|
-| `pkActionId` | `integer` |
-| `fkConditionId` | `integer` |
-| `ActionName` | `string` |
-| `ActionType` | `string` |
-| `Properties` | `ActionWebProperty[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkActionId` | `integer` |  |
+| `fkConditionId` | `integer` |  |
+| `ActionName` | `string` |  |
+| `ActionType` | `string` |  |
+| `Properties` | `ActionWebProperty[]` |  |
 
 ### `ConditionHeaderBasic`
 
-| Property | Type |
-|---|---|
-| `pkConditionId` | `integer` |
-| `fkParentConditionId` | `integer` |
-| `fkRuleId` | `integer` |
-| `ConditionName` | `string` |
-| `Enabled` | `boolean` |
-| `Conditions` | `ConditionItemBasic[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkConditionId` | `integer` |  |
+| `fkParentConditionId` | `integer` |  |
+| `fkRuleId` | `integer` |  |
+| `ConditionName` | `string` |  |
+| `Enabled` | `boolean` |  |
+| `Conditions` | `ConditionItemBasic[]` |  |
 
 ### `EvaluatorDescriptor`
 
-| Property | Type |
-|---|---|
-| `EvaluatorType` | `string` |
-| `ClientType` | `string` |
-| `ClientTypeName` | `string` |
-| `EvaluatorGroup` | `string` |
-| `Description` | `string` |
-| `GroupIndex` | `integer` |
-| `EvalIndex` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `EvaluatorType` | `string` |  |
+| `ClientType` | `string` |  |
+| `ClientTypeName` | `string` |  |
+| `EvaluatorGroup` | `string` |  |
+| `Description` | `string` |  |
+| `GroupIndex` | `integer` |  |
+| `EvalIndex` | `integer` |  |
 
 ### `FieldDescriptor`
 
-| Property | Type |
-|---|---|
-| `Name` | `string` |
-| `FieldName` | `string` |
-| `FieldGroup` | `string` |
-| `IsASet` | `boolean` |
-| `ValidEvaluatorGroups` | `string[]` |
-| `Key` | `string` |
-| `KeyDisplayName` | `string` |
-| `HasKeyOptions` | `boolean` |
-| `HasAttributeKey` | `boolean` |
-| `HasOptions` | `boolean` |
-| `DisplayType` | `string` |
-| `ExactMatchRequired` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `FieldName` | `string` |  |
+| `FieldGroup` | `string` |  |
+| `IsASet` | `boolean` |  |
+| `ValidEvaluatorGroups` | `string[]` |  |
+| `Key` | `string` |  |
+| `KeyDisplayName` | `string` |  |
+| `HasKeyOptions` | `boolean` |  |
+| `HasAttributeKey` | `boolean` |  |
+| `HasOptions` | `boolean` |  |
+| `DisplayType` | `string` |  |
+| `ExactMatchRequired` | `boolean` |  |
 
 ### `MultiKeyOptionResponse`
 
-| Property | Type |
-|---|---|
-| `Field` | `string` |
-| `Options` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Field` | `string` | Option field |
+| `Options` | `string[]` | List of options |
 
 ### `MultiOptionResponse`
 
-| Property | Type |
-|---|---|
-| `Field` | `string` |
-| `Key` | `string` |
-| `Options` | `string[]` |
-| `KeyedOptions` | `OptionBase[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Field` | `string` | Evaluation field |
+| `Key` | `string` | Evaluation key |
+| `Options` | `string[]` | Evaluation options |
+| `KeyedOptions` | `OptionBase[]` |  |
 
 ### `RuleAction`
 
-| Property | Type |
-|---|---|
-| `pkActionId` | `integer` |
-| `ActionName` | `string` |
-| `ActionType` | `string` |
-| `ActionValue` | `string` |
-| `fkConditionId` | `integer` |
-| `RuleVersion` | `integer` |
-| `fkRuleId` | `integer` |
-| `Properties` | `RuleActionProperty[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkActionId` | `integer` |  |
+| `ActionName` | `string` |  |
+| `ActionType` | `string` |  |
+| `ActionValue` | `string` |  |
+| `fkConditionId` | `integer` |  |
+| `RuleVersion` | `integer` |  |
+| `fkRuleId` | `integer` |  |
+| `Properties` | `RuleActionProperty[]` |  |
 
 ### `RuleConditionHeader`
 
-| Property | Type |
-|---|---|
-| `pkConditionId` | `integer` |
-| `fkRuleId` | `integer` |
-| `RunOrder` | `integer` |
-| `Enabled` | `boolean` |
-| `ConditionName` | `string` |
-| `fkParentConditionId` | `integer` |
-| `Conditions` | `IRuleConditionItem[]` |
-| `Action` | `RuleAction` |
-| `Subrules` | `RuleConditionHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkConditionId` | `integer` |  |
+| `fkRuleId` | `integer` |  |
+| `RunOrder` | `integer` |  |
+| `Enabled` | `boolean` |  |
+| `ConditionName` | `string` |  |
+| `fkParentConditionId` | `integer` |  |
+| `Conditions` | `IRuleConditionItem[]` |  |
+| `Action` | `RuleAction` |  |
+| `Subrules` | `RuleConditionHeader[]` |  |
 
 ### `RuleEvaluationResult`
 
-| Property | Type |
-|---|---|
-| `LastConditionId` | `integer` |
-| `LastActionId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `LastConditionId` | `integer` |  |
+| `LastActionId` | `integer` |  |
 
 ### `RuleHeaderBasic`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
-| `RuleName` | `string` |
-| `RuleType` | `string` |
-| `Enabled` | `boolean` |
-| `RunOrder` | `integer` |
-| `pkRuleId_Draft` | `integer` |
-| `Draft` | `boolean` |
-| `RuleTypeDisplayName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
+| `RuleName` | `string` |  |
+| `RuleType` | `string` |  |
+| `Enabled` | `boolean` |  |
+| `RunOrder` | `integer` |  |
+| `pkRuleId_Draft` | `integer` |  |
+| `Draft` | `boolean` |  |
+| `RuleTypeDisplayName` | `string` |  |
 
 ### `RulesEngine_AddActionRequest`
 
-| Property | Type |
-|---|---|
-| `action` | `ActionWeb` |
+| Property | Type | Description |
+|---|---|---|
+| `action` | `ActionWeb` |  |
 
 ### `RulesEngine_CopyActionRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
-| `targetParentConditionId` | `integer` |
-| `pkActionId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
+| `targetParentConditionId` | `integer` |  |
+| `pkActionId` | `integer` |  |
 
 ### `RulesEngine_CopyConditionRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
-| `targetParentConditionId` | `integer` |
-| `pkConditionId` | `integer` |
-| `includeChildren` | `boolean` |
-| `includeActions` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
+| `targetParentConditionId` | `integer` |  |
+| `pkConditionId` | `integer` |  |
+| `includeChildren` | `boolean` |  |
+| `includeActions` | `boolean` |  |
 
 ### `RulesEngine_CreateDraftFromExistingRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
 
 ### `RulesEngine_CreateNewConditionRequest`
 
-| Property | Type |
-|---|---|
-| `header` | `ConditionHeaderBasic` |
+| Property | Type | Description |
+|---|---|---|
+| `header` | `ConditionHeaderBasic` |  |
 
 ### `RulesEngine_CreateNewDraftFromExistingRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
-| `ruleName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
+| `ruleName` | `string` |  |
 
 ### `RulesEngine_CreateNewDraftRequest`
 
-| Property | Type |
-|---|---|
-| `ruleName` | `string` |
-| `type` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `ruleName` | `string` |  |
+| `type` | `string` |  |
 
 ### `RulesEngine_DeleteActionRequest`
 
-| Property | Type |
-|---|---|
-| `pkActionId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkActionId` | `integer` |  |
 
 ### `RulesEngine_DeleteConditionRequest`
 
-| Property | Type |
-|---|---|
-| `pkConditionId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkConditionId` | `integer` |  |
 
 ### `RulesEngine_DeleteRuleByIdRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
 
 ### `RulesEngine_GetMultiKeyOptionsRequest`
 
-| Property | Type |
-|---|---|
-| `type` | `string` |
-| `fieldNames` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `type` | `string` |  |
+| `fieldNames` | `string[]` |  |
 
 ### `RulesEngine_GetMultiOptionsRequest`
 
-| Property | Type |
-|---|---|
-| `type` | `string` |
-| `fieldKeys` | `FieldKeys[]` |
+| Property | Type | Description |
+|---|---|---|
+| `type` | `string` |  |
+| `fieldKeys` | `FieldKeys[]` |  |
 
 ### `RulesEngine_SaveConditionChangesRequest`
 
-| Property | Type |
-|---|---|
-| `conditionHeader` | `ConditionHeaderBasic` |
+| Property | Type | Description |
+|---|---|---|
+| `conditionHeader` | `ConditionHeaderBasic` |  |
 
 ### `RulesEngine_SetConditionEnabledRequest`
 
-| Property | Type |
-|---|---|
-| `pkConditionId` | `integer` |
-| `enabled` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkConditionId` | `integer` |  |
+| `enabled` | `boolean` |  |
 
 ### `RulesEngine_SetDraftLiveRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
 
 ### `RulesEngine_SetRuleEnabledRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
-| `enabled` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
+| `enabled` | `boolean` |  |
 
 ### `RulesEngine_SetRuleNameRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId` | `integer` |
-| `ruleName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId` | `integer` |  |
+| `ruleName` | `string` |  |
 
 ### `RulesEngine_SwapConditionsRequest`
 
-| Property | Type |
-|---|---|
-| `pkConditionId1` | `integer` |
-| `pkConditionId2` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkConditionId1` | `integer` |  |
+| `pkConditionId2` | `integer` |  |
 
 ### `RulesEngine_SwapRulesRequest`
 
-| Property | Type |
-|---|---|
-| `pkRuleId1` | `integer` |
-| `pkRuleId2` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRuleId1` | `integer` |  |
+| `pkRuleId2` | `integer` |  |
 
 ### `RulesEngine_TestEvaluateRuleRequest`
 
-| Property | Type |
-|---|---|
-| `testValues` | `TestpadValue[]` |
-| `pkRuleId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `testValues` | `TestpadValue[]` |  |
+| `pkRuleId` | `integer` |  |
 
 ### `RulesEngine_UpdateActionRequest`
 
-| Property | Type |
-|---|---|
-| `action` | `ActionWeb` |
+| Property | Type | Description |
+|---|---|---|
+| `action` | `ActionWeb` |  |
 
 ### `RulesFields`
 
-| Property | Type |
-|---|---|
-| `FieldNames` | `string[]` |
-| `FieldKeys` | `object` |
-| `IdName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `FieldNames` | `string[]` |  |
+| `FieldKeys` | `object` |  |
+| `IdName` | `string` |  |

@@ -4,6 +4,13 @@
 [Ll]og/
 [Ll]ogs/
 
+# check_macro_compiles scratch source - overwritten per MCP call, not tracked
+mcp-server/compile_check/Macro.cs
+
+# enrich_api_descriptions.py's inspection output - regenerable from vendor/LinnworksNetSDK/,
+# not read by anything else (sync_api_spec.py calls load_descriptions() directly)
+vendor/LinnworksNetSDK/descriptions.json
+
 # Visual Studio / .NET
 .vs/
 *.user

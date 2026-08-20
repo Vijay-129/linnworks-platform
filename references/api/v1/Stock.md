@@ -2,8 +2,8 @@
 
 # Stock (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/stock.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/stock.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -65,9 +65,9 @@ _Last synced: 2026-08-13_
 
 Use this call to check if a potential parent SKU exist and its current status.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `parentSKU` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `parentSKU` | query | `string` | False | The SKU |
 
 ### GET `/api/Stock/GetVariationGroupSearchTypes`
 
@@ -77,20 +77,20 @@ Use this call to retrieve a list of the search types for searching for variation
 
 Use this call to search for a variation group
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `searchType` | query | `string` | False |
-| `searchText` | query | `string` | False |
-| `pageNumber` | query | `integer` | False |
-| `entriesPerPage` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `searchType` | query | `string` | False | The search method to use |
+| `searchText` | query | `string` | False | The search term (either in part of full) |
+| `pageNumber` | query | `integer` | False | The page number (e.g. 1). |
+| `entriesPerPage` | query | `integer` | False | The number of entries to return per page. |
 
 ### GET `/api/Stock/DeleteVariationGroup`
 
 Use this call to delete variation group by id Permissions Required: GlobalPermissions.Inventory.DeleteMyInventoryItems.DeleteItemsNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkVariationGroupId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkVariationGroupId` | query | `string` | False |  |
 
 ### POST `/api/Stock/DeleteVariationGroups`
 
@@ -100,17 +100,17 @@ Use this call to delete variation groups by ids Permissions Required: GlobalPerm
 
 Use this call to search for a variation group by the parent SKU's stock item id
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkStockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkStockItemId` | query | `string` | False | The stock item id to search by |
 
 ### GET `/api/Stock/GetVariationGroupByName`
 
 Use this call to search for a variation group by the group name
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `variationName` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `variationName` | query | `string` | False | The group name to search by |
 
 ### POST `/api/Stock/RenameVariationGroup`
 
@@ -120,9 +120,9 @@ Use this call to rename a variation group
 
 Use this call to retrieve the items in this variation
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkVariationItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkVariationItemId` | query | `string` | False | The variation item id |
 
 ### POST `/api/Stock/AddVariationItems`
 
@@ -144,54 +144,54 @@ Use this call to create a variation group
 
 Use this call to check if a SKU exists within Linnworks.
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `SKU` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `SKU` | query | `string` | False | The SKU you want to check exists. |
 
 ### GET `/api/Stock/GetStockConsumption`
 
 Use this call to retrieve report about "stock consumption between two dates"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `startDate` | query | `string` | False |
-| `endDate` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify report stock id |
+| `locationId` | query | `string` | False | Used to specify location id. If null, then will return combined result of every location |
+| `startDate` | query | `string` | False | Used to specify report start date |
+| `endDate` | query | `string` | False | Used to specify report end date |
 
 ### GET `/api/Stock/GetItemChangesHistory`
 
 Use this call to retrieve report about "stock changes of an item"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `entriesPerPage` | query | `integer` | False |
-| `pageNumber` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify report stock item id |
+| `locationId` | query | `string` | False | Used to specify report location id. If null then combined |
+| `entriesPerPage` | query | `integer` | False | Used to specify number of entries per page in report |
+| `pageNumber` | query | `integer` | False | Used to specify report page number. If -1 then will return all pages |
 
 ### GET `/api/Stock/GetItemChangesHistoryCSV`
 
 Use this call to retrieve link to csv file report about "Stock changes of an item"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
-| `locationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify stock item id |
+| `locationId` | query | `string` | False | Used to specify location id. If null then combined |
 
 ### GET `/api/Stock/GetStockItems`
 
 Use this call to retrieve report about "Found stock items"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `keyWord` | query | `string` | False |
-| `locationId` | query | `string` | False |
-| `entriesPerPage` | query | `integer` | False |
-| `pageNumber` | query | `integer` | False |
-| `excludeComposites` | query | `boolean` | False |
-| `excludeVariations` | query | `boolean` | False |
-| `excludeBatches` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `keyWord` | query | `string` | False |  |
+| `locationId` | query | `string` | False |  |
+| `entriesPerPage` | query | `integer` | False |  |
+| `pageNumber` | query | `integer` | False |  |
+| `excludeComposites` | query | `boolean` | False |  |
+| `excludeVariations` | query | `boolean` | False |  |
+| `excludeBatches` | query | `boolean` | False |  |
 
 ### POST `/api/Stock/GetStockItemsByKey`
 
@@ -209,9 +209,9 @@ Used to get inventory item information at a basic level from ids.
 
 Use this call to retrieve report about "item stock level"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify stock item id |
 
 ### POST `/api/Stock/GetStockLevelByLocation`
 
@@ -229,41 +229,41 @@ Use this call to update stock minimum level
 
 Use this call to retrieve report about "item stock sold"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify report stock item id |
 
 ### GET `/api/Stock/GetStockDuePO`
 
 Use this call to retrieve report about "item stock due po"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify report stock item id |
 
 ### GET `/api/Stock/GetStockItemReturnStat`
 
 Use this call to retrieve report about "item return stat"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify report stock item id |
 
 ### GET `/api/Stock/GetStockItemScrapStat`
 
 Use this call to retrieve report about "item stock scrap stat"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify report stock item id |
 
 ### GET `/api/Stock/GetSoldStat`
 
 Use this call to retrieve report about "item sold stat"
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockItemId` | query | `string` | False | Used to specify report stock item id |
 
 ### POST `/api/Stock/SetStockLevel`
 
@@ -347,559 +347,559 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 
 ### `AddRollingStockTakeRequest`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
-| `SessionDuriationSeconds` | `integer` |
-| `Items` | `StockTakeItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` | Location Id |
+| `SessionDuriationSeconds` | `integer` | Time in seconds the stock take session has taken |
+| `Items` | `StockTakeItem[]` | List of stock take items. Maximum 1000 items in a stock take session |
 
 ### `AddRollingStockTakeResponse`
 
-| Property | Type |
-|---|---|
-| `ErroredItems` | `StockTakeItemWithError[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ErroredItems` | `StockTakeItemWithError[]` | List of items that have failed validation, if any items are returned then the stock take won't be submitted. |
 
 ### `BatchStockLevelDeltaResponse`
 
-| Property | Type |
-|---|---|
-| `ProcessedDeltas` | `BatchStockLevelDelta[]` |
-| `ProcessedContainsErrors` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `ProcessedDeltas` | `BatchStockLevelDelta[]` |  |
+| `ProcessedContainsErrors` | `boolean` |  |
 
 ### `BinrackSkuResponse`
 
-| Property | Type |
-|---|---|
-| `Skus` | `StockItemBatch[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Skus` | `StockItemBatch[]` |  |
 
 ### `BinracksResponse`
 
-| Property | Type |
-|---|---|
-| `BinRacks` | `WarehouseBinRack[]` |
-| `Decisions` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `BinRacks` | `WarehouseBinRack[]` | List of binracks available for the given item in the order applicability. |
+| `Decisions` | `string[]` |  |
 
 ### `CreateWarehouseMoveRequest`
 
-| Property | Type |
-|---|---|
-| `BatchInventoryId` | `integer` |
-| `Quantity` | `integer` |
-| `BinrackIdDestination` | `integer` |
-| `JobId` | `integer` |
-| `TotId` | `integer` |
-| `TxType` | `string` |
-| `UserId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Batch Inventory Id of the stock item you are moving |
+| `Quantity` | `integer` | Quantity of items being moved |
+| `BinrackIdDestination` | `integer` | Destination if known, can be null |
+| `JobId` | `integer` | If the move is part of a specific job, specify job id so it can be marked off from the job |
+| `TotId` | `integer` | (Optional) Move to TOT id, create or retrive tot scan barcode first. To unassign from Tot send 0 |
+| `TxType` | `string` | Type of the move. Open means its an instruction to move, In Transit actually marks the item as unavilable and physically being moved |
+| `UserId` | `string` |  |
 
 ### `DeleteMoveRequest`
 
-| Property | Type |
-|---|---|
-| `MoveId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `MoveId` | `integer` | Id of the stock move to delete |
 
 ### `GenericEnumDescriptor`
 
-| Property | Type |
-|---|---|
-| `Description` | `string` |
-| `Value` | `string` |
-| `IsDefault` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `Description` | `string` |  |
+| `Value` | `string` |  |
+| `IsDefault` | `boolean` |  |
 
 ### `GenericPagedResult_StockItem`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `StockItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `StockItem[]` |  |
 
 ### `GenericPagedResult_StockItemChangeHistory`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `StockItemChangeHistory[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `StockItemChangeHistory[]` |  |
 
 ### `GenericPagedResult_VariationGroup`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `VariationGroup[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `VariationGroup[]` |  |
 
 ### `GetBinRackSkusRequest`
 
-| Property | Type |
-|---|---|
-| `BinRackId` | `integer` |
-| `DetailLevel` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `BinRackId` | `integer` | WMS BinRack Id |
+| `DetailLevel` | `string[]` | Detail level required in the response |
 
 ### `GetBinrackByIdRequest`
 
-| Property | Type |
-|---|---|
-| `BinrackIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `BinrackIds` | `integer[]` |  |
 
 ### `GetStockItemTypeInfoRequest`
 
-| Property | Type |
-|---|---|
-| `SKUS` | `string[]` |
-| `StockItemIntIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `SKUS` | `string[]` |  |
+| `StockItemIntIds` | `integer[]` |  |
 
 ### `GetStockItemTypeInfoResponse`
 
-| Property | Type |
-|---|---|
-| `StockItemInfo` | `StockItemTypeInfo[]` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemInfo` | `StockItemTypeInfo[]` |  |
 
 ### `GetStockItemsByIdsRequest`
 
-| Property | Type |
-|---|---|
-| `StockItemIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemIds` | `string[]` | Collection of Stock item id (uniqueidentifier) |
 
 ### `GetStockItemsByIdsResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `StockItemHeader[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `StockItemHeader[]` | List of stock item headers. |
 
 ### `GetStockItemsFullByIdsResponse`
 
-| Property | Type |
-|---|---|
-| `StockItemsFullExtended` | `StockItemFullExtended[]` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemsFullExtended` | `StockItemFullExtended[]` |  |
 
 ### `GetStockItemsLocationResponse`
 
-| Property | Type |
-|---|---|
-| `StockItemLocations` | `StockItemLocation[]` |
+| Property | Type | Description |
+|---|---|---|
+| `StockItemLocations` | `StockItemLocation[]` |  |
 
 ### `GetStockLevelByLocationResponse`
 
-| Property | Type |
-|---|---|
-| `StockLevel` | `StockItemLevel` |
+| Property | Type | Description |
+|---|---|---|
+| `StockLevel` | `StockItemLevel` |  |
 
 ### `GetStockLevel_BatchResponse`
 
-| Property | Type |
-|---|---|
-| `pkStockItemId` | `string` |
-| `StockItemLevels` | `StockItemLevel[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkStockItemId` | `string` | Id of the stock item |
+| `StockItemLevels` | `StockItemLevel[]` | List of stock level for each location |
 
 ### `GetWarehouseMoveRequest`
 
-| Property | Type |
-|---|---|
-| `MoveId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `MoveId` | `integer` | Id of the stock move |
 
 ### `GetWarehouseMoveResponse`
 
-| Property | Type |
-|---|---|
-| `WarehouseMove` | `WarehouseMoveDetailed` |
+| Property | Type | Description |
+|---|---|---|
+| `WarehouseMove` | `WarehouseMoveDetailed` | Move details |
 
 ### `GetWarehouseMovesByBinrackResponse`
 
-| Property | Type |
-|---|---|
-| `WarehouseMoves` | `WarehouseMoveCollection` |
+| Property | Type | Description |
+|---|---|---|
+| `WarehouseMoves` | `WarehouseMoveCollection` | A list of warehouse moves for a binrack; both incoming and outgoing |
 
 ### `StockConsumption`
 
-| Property | Type |
-|---|---|
-| `Date` | `string` |
-| `StockQuantity` | `integer` |
-| `StockValue` | `number` |
-| `Shipped` | `integer` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Date` | `string` | When stock was sold |
+| `StockQuantity` | `integer` | Sold quantity |
+| `StockValue` | `number` | Current stock value |
+| `Shipped` | `integer` | Shipped stock |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItem`
 
-| Property | Type |
-|---|---|
-| `ItemDescription` | `string` |
-| `Quantity` | `integer` |
-| `InOrder` | `integer` |
-| `Due` | `integer` |
-| `MinimumLevel` | `integer` |
-| `Available` | `integer` |
-| `IsCompositeParent` | `boolean` |
-| `ShippedSeparately` | `boolean` |
-| `ItemNumber` | `string` |
-| `ItemTitle` | `string` |
-| `BarcodeNumber` | `string` |
-| `MetaData` | `string` |
-| `IsVariationParent` | `boolean` |
-| `isBatchedStockType` | `boolean` |
-| `PurchasePrice` | `number` |
-| `RetailPrice` | `number` |
-| `TaxRate` | `number` |
-| `PostalServiceId` | `string` |
-| `PostalServiceName` | `string` |
-| `CategoryId` | `string` |
-| `CategoryName` | `string` |
-| `PackageGroupId` | `string` |
-| `PackageGroupName` | `string` |
-| `Height` | `number` |
-| `Width` | `number` |
-| `Depth` | `number` |
-| `Weight` | `number` |
-| `CreationDate` | `string` |
-| `InventoryTrackingType` | `integer` |
-| `BatchNumberScanRequired` | `boolean` |
-| `SerialNumberScanRequired` | `boolean` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `ItemDescription` | `string` | Item Description(Metadata) |
+| `Quantity` | `integer` | Quantity in stock |
+| `InOrder` | `integer` | Quantity in order book |
+| `Due` | `integer` | Quantity due in purchase orders |
+| `MinimumLevel` | `integer` | Minimum level of stock item. -1 is not tracked. Null value when adding will use user default minimum level |
+| `Available` | `integer` | Available level. Quantity - InOrder |
+| `IsCompositeParent` | `boolean` | Item is a composite parent |
+| `ShippedSeparately` | `boolean` |  |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `BarcodeNumber` | `string` |  |
+| `MetaData` | `string` |  |
+| `IsVariationParent` | `boolean` |  |
+| `isBatchedStockType` | `boolean` |  |
+| `PurchasePrice` | `number` |  |
+| `RetailPrice` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PostalServiceId` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `CategoryId` | `string` |  |
+| `CategoryName` | `string` |  |
+| `PackageGroupId` | `string` |  |
+| `PackageGroupName` | `string` |  |
+| `Height` | `number` |  |
+| `Width` | `number` |  |
+| `Depth` | `number` |  |
+| `Weight` | `number` |  |
+| `CreationDate` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `BatchNumberScanRequired` | `boolean` |  |
+| `SerialNumberScanRequired` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemBatch`
 
-| Property | Type |
-|---|---|
-| `BatchId` | `integer` |
-| `SKU` | `string` |
-| `InventoryTrackingType` | `integer` |
-| `StockItemId` | `string` |
-| `BatchNumber` | `string` |
-| `ExpiresOn` | `string` |
-| `SellBy` | `string` |
-| `Inventory` | `StockItemBatchInventory[]` |
-| `IsDeleted` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchId` | `integer` | Batch ID |
+| `SKU` | `string` | Product SKU |
+| `InventoryTrackingType` | `integer` | 0 - None, 1 - Order by sell by date, 2 - Ordered by priority sequence |
+| `StockItemId` | `string` | Product ID |
+| `BatchNumber` | `string` | Batch number |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
+| `Inventory` | `StockItemBatchInventory[]` | Batch records |
+| `IsDeleted` | `boolean` | Is the batch deleted |
 
 ### `StockItemDuePO`
 
-| Property | Type |
-|---|---|
-| `SupplierName` | `string` |
-| `Location` | `InventoryStockLocation` |
-| `SupplierId` | `string` |
-| `DateOfPurchase` | `string` |
-| `QuotedDeliveryDate` | `string` |
-| `Quantity` | `integer` |
-| `Delivered` | `integer` |
-| `UnitCost` | `number` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `SupplierName` | `string` | Supplier name |
+| `Location` | `InventoryStockLocation` | Stock location to be delivered to |
+| `SupplierId` | `string` | Supplier ID |
+| `DateOfPurchase` | `string` | Date of PO purchase |
+| `QuotedDeliveryDate` | `string` | PO delivery date |
+| `Quantity` | `integer` | Quantity to be delived |
+| `Delivered` | `integer` | Delivered quantity |
+| `UnitCost` | `number` | Unit cost |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemFull`
 
-| Property | Type |
-|---|---|
-| `Suppliers` | `StockItemSupplierStat[]` |
-| `StockLevels` | `StockItemLevel[]` |
-| `ItemChannelDescriptions` | `StockItemDescription[]` |
-| `ItemExtendedProperties` | `StockItemExtendedProperty[]` |
-| `ItemChannelTitles` | `StockItemTitle[]` |
-| `ItemChannelPrices` | `StockItemPrice[]` |
-| `Images` | `StockItemImage[]` |
-| `ItemNumber` | `string` |
-| `ItemTitle` | `string` |
-| `BarcodeNumber` | `string` |
-| `MetaData` | `string` |
-| `IsVariationParent` | `boolean` |
-| `isBatchedStockType` | `boolean` |
-| `PurchasePrice` | `number` |
-| `RetailPrice` | `number` |
-| `TaxRate` | `number` |
-| `PostalServiceId` | `string` |
-| `PostalServiceName` | `string` |
-| `CategoryId` | `string` |
-| `CategoryName` | `string` |
-| `PackageGroupId` | `string` |
-| `PackageGroupName` | `string` |
-| `Height` | `number` |
-| `Width` | `number` |
-| `Depth` | `number` |
-| `Weight` | `number` |
-| `CreationDate` | `string` |
-| `InventoryTrackingType` | `integer` |
-| `BatchNumberScanRequired` | `boolean` |
-| `SerialNumberScanRequired` | `boolean` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Suppliers` | `StockItemSupplierStat[]` | Suppliers |
+| `StockLevels` | `StockItemLevel[]` | Stock Levels |
+| `ItemChannelDescriptions` | `StockItemDescription[]` | List of item descriptions |
+| `ItemExtendedProperties` | `StockItemExtendedProperty[]` | List of extended properties |
+| `ItemChannelTitles` | `StockItemTitle[]` | List item titles |
+| `ItemChannelPrices` | `StockItemPrice[]` | List of item prices |
+| `Images` | `StockItemImage[]` | Image urls |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `BarcodeNumber` | `string` |  |
+| `MetaData` | `string` |  |
+| `IsVariationParent` | `boolean` |  |
+| `isBatchedStockType` | `boolean` |  |
+| `PurchasePrice` | `number` |  |
+| `RetailPrice` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PostalServiceId` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `CategoryId` | `string` |  |
+| `CategoryName` | `string` |  |
+| `PackageGroupId` | `string` |  |
+| `PackageGroupName` | `string` |  |
+| `Height` | `number` |  |
+| `Width` | `number` |  |
+| `Depth` | `number` |  |
+| `Weight` | `number` |  |
+| `CreationDate` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `BatchNumberScanRequired` | `boolean` |  |
+| `SerialNumberScanRequired` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemLevel`
 
-| Property | Type |
-|---|---|
-| `Location` | `InventoryStockLocation` |
-| `StockLevel` | `integer` |
-| `StockValue` | `number` |
-| `MinimumLevel` | `integer` |
-| `InOrderBook` | `integer` |
-| `Due` | `integer` |
-| `JIT` | `boolean` |
-| `InOrders` | `integer` |
-| `Available` | `integer` |
-| `UnitCost` | `number` |
-| `SKU` | `string` |
-| `AutoAdjust` | `boolean` |
-| `LastUpdateDate` | `string` |
-| `LastUpdateOperation` | `string` |
-| `rowid` | `string` |
-| `PendingUpdate` | `boolean` |
-| `StockItemPurchasePrice` | `number` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Location` | `InventoryStockLocation` | Location details Be careful! Not always all the fields are populated! |
+| `StockLevel` | `integer` | Stock level |
+| `StockValue` | `number` | Stock value |
+| `MinimumLevel` | `integer` | Minimum level |
+| `InOrderBook` | `integer` | Currently in open orders |
+| `Due` | `integer` | Due to come in purchase orders |
+| `JIT` | `boolean` | Stock Item Just In Time (JIT) status |
+| `InOrders` | `integer` | Currently in open orders |
+| `Available` | `integer` | StockLevel - InOrders |
+| `UnitCost` | `number` | if( Quantity == 0 ) dbo.StockItem.PurchasePrice Else CurrentStockValue / Quantity |
+| `SKU` | `string` | Product SKU |
+| `AutoAdjust` | `boolean` | If level is auto adjusted |
+| `LastUpdateDate` | `string` | Last time stock level was adjusted |
+| `LastUpdateOperation` | `string` | Name of last update operation |
+| `rowid` | `string` | dbo.StockLevel.rowid |
+| `PendingUpdate` | `boolean` | dbo.StockLevel.PendingUpdate |
+| `StockItemPurchasePrice` | `number` | Stock item purchase price. It's used to calculate UnitCost |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemReturn`
 
-| Property | Type |
-|---|---|
-| `Year` | `integer` |
-| `Month` | `integer` |
-| `Reason` | `string` |
-| `Quantity` | `integer` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Year` | `integer` | What year it was returned |
+| `Month` | `integer` | what month item was returned |
+| `Reason` | `string` | Return reason |
+| `Quantity` | `integer` | Quantity returned |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemScrap`
 
-| Property | Type |
-|---|---|
-| `Year` | `integer` |
-| `Month` | `integer` |
-| `Reason` | `string` |
-| `Quantity` | `integer` |
-| `Cost` | `number` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Year` | `integer` | Year item was scraped |
+| `Month` | `integer` | Month item was scraped |
+| `Reason` | `string` | Reason item was scrapped |
+| `Quantity` | `integer` | Scraped quantity |
+| `Cost` | `number` | Cost of scraped item |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemSold`
 
-| Property | Type |
-|---|---|
-| `Quantity` | `integer` |
-| `ItemNumber` | `string` |
-| `ItemTitle` | `string` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Quantity` | `integer` | Sold quantity |
+| `ItemNumber` | `string` | Item SKU |
+| `ItemTitle` | `string` | Item title |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemSoldStat`
 
-| Property | Type |
-|---|---|
-| `Source` | `string` |
-| `Quantity` | `integer` |
-| `Total` | `number` |
-| `Cost` | `number` |
-| `ProfitMargin` | `number` |
-| `Detail` | `StockItemSoldStatDetail[]` |
-| `StockItemId` | `string` |
-| `StockItemIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `Quantity` | `integer` | Sold quantity |
+| `Total` | `number` | Total price stock was sold for |
+| `Cost` | `number` | Total cost of sold stock |
+| `ProfitMargin` | `number` | Profit margin |
+| `Detail` | `StockItemSoldStatDetail[]` | Sold stat inforamtion |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `Stock_AddVariationItemsRequest`
 
-| Property | Type |
-|---|---|
-| `pkVariationItemId` | `string` |
-| `pkStockItemIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `pkVariationItemId` | `string` |  |
+| `pkStockItemIds` | `string[]` |  |
 
 ### `Stock_BatchStockLevelDeltaRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `BatchStockLevelDetaRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `BatchStockLevelDetaRequest` |  |
 
 ### `Stock_BookInStockBatchRequest`
 
-| Property | Type |
-|---|---|
-| `stockItem` | `BatchedBookIn` |
+| Property | Type | Description |
+|---|---|---|
+| `stockItem` | `BatchedBookIn` |  |
 
 ### `Stock_BookInStockItemRequest`
 
-| Property | Type |
-|---|---|
-| `stockItem` | `BookInStockItem` |
+| Property | Type | Description |
+|---|---|---|
+| `stockItem` | `BookInStockItem` |  |
 
 ### `Stock_CompleteWarehouseMoveRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `WarehouseMoveCompleteRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `WarehouseMoveCompleteRequest` |  |
 
 ### `Stock_CreateStockBatchesRequest`
 
-| Property | Type |
-|---|---|
-| `batches` | `StockItemBatch[]` |
+| Property | Type | Description |
+|---|---|---|
+| `batches` | `StockItemBatch[]` |  |
 
 ### `Stock_CreateVariationGroupRequest`
 
-| Property | Type |
-|---|---|
-| `template` | `VariationGroupTemplate` |
+| Property | Type | Description |
+|---|---|---|
+| `template` | `VariationGroupTemplate` |  |
 
 ### `Stock_DeleteVariationGroupsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteVariationGroupsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteVariationGroupsRequest` |  |
 
 ### `Stock_DeleteVariationItemRequest`
 
-| Property | Type |
-|---|---|
-| `pkVariationItemId` | `string` |
-| `pkStockItemId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkVariationItemId` | `string` |  |
+| `pkStockItemId` | `string` |  |
 
 ### `Stock_DeleteVariationItemsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `DeleteVariationItemsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `DeleteVariationItemsRequest` |  |
 
 ### `Stock_GetStockItemsByKeyRequest`
 
-| Property | Type |
-|---|---|
-| `stockIdentifier` | `Search_Stock_ByKey` |
+| Property | Type | Description |
+|---|---|---|
+| `stockIdentifier` | `Search_Stock_ByKey` |  |
 
 ### `Stock_GetStockItemsFullByIdsRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetStockItemsFullByIdsRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetStockItemsFullByIdsRequest` |  |
 
 ### `Stock_GetStockItemsFullRequest`
 
-| Property | Type |
-|---|---|
-| `keyword` | `string` |
-| `loadCompositeParents` | `boolean` |
-| `loadVariationParents` | `boolean` |
-| `entriesPerPage` | `integer` |
-| `pageNumber` | `integer` |
-| `dataRequirements` | `string[]` |
-| `searchTypes` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `keyword` | `string` |  |
+| `loadCompositeParents` | `boolean` |  |
+| `loadVariationParents` | `boolean` |  |
+| `entriesPerPage` | `integer` |  |
+| `pageNumber` | `integer` |  |
+| `dataRequirements` | `string[]` |  |
+| `searchTypes` | `string[]` |  |
 
 ### `Stock_GetStockItemsLocationRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetStockItemsLocationRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetStockItemsLocationRequest` |  |
 
 ### `Stock_GetStockLevelByLocationRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetStockLevelByLocationRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetStockLevelByLocationRequest` |  |
 
 ### `Stock_GetStockLevel_BatchRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetStockLevel_BatchRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetStockLevel_BatchRequest` |  |
 
 ### `Stock_GetWarehouseMovesByBinrackRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `GetWarehouseMovesByBinrackRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `GetWarehouseMovesByBinrackRequest` |  |
 
 ### `Stock_RenameVariationGroupRequest`
 
-| Property | Type |
-|---|---|
-| `pkVariationItemId` | `string` |
-| `variationName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkVariationItemId` | `string` |  |
+| `variationName` | `string` |  |
 
 ### `Stock_SearchBinracksRequest`
 
-| Property | Type |
-|---|---|
-| `request` | `SearchBinracksRequest` |
+| Property | Type | Description |
+|---|---|---|
+| `request` | `SearchBinracksRequest` |  |
 
 ### `Stock_SetStockLevelRequest`
 
-| Property | Type |
-|---|---|
-| `stockLevels` | `StockLevelUpdate[]` |
-| `changeSource` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `stockLevels` | `StockLevelUpdate[]` |  |
+| `changeSource` | `string` |  |
 
 ### `Stock_UpdateStockLevelsBySKURequest`
 
-| Property | Type |
-|---|---|
-| `stockLevels` | `StockLevelUpdate[]` |
-| `changeSource` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `stockLevels` | `StockLevelUpdate[]` |  |
+| `changeSource` | `string` |  |
 
 ### `Stock_UpdateStockMinimumLevelRequest`
 
-| Property | Type |
-|---|---|
-| `stockItemId` | `string` |
-| `locationId` | `string` |
-| `minimumLevel` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `string` |  |
+| `locationId` | `string` |  |
+| `minimumLevel` | `integer` |  |
 
 ### `TempFile`
 
-| Property | Type |
-|---|---|
-| `Name` | `string` |
-| `Path` | `string` |
-| `Url` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `Path` | `string` |  |
+| `Url` | `string` |  |
 
 ### `UpdateSkuGroupIdentifierRequest`
 
-| Property | Type |
-|---|---|
-| `Identifiers` | `UpdateSkuGroupIdentifierRequestItems[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Identifiers` | `UpdateSkuGroupIdentifierRequestItems[]` |  |
 
 ### `UpdateSkuGroupIdentifierResponse`
 
 ### `UpdateStockLevelsBulkRequest`
 
-| Property | Type |
-|---|---|
-| `Items` | `UpdateStockLevelsBulkRequestItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `UpdateStockLevelsBulkRequestItem[]` |  |
 
 ### `UpdateStockLevelsBulkResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `UpdateStockLevelsBulkResponseItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `UpdateStockLevelsBulkResponseItem[]` |  |
 
 ### `UpdateWarehouseMoveRequest`
 
-| Property | Type |
-|---|---|
-| `MoveId` | `integer` |
-| `BatchInventoryId` | `integer` |
-| `Quantity` | `integer` |
-| `BinrackIdDestination` | `integer` |
-| `JobId` | `integer` |
-| `TotId` | `integer` |
-| `TxType` | `string` |
-| `UserId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `MoveId` | `integer` | The Id of the stock move to update |
+| `BatchInventoryId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `BinrackIdDestination` | `integer` |  |
+| `JobId` | `integer` |  |
+| `TotId` | `integer` |  |
+| `TxType` | `string` |  |
+| `UserId` | `string` |  |
 
 ### `VariationGroup`
 
-| Property | Type |
-|---|---|
-| `VariationSKU` | `string` |
-| `pkVariationItemId` | `string` |
-| `VariationGroupName` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `VariationSKU` | `string` | Variation parent SKU |
+| `pkVariationItemId` | `string` | Variation parent ID (unique identifier) |
+| `VariationGroupName` | `string` | Variation parent title |
 
 ### `VariationItem`
 
-| Property | Type |
-|---|---|
-| `pkRowId` | `string` |
-| `pkStockItemId` | `string` |
-| `ItemNumber` | `string` |
-| `ItemTitle` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Variation item record ID |
+| `pkStockItemId` | `string` | Stock item ID (unique identifier) |
+| `ItemNumber` | `string` | Item SKU |
+| `ItemTitle` | `string` | Item title |

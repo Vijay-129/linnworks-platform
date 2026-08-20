@@ -20,6 +20,10 @@ nothing to refresh.
 pip install -r requirements.txt
 ```
 
+`check_macro_compiles` additionally needs the .NET SDK on PATH (whatever version
+`LinnworksAPI/` already builds with - this machine has 10.0.301). Every other tool
+is pure Python/markdown and works without it.
+
 ## Run locally (stdio, for Claude Desktop / Cursor / Antigravity / VS Code Copilot)
 
 ```
@@ -73,13 +77,26 @@ Use `--allowed-host` once you have a stable domain.
 | `list_golden_examples()` | List real approved macros kept as reference examples |
 | `get_golden_example(name)` | Read one golden example macro's full source |
 | `get_golden_example_notes()` | What to copy vs fix in each golden example - none are fully compliant with `get_macro_conventions()` |
+| `search_golden_examples(query)` | Find the closest golden example to a new requirement (e.g. `"rate limit"`, `"idempotency"`) without already knowing its filename - word-level match over each example's annotated write-up, not the raw filename |
+| `scaffold_macro(macro_name, trigger, config_params?)` | Generate a starting skeleton with the mandatory structure already filled in - start/end logging, try/catch, and the full rate-limit-safe `ExecuteApi`/`PaceApiCall` wrapper (copied verbatim from `get_macro_conventions()` rule 4) - for a `"rule"` or `"scheduled"` macro. Business logic is left as TODOs; not a finished macro |
 | `check_against_standards(code)` | Lint a C# snippet against the mechanically-checkable rules (nullable reference types, missing StringEnumConverter, interface naming, SDK-layer logging, empty catches, async usage) |
+| `check_macro_compiles(code)` | Actually `dotnet build` a complete macro file against the real `LinnworksAPI`/`LinnworksMacroHelpers` assemblies - catches typo'd method names, wrong argument types, wrong namespaces, anything `check_against_standards` can't see because it's just a regex linter |
 
 `check_against_standards` is a regex linter, not a compiler - it only covers rules
 that are checkable from a single snippet with no cross-file context (it can't verify
 e.g. a Models/ file's name matches its class, or that a request/response model
 inherits `LinnObject`). Read `get_standards()` for the full rule set; a clean lint
 result is not proof the code is correct.
+
+`check_macro_compiles` is a real compiler check (slower - a few seconds per call,
+run it once a macro looks right rather than on every draft) and needs the .NET SDK
+installed on this machine. It compiles against `mcp-server/compile_check/`, a scratch
+project targeting `net10.0`/C# latest with nullable enabled - the macro engine's real,
+**confirmed** target (2026-08-19, a 16-feature probe ran to completion against a real
+account), not `LinnworksAPI/`'s `netstandard2.0`/C# 7.3 SDK-library constraint. See
+`references/standards/macro_conventions.md` section 0 for the full results, including
+one thing that compiles fine locally but isn't safe to use (`file`-scoped types) and
+an open question about Rule- vs Scheduled-macro triggering.
 
 ## Not yet built
 

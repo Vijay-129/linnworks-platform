@@ -18,14 +18,68 @@ features far newer than C# 7.3:
 - **`init`-only setters** (C# 9) - used throughout `02`'s internal record-like
   classes (`PurchaseOrderEtaSnapshot`, `FolderChangePlan`, etc).
 
-Don't apply the SDK's C# 7.3 constraint to macro code - it doesn't apply. What
-*hasn't* been confirmed yet (no real example uses them): `record`/`record struct`
-declarations, `required` members, collection expressions (`[1, 2, 3]`), raw
-string literals. If you want to use one of these in a real macro, the safe move
-is a small standalone test macro exercising just that feature, run once against
-a real account, before relying on it in production code - don't assume based on
-the C# 7.3 SDK constraint, and don't assume based on the confirmed features above
-either (a feature working doesn't mean every newer feature does).
+Don't apply the SDK's C# 7.3 constraint to macro code - it doesn't apply.
+
+**Confirmed 2026-08-19** against a real account (a 16-feature probe macro, run to
+completion as a Scheduled macro - see below for why Scheduled and not Rule -
+every one of these logged successfully):
+
+- `record` / `record struct` declarations
+- `required` members
+- Collection expressions (`[1, 2, 3]`)
+- Raw string literals (`"""..."""`)
+- Pattern matching as a group: switch expressions, list patterns
+  (`[first, .., last]`), relational patterns (`>= 90 and <= 100`)
+- Target-typed `new()`
+- Null-coalescing assignment (`??=`)
+- Index/range operators (`^1`, `1..3`)
+- `using` declarations (`using var x = ...`)
+- `params` collections (`params IEnumerable<T>`, not just `params T[]`)
+- `System.Threading.Lock` (C# 13) - **actionable**: rule 4's rate-limit pattern
+  below still uses a plain `object` + `lock(...)`; `Lock` can replace it if/when
+  that pattern is next touched, not required retroactively.
+- `field`-backed properties (the `field` keyword, C# 14)
+- Null-conditional assignment (`obj?.Prop = value`, C# 14)
+- Extension members (`extension(...)` blocks, C# 14 / .NET 10's headline feature)
+
+Combined with the nullable reference types + `init`-only setters already
+confirmed above, the macro engine's real target is effectively **C# 14 / .NET
+10**, not just "newer than C# 7.3." `compile_check/CompileCheck.csproj`
+(`net10.0`, `LangVersion latest`, `Nullable enable`) matches this - it was a
+guess as of the previous version of this note, it is now confirmed.
+
+**Not safe to use**: `file`-scoped types (the `file` modifier). Confirmed
+2026-08-19 - a `file static class` produced `CS9068: File-local type '...' must
+be declared in a file with a unique path. Path '' is used in multiple files.`
+Whatever compiles pasted macro source appears to treat it as a pathless/anonymous
+unit, and `file`'s visibility model depends on a unique file path to key off of.
+Use `internal` instead - same practical effect for macro-internal helper types,
+no dependency on file-path uniqueness.
+
+**Open question, not resolved**: a Rule macro (`Execute(Guid[] OrderIds)`,
+attached to a real Rule condition that matched a live order) produced **zero**
+log output and no execution-history record at all - not even a failure entry -
+both for the full probe and for a maximally trivial one-line sanity-check
+version. The identical macro body run as a **Scheduled** macro (`Execute(string
+someParam = "")`) logged correctly on its first cycle. This does not mean Rule
+macros are broken - the cause wasn't isolated (could be the specific rule
+condition/attachment in this account, a delay, or something else entirely) - but
+it does mean **don't assume a Rule macro is executing just because it saved
+without error**. Verify a new Rule macro actually produces log output against a
+real matching order before relying on it; if it doesn't, don't debug the macro's
+C# first - check the rule's condition/attachment.
+
+**Also observed, not a hard rule**: during this testing, Linnworks' macro editor
+required the exact namespace/class shape `namespace LinnworksMacro { public
+class LinnworksMacro : LinnworksMacroHelpers.LinnworksMacroBase { ... } }`
+(fully-qualified base class, no `using LinnworksMacroHelpers;`) for the specific
+macro being edited at the time - but this is very likely per-macro (matching
+whatever name that macro was given), not a fixed platform-wide name every macro
+must use. `golden_examples/01` (`LinnworksMacro._2349` /
+`Shopify_PaymentMethod_Mapping_MacroGraphQL`) and `02`
+(`Rishvi.ContainerEtaFolderSyncMacro`) use their own distinct namespace/class
+names and are real approved macros - don't force every future macro into the
+literal `LinnworksMacro`/`LinnworksMacro` name based on this test.
 
 ## 0.1 GUIDs default to `Guid.Empty` - and `Guid.Empty` is a REAL location, not "all"
 

@@ -2,8 +2,8 @@
 
 # OpenOrders (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/openorders.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/openorders.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -89,213 +89,213 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 
 ### `AssignResult`
 
-| Property | Type |
-|---|---|
-| `Changed` | `string[]` |
-| `NotChanged` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Changed` | `string[]` |  |
+| `NotChanged` | `string[]` |  |
 
 ### `AssignStockToOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
-| `BatchAssignmentMode` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` |  |
+| `BatchAssignmentMode` | `string` |  |
 
 ### `AssignStockToOrdersResponse_Int32_Int32`
 
-| Property | Type |
-|---|---|
-| `BatchActionResult` | `BatchActionResult_Int32_Int32` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchActionResult` | `BatchActionResult_Int32_Int32` |  |
 
 ### `AssignStockToOrdersResponse_OrderItemBatchExtended_Guid`
 
-| Property | Type |
-|---|---|
-| `BatchActionResult` | `BatchActionResult_OrderItemBatchExtended_Guid` |
+| Property | Type | Description |
+|---|---|---|
+| `BatchActionResult` | `BatchActionResult_OrderItemBatchExtended_Guid` |  |
 
 ### `ChangeOrderIdentifierRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
-| `Tag` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` | Primary key of the orders to assign/unassign the identifier to. |
+| `Tag` | `string` | Identifier tag to assign/unassign. E.g. AMAZON_PRIME |
 
 ### `ClearStockAssignmentRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `integer[]` |  |
 
 ### `DeleteIdentifiersRequest`
 
-| Property | Type |
-|---|---|
-| `Tag` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` | Tag of the order identifier to delete. E.g. CUSTOM_PRINT. It is not possible to delete a system tag such as AMAZON_PRIME |
 
 ### `GenericOrderOperationResult`
 
-| Property | Type |
-|---|---|
-| `SuccessfulOrders` | `string[]` |
-| `KeyedErrors` | `object` |
+| Property | Type | Description |
+|---|---|---|
+| `SuccessfulOrders` | `string[]` | List of orders that were moved |
+| `KeyedErrors` | `object` | Dictionary of keyed errors. These are the same errors as per the Errors property, but indexable by orderId |
 
 ### `GenericPagedResult_Guid`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `string[]` |  |
 
 ### `GetAvailableChannelsResponse`
 
-| Property | Type |
-|---|---|
-| `Channels` | `ServiceInformation[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Channels` | `ServiceInformation[]` |  |
 
 ### `GetOpenOrdersDetailsRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
-| `DetailLevel` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` | List of order ids as unique identifiers |
+| `DetailLevel` | `string[]` | (optional) List of detail level limiters. If the list is null or empty Full details will be returned, as in all detail levels are applied |
 
 ### `GetOpenOrdersDetailsResponse`
 
-| Property | Type |
-|---|---|
-| `Orders` | `OrderDetails[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Orders` | `OrderDetails[]` | List of orders |
 
 ### `GetOpenOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `ViewId` | `integer` |
-| `LocationId` | `string` |
-| `EntriesPerPage` | `integer` |
-| `PageNumber` | `integer` |
-| `OrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ViewId` | `integer` |  |
+| `LocationId` | `string` |  |
+| `EntriesPerPage` | `integer` |  |
+| `PageNumber` | `integer` |  |
+| `OrderIds` | `string[]` |  |
 
 ### `GetOrderIdentifierRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` |  |
 
 ### `GetOrderItemIndicatorRequest`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
-| `Items` | `IndicatorRequest[]` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` |  |
+| `Items` | `IndicatorRequest[]` |  |
 
 ### `GetOrderItemIndicatorResponse`
 
-| Property | Type |
-|---|---|
-| `Items` | `OrderItemIndicator[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `OrderItemIndicator[]` |  |
 
 ### `GetOrdersLowFidelityRequest`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` | (Optional) Fulfilment location id. Defaults to Default location |
 
 ### `GetOrdersLowFidelityResponse`
 
-| Property | Type |
-|---|---|
-| `Orders` | `OpenOrderLowFidelity[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Orders` | `OpenOrderLowFidelity[]` | List of low fidelity order headers with order items, composites and product identifiers |
 
 ### `GetViewStatsRequest`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
-| `ViewId` | `integer` |
-| `UserId` | `integer` |
-| `IncludeUserManagement` | `boolean` |
-| `OnlyVisible` | `boolean` |
-| `RebuildCacheIfRequired` | `boolean` |
-| `RecalculateViewIfRequired` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` |  |
+| `ViewId` | `integer` |  |
+| `UserId` | `integer` |  |
+| `IncludeUserManagement` | `boolean` |  |
+| `OnlyVisible` | `boolean` |  |
+| `RebuildCacheIfRequired` | `boolean` | If only the currently built stats are required, pass false here. Useful for polling whether a long running cache build has finished The default is true. |
+| `RecalculateViewIfRequired` | `boolean` |  |
 
 ### `Identifier`
 
-| Property | Type |
-|---|---|
-| `IdentifierId` | `integer` |
-| `Name` | `string` |
-| `Tag` | `string` |
-| `IsCustom` | `boolean` |
-| `ImageId` | `string` |
-| `ImageUrl` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `IdentifierId` | `integer` | Internal identifier id. Use to update image and name. |
+| `Name` | `string` |  |
+| `Tag` | `string` |  |
+| `IsCustom` | `boolean` | Is the tag user or system defined? |
+| `ImageId` | `string` |  |
+| `ImageUrl` | `string` |  |
 
 ### `MarkReadyForCollectionRequest`
 
-| Property | Type |
-|---|---|
-| `OrderIds` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` |  |
 
 ### `OrderIdentifier`
 
-| Property | Type |
-|---|---|
-| `fkOrderId` | `string` |
-| `IdentifierId` | `integer` |
-| `IsCustom` | `boolean` |
-| `ImageId` | `string` |
-| `ImageUrl` | `string` |
-| `Tag` | `string` |
-| `Name` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fkOrderId` | `string` |  |
+| `IdentifierId` | `integer` |  |
+| `IsCustom` | `boolean` |  |
+| `ImageId` | `string` |  |
+| `ImageUrl` | `string` |  |
+| `Tag` | `string` |  |
+| `Name` | `string` |  |
 
 ### `OrderViewStats`
 
-| Property | Type |
-|---|---|
-| `ViewId` | `integer` |
-| `ViewName` | `string` |
-| `IsSystem` | `boolean` |
-| `TotalOrders` | `integer` |
-| `LocationId` | `string` |
-| `ExpiryDate` | `string` |
-| `IsCalculating` | `boolean` |
-| `ViewExists` | `boolean` |
-| `LastRequested` | `string` |
-| `UserManagement` | `ViewUserManagement` |
-| `OrderViewUserPreference` | `OrderViewUserPreference` |
-| `Owner` | `ViewUser` |
-| `IsCacheable` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `ViewId` | `integer` |  |
+| `ViewName` | `string` |  |
+| `IsSystem` | `boolean` |  |
+| `TotalOrders` | `integer` |  |
+| `LocationId` | `string` |  |
+| `ExpiryDate` | `string` |  |
+| `IsCalculating` | `boolean` |  |
+| `ViewExists` | `boolean` |  |
+| `LastRequested` | `string` |  |
+| `UserManagement` | `ViewUserManagement` |  |
+| `OrderViewUserPreference` | `OrderViewUserPreference` |  |
+| `Owner` | `ViewUser` |  |
+| `IsCacheable` | `boolean` |  |
 
 ### `PostFilterPagedResponse_OpenOrder`
 
-| Property | Type |
-|---|---|
-| `ResultCountRemovedByPostFilter` | `integer` |
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `OpenOrder[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ResultCountRemovedByPostFilter` | `integer` |  |
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `OpenOrder[]` |  |
 
 ### `SaveIdentifiersRequest`
 
-| Property | Type |
-|---|---|
-| `Identifier` | `Identifier` |
+| Property | Type | Description |
+|---|---|---|
+| `Identifier` | `Identifier` |  |
 
 ### `SearchOrdersRequest`
 
-| Property | Type |
-|---|---|
-| `LocationId` | `string` |
-| `SearchTerm` | `string` |
-| `IncludeProcessed` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` |  |
+| `SearchTerm` | `string` |  |
+| `IncludeProcessed` | `boolean` |  |
 
 ### `SearchOrdersResponse`
 
-| Property | Type |
-|---|---|
-| `OpenOrders` | `OrderViewIds[]` |
-| `ProcessedOrders` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `OpenOrders` | `OrderViewIds[]` |  |
+| `ProcessedOrders` | `string[]` |  |

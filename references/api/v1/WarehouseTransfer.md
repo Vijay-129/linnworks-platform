@@ -2,8 +2,8 @@
 
 # WarehouseTransfer (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/warehousetransfer.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/warehousetransfer.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -63,9 +63,9 @@ _Last synced: 2026-08-13_
 
 Use this call to get all of the active transfers related to this location Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `locationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `locationId` | query | `string` | False | pkLocationId for |
 
 ### GET `/api/WarehouseTransfer/GetActiveTransfersAllLocations`
 
@@ -91,9 +91,9 @@ Use this call to delete a property from the transfer Permissions Required: Globa
 
 Use this call to get a warehouse transfer object with items Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | pkTransferId for required Transfer |
 
 ### POST `/api/WarehouseTransfer/ChangeTransferStatus`
 
@@ -147,9 +147,9 @@ Use this call to change a property belonging to a given transfer. Permissions Re
 
 Use this call to retrieve a list of items on the order and request/sent/received levels. This method will return multiple entries for a single item if the item exists in multiple bins. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer. |
 
 ### POST `/api/WarehouseTransfer/ChangeTransferItemRequestQuantity`
 
@@ -167,18 +167,18 @@ Use this call to change the received quantity of a transfer item. Permissions Re
 
 Use this call to retrieve a list of transfer-level notes for a given transfer. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer |
 
 ### GET `/api/WarehouseTransfer/GetTransferItemNotes`
 
 Use this call to retrieve the notes from a transfer item. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
-| `pkTransferItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer to which the item belongs. |
+| `pkTransferItemId` | query | `string` | False | The id of the transfer item. |
 
 ### POST `/api/WarehouseTransfer/AddTransferItemNote`
 
@@ -188,78 +188,78 @@ Use this call to add a note to a transfer item. Permissions Required: GlobalPerm
 
 Use this call to retrieve all of the audit entries for the specified transfer. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer to retrieve audit entries for. |
 
 ### GET `/api/WarehouseTransfer/GetTransferProperties`
 
 Use this call to retrieve a list of properties associated with a given transfer. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer. |
 
 ### GET `/api/WarehouseTransfer/SearchTransfersAllLocations`
 
 Use this call to search for transfers which match a specific criteria Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `searchType` | query | `string` | False |
-| `searchText` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `searchType` | query | `string` | False | The type of search. |
+| `searchText` | query | `string` | False | The search term. |
 
 ### GET `/api/WarehouseTransfer/GetArchivedTransfers`
 
 Use this call to retrieve all of the archived transfers in the system (i.e. Delivered or Deleted). Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pageNumber` | query | `integer` | False |
-| `entriesPerPage` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pageNumber` | query | `integer` | False | The page number (starting at 1). |
+| `entriesPerPage` | query | `integer` | False | The number of entries to be returned per page. |
 
 ### GET `/api/WarehouseTransfer/GetArchivedTransfersFiltered`
 
 Use this call to search for archived transfers which match a specific search term. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `searchType` | query | `string` | False |
-| `filter` | query | `string` | False |
-| `pageNumber` | query | `integer` | False |
-| `entriesPerPage` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `searchType` | query | `string` | False | The type of search. |
+| `filter` | query | `string` | False | The search term. |
+| `pageNumber` | query | `integer` | False | The page number (starting at 1). |
+| `entriesPerPage` | query | `integer` | False | The number of entries to be returned per page. |
 
 ### GET `/api/WarehouseTransfer/GetArchivedTransfersBetweenDates`
 
 Use this call to search for archived transfers which were created between two dates. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `start` | query | `string` | False |
-| `end` | query | `string` | False |
-| `pageNumber` | query | `integer` | False |
-| `entriesPerPage` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `start` | query | `string` | False | The start date. |
+| `end` | query | `string` | False | The end date. |
+| `pageNumber` | query | `integer` | False | The page number (starting at 1). |
+| `entriesPerPage` | query | `integer` | False | The number of entries to be returned per page. |
 
 ### GET `/api/WarehouseTransfer/GetArchivedTransfersBetweenArchivedDates`
 
 Use this call to search for archived transfers which were archived between two dates. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `start` | query | `string` | False |
-| `end` | query | `string` | False |
-| `pageNumber` | query | `integer` | False |
-| `entriesPerPage` | query | `integer` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `start` | query | `string` | False | The start date. |
+| `end` | query | `string` | False | The end date. |
+| `pageNumber` | query | `integer` | False | The page number (starting at 1). |
+| `entriesPerPage` | query | `integer` | False | The number of entries to be returned per page. |
 
 ### GET `/api/WarehouseTransfer/SearchTransfersByLocation`
 
 Use this call to search for transfers which match a specific criteria Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `searchType` | query | `string` | False |
-| `searchText` | query | `string` | False |
-| `locationID` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `searchType` | query | `string` | False | The type of search. |
+| `searchText` | query | `string` | False | The search term. |
+| `locationID` | query | `string` | False | The location ID to search. |
 
 ### POST `/api/WarehouseTransfer/GetListTransfers`
 
@@ -269,9 +269,9 @@ Use this call to load a list of basic transfers Permissions Required: GlobalPerm
 
 Use this call to retrieve a basic list of transfers which have been significantly modified between the specified UTC date and now. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `updateDate` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `updateDate` | query | `string` | False | A UTC date/time |
 
 ### GET `/api/WarehouseTransfer/GetServerTime`
 
@@ -281,9 +281,9 @@ Use this call to get the current UTC date Permissions Required: GlobalPermission
 
 Use this call to get a transfer object with its items. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer to be loaded. |
 
 ### POST `/api/WarehouseTransfer/ChangeBinDetails`
 
@@ -305,33 +305,33 @@ Use this call to delete bins with no items. To be used if a bin is created and n
 
 Use this call to retrieve notes from a specific bin. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkBinId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkBinId` | query | `string` | False | The id of the bin. |
 
 ### GET `/api/WarehouseTransfer/GetDiscrepancyItems`
 
 Use this call to get a list of items whose quantities do not match those that were originally expected. E.g. Received < Sent when Delivered or Sent < Requested when Accepted. Only call this method once after the transfer is Accepted and once when it has been Delivered. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer. |
 
 ### GET `/api/WarehouseTransfer/GetStockAvailability`
 
 Use this call to retrieve information on inbound transfers and purchase orders for the given transfer item. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferItemId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferItemId` | query | `string` | False | The transfer item id. |
 
 ### GET `/api/WarehouseTransfer/IsDraftTransferChanged`
 
 Use this call to work out if a draft transfer has been changed since it was created. Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `pkTransferId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `pkTransferId` | query | `string` | False | The id of the transfer to check. |
 
 ### POST `/api/WarehouseTransfer/DeleteEmptyDraftTransfer`
 
@@ -341,10 +341,10 @@ Use this call to delete a draft transfer with no items, properties or notes. Per
 
 Use this call to see if a draft transfer already exists for the two locations Permissions Required: GlobalPermissions.Inventory.WarehouseTransferNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `toLocationId` | query | `string` | False |
-| `fromLocationId` | query | `string` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `toLocationId` | query | `string` | False | The id of the location the transfer should be going to |
+| `fromLocationId` | query | `string` | False | The id of the location the transfer should be coming from |
 
 ### POST `/api/WarehouseTransfer/PrintTransfer`
 
@@ -354,328 +354,328 @@ Creates a PDF for this transfer and returns the URL Permissions Required: Global
 
 ### `AddItemsToTransferRequest`
 
-| Property | Type |
-|---|---|
-| `TransferId` | `string` |
-| `TransferItems` | `WarehouseTransferItemQuantity[]` |
+| Property | Type | Description |
+|---|---|---|
+| `TransferId` | `string` |  |
+| `TransferItems` | `WarehouseTransferItemQuantity[]` |  |
 
 ### `AddItemsToTransferResponse`
 
-| Property | Type |
-|---|---|
-| `TransferItems` | `WarehouseTransferItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `TransferItems` | `WarehouseTransferItem[]` |  |
 
 ### `GenericPagedResult_WarehouseTransfer`
 
-| Property | Type |
-|---|---|
-| `PageNumber` | `integer` |
-| `EntriesPerPage` | `integer` |
-| `TotalEntries` | `integer` |
-| `TotalPages` | `integer` |
-| `Data` | `WarehouseTransfer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `WarehouseTransfer[]` |  |
 
 ### `StockAvailability`
 
-| Property | Type |
-|---|---|
-| `PkId` | `string` |
-| `LevelType` | `string` |
-| `Status` | `string` |
-| `ReferenceNumber` | `string` |
-| `Quantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `PkId` | `string` |  |
+| `LevelType` | `string` |  |
+| `Status` | `string` |  |
+| `ReferenceNumber` | `string` |  |
+| `Quantity` | `integer` |  |
 
 ### `WarehouseTransfer`
 
-| Property | Type |
-|---|---|
-| `PkTransferId` | `string` |
-| `FromLocationId` | `string` |
-| `ToLocationId` | `string` |
-| `FromLocation` | `string` |
-| `ToLocation` | `string` |
-| `Status` | `string` |
-| `nStatus` | `integer` |
-| `ReferenceNumber` | `string` |
-| `OrderDate` | `string` |
-| `NumberOfItems` | `integer` |
-| `NumberOfNotes` | `integer` |
-| `fkOriginalTransferId` | `string` |
-| `OriginalTransferReference` | `string` |
-| `IsDiscrepancyTransfer` | `boolean` |
-| `BLogicalDelete` | `boolean` |
-| `Bins` | `WarehouseTransferBin[]` |
-| `Notes` | `WarehouseTransferNote[]` |
-| `AuditTrail` | `WarehouseTransferAudit[]` |
-| `TransferProperties` | `WarehouseTransferProperty[]` |
-| `UpdateStatus` | `UpdateStatus` |
+| Property | Type | Description |
+|---|---|---|
+| `PkTransferId` | `string` | Transfer ID |
+| `FromLocationId` | `string` | Location from which transfer is made (unique identifier) |
+| `ToLocationId` | `string` | Location to which transfer is made (unique identifier) |
+| `FromLocation` | `string` | Name of location from which transfer is made |
+| `ToLocation` | `string` | Name of location to which transfer is made |
+| `Status` | `string` | Current transfer status |
+| `nStatus` | `integer` | Status ID |
+| `ReferenceNumber` | `string` | Transfer reference number |
+| `OrderDate` | `string` | When transer was ordered |
+| `NumberOfItems` | `integer` | Number of items transfered |
+| `NumberOfNotes` | `integer` | Number of transfer notes |
+| `fkOriginalTransferId` | `string` | Original transfer ID |
+| `OriginalTransferReference` | `string` | Original transfer reference number |
+| `IsDiscrepancyTransfer` | `boolean` | If its a discrepency transfer |
+| `BLogicalDelete` | `boolean` | If transfer is deleted |
+| `Bins` | `WarehouseTransferBin[]` | List of transfer bins |
+| `Notes` | `WarehouseTransferNote[]` | List of transfer notes |
+| `AuditTrail` | `WarehouseTransferAudit[]` | List of transfer audits |
+| `TransferProperties` | `WarehouseTransferProperty[]` | List of transfer properties |
+| `UpdateStatus` | `UpdateStatus` | Which status is updated |
 
 ### `WarehouseTransferAudit`
 
-| Property | Type |
-|---|---|
-| `PkTransferAuditId` | `string` |
-| `AuditType` | `string` |
-| `nAuditType` | `integer` |
-| `AuditDate` | `string` |
-| `AuditNote` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `PkTransferAuditId` | `string` |  |
+| `AuditType` | `string` |  |
+| `nAuditType` | `integer` |  |
+| `AuditDate` | `string` |  |
+| `AuditNote` | `string` |  |
 
 ### `WarehouseTransferBin`
 
-| Property | Type |
-|---|---|
-| `PkBinId` | `string` |
-| `BinName` | `string` |
-| `BinReference` | `string` |
-| `BinBarcode` | `string` |
-| `BinNotes` | `WarehouseTransferBinNote[]` |
-| `BinItems` | `WarehouseTransferItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PkBinId` | `string` | Bin ID |
+| `BinName` | `string` | Transfer bin name |
+| `BinReference` | `string` | Bin reference |
+| `BinBarcode` | `string` | Bin barcode |
+| `BinNotes` | `WarehouseTransferBinNote[]` | List of transfer bin notes |
+| `BinItems` | `WarehouseTransferItem[]` | List of transfer items |
 
 ### `WarehouseTransferBinNote`
 
-| Property | Type |
-|---|---|
-| `PkTransferBinNoteId` | `string` |
-| `NoteUser` | `string` |
-| `Note` | `string` |
-| `NoteDateTime` | `string` |
-| `NoteRead` | `boolean` |
-| `PkBinId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `PkTransferBinNoteId` | `string` | Transfer bin note ID |
+| `NoteUser` | `string` | User who created note |
+| `Note` | `string` | Note text |
+| `NoteDateTime` | `string` | When bin note was added |
+| `NoteRead` | `boolean` | If bin note is readable |
+| `PkBinId` | `string` | Bin ID |
 
 ### `WarehouseTransferItem`
 
-| Property | Type |
-|---|---|
-| `PkTransferItemId` | `string` |
-| `FkStockItemId` | `string` |
-| `SKU` | `string` |
-| `Barcode` | `string` |
-| `ItemTitle` | `string` |
-| `RequestedQuantity` | `integer` |
-| `SentQuantity` | `integer` |
-| `ReceivedQuantity` | `integer` |
-| `InFromLocationQuantity` | `integer` |
-| `DueFromLocationQuantity` | `integer` |
-| `InToLocationQuantity` | `integer` |
-| `ItemNoteCount` | `integer` |
-| `BinRackNumber` | `string` |
-| `PkBinId` | `string` |
-| `ItemNotes` | `WarehouseTransferItemNote[]` |
+| Property | Type | Description |
+|---|---|---|
+| `PkTransferItemId` | `string` | Transfer ID |
+| `FkStockItemId` | `string` | Stock item ID (unique identifier) |
+| `SKU` | `string` | Product SKU |
+| `Barcode` | `string` | Product barcode |
+| `ItemTitle` | `string` | Product title |
+| `RequestedQuantity` | `integer` | Quantity requested for transfer |
+| `SentQuantity` | `integer` | Quantity transferred |
+| `ReceivedQuantity` | `integer` | Quantity received |
+| `InFromLocationQuantity` | `integer` | Quantity from location |
+| `DueFromLocationQuantity` | `integer` | Due from location quantity |
+| `InToLocationQuantity` | `integer` | Currently in location quantity |
+| `ItemNoteCount` | `integer` | Items notes count |
+| `BinRackNumber` | `string` | Stock item binrack |
+| `PkBinId` | `string` | Transfer bin ID |
+| `ItemNotes` | `WarehouseTransferItemNote[]` | List of transfer notes |
 
 ### `WarehouseTransferItemNote`
 
-| Property | Type |
-|---|---|
-| `PkTransferItemNoteId` | `string` |
-| `NoteUser` | `string` |
-| `Note` | `string` |
-| `NoteDateTime` | `string` |
-| `NoteRead` | `boolean` |
-| `FkBinId` | `string` |
-| `PkTransferItemId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `PkTransferItemNoteId` | `string` | Stock item ID (unique identifier) |
+| `NoteUser` | `string` | User who added note |
+| `Note` | `string` | Note text |
+| `NoteDateTime` | `string` | When note was added |
+| `NoteRead` | `boolean` | If note is readable |
+| `FkBinId` | `string` | Bin ID |
+| `PkTransferItemId` | `string` | Transfer ID |
 
 ### `WarehouseTransferNote`
 
-| Property | Type |
-|---|---|
-| `PkTransferNoteId` | `string` |
-| `NoteUser` | `string` |
-| `Note` | `string` |
-| `NoteDateTime` | `string` |
-| `NoteRead` | `boolean` |
+| Property | Type | Description |
+|---|---|---|
+| `PkTransferNoteId` | `string` |  |
+| `NoteUser` | `string` |  |
+| `Note` | `string` |  |
+| `NoteDateTime` | `string` |  |
+| `NoteRead` | `boolean` |  |
 
 ### `WarehouseTransferProperty`
 
-| Property | Type |
-|---|---|
-| `PkTransferPropertyId` | `string` |
-| `TransferPropertyName` | `string` |
-| `TransferPropertyValue` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `PkTransferPropertyId` | `string` |  |
+| `TransferPropertyName` | `string` |  |
+| `TransferPropertyValue` | `string` |  |
 
 ### `WarehouseTransfer_AddItemToTransferRequest`
 
-| Property | Type |
-|---|---|
-| `fkTransferId` | `string` |
-| `pkStockItemId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fkTransferId` | `string` |  |
+| `pkStockItemId` | `string` |  |
 
 ### `WarehouseTransfer_AddTransferBinNoteRequest`
 
-| Property | Type |
-|---|---|
-| `fkTransferBinId` | `string` |
-| `note` | `string` |
-| `fkTransferId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fkTransferBinId` | `string` |  |
+| `note` | `string` |  |
+| `fkTransferId` | `string` |  |
 
 ### `WarehouseTransfer_AddTransferItemNoteRequest`
 
-| Property | Type |
-|---|---|
-| `fkTransferId` | `string` |
-| `fkTransferItemId` | `string` |
-| `note` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fkTransferId` | `string` |  |
+| `fkTransferItemId` | `string` |  |
+| `note` | `string` |  |
 
 ### `WarehouseTransfer_AddTransferNoteRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `note` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `note` | `string` |  |
 
 ### `WarehouseTransfer_AddTransferPropertyRequest`
 
-| Property | Type |
-|---|---|
-| `fkTransferId` | `string` |
-| `propertyName` | `string` |
-| `propertyValue` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fkTransferId` | `string` |  |
+| `propertyName` | `string` |  |
+| `propertyValue` | `string` |  |
 
 ### `WarehouseTransfer_AllocateItemToBinRequest`
 
-| Property | Type |
-|---|---|
-| `pkSrcBinId` | `string` |
-| `pkDstBinId` | `string` |
-| `pkTransferItemId` | `string` |
-| `quantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkSrcBinId` | `string` |  |
+| `pkDstBinId` | `string` |  |
+| `pkTransferItemId` | `string` |  |
+| `quantity` | `integer` |  |
 
 ### `WarehouseTransfer_ChangeBinDetailsRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `pkBinId` | `string` |
-| `BinName` | `string` |
-| `BinReference` | `string` |
-| `BinBarcode` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `pkBinId` | `string` |  |
+| `BinName` | `string` |  |
+| `BinReference` | `string` |  |
+| `BinBarcode` | `string` |  |
 
 ### `WarehouseTransfer_ChangeTransferFromLocationRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `newLocationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `newLocationId` | `string` |  |
 
 ### `WarehouseTransfer_ChangeTransferItemReceivedQuantityRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `pkBinId` | `string` |
-| `pkTransferItemId` | `string` |
-| `Quantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `pkBinId` | `string` |  |
+| `pkTransferItemId` | `string` |  |
+| `Quantity` | `integer` |  |
 
 ### `WarehouseTransfer_ChangeTransferItemRequestQuantityRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `pkTransferItemId` | `string` |
-| `Quantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `pkTransferItemId` | `string` |  |
+| `Quantity` | `integer` |  |
 
 ### `WarehouseTransfer_ChangeTransferItemSentQuantityRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `pkBinId` | `string` |
-| `pkTransferItemId` | `string` |
-| `Quantity` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `pkBinId` | `string` |  |
+| `pkTransferItemId` | `string` |  |
+| `Quantity` | `integer` |  |
 
 ### `WarehouseTransfer_ChangeTransferLocationsRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `fromLocationId` | `string` |
-| `toLocationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `fromLocationId` | `string` |  |
+| `toLocationId` | `string` |  |
 
 ### `WarehouseTransfer_ChangeTransferPropertyRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `pkTransferPropertyId` | `string` |
-| `newValue` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `pkTransferPropertyId` | `string` |  |
+| `newValue` | `string` |  |
 
 ### `WarehouseTransfer_ChangeTransferStatusRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `newStatus` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `newStatus` | `string` |  |
 
 ### `WarehouseTransfer_ChangeTransferToLocationRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `newLocationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `newLocationId` | `string` |  |
 
 ### `WarehouseTransfer_CreateNewBinRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `barcode` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `barcode` | `string` |  |
 
 ### `WarehouseTransfer_CreateTransferFromDescrepanciesRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
 
 ### `WarehouseTransfer_CreateTransferRequestWithReturnRequest`
 
-| Property | Type |
-|---|---|
-| `fromLocationId` | `string` |
-| `toLocationId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `fromLocationId` | `string` |  |
+| `toLocationId` | `string` |  |
 
 ### `WarehouseTransfer_DeleteEmptyDraftTransferRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
 
 ### `WarehouseTransfer_DeleteTransferPropertyRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `pkTransferPropertyId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `pkTransferPropertyId` | `string` |  |
 
 ### `WarehouseTransfer_DeleteTransferRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `DeleteReason` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `DeleteReason` | `string` |  |
 
 ### `WarehouseTransfer_GetListTransfersRequest`
 
-| Property | Type |
-|---|---|
-| `ids` | `string[]` |
+| Property | Type | Description |
+|---|---|---|
+| `ids` | `string[]` |  |
 
 ### `WarehouseTransfer_PrintTransferRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
 
 ### `WarehouseTransfer_RemoveAllEmptyBinsRequest`
 
 ### `WarehouseTransfer_RemoveItemFromTransferRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `pkTransferItemId` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `pkTransferItemId` | `string` |  |
 
 ### `WarehouseTransfer_SetReferenceNumberRequest`
 
-| Property | Type |
-|---|---|
-| `pkTransferId` | `string` |
-| `ReferenceNumber` | `string` |
+| Property | Type | Description |
+|---|---|---|
+| `pkTransferId` | `string` |  |
+| `ReferenceNumber` | `string` |  |

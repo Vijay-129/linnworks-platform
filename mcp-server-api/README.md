@@ -6,8 +6,14 @@ standards - this is the one safe to hand a URL to someone outside the team,
 because there's nothing in it about how you write macros, only what Linnworks'
 API looks like.
 
-Standalone from `mcp-server/` (the full internal server) on purpose - sharing code
-between them would risk something internal leaking into the public one later.
+Its four tools' implementation is shared with `mcp-server/` (the full internal
+server) via `../mcp-shared/` - both are internal-only in practice (neither is
+actually hosted publicly), so that sharing was judged an acceptable tradeoff against
+the drift risk of two hand-maintained copies. `mcp-shared/` itself contains nothing
+macro/golden-example/standards-related regardless, so if this server's use ever
+changes to genuinely public hosting, the boundary is still real - only this file's
+own registration (`list_controllers`/`get_endpoint`/`search_api`/`get_model`)
+changes, not what's importable from it.
 
 ## Local use (stdio)
 

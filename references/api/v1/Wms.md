@@ -2,8 +2,8 @@
 
 # Wms (v1)
 
-Source: `linnworks-api-python-main/PublicApiSpecs/1.0/wms.json`  
-_Last synced: 2026-08-13_
+Source: `PublicApiSpecs/1.0/wms.json`  
+_Last synced: 2026-08-20_
 
 ## Endpoints
 
@@ -41,10 +41,10 @@ Permissions Required: GlobalPermissions.Inventory.WarehouseManagement.Administra
 
 Permissions Required: GlobalPermissions.Inventory.WarehouseManagementNode
 
-| Param | In | Type | Required |
-|---|---|---|---|
-| `stockLocationIntId` | query | `integer` | False |
-| `onlyBinrackAssignable` | query | `boolean` | False |
+| Param | In | Type | Required | Description |
+|---|---|---|---|---|
+| `stockLocationIntId` | query | `integer` | False |  |
+| `onlyBinrackAssignable` | query | `boolean` | False |  |
 
 ### POST `/api/Wms/GetBinrackZonesByBinrackIdOrName`
 
@@ -74,127 +74,127 @@ Permissions Required: GlobalPermissions.Inventory.WarehouseManagement.Administra
 
 ### `AddWarehouseZoneRequest`
 
-| Property | Type |
-|---|---|
-| `ZoneTypeId` | `integer` |
-| `Name` | `string` |
-| `ParentZoneId` | `integer` |
-| `HierarchyLevel` | `integer` |
-| `StockLocationIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `ZoneTypeId` | `integer` | Zone type Id |
+| `Name` | `string` | Zone name, unique to location |
+| `ParentZoneId` | `integer` | Parent zone id (immediate parent in hierarchy) |
+| `HierarchyLevel` | `integer` | Hierarchy level from top most parent. |
+| `StockLocationIntId` | `integer` | Stock location interger id |
 
 ### `AddWarehouseZoneResponse`
 
-| Property | Type |
-|---|---|
-| `Zone` | `WarehouseZone` |
+| Property | Type | Description |
+|---|---|---|
+| `Zone` | `WarehouseZone` |  |
 
 ### `AddWarehouseZoneTypeRequest`
 
-| Property | Type |
-|---|---|
-| `Name` | `string` |
-| `StockLocationIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` | Warehouse zone type name |
+| `StockLocationIntId` | `integer` | Stock location interger id |
 
 ### `AddWarehouseZoneTypeResponse`
 
-| Property | Type |
-|---|---|
-| `Type` | `WarehouseZoneType` |
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `WarehouseZoneType` |  |
 
 ### `DeleteWarehouseZoneRequest`
 
-| Property | Type |
-|---|---|
-| `ZoneId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `ZoneId` | `integer` | Zone id to delete. |
 
 ### `DeleteWarehouseZoneResponse`
 
 ### `DeleteWarehouseZoneTypeRequest`
 
-| Property | Type |
-|---|---|
-| `ZoneTypeId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `ZoneTypeId` | `integer` |  |
 
 ### `DeleteWarehouseZoneTypeResponse`
 
 ### `GetBinrackZonesByBinrackIdOrNameRequest`
 
-| Property | Type |
-|---|---|
-| `BinrackIds` | `integer[]` |
-| `BinrackNames` | `string[]` |
-| `StockLocationIntId` | `integer` |
+| Property | Type | Description |
+|---|---|---|
+| `BinrackIds` | `integer[]` | Binrack Ids, StockLocationIntId optional, if different to supplied binrack ids, zones will still be returned. |
+| `BinrackNames` | `string[]` | Binrack names, StockLocationIntId required. |
+| `StockLocationIntId` | `integer` | Stock Location interger id. |
 
 ### `GetBinrackZonesByBinrackIdOrNameResponse`
 
-| Property | Type |
-|---|---|
-| `Zones` | `WarehouseZone[]` |
-| `BinrackToZones` | `WarehouseBinrackToZone[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Zones` | `WarehouseZone[]` | Warehouse Zones |
+| `BinrackToZones` | `WarehouseBinrackToZone[]` | Warehosue binrack to zones. |
 
 ### `GetBinrackZonesByZoneIdOrNameRequest`
 
-| Property | Type |
-|---|---|
-| `StockLocationIntId` | `integer` |
-| `ZoneNames` | `string[]` |
-| `ZoneIds` | `integer[]` |
+| Property | Type | Description |
+|---|---|---|
+| `StockLocationIntId` | `integer` |  |
+| `ZoneNames` | `string[]` |  |
+| `ZoneIds` | `integer[]` |  |
 
 ### `GetBinrackZonesByZoneIdOrNameResponse`
 
-| Property | Type |
-|---|---|
-| `WarehouseZones` | `WarehouseZone[]` |
+| Property | Type | Description |
+|---|---|---|
+| `WarehouseZones` | `WarehouseZone[]` |  |
 
 ### `GetWarehouseZoneTypesResponse`
 
-| Property | Type |
-|---|---|
-| `Types` | `WarehouseZoneType[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Types` | `WarehouseZoneType[]` | Warehouse zone types |
 
 ### `GetWarehouseZonesByLocationResponse`
 
-| Property | Type |
-|---|---|
-| `Zones` | `WarehouseZone[]` |
-| `ZoneTypes` | `WarehouseZoneType[]` |
-| `ZoneGroups` | `WarehouseZoneGroup[]` |
-| `ZoneGroupsToZones` | `WarehouseZoneGroupToZone[]` |
-| `ZonesBinracksCount` | `WarehouseZoneBinrackCount[]` |
-| `ZonesToZonesHierarchy` | `WarehouseZoneToZone[]` |
+| Property | Type | Description |
+|---|---|---|
+| `Zones` | `WarehouseZone[]` | Warehouse Zones |
+| `ZoneTypes` | `WarehouseZoneType[]` | Warehouse Zone types |
+| `ZoneGroups` | `WarehouseZoneGroup[]` | Zone groups |
+| `ZoneGroupsToZones` | `WarehouseZoneGroupToZone[]` | Zone groups to zones. |
+| `ZonesBinracksCount` | `WarehouseZoneBinrackCount[]` | Zone binrack counts. Only returns zone if binrack is directly in zone. |
+| `ZonesToZonesHierarchy` | `WarehouseZoneToZone[]` | Zone to zones hierarchy |
 
 ### `UpdateWarehouseBinrackBinrackToZoneRequest`
 
-| Property | Type |
-|---|---|
-| `BinrackToZones` | `WarehouseBinrackToZoneRequestItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `BinrackToZones` | `WarehouseBinrackToZoneRequestItem[]` | Binrack to zones collection, a BinRackId of zero will assume the Binrack should be removed from the zone. |
 
 ### `UpdateWarehouseBinrackBinrackToZoneResponse`
 
-| Property | Type |
-|---|---|
-| `BinrackToZones` | `WarehouseBinrackToZoneResponseItem[]` |
+| Property | Type | Description |
+|---|---|---|
+| `BinrackToZones` | `WarehouseBinrackToZoneResponseItem[]` |  |
 
 ### `UpdateWarehouseZoneRequest`
 
-| Property | Type |
-|---|---|
-| `Zone` | `WarehouseZone` |
+| Property | Type | Description |
+|---|---|---|
+| `Zone` | `WarehouseZone` |  |
 
 ### `UpdateWarehouseZoneResponse`
 
-| Property | Type |
-|---|---|
-| `Zone` | `WarehouseZone` |
+| Property | Type | Description |
+|---|---|---|
+| `Zone` | `WarehouseZone` |  |
 
 ### `UpdateWarehouseZoneTypeRequest`
 
-| Property | Type |
-|---|---|
-| `Type` | `WarehouseZoneType` |
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `WarehouseZoneType` |  |
 
 ### `UpdateWarehouseZoneTypeResponse`
 
-| Property | Type |
-|---|---|
-| `Type` | `WarehouseZoneType` |
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `WarehouseZoneType` |  |
