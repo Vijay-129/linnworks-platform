@@ -85,3 +85,28 @@ idempotency.
   `../macro_conventions.md` section 0.1. **Do not copy this pattern** - if "all
   locations" is genuinely intended, fetch `Inventory.GetStockLocations()` once and
   loop, issuing one scoped call per location.
+
+## Adding a new golden example
+
+This is how the three above got here, made explicit so it stays a repeatable
+process instead of an ad hoc one:
+
+1. **The macro has to be real and approved** - actually deployed/reviewed, not a
+   generated sample. A generated macro documenting its own generation process
+   teaches nothing this file doesn't already know.
+2. **Run it (or the parts you can) through `check_against_standards` and read it
+   against every rule in `../macro_conventions.md`.** It won't be perfect - none
+   of the three above are - and that's fine; the annotation below is where the
+   gap gets recorded, not a reason to exclude it.
+3. **Add the file** under `golden_examples/`, numbered next in sequence
+   (`04_...`, `05_...`).
+4. **Add a section to this README** in the same shape as the three above:
+   a one-line summary of what it demonstrates, a **"Copy this"** list (what's
+   genuinely worth reusing, and why), and a **"Fix if reusing"** list (every real
+   deviation from `macro_conventions.md`, specific enough that someone copying
+   this file knows exactly what to change). Cite the exact rule number it
+   violates where one exists.
+5. **If it demonstrates something `macro_conventions.md` doesn't have a rule for
+   yet**, that's a signal to add one (or a new pattern doc under
+   `references/macro/patterns/`) - the existing rules were derived from these
+   examples, not written first and checked against them after.

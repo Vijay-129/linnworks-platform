@@ -396,22 +396,40 @@ Linnworks open-order view. Leave empty to scan all open orders." is exactly what
 a non-developer configuring the macro sees). A parameter with no description is a
 blank, unexplained text box in that UI.
 
-**Never combine several logical values into one JSON- or CSV-encoded string
-parameter** (`Execute(string configJson)` parsed with
-`JsonConvert.DeserializeObject` inside, or a single `"a,b,c"` parameter split in
-code) to avoid declaring several parameters. Linnworks' settings UI edits one text
-field per `Execute` parameter - a blob parameter isn't editable there in any
-user-friendly way, it just moves the problem from "the macro has no config UI" to
-"the macro has a config UI that shows one cryptic text box." Declare one `string`
-parameter per logical value instead, each with its own description. Every
-parameter is a plain `string` regardless of its real meaning (a count, a Guid, a
-flag) - the settings UI only edits text - so parse/validate the string inside
-`Execute`, don't expect the engine to coerce it.
+**The rule is "one parameter per logical setting", not "one parameter per scalar
+value".** Don't combine several *unrelated* settings into one JSON/CSV-encoded
+blob (`Execute(string configJson)` parsed with `JsonConvert.DeserializeObject`
+inside, jamming a location name and a folder prefix and a flag into one string)
+to avoid declaring several parameters - Linnworks' settings UI edits one text
+field per `Execute` parameter, so a blob like that isn't editable there in any
+useful way, it just moves the problem from "no config UI" to "a config UI that
+shows one cryptic text box."
+
+A delimited (CSV) value **is** allowed - and often the better choice - when the
+parameter genuinely represents **one setting that can hold more than one value**:
+locations, folders, sources/sub-sources, SKUs, channels, or any other selector a
+user might reasonably want to scope to two or three of, not necessarily one or
+all. Forcing that into "one or ALL" is worse UX than a documented CSV field, not
+better. See `references/macro/patterns/multi_value_selector.md` for the standard
+way to parse and resolve one of these - it defines the trim/case/dedupe/ALL
+rules once so every macro handles a multi-select parameter the same way, instead
+of each macro re-inventing (and probably getting slightly wrong) its own
+location-list parsing.
+
+Whichever shape a parameter takes, it must still be one `string` (Linnworks'
+settings UI only edits text - parse/validate inside `Execute`, don't expect the
+engine to coerce it), and its `<param>` doc comment must say what it is,
+including - if it's a multi-value selector - the delimiter and what a blank
+value means (see `multi_value_selector.md`; never leave "what does blank mean"
+unstated, and never let blank silently resolve via `Guid.Empty`, per section 0.1).
 
 `scaffold_macro`'s `config_params` argument takes `"name:description"` pairs
 (separated by `|`) for exactly this reason, and refuses to generate a parameter
-with no description - use it rather than hand-writing the signature, so this rule
-can't be silently skipped.
+with no description - use it rather than hand-writing the signature, so this
+rule can't be silently skipped. It generates a single `string` parameter either
+way; whether that parameter's value happens to be delimited is a documentation
+and parsing concern (write the delimiter semantics into the description you
+pass), not a different code-generation path.
 
 ## 9. Verify the request/response shape before writing an API call
 
@@ -426,3 +444,54 @@ memory or infer it from a similarly-named type. This is especially easy to get
 wrong for request types that look like their response counterpart but aren't
 (different required fields, different casing) - checking first is one tool call;
 debugging a live "Bad Request" with no field-level detail is not.
+
+## 10. Every `Api.*` call goes through the rate-limit wrapper - no exceptions
+
+Rule 4 says this is mandatory, and `check_against_standards` now actually checks
+it: any line calling `Api.<Controller>.<Method>(` that isn't also wrapped in
+`ExecuteApi(...)` (the golden pattern is always `ExecuteApi("Name", () =>
+Api.X.Y(...))` on one line) gets flagged. This closes a real gap - the rule
+existed in prose since this file's first version, but nothing verified it before
+now, so a single unwrapped call could slip through unnoticed until it caused a
+real 429. Read the flag as "add the wrapper", not "this call is somehow exempt" -
+there is no exemption in normal macro code.
+
+## 11. Runtime-budget red flags `check_against_standards` now catches
+
+Rule 7 already covers the ~5-minute budget in prose; these are the specific
+shapes of getting it wrong that are now mechanically flagged, because they've
+shown up in real macros:
+
+- **`int.MaxValue` passed into a fetch/page-size argument** - a request for "no
+  limit" against a growing order book will eventually exceed the budget outright,
+  independent of how fast each individual call is. Page it instead (rule 7).
+- **A large literal `Thread.Sleep`** (a hardcoded pause of several seconds or
+  more, not the mandated `ExecuteApi` backoff array) - a 60-second sleep between
+  every batch adds up fast against a 5-minute ceiling. If a deliberate pause is
+  actually needed, make the duration small enough that the budget still holds
+  even in the worst case, and say why in a comment.
+- **A declared cap (`MaxOrdersPerRun`, `MaxRecords`, etc.) that's never
+  referenced again after its own declaration** - a variable that exists only to
+  document an intended limit isn't a limit; it has to actually gate a loop
+  (`if (processed >= MaxOrdersPerRun) break;` or equivalent) to do anything.
+
+**Not flagged, deliberately**: an `Api.*` call nested inside two loops. Detecting
+that reliably needs real parsing (loop nesting, not a regex), and a linter that
+tries anyway will be wrong often enough to train people to ignore its output.
+Watch for it by reading the code instead - "does this call happen once per
+combination of two things I'm iterating over" is usually visible on inspection.
+
+## 12. Destructive operations need a visible ownership/idempotency guard
+
+A call that deletes, unassigns, cancels, or wholesale-overwrites something
+(`DeleteAssignedStock`, `Unassign...`, `Cancel...`, replacing an entity's full
+property set instead of adding to it) is a lot more expensive to get wrong than
+a read - a duplicate read is wasted API budget, a duplicate delete/cancel is
+data loss. `check_against_standards` warns (not fails) when it sees one of these
+method names with nothing that looks like an ownership/idempotency check (a
+marker-tag/processed-flag lookup, per rule 6) nearby in the same method - this
+is a nudge to double check, not proof either way, since "nearby in the same
+method" is a rough heuristic that can both miss a guard written differently and
+flag one that's genuinely not needed (e.g. a guard enforced by the caller,
+documented as such). Treat the warning as "look at this again", not "this is
+wrong."

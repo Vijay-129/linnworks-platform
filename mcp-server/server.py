@@ -602,9 +602,46 @@ _PARAM_DOC_RE = re.compile(r'<param\s+name="(\w+)"')
 # blob isn't user-editable there).
 _BLOB_PARSE_RE = re.compile(r"\b(JsonConvert\.DeserializeObject|JsonFormatter\.ConvertFromJson)\s*[<(]")
 
+# rule 10 - every Api.* call must be wrapped in ExecuteApi(...). Requires a word
+# boundary before "Api." so it doesn't false-positive on an unrelated identifier
+# ending in "...Api" (e.g. "someGraphqlApi.Foo()" has no \w/non-\w transition
+# right before "Api.", so \b correctly doesn't match there).
+_API_CALL_RE = re.compile(r"\bApi\.\w+\.\w+\s*\(")
+
+# rule 11 - runtime-budget red flags
+_INT_MAXVALUE_RE = re.compile(r"\bint\.MaxValue\b")
+_THREAD_SLEEP_MS_RE = re.compile(r"Thread\.Sleep\s*\(\s*(\d+)\s*\)")
+_THREAD_SLEEP_SEC_RE = re.compile(r"Thread\.Sleep\s*\(\s*TimeSpan\.FromSeconds\s*\(\s*(\d+)\s*\)\s*\)")
+_SLEEP_MS_THRESHOLD = 10_000   # 10s - well above rule 4's ~550ms pacing spacing
+_SLEEP_SEC_THRESHOLD = 10
+_CAP_DECL_RE = re.compile(r"\b(Max\w*(?:PerRun|Orders|Records|Batch)\w*)\b\s*=")
+
+# rule 12 - destructive operations should have a visible ownership/idempotency
+# guard somewhere in the file. File-level, not per-call - "nearby in the same
+# method" isn't reliably detectable with regex, so this is a coarser signal:
+# does the file contain *any* destructive call and *no* marker-looking identifier
+# at all. Advisory only, per the rule's own text.
+_DESTRUCTIVE_CALL_RE = re.compile(r"\bApi\.\w+\.(Delete\w*|Cancel\w*|Unassign\w*|Void\w*|Discard\w*)\s*\(")
+_IDEMPOTENCY_MARKER_RE = re.compile(r"\b(Marker|Processed|AlreadyHandled|Idempotenc\w*)\b", re.IGNORECASE)
+
 
 def _lines_with(pattern: re.Pattern, text: str):
     return [(i, line) for i, line in enumerate(text.splitlines(), start=1) if pattern.search(line)]
+
+
+# Structural checks (rule 10) need to count parens/statement boundaries without
+# being confused by braces/parens that only exist inside a string or comment -
+# e.g. $"GetOpenOrders(page={currentPage})" contains a literal ( and { that isn't
+# real code structure. Masking replaces string/comment spans with same-length
+# spaces so positions/line numbers into the original `code` stay valid.
+_STRING_OR_COMMENT_RE = re.compile(
+    r'@"(?:[^"]|"")*"' + r'|"(?:\\.|[^"\\])*"' + r"|'(?:\\.|[^'\\])'" + r"|//[^\n]*" + r"|/\*.*?\*/",
+    re.DOTALL,
+)
+
+
+def _mask_strings_and_comments(text: str) -> str:
+    return _STRING_OR_COMMENT_RE.sub(lambda m: " " * len(m.group(0)), text)
 
 
 @mcp.tool()
@@ -693,6 +730,81 @@ def check_against_standards(code: str) -> str:
                 "so a blob isn't user-editable there - use one scalar, documented parameter per value "
                 "instead (macro_conventions.md rule 8)."
             )
+
+    # rule 10 - every Api.* call must go through a rate-limit wrapper. Real macros
+    # name this wrapper differently (ExecuteApi, ApiCall, ...) and sometimes wrap
+    # indirectly (a lambda passed to a batching helper that calls the real wrapper
+    # internally, e.g. 02_ContainerEtaFolderSync.cs's ExecuteInBatches) - so this
+    # can't check for one hardcoded name. Instead: is the Api.* call nested inside
+    # *any* still-open call - i.e. is there an unmatched "(" before it that hasn't
+    # been closed yet. Braces don't affect this: a block-bodied lambda argument
+    # ("batch => { ... }") is still inside its enclosing call's parens the whole
+    # time, so only "(" / ")" are tracked, not "{" / "}". A bare call (paren depth
+    # 0 at the call site) has no wrapper by definition, whatever it's named.
+    _masked = _mask_strings_and_comments(code)
+    _paren_depth_at = [0] * (len(_masked) + 1)
+    _depth = 0
+    for _i, _ch in enumerate(_masked):
+        if _ch == "(":
+            _depth += 1
+        elif _ch == ")":
+            _depth -= 1
+        _paren_depth_at[_i + 1] = _depth
+
+    for match in _API_CALL_RE.finditer(_masked):
+        if _paren_depth_at[match.start()] <= 0:
+            lineno = code.count("\n", 0, match.start()) + 1
+            call_line = code.splitlines()[lineno - 1].strip()
+            findings.append(
+                f'line {lineno}: "{call_line}" - a bare Api.* call, not nested inside any wrapping '
+                f"call. Rule 4/10: every Api.* call must go through a rate-limit-safe wrapper (proactive "
+                f"pacing + HTTP 429 backoff) - directly, or indirectly via a batching helper that calls "
+                f"one internally (see get_macro_conventions rule 4)."
+            )
+
+    # rule 11 - runtime-budget red flags
+    for lineno, line in _lines_with(_INT_MAXVALUE_RE, code):
+        findings.append(
+            f'line {lineno}: "{line.strip()}" - int.MaxValue in what looks like a fetch/page-size '
+            f"argument requests \"no limit\", which will eventually exceed the ~5-minute budget against "
+            f"a growing data set regardless of per-call speed. Page it instead (rule 7)."
+        )
+    for lineno, line in _lines_with(_THREAD_SLEEP_MS_RE, code):
+        ms = int(_THREAD_SLEEP_MS_RE.search(line).group(1))
+        if ms >= _SLEEP_MS_THRESHOLD:
+            findings.append(
+                f'line {lineno}: "{line.strip()}" - a literal {ms}ms (~{ms / 1000:.0f}s) sleep. Repeated '
+                f"across a batch this adds up fast against the ~5-minute budget (rule 11) - if a "
+                f"deliberate pause is really needed, make it small enough that the worst case still fits."
+            )
+    for lineno, line in _lines_with(_THREAD_SLEEP_SEC_RE, code):
+        sec = int(_THREAD_SLEEP_SEC_RE.search(line).group(1))
+        if sec >= _SLEEP_SEC_THRESHOLD:
+            findings.append(
+                f'line {lineno}: "{line.strip()}" - a literal {sec}s sleep. Repeated across a batch this '
+                f"adds up fast against the ~5-minute budget (rule 11) - if a deliberate pause is really "
+                f"needed, make it small enough that the worst case still fits."
+            )
+    for cap_name in sorted(set(_CAP_DECL_RE.findall(_masked))):
+        if len(re.findall(rf"\b{re.escape(cap_name)}\b", _masked)) <= 1:
+            findings.append(
+                f'"{cap_name}" looks like a run-size cap that\'s declared but never referenced again - '
+                f'a declared limit only does something if a loop actually checks it (e.g. "if (processed '
+                f'>= {cap_name}) break;"). macro_conventions.md rule 11.'
+            )
+
+    # rule 12 - destructive operations should have a visible ownership/idempotency
+    # guard somewhere in the file. File-level heuristic, advisory only - see the
+    # rule's own text for why this can't be more precise than that.
+    destructive_calls = sorted(set(m.group(0).rstrip(" \t(") + "(...)" for m in _DESTRUCTIVE_CALL_RE.finditer(code)))
+    if destructive_calls and not _IDEMPOTENCY_MARKER_RE.search(code):
+        findings.append(
+            f"Destructive call(s) found ({', '.join(destructive_calls)}) but nothing in this file looks "
+            f"like an idempotency/ownership marker check (no identifier containing Marker/Processed/"
+            f"AlreadyHandled/Idempotency). This is a coarse, file-wide heuristic (rule 12) - it can miss a "
+            f"guard written differently, or flag one enforced by the caller instead. Worth a second look, "
+            f"not necessarily wrong."
+        )
 
     if not findings:
         return "No mechanically-checkable violations found. This does not mean the code is correct - see get_standards() for rules this linter can't check (file/class naming match, LinnObject inheritance, etc)."
