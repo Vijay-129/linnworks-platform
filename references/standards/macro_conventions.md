@@ -159,6 +159,13 @@ just because it's a different entity type than the one that was live-tested.
 `check_against_standards` flags any `?? Guid.Empty` occurrence for this reason -
 treat a flag on it as a real bug to investigate, not noise.
 
+**Independently reconfirmed 2026-08-20**, different account, different endpoint:
+probing `Picking.GetItemBinracks` for a real batch-tracked item found its bin
+data sitting at the location literally named `"Default"`, whose
+`StockLocationId` is `00000000-0000-0000-0000-000000000000`. Same conclusion,
+reproduced from scratch - see `references/macro/patterns/picking_get_item_binracks.md`
+for the full test.
+
 **This rule applies identically no matter which agent is writing the macro** -
 Claude, Antigravity, or ChatGPT. It's documented here (not only in any one
 agent's prompt) precisely so it can't be forgotten by switching tools.
