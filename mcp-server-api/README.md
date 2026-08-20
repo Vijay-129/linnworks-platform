@@ -7,13 +7,12 @@ because there's nothing in it about how you write macros, only what Linnworks'
 API looks like.
 
 Its four tools' implementation is shared with `mcp-server/` (the full internal
-server) via `../mcp-shared/` - both are internal-only in practice (neither is
-actually hosted publicly), so that sharing was judged an acceptable tradeoff against
-the drift risk of two hand-maintained copies. `mcp-shared/` itself contains nothing
-macro/golden-example/standards-related regardless, so if this server's use ever
-changes to genuinely public hosting, the boundary is still real - only this file's
-own registration (`list_controllers`/`get_endpoint`/`search_api`/`get_model`)
-changes, not what's importable from it.
+server) via `../mcp-shared/` - this server and the full one have both actually
+been hosted publicly already (Cloudflare Tunnel, 2026-08-14). The sharing is
+judged safe regardless of that: `mcp-shared/` itself contains nothing
+macro/golden-example/standards-related no matter which server(s) are exposed at a
+given time - the boundary is enforced by what each `server.py` chooses to
+register, not by which servers happen to be running.
 
 ## Local use (stdio)
 

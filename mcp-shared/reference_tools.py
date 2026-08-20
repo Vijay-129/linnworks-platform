@@ -7,10 +7,12 @@ get_endpoint, search_api, get_model.
 
 Extracted 2026-08-20 after the two files drifted once already (a TransportSecuritySettings
 fix landed in mcp-server-api/server.py first, mcp-server/server.py's own comment had to
-call that out explicitly - "first fixed there"). Both servers are internal-only in
-practice, not actually hosted publicly, which is why this sharing was judged safe
-despite mcp-server-api/README.md's original "standalone on purpose" rationale - see
-that README for the updated note.
+call that out explicitly - "first fixed there"). Both servers have in fact been hosted
+publicly (via Cloudflare Tunnel, 2026-08-14) - this sharing is judged safe regardless,
+because this module contains nothing macro/golden-example/standards-related no matter
+which server(s) end up exposed; the boundary is enforced by what each server.py chooses
+to register, not by which servers happen to be running at a given time. See
+mcp-server-api/README.md for the updated note.
 
 Plain functions, not @mcp.tool()-decorated - each server registers them against its
 own FastMCP instance with `mcp.tool()(list_controllers)` etc. (registers under the
