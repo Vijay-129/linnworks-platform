@@ -64,6 +64,11 @@ mcp-server/                 Full internal MCP server: mcp-shared/'s API lookup +
 mcp-server-api/             Narrower subset built on the same mcp-shared/ lookup tools,
                             nothing about macro conventions or golden examples. stdio and
                             --http - see mcp-server-api/README.md.
+
+chatgpt-action/              Plain REST wrapper (FastAPI) over the same mcp-shared/
+                            lookup tools, for ChatGPT Custom GPT Actions - Actions
+                            don't speak MCP, they need an OpenAPI schema over plain
+                            REST. See chatgpt-action/README.md.
 ```
 
 ## Rules
