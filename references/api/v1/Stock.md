@@ -359,12 +359,63 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 |---|---|---|
 | `ErroredItems` | `StockTakeItemWithError[]` | List of items that have failed validation, if any items are returned then the stock take won't be submitted. |
 
+### `BatchPickingWaveStockItems`
+
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveItemsRowId` | `integer` | Pickwave Row Id |
+| `PickingWaveId` | `integer` | Pickwave Id |
+| `UserName` | `string` | User name to whom the pickwave was/is allocated. If unallocated this will be null |
+| `ToPickQuantity` | `integer` | Total Quantity to pick |
+| `PickedQuantity` | `integer` | Picked quantity |
+| `StockItemId` | `string` | Stock Item Id |
+| `OrderId` | `integer` | Order Id |
+| `UserId` | `integer` | User Id to whom the pickwave was/is allocated. If unallocated this will be null |
+
+### `BatchStockLevelDelta`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKU` | `string` |  |
+| `BatchNumber` | `string` |  |
+| `BinRack` | `string` |  |
+| `DeltaQuantity` | `integer` |  |
+| `Reason` | `string` |  |
+| `pkBatchInventoryId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `StockValue` | `number` |  |
+| `Errors` | `string[]` |  |
+| `NewLevel` | `integer` |  |
+| `BatchStatus` | `string` |  |
+
 ### `BatchStockLevelDeltaResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ProcessedDeltas` | `BatchStockLevelDelta[]` |  |
 | `ProcessedContainsErrors` | `boolean` |  |
+
+### `BatchStockLevelDetaRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockLevelDeltas` | `BatchStockLevelDelta[]` |  |
+| `StockLocationId` | `string` |  |
+
+### `BatchedBookIn`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKU` | `string` | Product SKU |
+| `BatchNumber` | `string` | Batch number |
+| `LocationId` | `string` | Location ID |
+| `BinRack` | `string` | Bin rack |
+| `Quantity` | `integer` | Quantity booked in |
+| `StockValue` | `number` | Stock value |
+| `BatchStatus` | `string` | Batch status |
+| `PrioritySequence` | `integer` |  |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
 
 ### `BinrackSkuResponse`
 
@@ -378,6 +429,16 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 |---|---|---|
 | `BinRacks` | `WarehouseBinRack[]` | List of binracks available for the given item in the order applicability. |
 | `Decisions` | `string[]` |  |
+
+### `BookInStockItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | Id of the stock item |
+| `LocationId` | `string` | Id of the location |
+| `QuantityReceived` | `integer` | Quantity to be booked in |
+| `CostPerUnit` | `number` | Cost of the item for this order |
+| `BinRack` | `string` | Binrack of the item to be booked in. |
 
 ### `CreateWarehouseMoveRequest`
 
@@ -396,6 +457,27 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | Property | Type | Description |
 |---|---|---|
 | `MoveId` | `integer` | Id of the stock move to delete |
+
+### `DeleteVariationGroupsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `VariationGroupsIdList` | `string[]` | A list of VariationsGroups Guids |
+
+### `DeleteVariationItemsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `VariationItemId` | `string` |  |
+| `StockItemIds` | `string[]` |  |
+
+### `Dimension`
+
+| Property | Type | Description |
+|---|---|---|
+| `Width` | `number` | Width |
+| `Depth` | `number` | Depth |
+| `Height` | `number` | Height |
 
 ### `GenericEnumDescriptor`
 
@@ -435,6 +517,14 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `TotalPages` | `integer` |  |
 | `Data` | `VariationGroup[]` |  |
 
+### `GeoPosition`
+
+| Property | Type | Description |
+|---|---|---|
+| `X` | `number` | X position |
+| `Y` | `number` | Y position |
+| `Z` | `number` | Z position |
+
 ### `GetBinRackSkusRequest`
 
 | Property | Type | Description |
@@ -473,11 +563,28 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 |---|---|---|
 | `Items` | `StockItemHeader[]` | List of stock item headers. |
 
+### `GetStockItemsFullByIdsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemIds` | `string[]` |  |
+| `DataRequirements` | `string[]` |  |
+
 ### `GetStockItemsFullByIdsResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `StockItemsFullExtended` | `StockItemFullExtended[]` |  |
+
+### `GetStockItemsLocationRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemLocations` | `StockLocationStockItemId[]` |  |
+| `AuthToken` | `string` |  |
+| `AccountId` | `string` |  |
+| `VendorFriendlyName` | `string` |  |
+| `Vendor` | `string` |  |
 
 ### `GetStockItemsLocationResponse`
 
@@ -485,11 +592,24 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 |---|---|---|
 | `StockItemLocations` | `StockItemLocation[]` |  |
 
+### `GetStockLevelByLocationRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+| `LocationId` | `string` |  |
+
 ### `GetStockLevelByLocationResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `StockLevel` | `StockItemLevel` |  |
+
+### `GetStockLevel_BatchRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemIds` | `string[]` | List of stock item ids to get stock level |
 
 ### `GetStockLevel_BatchResponse`
 
@@ -510,11 +630,46 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 |---|---|---|
 | `WarehouseMove` | `WarehouseMoveDetailed` | Move details |
 
+### `GetWarehouseMovesByBinrackRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinrackId` | `integer` | The Id of the binrack to get stock moves for |
+
 ### `GetWarehouseMovesByBinrackResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `WarehouseMoves` | `WarehouseMoveCollection` | A list of warehouse moves for a binrack; both incoming and outgoing |
+
+### `InventoryStockLocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockLocationId` | `string` |  |
+| `StockLocationIntId` | `integer` |  |
+| `LocationName` | `string` |  |
+| `LocationTag` | `string` |  |
+| `IsFulfillmentCenter` | `boolean` |  |
+| `IsWarehouseManaged` | `boolean` |  |
+| `BinRack` | `string` |  |
+
+### `SearchBinracksRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinRack` | `string` | Bin rack search term. For example for PUT1.2.3878, bin rack search term PUT1 will yeild the result |
+| `LocationId` | `string` | Specific location id. Location must be Warehouse Managed location |
+| `StockItemId` | `string` | Stock Item Id |
+| `BinRackTypeIds` | `integer[]` | List of types of bin racks, nullable. If not provided all binrack types will be searched |
+| `PageNumber` | `integer` |  |
+
+### `Search_Stock_ByKey`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` | Item ID |
+| `LocationId` | `string` | Location ID |
 
 ### `StockConsumption`
 
@@ -579,6 +734,51 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `Inventory` | `StockItemBatchInventory[]` | Batch records |
 | `IsDeleted` | `boolean` | Is the batch deleted |
 
+### `StockItemBatchInventory`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Stock item batch record ID |
+| `BatchId` | `integer` | Batch ID |
+| `StockLocationId` | `string` | Location ID |
+| `BinRack` | `string` | BinRack |
+| `PrioritySequence` | `integer` | Pick order |
+| `Quantity` | `integer` | Quantity |
+| `StockValue` | `number` | Current stock value |
+| `StartQuantity` | `integer` | Quantity originally booked in |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `BatchStatus` | `string` | Batch Status |
+| `IsDeleted` | `boolean` | Is BatchInventory deleted |
+| `WarehouseBinrackStandardType` | `integer` | Warehouse binrack standard type |
+| `WarehouseBinrackTypeName` | `string` | Warehouse binrack type friendly name |
+| `InTransfer` | `integer` | Number of items in Transfer phase. |
+| `BinRackId` | `integer` | Binrack Id (Use for WMS) |
+| `WarehouseBinrackTypeId` | `integer` | Warehouse binrack type unique id. |
+
+### `StockItemChangeHistory`
+
+| Property | Type | Description |
+|---|---|---|
+| `Date` | `string` | When changes were made |
+| `Level` | `integer` | Change level |
+| `StockValue` | `number` | Stock value change |
+| `Note` | `string` | Change note |
+| `ChangeQty` | `integer` | Changed quantity |
+| `ChangeValue` | `number` | Changed value |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemDescription`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Record row ID (generate random GUID) |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Channel subsource (e.g EBAY1) |
+| `Description` | `string` | Product description |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
 ### `StockItemDuePO`
 
 | Property | Type | Description |
@@ -593,6 +793,16 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `UnitCost` | `number` | Unit cost |
 | `StockItemId` | `string` |  |
 | `StockItemIntId` | `integer` |  |
+
+### `StockItemExtendedProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Record row ID (generate random) |
+| `fkStockItemId` | `string` | Stock Item ID |
+| `ProperyName` | `string` | Property name |
+| `PropertyValue` | `string` | Property value |
+| `PropertyType` | `string` | Property type |
 
 ### `StockItemFull`
 
@@ -631,6 +841,88 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `StockItemId` | `string` |  |
 | `StockItemIntId` | `integer` |  |
 
+### `StockItemFullExtended`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemChannelDescriptions` | `StockItemDescription[]` | List of item descriptions |
+| `ItemExtendedProperties` | `StockItemExtendedProperty[]` | List of extended properties |
+| `ItemChannelTitles` | `StockItemTitle[]` | List item titles |
+| `ItemChannelPrices` | `StockItemPrice[]` | List of item prices |
+| `Suppliers` | `StockItemSupplierStat[]` | Suppliers |
+| `StockLevels` | `StockItemLevel[]` | Stock Levels |
+| `Images` | `StockItemImage[]` | Image URLs |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `BarcodeNumber` | `string` |  |
+| `MetaData` | `string` |  |
+| `isBatchedStockType` | `boolean` |  |
+| `PurchasePrice` | `number` |  |
+| `RetailPrice` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PostalServiceId` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `CategoryId` | `string` |  |
+| `CategoryName` | `string` |  |
+| `PackageGroupId` | `string` |  |
+| `PackageGroupName` | `string` |  |
+| `Height` | `number` |  |
+| `Width` | `number` |  |
+| `Depth` | `number` |  |
+| `Weight` | `number` |  |
+| `CreationDate` | `string` |  |
+| `IsCompositeParent` | `boolean` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `BatchNumberScanRequired` | `boolean` |  |
+| `SerialNumberScanRequired` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemHeader`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` | SKU |
+| `ItemTitle` | `string` | Item title |
+| `BarcodeNumber` | `string` | Barcode number |
+| `MetaData` | `string` | Item description |
+| `IsVariationParent` | `boolean` | Is Variation Parent |
+| `isBatchedStockType` | `boolean` | Returns true is the stock item is tracked by batch |
+| `PurchasePrice` | `number` | Default item purchase price |
+| `RetailPrice` | `number` | Default item retail price |
+| `TaxRate` | `number` | Default item tax rate. Set -1 to use country tax rate |
+| `PostalServiceId` | `string` | Default postal service id |
+| `PostalServiceName` | `string` | Default postal service name |
+| `CategoryId` | `string` | Default category id |
+| `CategoryName` | `string` | Default category name |
+| `PackageGroupId` | `string` | Default package group id |
+| `PackageGroupName` | `string` | Default package group name |
+| `Height` | `number` | Item height |
+| `Width` | `number` | Item width |
+| `Depth` | `number` | Item depth |
+| `Weight` | `number` | Item weight |
+| `CreationDate` | `string` | Stock item creation date |
+| `InventoryTrackingType` | `integer` | Stock item tracking type. 0 = none. 1 = Ordered by Sell by Date. 2 = Ordered by Priority Sequence |
+| `BatchNumberScanRequired` | `boolean` | User must scan batch number when procesing orders |
+| `SerialNumberScanRequired` | `boolean` | User must scan item serial number when processing ordesr |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemImage`
+
+| Property | Type | Description |
+|---|---|---|
+| `Source` | `string` | URL to thumnail image |
+| `FullSource` | `string` | Url to full size image |
+| `CheckSumValue` | `string` | Image check sum |
+| `pkRowId` | `string` |  |
+| `IsMain` | `boolean` |  |
+| `SortOrder` | `integer` |  |
+| `ChecksumValue` | `string` |  |
+| `RawChecksum` | `string` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
 ### `StockItemLevel`
 
 | Property | Type | Description |
@@ -654,6 +946,40 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `StockItemPurchasePrice` | `number` | Stock item purchase price. It's used to calculate UnitCost |
 | `StockItemId` | `string` |  |
 | `StockItemIntId` | `integer` |  |
+
+### `StockItemLocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockLocationId` | `string` | Stock location ID |
+| `LocationName` | `string` | Location name |
+| `BinRack` | `string` | BinRack |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemPrice`
+
+| Property | Type | Description |
+|---|---|---|
+| `Rules` | `StockItemPricingRule[]` | Pricing rule |
+| `pkRowId` | `string` |  |
+| `Source` | `string` |  |
+| `SubSource` | `string` |  |
+| `Price` | `number` |  |
+| `Tag` | `string` |  |
+| `UpdateStatus` | `string` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemPricingRule`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `integer` | Record row ID (optional) |
+| `fkStockPricingId` | `string` | Stock pricing ID |
+| `Type` | `string` | Type |
+| `LowerBound` | `integer` | Lower level |
+| `Value` | `number` | Value/Price level |
 
 ### `StockItemReturn`
 
@@ -700,6 +1026,111 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `Detail` | `StockItemSoldStatDetail[]` | Sold stat inforamtion |
 | `StockItemId` | `string` |  |
 | `StockItemIntId` | `integer` |  |
+
+### `StockItemSoldStatDetail`
+
+| Property | Type | Description |
+|---|---|---|
+| `Subsource` | `string` | Subsource (e.g EBAY1) |
+| `Quantity` | `integer` | Quantity |
+| `Total` | `number` | Total price stock was sold for |
+| `Cost` | `number` | Total cost of sold stock |
+| `ProfitMargin` | `number` | Profit margine |
+| `Detail` | `StockItemSoldStatFinalDetail[]` | List of sold stock item information details |
+
+### `StockItemSoldStatFinalDetail`
+
+| Property | Type | Description |
+|---|---|---|
+| `Date` | `string` | When stock was sold |
+| `Quantity` | `integer` | Quantity of sold stock |
+| `Total` | `number` | Total price stock was sold for |
+| `Cost` | `number` | Total cost of sold stock |
+| `ProfitMargin` | `number` | Profit margin |
+
+### `StockItemSupplierStat`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsDefault` | `boolean` | If supplier information is default |
+| `Supplier` | `string` | Supplier name |
+| `SupplierID` | `string` | Supplier ID |
+| `Code` | `string` | Supplier code |
+| `SupplierBarcode` | `string` | Supplier barcode |
+| `LeadTime` | `integer` | Supplier lead time |
+| `PurchasePrice` | `number` | Supplier purchase price |
+| `MinPrice` | `number` | Minimum price |
+| `MaxPrice` | `number` | Maximum price |
+| `AveragePrice` | `number` | Average price |
+| `AverageLeadTime` | `number` | Average lead time |
+| `SupplierMinOrderQty` | `integer` | Minimum order quantity from this supplier |
+| `SupplierPackSize` | `integer` | Supplier pack size |
+| `SupplierCurrency` | `string` | Supplier's default currency |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemTitle`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Record row id (generate random) |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | SubSource (EBAY1) |
+| `Title` | `string` | Item title |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemTypeInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKU` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+| `StockItemId` | `string` |  |
+| `IsVariationGroup` | `boolean` |  |
+| `IsCompositeParent` | `boolean` |  |
+| `IsArchived` | `boolean` |  |
+| `InventoryTrackingType` | `integer` |  |
+
+### `StockLevelUpdate`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKU` | `string` |  |
+| `LocationId` | `string` |  |
+| `Level` | `integer` |  |
+
+### `StockLocationStockItemId`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | StockItemId |
+| `StockLocationId` | `string` | StockLocationId |
+
+### `StockTakeItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinRack` | `string` | (optional) Only applicable to non-batched and non-WMS locations. Singular BinRack will be updated for the given item for a given location. Will be ignored for a batched or WMS item. |
+| `PickingWaveItems` | `BatchPickingWaveStockItems[]` | (optional) Pickwave items associated with the batch. This data will be used for concurrency check and validation of data. Super important stuff when you are submitting batch inventory stock count in WMS location. Order items will automatically be allocated to a specific batch when the order is placed/printed/added to pickwave. This will normally block stock count, however it is possible to get the state of pickwave items, and if all items are picked from the location the user can still count them. When stock count is submitted we need to also submit the state of the pickwave at the point of count, so we can compare state was and the state is, discount any stock from the count that was processed/shipped If this parameter is not supplied and the batch is allocated to orders, the stock count for this item will be blocked and will not be submitted |
+| `StockItemId` | `string` | Stock Item Id |
+| `Quantity` | `integer` | Current stock level |
+| `OriginalQuantity` | `integer` | (Optional) Original quantity, used to validate if the original has changed since the items have been counted. If supplied and different to expected then an error will be returned. |
+| `StockValue` | `number` | (optional) Stock value (unit cost * quantity). If not provided it will be calculated from current stock value |
+| `BatchInventoryId` | `integer` | (conditional) If item is batched or in WMS location, you must provide BatchInventoryId which is being updated. If its newly discovered item, use BookInStockBatch call in Stock controller to create a new batch inventory |
+
+### `StockTakeItemWithError`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinRack` | `string` |  |
+| `PickingWaveItems` | `BatchPickingWaveStockItems[]` |  |
+| `Errors` | `string[]` | List of errors for specific stock take item |
+| `StockItemId` | `string` |  |
+| `Quantity` | `integer` |  |
+| `OriginalQuantity` | `integer` |  |
+| `StockValue` | `number` |  |
+| `BatchInventoryId` | `integer` |  |
 
 ### `Stock_AddVariationItemsRequest`
 
@@ -860,6 +1291,14 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 |---|---|---|
 | `Identifiers` | `UpdateSkuGroupIdentifierRequestItems[]` |  |
 
+### `UpdateSkuGroupIdentifierRequestItems`
+
+| Property | Type | Description |
+|---|---|---|
+| `SkuGroupId` | `integer` |  |
+| `SkuGroupIdentifierType` | `string` |  |
+| `Identifier` | `string` |  |
+
 ### `UpdateSkuGroupIdentifierResponse`
 
 ### `UpdateStockLevelsBulkRequest`
@@ -868,11 +1307,42 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 |---|---|---|
 | `Items` | `UpdateStockLevelsBulkRequestItem[]` |  |
 
+### `UpdateStockLevelsBulkRequestItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKU` | `string` | SKU - Optional if stock item id is provided |
+| `StockItemId` | `string` | StockItemId - Optional if stock SKU is provided, calls will be faster if this is provided. |
+| `StockLocationName` | `string` | Stock location name, optional if StockLocationId is provided. |
+| `StockLocationId` | `string` | Stock Location Id, optional if StockLocationName is provided, calls will be faster if this is provided. |
+| `StockLevel` | `integer` | StockLevel - Optional |
+| `StockValue` | `number` | StockValue - Optional, if unit cost is provided then value will be calculated from this, otherwise existing stock value or purchase price will be used. |
+| `UnitCost` | `number` | UnitCost - Optional, if stock value is provided then value will be calculated from this, otherwise existing stock value or purchase price will be used. |
+| `Binrack` | `string` | Binrack - Optional, if not provided or empty exisitng binrack will remain. |
+| `MinimumLevel` | `integer` | Minimum level - Optional |
+| `RowIndex` | `integer` | RowIndex - Optional, can be used to marry up request items with response items. |
+
 ### `UpdateStockLevelsBulkResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `Items` | `UpdateStockLevelsBulkResponseItem[]` |  |
+
+### `UpdateStockLevelsBulkResponseItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Errors` | `string[]` | Errors assocaited with request item. |
+| `SKU` | `string` |  |
+| `StockItemId` | `string` |  |
+| `StockLocationName` | `string` |  |
+| `StockLocationId` | `string` |  |
+| `StockLevel` | `integer` |  |
+| `StockValue` | `number` |  |
+| `UnitCost` | `number` |  |
+| `Binrack` | `string` |  |
+| `MinimumLevel` | `integer` |  |
+| `RowIndex` | `integer` |  |
 
 ### `UpdateWarehouseMoveRequest`
 
@@ -895,6 +1365,15 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `pkVariationItemId` | `string` | Variation parent ID (unique identifier) |
 | `VariationGroupName` | `string` | Variation parent title |
 
+### `VariationGroupTemplate`
+
+| Property | Type | Description |
+|---|---|---|
+| `VariationGroupName` | `string` | Variation parent title |
+| `ParentSKU` | `string` | Variation parent SKU |
+| `ParentStockItemId` | `string` | Variation parent stock item id |
+| `VariationItemIds` | `string[]` | List of variation children |
+
 ### `VariationItem`
 
 | Property | Type | Description |
@@ -903,3 +1382,87 @@ Get the location (including binrack) of a given list of stockItemIds and stockLo
 | `pkStockItemId` | `string` | Stock item ID (unique identifier) |
 | `ItemNumber` | `string` | Item SKU |
 | `ItemTitle` | `string` | Item title |
+
+### `WarehouseBinRack`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinRackId` | `integer` | BinRack internal id |
+| `BinRackTypeId` | `integer` | BinRack type id |
+| `BinRack` | `string` | BinRack |
+| `GeoPosition` | `GeoPosition` | Geograpic position of the BinRack |
+| `Dimension` | `Dimension` | Dimention of the BinRack |
+| `RoutingSequence` | `integer` | Sequence in which the picking or stock movement should be done. Routing. |
+| `MaxCapacityVolumetric` | `number` | Max capacity volume |
+| `CurrentFullPercentage` | `number` | Maximum volumetric capacity of the location WxDxH = volumetric |
+| `MaxQuantityCapacity` | `integer` | How full the bin rack is in percentage 0 to 100, based on the max quantity or max volumetric capacity. Updated everytime stock is moved in or out. |
+| `CurrentQuantity` | `integer` | Current total quantity of all items in the bin rack. Updated everytime stock is moved in or out. |
+| `CurrentVolumetric` | `number` | Current calculation of total volumetric total for all items in the binrack. Updated everytime stock is moved in or out. |
+| `OptimalReplenishFullPercentage` | `number` | Based on the fill percentage, indicates the bin rack as needs replenishment. Auto recalculated based on the consumption. |
+| `CriticalReplenishFullPercentage` | `number` | User fixed fill percentage. When it reaches this level the binrack is considered for replenishment. |
+| `ItemRestriction` | `boolean` | Item Restriction |
+| `GroupRestriction` | `boolean` | Group Restriction |
+| `LocationId` | `string` | Location of the binrack. |
+| `TypeName` | `string` | Readonly value of the TypeName loaded from BinRackTypeId |
+| `StandardType` | `integer` | Readonly value of the Standard type loaded from BinRackTypeId |
+| `IsVolumetric` | `boolean` | Readonly value indicates if the Type is Volumumetric |
+| `AccessOrientation` | `string` | Direction the item should be accessed from. |
+| `StorageGroups` | `string[]` | List of storage groups either for the whole binrack or relevant to specific stock item. |
+| `UniqueSkus` | `integer` | Unique skus in binrack. |
+| `ItemsInfo` | `WarehouseBinRackItemsInfo` |  |
+| `BinrackType` | `WarehouseBinRackType` | Binrack type |
+| `IsValidForStockItem` | `boolean` | Indicates if the binrack is valid for the supplied stockitem. |
+
+### `WarehouseBinRackItemsInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinRackId` | `integer` |  |
+| `NumberOfItems` | `integer` |  |
+| `TotalQuantity` | `integer` |  |
+
+### `WarehouseBinRackType`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinRackTypeId` | `integer` | Binrack type id - unique record identifier |
+| `Name` | `string` | Custom name for bin rack type |
+| `StandardType` | `integer` | Binrack Standard Type  Id 1 - Picking 2 - Special Access Picking 3 - Storage 4 - Deep Storage 5 - Putaway 6 - Quality Assurance 7 - Scrap / Quarantine 8 - Returns 0 - Flexible |
+| `LocationBound` | `string` | Identifies whether the bin rack type is bound to a specific location |
+| `IsVolumetric` | `boolean` | Is type restricted to volumetric measurements only |
+| `DefaultBatchStatus` | `string` | Sets the default status for batches in this binrack type |
+
+### `WarehouseMoveCollection`
+
+| Property | Type | Description |
+|---|---|---|
+| `Incoming` | `WarehouseMoveDetailed[]` | List of stock moves coming into the binrack |
+| `Outgoing` | `WarehouseMoveDetailed[]` | List of stock moves leaving the binrack |
+
+### `WarehouseMoveCompleteRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `MoveId` | `integer` |  |
+| `FinalBinrackId` | `integer` |  |
+
+### `WarehouseMoveDetailed`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinrackFrom` | `WarehouseBinRack` | Moving from bin rack |
+| `BinrackDestination` | `WarehouseBinRack` | Destination if known, otherwise will be null |
+| `Batch` | `StockItemBatch` | Detailed batch information, batch inventory is in Inventory class |
+| `MoveId` | `integer` |  |
+| `BatchInventoryId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `UserId` | `string` |  |
+| `UserName` | `string` |  |
+| `BinrackIdFrom` | `integer` |  |
+| `BinrackIdDestination` | `integer` |  |
+| `TxType` | `string` |  |
+| `JobId` | `integer` |  |
+| `CreateDate` | `string` |  |
+| `BatchId` | `integer` |  |
+| `StockLocationId` | `string` |  |
+| `TotId` | `integer` |  |

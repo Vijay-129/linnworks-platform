@@ -54,12 +54,27 @@ Gets latest conversion rates for all known currencies. The rate is updated every
 
 ## Models
 
+### `AvailableTimeZone`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `Name` | `string` |  |
+
 ### `CurrencyConversionRate`
 
 | Property | Type | Description |
 |---|---|---|
 | `Currency` | `string` | Currency code (e.g. GBP) |
 | `ConversionRate` | `number` | Currency conversion rate to default currency |
+
+### `CurrencyRate`
+
+| Property | Type | Description |
+|---|---|---|
+| `Currency` | `string` | Currency code |
+| `Rate` | `number` | Currency rate to Base Currency. CurrencyRate / BaseCurrencyRate = Converted value |
+| `AccurateAsOf` | `string` | UTC time when the currency rate was updated |
 
 ### `GetAvailableTimeZonesResponse`
 

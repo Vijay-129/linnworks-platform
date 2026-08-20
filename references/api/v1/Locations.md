@@ -46,6 +46,13 @@ Delete existing Tote from location Permissions Required: GlobalPermissions.Inven
 
 ## Models
 
+### `DeleteWarehouseToteRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ToteIds` | `integer[]` | List of warehouse tote ids to delete |
+| `LocationId` | `string` | Location id |
+
 ### `DeleteWarehouseToteResponse`
 
 | Property | Type | Description |
@@ -109,3 +116,11 @@ Delete existing Tote from location Permissions Required: GlobalPermissions.Inven
 | `LocationName` | `string` |  |
 | `IsFulfillmentCenter` | `boolean` |  |
 | `StockLocationIntId` | `integer` |  |
+
+### `WarehouseTOTE`
+
+| Property | Type | Description |
+|---|---|---|
+| `ToteId` | `integer` | Tote Id |
+| `ToteBarcode` | `string` | TOTE Barcode |
+| `LocationId` | `string` | Location Id of a warehouse to which TOT belongs |

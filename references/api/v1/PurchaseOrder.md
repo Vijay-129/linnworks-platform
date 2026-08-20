@@ -210,17 +210,182 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 
 ## Models
 
+### `AddAdditionalCostAllocationItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseItemId` | `string` | Specific purchase order line id the cost is attributed to |
+| `Id` | `string` |  |
+| `PurchaseAdditionalCostItemId` | `integer` |  |
+| `AllocationPercentage` | `number` |  |
+
+### `AddAdditionalCostItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` | Each item in the request can have unique Id supplied (uniqueidentifier) this Id will be returned to you in the response so you can match request item with the response |
+| `AdditionalCostTypeId` | `integer` |  |
+| `Reference` | `string` |  |
+| `SubTotalLineCost` | `number` |  |
+| `TaxRate` | `number` |  |
+| `Currency` | `string` |  |
+| `ConversionRate` | `number` |  |
+| `AllocationLocked` | `boolean` |  |
+| `Print` | `boolean` |  |
+| `AllocationMethod` | `string` |  |
+
+### `AddPaymentStatementItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` | Each item in the request can have unique Id supplied (uniqueidentifier) this Id will be returned to you in the response so you can match request item with the response |
+| `Reference` | `string` |  |
+| `ConversionRate` | `number` |  |
+| `Currency` | `string` |  |
+| `fkPurchaseAdditionalCostItemId` | `integer` |  |
+| `LineCost` | `number` |  |
+| `PaymentDate` | `string` |  |
+| `CreationDate` | `string` |  |
+
+### `AddPurchaseOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` | unique row id, the same id will be returned to you in the response |
+| `StockItemId` | `string` |  |
+| `Qty` | `integer` |  |
+| `Cost` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PackQuantity` | `integer` |  |
+| `PackSize` | `integer` |  |
+
+### `Add_AdditionalCostTypesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `TypeName` | `string` | Additional cost name |
+| `IsShippingType` | `boolean` | Type of additional cost is shipping cost |
+| `IsPartialAllocation` | `boolean` | Type must be 100% allocated to PO items |
+| `Print` | `boolean` | Type must appear on prints and emails |
+| `AllocationMethod` | `string` |  |
+
 ### `Add_AdditionalCostTypesResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `NewAdditionalCostType` | `PurchaseOrderAdditionalCostType` | Added AdditionalCostType |
 
+### `Add_PurchaseOrderExtendedPropertyRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase order uniqueidentifier |
+| `ExtendedPropertyItems` | `Add_PurchaseOrderExtendedProperty_Item[]` | List of Extended Properties to be added to the purchase order |
+
 ### `Add_PurchaseOrderExtendedPropertyResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `Items` | `PurchaseOrderExtendedProperty[]` | Added purchase order extended properties |
+
+### `Add_PurchaseOrderExtendedProperty_Item`
+
+| Property | Type | Description |
+|---|---|---|
+| `PropertyName` | `string` |  |
+| `PropertyValue` | `string` |  |
+
+### `Add_PurchaseOrderItemParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` | Purchase order id. You can only add items to pending purchase orders |
+| `fkStockItemId` | `string` | pkStockItemId. Use Get Stock Item API call to get the id of a product by SKU or Title |
+| `Qty` | `integer` | Quantity of items in the purchase order line |
+| `PackQuantity` | `integer` | Number of items in a single pack. This is for reference purposes only. Not used for any calculations. |
+| `PackSize` | `integer` | Number of packs ordered. This is for reference purposes only. Not used for any calculations. |
+| `Cost` | `number` | Line Total cost of all the purchase order item inclusive of tax (unitcost * qty) + tax |
+| `TaxRate` | `number` | Product tax rate |
+
+### `Change_PurchaseOrderStatusParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` | Purchase order uniqueidentifier |
+| `status` | `string` | Change purchase order status to the specified value |
+
+### `ColumnPurchaseOrderMappingModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `CsvField` | `string` |  |
+| `Index` | `integer` |  |
+| `LinnworksFieldType` | `string` |  |
+
+### `CommonModifiedAdditionalCostItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `PurchaseAdditionalCostItemId` | `integer` |  |
+| `AdditionalCostTypeId` | `integer` |  |
+| `Reference` | `string` |  |
+| `SubTotalLineCost` | `number` |  |
+| `TaxRate` | `number` |  |
+| `Tax` | `number` |  |
+| `Currency` | `string` |  |
+| `ConversionRate` | `number` |  |
+| `TotalLineCost` | `number` |  |
+| `CostAllocation` | `CommonPurchaseOrderAdditionalCostAllocation[]` |  |
+| `AllocationLocked` | `boolean` |  |
+| `AdditionalCostTypeName` | `string` |  |
+| `AdditionalCostTypeIsShippingType` | `boolean` |  |
+| `AdditionalCostTypeIsPartialAllocation` | `boolean` |  |
+| `Print` | `boolean` |  |
+| `AllocationMethod` | `string` |  |
+
+### `CommonPurchaseOrderAdditionalCost`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseAdditionalCostItemId` | `integer` | Unique record id |
+| `AdditionalCostTypeId` | `integer` | Additional cost type Id |
+| `Reference` | `string` | Additional cost reference |
+| `SubTotalLineCost` | `number` | Line Subtotal (Total less tax) |
+| `TaxRate` | `number` | Tax rate |
+| `Tax` | `number` | Tax amount |
+| `Currency` | `string` | Currency code |
+| `ConversionRate` | `number` | Conversion rate from system currency, i.e. system currency rate to additional cost currency. For example if your system currency is GBP and additional cost is in USD the converted value is USD / Rate, example calculation, Rate 1.27, Additional cost total is 100, converted value = 100 USD / 1.27 = 78.98 GBP |
+| `TotalLineCost` | `number` | Total cost, this is subtotal + tax (in system currency) |
+| `CostAllocation` | `CommonPurchaseOrderAdditionalCostAllocation[]` | List of cost allocations. The list defines which PO items the additional cost will be attributed to. If the specific value is not entered, it means the cost is equaly distributed The List is populated as part of Get_PurchaseOrder method |
+| `AllocationLocked` | `boolean` | If this flag is set, new items added to PO will not be part of the allocation cost |
+| `AdditionalCostTypeName` | `string` | Additional cost type name |
+| `AdditionalCostTypeIsShippingType` | `boolean` | Indicate if the additional cost type is Shipping type |
+| `AdditionalCostTypeIsPartialAllocation` | `boolean` | Indicate if the additional cost type allow partial allocation |
+| `Print` | `boolean` | Indicate if the additional cost has to be shown in prints and emails |
+| `AllocationMethod` | `string` | Indicate the method to calculate the allocation %  for each item |
+
+### `CommonPurchaseOrderAdditionalCostAllocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `CostAllocationId` | `integer` | Allocation row id. Use this Id to update or delete specific record. |
+| `PurchaseAdditionalCostItemId` | `integer` | Relation to additional cost line |
+| `PurchaseItemId` | `string` | Specific purchase order line id the cost is attributed to |
+| `AllocationPercentage` | `number` | Percentage of the cost that will be attributed to Purchase order item id |
+
+### `CommonPurchaseOrderDeliveredRecord`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkDeliveryRecordId` | `integer` | Delivery record Id |
+| `fkPurchaseItemId` | `string` | Purchase item id |
+| `fkStockLocationId` | `string` | Purchase item location id |
+| `UnitCost` | `number` | Unit cost |
+| `DeliveredQuantity` | `integer` | Quantity delivered |
+| `CreatedDateTime` | `string` | Record creation date |
+| `ModifiedDateTime` | `string` | Record modification date |
+| `fkBatchInventoryId` | `integer` | Purchase item batch Id (Optional) |
 
 ### `CommonPurchaseOrderHeader`
 
@@ -251,12 +416,120 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | `ConvertedOtherTax` | `number` | Total tax amount of additional costs of the purchase order, converted to system currency |
 | `ConvertedGrandTotal` | `number` | Total amount of the purchase order, converted to system currency |
 
+### `CommonPurchaseOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` | Unique record identifier. Use this id to update quantity, cost, deliver item etc |
+| `fkStockItemId` | `string` | Unique system stock identifier. Use this id to query linnworks api for product information, stock levels etc |
+| `StockItemIntId` | `integer` | Unique system stock integer identifier. Use this id to query linnworks api for product information, stock levels etc |
+| `Quantity` | `integer` | Quantity of unique stock items ordered |
+| `Cost` | `number` | Line Total cost of all the purchase order item inclusive of tax (unitcost * qty) + tax |
+| `Delivered` | `integer` | Number of items delivered on the PO. If this number is more than 1, purchase order item cannot be deleted from the PO. Cannot be decreased. |
+| `TaxRate` | `number` | Tax rate as a whole number, for example 20 represents 20% |
+| `Tax` | `number` | Tax calculated from Cost * (TaxRate/100) |
+| `PackQuantity` | `integer` | Arbitary identifier of how many packs ordered. Number not used in any of the calculation and purely for visualization and minimum reorder quantity purposes only |
+| `PackSize` | `integer` | Arbitary identifier of how many items in each pack. Number not used in any of the calculation and purely for visualization and minimum reorder quantity purposes only |
+| `SKU` | `string` | Item SKU |
+| `ItemTitle` | `string` | Item Title |
+| `InventoryTrackingType` | `integer` | Stock item tracking type. 0 = none. 1 = Ordered by Sell by Date. 2 = Ordered by Priority Sequence |
+| `IsDeleted` | `boolean` | Whether or not the stock item for this purchase order item has been deleted in the system |
+| `SortOrder` | `integer` | Order the item was added to PO. First item = 0 |
+| `DimHeight` | `number` | Item height |
+| `DimWidth` | `number` | Item Width |
+| `BarcodeNumber` | `string` | Barcode |
+| `DimDepth` | `number` | Item Depth |
+| `BoundToOpenOrdersItems` | `integer` | Number of open order items this item is bound |
+| `BinRack` | `string` | Bin rack |
+| `QuantityBoundToOpenOrdersItems` | `integer` | Sum of quantity of items bound to open order items |
+| `SupplierCode` | `string` | Supplier Code |
+| `SupplierBarcode` | `string` |  |
+| `SkuGroupIds` | `integer[]` | Sku group id assocaited with purchase item. Used for containerisation. |
+
+### `CommonPurchaseOrderPaymentStatement`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchasePaymentStatementId` | `integer` | Unique record id |
+| `LineCost` | `number` | Cost of the purchase order the payment contributes to |
+| `ConversionRate` | `number` | Conversion rate from system currency, i.e. system currency rate to additional cost currency. For example if your system currency is GBP and payment statement cost is in USD the converted value is USD / Rate, example calculation, Rate 1.27, Additional cost total is 100, converted value = 100 USD / 1.27 = 78.98 GBP |
+| `Currency` | `string` | Currency code |
+| `Reference` | `string` | Payment Statement reference |
+| `CreationDate` | `string` | Date when the payment statement was added |
+| `PaymentDate` | `string` | Date when payment statement was marked as paid |
+| `fkPurchaseAdditionalCostItemId` | `integer` | Relation to additional cost line. If no value is set then the payment statement relates to PO supplier |
+
+### `CreatePOsFromInventoryRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ToCreate` | `MyInventoryPOCreationItems[]` | A list of items that should either be added to a PO, either new or existing, depending on data |
+| `LocationId` | `string` | Linnworks stock location id |
+
 ### `CreatePOsFromInventoryResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `PurchaseOrders` | `object` | A dictionary where the key is supplier Id and the tuple represents the purchase order id and the external invoice number for that PO |
 | `SkippedStockItems` | `string[]` |  |
+
+### `Create_PurchaseOrder_InitialParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkSupplierId` | `string` | Supplier unique identifier. Use Inventory/GetSupplierList to get the supplier ids |
+| `fkLocationId` | `string` | Location id where the PO will be delivered to. Use Inventory/GetStockLocations to get the location ids |
+| `ExternalInvoiceNumber` | `string` | Purchase order reference |
+| `Currency` | `string` | Currency of the purchase order |
+| `SupplierReferenceNumber` | `string` | Supplier purchase order reference number |
+| `UnitAmountTaxIncludedType` | `integer` | Unit amount includes,excludes or no tax. 0 - Excludes Tax, 1 - Includes tax, 2 - No Tax |
+| `DateOfPurchase` | `string` | DateTime of the purchase order |
+| `QuotedDeliveryDate` | `string` | DateTime of the expected delivery date. |
+| `PostagePaid` | `number` | **DEPRECIATED** Use additional costs with Shipping flag to record shipping costs. This field remains available in the API for backward compatibility and acts pretty much like an additional cost item with type |
+| `ShippingTaxRate` | `number` | **DEPRECIATED** Use additional costs with Shipping flag to record shipping costs. This field remains available in the API for backward compatibility and acts pretty much like an additional cost item with type |
+| `ConversionRate` | `number` | Currency conversion rate, multiplier to change the purchase order currency into the system currecny |
+
+### `Delete_AdditionalCostTypesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `AdditionalCostTypeId` | `integer` | Additional cost type Ids to delete |
+
+### `Delete_PurchaseOrderExtendedPropertyRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase order unique identifier |
+| `RowIds` | `integer[]` | List of ids to delete |
+
+### `Delete_PurchaseOrderItemParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` | Purchase order item unique row identifier |
+| `pkPurchaseId` | `string` | Purchase order id |
+
+### `DeliverAllPurchaseOrderItemsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
+| `DeliveryId` | `integer` |  |
+| `Items` | `PurchaseOrderDeliveredItem[]` |  |
+
+### `DeliverPurchaseOrderItemRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchNumber` | `string` |  |
+| `BinRack` | `string` |  |
+| `PrioritySequence` | `integer` |  |
+| `BatchStatus` | `string` |  |
+| `pkPurchaseId` | `string` |  |
+| `pkPurchaseItemId` | `string` |  |
+| `Delivered` | `integer` |  |
+| `AddToDelivered` | `integer` |  |
+| `DeliveryId` | `integer` |  |
 
 ### `DeliverPurchaseOrderItemResponse`
 
@@ -288,6 +561,34 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | `Url` | `string` |  |
 | `Path` | `string` |  |
 
+### `EmailSent`
+
+| Property | Type | Description |
+|---|---|---|
+| `AttachmentUrl` | `string` |  |
+| `pkEmailId` | `integer` |  |
+| `Recipient` | `string` |  |
+| `SendDate` | `string` |  |
+| `Subject` | `string` |  |
+| `UserName` | `string` |  |
+
+### `ExportPurchaseOrderSettingModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `ColumnMappings` | `ColumnPurchaseOrderMappingModel[]` |  |
+| `Delimiter` | `string` |  |
+| `Encoding` | `string` |  |
+| `PurchaseId` | `string` |  |
+| `StringDelimiter` | `string` |  |
+| `FileName` | `string` |  |
+
+### `FindStockItemRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Codes` | `string[]` |  |
+
 ### `FindStockItem_Response`
 
 | Property | Type | Description |
@@ -299,6 +600,12 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | Property | Type | Description |
 |---|---|---|
 | `AdditionalTypes` | `PurchaseOrderAdditionalCostType[]` | List of additional costs types |
+
+### `Get_Additional_CostRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase order unique identifier of a PO |
 
 ### `Get_Additional_CostResponse`
 
@@ -312,11 +619,23 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 |---|---|---|
 | `Items` | `CommonPurchaseOrderDeliveredRecord[]` |  |
 
+### `Get_EmailCSVFileRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
+
 ### `Get_EmailCSVFileResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `Url` | `string` |  |
+
+### `Get_EmailsSentRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` |  |
 
 ### `Get_EmailsSentResponse`
 
@@ -324,11 +643,23 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 |---|---|---|
 | `Items` | `EmailSent[]` |  |
 
+### `Get_PaymentStatementRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase order unique identifier of a PO |
+
 ### `Get_PaymentStatementResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `items` | `CommonPurchaseOrderPaymentStatement[]` | List of payment statements |
+
+### `Get_PurchaseOrderExtendedPropertyRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase Order unique identifier |
 
 ### `Get_PurchaseOrderExtendedPropertyResponse`
 
@@ -336,11 +667,86 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 |---|---|---|
 | `Items` | `PurchaseOrderExtendedProperty[]` | Purchase order extended properties |
 
+### `ModifiedAdditionalCostAllocationItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` | Relation to the initial request. This Id will match to what was specified in the request so that the client side can be updated with new CostAllocationIds |
+| `CostAllocationId` | `integer` |  |
+| `PurchaseAdditionalCostItemId` | `integer` |  |
+| `PurchaseItemId` | `string` |  |
+| `AllocationPercentage` | `number` |  |
+
+### `ModifiedPaymentStatementItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `PurchasePaymentStatementId` | `integer` |  |
+| `LineCost` | `number` |  |
+| `ConversionRate` | `number` |  |
+| `Currency` | `string` |  |
+| `Reference` | `string` |  |
+| `CreationDate` | `string` |  |
+| `PaymentDate` | `string` |  |
+| `fkPurchaseAdditionalCostItemId` | `integer` |  |
+
+### `ModifiedPurchaseOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` | unique row id which was supplied in the ModifyPurchaseOrderItem, you can match this id to the request item. The same Id is returned to back from the request parameter |
+| `PurchaseItemId` | `string` | Unique purchase order item id. Purchase order item is deleted and updated by PurchaseOrderItemId |
+| `StockItemId` | `string` |  |
+| `Qty` | `integer` |  |
+| `BoundToOpenOrdersItems` | `integer` |  |
+| `QuantityBoundToOpenOrdersItems` | `integer` |  |
+| `Cost` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PackQuantity` | `integer` |  |
+| `PackSize` | `integer` |  |
+
+### `Modify_AdditionalCostAllocationRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase order id |
+| `itemsToAdd` | `AddAdditionalCostAllocationItem[]` | Items to add |
+| `itemsToUpdate` | `UpdateAdditionalCostAllocationItem[]` | Items to update |
+| `itemsToDelete` | `integer[]` | Items to delete by CostAllocationId |
+
 ### `Modify_AdditionalCostAllocationResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ModifiedItems` | `ModifiedAdditionalCostAllocationItem[]` | list of modified items with Ids matched to CostAllocationId |
+
+### `Modify_AdditionalCostRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `itemsToAdd` | `AddAdditionalCostItem[]` | list of additional cost items to add. Each item has Id which will be returned to you to match the item you are adding to array on your side |
+| `itemsToUpdate` | `UpdateAdditionalCostItem[]` | List of items to update. Each line is identified by |
+| `itemsToDelete` | `integer[]` | List of items to delete, provide list of PurchaseAdditionalCostItemId's |
+| `PurchaseId` | `string` | Purchase order id |
+
+### `Modify_PaymentStatementRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `itemsToAdd` | `AddPaymentStatementItem[]` | list of payment statements to add. Each item has Id which will be returned to you to match the item you are adding to array on your side |
+| `itemsToUpdate` | `UpdatePaymentStatementItem[]` | List of payment statements to update. Each line is identified by |
+| `itemsToDelete` | `integer[]` | List of payment statements to delete, provide list of PurchasePaymentStatementId's |
+| `PurchaseId` | `string` | Purchase order id |
+
+### `Modify_PurchaseOrderItems_BulkRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase order id |
+| `ItemsToAdd` | `AddPurchaseOrderItem[]` | New purchase order items to add |
+| `ItemsToUpdate` | `UpdatePurchaseOrderItem[]` | Purchase order items to update |
+| `ItemsToDelete` | `string[]` | Purchase order items to delete. PurchaseOrderItemId(s) |
 
 ### `Modify_PurchaseOrderItems_BulkResponse`
 
@@ -348,6 +754,92 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 |---|---|---|
 | `ModifiedItems` | `ModifiedPurchaseOrderItem[]` | Modified purchase order items. Newly added items, updated items. Deleted items not returned back to the client. |
 | `PurchaseOrderHeader` | `CommonPurchaseOrderHeader` | Recalculated purchase order header |
+
+### `MyInventoryPOCreationItems`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsNew` | `boolean` | Denotes item should be added to a new PO |
+| `PurchaseOrderId` | `string` | If this is populated with a valid PurchaseOrderId, the item will be added to that PO |
+| `OpenOrderItemsBound` | `string[]` | List of open order items to be bound to the PO item |
+| `StockItemId` | `string` |  |
+| `SupplierId` | `string` |  |
+| `SupplierName` | `string` |  |
+| `OustandingPOQuantity` | `integer` |  |
+| `SuggestedReorderAmount` | `integer` |  |
+| `QuantityInDraftPOs` | `integer` |  |
+| `ItemTitle` | `string` |  |
+| `SKU` | `string` |  |
+| `ImageURL` | `string` |  |
+| `SupplierAssigned` | `boolean` |  |
+| `CalculationMethod` | `string` |  |
+| `ErrorMessage` | `string` |  |
+| `CanBeOrdered` | `boolean` |  |
+| `ErrorCode` | `string` |  |
+| `SupplierPackSize` | `integer` |  |
+| `MinimumOrderQuantity` | `integer` |  |
+| `RequestedSupplierId` | `string` |  |
+
+### `PurchaseItemFound`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkStockItemId` | `string` |  |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `TaxRate` | `number` |  |
+| `PurchasePrice` | `number` |  |
+| `KnownPurchasePrice` | `number` |  |
+| `SupplierCode` | `string` |  |
+| `SupplierBarcode` | `string` |  |
+| `fkSupplierId` | `string` |  |
+| `SupplierMinOrderQty` | `integer` |  |
+| `SupplierPackSize` | `integer` |  |
+| `ContainsComposites` | `boolean` |  |
+| `StockItemIntId` | `integer` |  |
+| `fkStockLocationId` | `string` |  |
+
+### `PurchaseOrderAdditionalCost`
+
+| Property | Type | Description |
+|---|---|---|
+| `AdditionalCostTypeIsShippingType` | `boolean` |  |
+| `PurchaseAdditionalCostItemId` | `integer` |  |
+| `AdditionalCostTypeId` | `integer` |  |
+| `Reference` | `string` |  |
+| `SubTotalLineCost` | `number` |  |
+| `TaxRate` | `number` |  |
+| `Tax` | `number` |  |
+| `Currency` | `string` |  |
+| `ConversionRate` | `number` |  |
+| `TotalLineCost` | `number` |  |
+| `CostAllocation` | `PurchaseOrderAdditionalCostAllocation[]` |  |
+| `AllocationLocked` | `boolean` |  |
+| `AdditionalCostTypeName` | `string` |  |
+| `AdditionalCostTypeIsPartialAllocation` | `boolean` |  |
+| `Print` | `boolean` |  |
+| `AllocationMethod` | `string` |  |
+
+### `PurchaseOrderAdditionalCostAllocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `CostAllocationId` | `integer` |  |
+| `PurchaseAdditionalCostItemId` | `integer` |  |
+| `PurchaseItemId` | `string` |  |
+| `AllocationPercentage` | `number` |  |
+
+### `PurchaseOrderAdditionalCostType`
+
+| Property | Type | Description |
+|---|---|---|
+| `AdditionalCostTypeId` | `integer` | Additional Cost type id |
+| `TypeName` | `string` | Additional cost name |
+| `IsShippingType` | `boolean` | Type of additional cost is shipping cost |
+| `IsPartialAllocation` | `boolean` | Type must be 100% allocated to PO items |
+| `Print` | `boolean` | Indicate if the additional costs of this type has to be printed |
+| `AllocationMethod` | `string` | Indicate the method to calculate the allocation %  for each item |
 
 ### `PurchaseOrderAudit`
 
@@ -362,6 +854,97 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | `UserName` | `string` | User whose actions are being audited |
 | `AuditTrailDate` | `string` | Date when purchase order audit record was created |
 | `AuditTrailTime` | `string` | Time when purchase order audit record was created |
+
+### `PurchaseOrderDeliveredItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` |  |
+| `QuantityDelivered` | `integer` |  |
+
+### `PurchaseOrderDeliveredRecord`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkDeliveryId` | `integer` |  |
+| `pkDeliveryRecordId` | `integer` |  |
+| `fkPurchaseItemId` | `string` |  |
+| `fkStockLocationId` | `string` |  |
+| `UnitCost` | `number` |  |
+| `DeliveredQuantity` | `integer` |  |
+| `CreatedDateTime` | `string` |  |
+| `ModifiedDateTime` | `string` |  |
+| `fkBatchInventoryId` | `integer` |  |
+
+### `PurchaseOrderExtendedProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `integer` | Extended Property item id |
+| `PurchaseID` | `string` | Purchase order id (unique identifier) |
+| `AddedDateTime` | `string` | UTC date when the extended property was added |
+| `UserName` | `string` | User name which added the extended property, if the property is updated it will not be changed from original |
+| `PropertyName` | `string` | Property name (max 255) |
+| `PropertyValue` | `string` | Property value (max 600) |
+
+### `PurchaseOrderHeader`
+
+| Property | Type | Description |
+|---|---|---|
+| `ExternalInvoiceNumber` | `string` |  |
+| `Status` | `string` |  |
+| `Currency` | `string` |  |
+| `SupplierReferenceNumber` | `string` |  |
+| `Locked` | `boolean` |  |
+| `UnitAmountTaxIncludedType` | `integer` |  |
+| `LineCount` | `integer` |  |
+| `DeliveredLinesCount` | `integer` |  |
+| `pkPurchaseID` | `string` |  |
+| `fkSupplierId` | `string` |  |
+| `fkLocationId` | `string` |  |
+| `DateOfPurchase` | `string` |  |
+| `DateOfDelivery` | `string` |  |
+| `QuotedDeliveryDate` | `string` |  |
+| `PostagePaid` | `number` |  |
+| `TotalCost` | `number` |  |
+| `taxPaid` | `number` |  |
+| `ShippingTaxRate` | `number` |  |
+| `ConversionRate` | `number` |  |
+| `ConvertedShippingCost` | `number` |  |
+| `ConvertedShippingTax` | `number` |  |
+| `ConvertedOtherCost` | `number` |  |
+| `ConvertedOtherTax` | `number` |  |
+| `ConvertedGrandTotal` | `number` |  |
+
+### `PurchaseOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` |  |
+| `fkStockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `Cost` | `number` |  |
+| `Delivered` | `integer` |  |
+| `TaxRate` | `number` |  |
+| `Tax` | `number` |  |
+| `PackQuantity` | `integer` |  |
+| `PackSize` | `integer` |  |
+| `SKU` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `IsDeleted` | `boolean` |  |
+| `SortOrder` | `integer` |  |
+| `DimHeight` | `number` |  |
+| `DimWidth` | `number` |  |
+| `BarcodeNumber` | `string` |  |
+| `DimDepth` | `number` |  |
+| `BoundToOpenOrdersItems` | `integer` |  |
+| `BinRack` | `string` |  |
+| `QuantityBoundToOpenOrdersItems` | `integer` |  |
+| `SupplierCode` | `string` |  |
+| `SupplierBarcode` | `string` |  |
+| `SkuGroupIds` | `integer[]` |  |
 
 ### `PurchaseOrderModify_AdditionalCostResponse`
 
@@ -387,6 +970,19 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | `NoteDate` | `string` | Format the Note Date |
 | `NoteTime` | `string` | Format the Note Time |
 
+### `PurchaseOrderPaymentStatement`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchasePaymentStatementId` | `integer` |  |
+| `LineCost` | `number` |  |
+| `ConversionRate` | `number` |  |
+| `Currency` | `string` |  |
+| `Reference` | `string` |  |
+| `CreationDate` | `string` |  |
+| `PaymentDate` | `string` |  |
+| `fkPurchaseAdditionalCostItemId` | `integer` |  |
+
 ### `PurchaseOrderResponse`
 
 | Property | Type | Description |
@@ -397,6 +993,13 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | `AdditionalCosts` | `PurchaseOrderAdditionalCost[]` |  |
 | `PaymentStatements` | `PurchaseOrderPaymentStatement[]` |  |
 | `DeliveredRecords` | `PurchaseOrderDeliveredRecord[]` |  |
+
+### `PurchaseOrderWithStockItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | The Id of the Stock Item |
+| `LocationIds` | `string[]` | List of Location Ids to determine whether to return Purchase Order Ids based on stock location as well as Stock Item Id |
 
 ### `PurchaseOrder_Add_AdditionalCostTypesRequest`
 
@@ -640,6 +1243,25 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | `Location` | `string[]` | Current Location |
 | `Supplier` | `string[]` | Current Supplier |
 
+### `Search_PurchaseOrderParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `DateFrom` | `string` | Purchase order date range from (optional) |
+| `DateTo` | `string` | Purchase order date range to (optional) |
+| `Status` | `string` | Purchase order status: PENDING - purchase order can be changed, not yet affecting stock levels OPEN - purchase order is created and stock levels Due are reflected PARTIAL - partially delivered DELIVERED - fully delivered |
+| `ReferenceLike` | `string` | Purchase order reference or Supplier PO reference, works as a like will return all POs that contain ReferenceLike value |
+| `EntriesPerPage` | `integer` | Number of records returned, sorted by Purchase Order Date |
+| `PageNumber` | `integer` | Page Number |
+| `Location` | `string[]` | Current Location |
+| `Supplier` | `string[]` | Current Supplier |
+
+### `Search_PurchaseOrder_AuditLog`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseId` | `string` | Purchase Order Unique Identifier |
+
 ### `Search_PurchaseOrdersResult`
 
 | Property | Type | Description |
@@ -650,11 +1272,118 @@ Permissions Required: GlobalPermissions.Inventory.PurchaseOrder.EditPurchaseOrde
 | `EntriesPerPage` | `integer` | Requested entries per page |
 | `TotalNumberOfRecords` | `integer` | Total number of records matching the search request |
 
+### `UpdateAdditionalCostAllocationItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `CostAllocationId` | `integer` | Allocation row id that will be updated with the new AllocationPercentage |
+| `Id` | `string` |  |
+| `PurchaseAdditionalCostItemId` | `integer` |  |
+| `AllocationPercentage` | `number` |  |
+
+### `UpdateAdditionalCostItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseAdditionalCostItemId` | `integer` | Additional cost line row id, uniquely identifying each cost line |
+| `Id` | `string` | Each item in the request can have unique Id supplied (uniqueidentifier) this Id will be returned to you in the response so you can match request item with the response |
+| `AdditionalCostTypeId` | `integer` |  |
+| `Reference` | `string` |  |
+| `SubTotalLineCost` | `number` |  |
+| `TaxRate` | `number` |  |
+| `Currency` | `string` |  |
+| `ConversionRate` | `number` |  |
+| `AllocationLocked` | `boolean` |  |
+| `Print` | `boolean` |  |
+| `AllocationMethod` | `string` |  |
+
+### `UpdatePaymentStatementItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchasePaymentStatementId` | `integer` | Payment Statement line row id, uniquely identifying each cost line |
+| `Id` | `string` | Each item in the request can have unique Id supplied (uniqueidentifier) this Id will be returned to you in the response so you can match request item with the response |
+| `Reference` | `string` |  |
+| `ConversionRate` | `number` |  |
+| `Currency` | `string` |  |
+| `fkPurchaseAdditionalCostItemId` | `integer` |  |
+| `LineCost` | `number` |  |
+| `PaymentDate` | `string` |  |
+| `CreationDate` | `string` |  |
+
+### `UpdatePurchaseOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` | unique row id, to uniquely identify submitted item. This Id will be returned in the response so you can match request to response items |
+| `PurchaseItemId` | `string` |  |
+| `StockItemId` | `string` |  |
+| `Qty` | `integer` |  |
+| `Cost` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PackQuantity` | `integer` |  |
+| `PackSize` | `integer` |  |
+
+### `Update_AdditionalCostTypesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `AdditionalCostTypeId` | `integer` | Additional Cost type id to update |
+| `TypeName` | `string` | Additional cost name, if null the field is not updated |
+| `IsShippingType` | `boolean` | Type of additional cost is shipping cost, if null, the field is not updated |
+| `IsPartialAllocation` | `boolean` | Type must be 100% allocated to PO items, if null, the field is not updated |
+| `Print` | `boolean` | Type must appear on prints and emails |
+| `AllocationMethod` | `string` |  |
+
 ### `Update_AdditionalCostTypesResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `UpdatedAdditionalCostType` | `PurchaseOrderAdditionalCostType` | Update additional cost type |
+
+### `Update_PurchaseOrderExtendedPropertyItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `integer` |  |
+| `PropertyName` | `string` |  |
+| `PropertyValue` | `string` |  |
+
+### `Update_PurchaseOrderExtendedPropertyRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PurchaseId` | `string` | Purchase order uniqueidentifier |
+| `ExtendedPropertyItems` | `Update_PurchaseOrderExtendedPropertyItem[]` | items to update |
+
+### `Update_PurchaseOrderHeaderParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseID` | `string` | Unique identifier for the purchase order. You have to use this ID for all updates to the PO |
+| `SupplierReferenceNumber` | `string` | Supplier reference number for the purchase order |
+| `fkLocationId` | `string` | Unique idenfidier of the location where the PO is expected to be delivered to. Empty Guid is default location. Use Locations API methods to get the names and additional details for the locations |
+| `fkSupplierId` | `string` | Unique identifier for the supplier. Empty Guid is default supplier. Otherwise use Supplier API to get the names and additional data for the supplier |
+| `Currency` | `string` | Currency of the values in the purchase order |
+| `ExternalInvoiceNumber` | `string` | Purchase order reference |
+| `UnitAmountTaxIncludedType` | `integer` | Unit amount includes,excludes or no tax. 0 - Excludes Tax, 1 - Includes tax, 2 - No Tax. Nullable if null, the value not updated |
+| `DateOfPurchase` | `string` | DateTime of the purchase order delivered, will be set to DateOfPurchase until the PO is fully delivered UTC |
+| `QuotedDeliveryDate` | `string` | DateTime of the purchase order quoted/expected delivery date UTC |
+| `ShippingTaxRate` | `number` | **DEPRECIATED** Use additional costs with Shipping flag to record shipping costs. This field remains available in the API for backward compatibility and acts pretty much like an additional cost item with type |
+| `ConversionRate` | `number` | Conversion rate of the purchase order currency. When PO is delivered Stock Value will be multipled by this conversion rate. For example if your system currency is GBP and Purchase order is in EUR the conversion rate is 0.81. |
+| `PostagePaid` | `number` | **DEPRECIATED** Use additional costs with Shipping flag to record shipping costs. This field remains available in the API for backward compatibility and acts pretty much like an additional cost item with type |
+
+### `Update_PurchaseOrderItemParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` | Purchase order item unique row identifier |
+| `pkPurchaseId` | `string` | Purchase order id |
+| `Quantity` | `integer` | Quantity to be updated. (optional) |
+| `PackQuantity` | `integer` | Number of items in a single pack. This is for reference purposes only. Not used for any calculations. Optional |
+| `PackSize` | `integer` | Number of packs ordered. This is for reference purposes only. Not used for any calculations. Optional |
+| `Cost` | `number` | Line Total cost of all the purchase order item inclusive of tax (unitcost * qty) + tax. Value should be in the currency of the purchase order (Optional) if not specified the cost will be recalculated from current cost specified on the PO |
+| `TaxRate` | `number` | Tax Rate (Optional) |
 
 ### `Update_PurchaseOrderItemResponse`
 

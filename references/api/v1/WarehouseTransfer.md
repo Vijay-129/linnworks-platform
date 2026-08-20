@@ -385,6 +385,16 @@ Creates a PDF for this transfer and returns the URL Permissions Required: Global
 | `ReferenceNumber` | `string` |  |
 | `Quantity` | `integer` |  |
 
+### `UpdateStatus`
+
+| Property | Type | Description |
+|---|---|---|
+| `Notes` | `boolean` |  |
+| `Items` | `boolean` |  |
+| `Properties` | `boolean` |  |
+| `Information` | `boolean` |  |
+| `Status` | `boolean` |  |
+
 ### `WarehouseTransfer`
 
 | Property | Type | Description |
@@ -473,6 +483,14 @@ Creates a PDF for this transfer and returns the URL Permissions Required: Global
 | `NoteRead` | `boolean` | If note is readable |
 | `FkBinId` | `string` | Bin ID |
 | `PkTransferItemId` | `string` | Transfer ID |
+
+### `WarehouseTransferItemQuantity`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkStockItemId` | `string` | Stock item ID (unique identifier) |
+| `Quantity` | `integer` | Item request quantity |
+| `pkTransferItemId` | `string` | Transfer item ID (unique identifier) |
 
 ### `WarehouseTransferNote`
 

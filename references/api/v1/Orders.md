@@ -577,12 +577,91 @@ Retrieves a list of order details for a given order reference number, returns ma
 
 ## Models
 
+### `AddExtendedPropertiesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order id of the order to append extended properties to |
+| `ExtendedProperties` | `BasicExtendedProperty[]` | Array of basic extended properties to be added |
+
 ### `AddExtendedPropertiesResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ExtendedPropertiesInserted` | `integer` | The number of extended properties that were added |
 | `Errors` | `string[]` | An array of errors created when attempting to add |
+
+### `AssignOrderItemBatches`
+
+| Property | Type | Description |
+|---|---|---|
+| `Batches` | `OrderItemBatch[]` |  |
+| `OrderId` | `string` |  |
+
+### `AssignStockToOrderRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` |  |
+| `OrderItemRows` | `string[]` |  |
+| `BatchAssignmentMode` | `string` | The way in which batches should be assigned |
+
+### `AvailableOrderItemBatchsInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` | Order ID |
+
+### `BasicExtendedProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` | Extended property name |
+| `Value` | `string` | Extended property value |
+| `Type` | `string` | Extended property type |
+
+### `BatchAssignmentForOrderItems`
+
+| Property | Type | Description |
+|---|---|---|
+| `orderId` | `string` | Identifies the order to be updated |
+| `batchToItemMapping` | `batchAssignment[]` | Maps order items to batches |
+
+### `BooleanFieldFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Value` | `boolean` |  |
+| `FieldCode` | `string` |  |
+
+### `CalcBin`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkBinId` | `string` | Bin Id |
+| `TrackingNumber` | `string` | Bin Tracking number |
+| `LabelId` | `string` | Bin Label Id |
+| `Weight` | `number` | Bin total weight. If null, recalculation was not performed |
+| `PrintDate` | `string` | Label Print date |
+| `Cost` | `number` | Label cost if available |
+| `fkPackagingTypeId` | `string` | Bin allocated packaging type |
+| `Width` | `number` | Bin width. If null, recalculation was not performed |
+| `Height` | `number` | Bin height. If null, recalculation was not performed |
+| `Depth` | `number` | Bin depth. If null, recalculation was not performed |
+| `PackagingWeight` | `number` | Bin packaging weight. If null, recalculation was not performed |
+| `ItemWeight` | `number` | Bin ItemWeight. If null, recalculation was not performed |
+| `ManualAdjust` | `boolean` | Indicates that the bin weights and dimensions have been manually adjusted by the user |
+| `Items` | `CalcBinItem[]` | List of order item ids in the bin and their quantities |
+
+### `CalcBinItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ShippingOrderItemId` | `integer` | Bin Item Id |
+| `BinId` | `string` | Package Id |
+| `fkOrderItemId` | `string` | Order Item Id |
+| `BoxId` | `integer` | Item Part Id |
+| `Quantity` | `integer` |  |
 
 ### `CalcOrderHeader`
 
@@ -612,6 +691,175 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Bins` | `CalcBin[]` | List of bins (split packaging) |
 | `ThreeDimPackaging` | `PackingResult` | Result for volumetric packaging |
 | `DimMethod` | `string` | Dimension Calculation method |
+
+### `CalcOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkStockItemId` | `string` | Unique stock item identifier |
+| `fkOrderItemId` | `string` | Unique row identifier of the order item |
+| `StockItemIntId` | `integer` |  |
+| `SKU` | `string` | SKU |
+| `nQty` | `integer` | Quantity of items |
+| `ItemWeight` | `number` | Item weight |
+| `DimHeight` | `number` | Item height |
+| `DimWidth` | `number` | Item width |
+| `DimDepth` | `number` | item depth |
+| `PackageGroup` | `string` | Prefered Packaging group |
+| `fkCompositeParentRowId` | `string` | Indicates whether the item is a child of a composite, if EmptyGuid or Null not a child |
+| `IsCompositeChild` | `boolean` |  |
+| `Boxes` | `StockItemBoxConfiguration[]` |  |
+
+### `ChannelAddress`
+
+| Property | Type | Description |
+|---|---|---|
+| `MatchCountryCode` | `string` |  |
+| `MatchCountryName` | `string` |  |
+| `FullName` | `string` |  |
+| `Company` | `string` |  |
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `Address3` | `string` |  |
+| `Town` | `string` |  |
+| `Region` | `string` |  |
+| `PostCode` | `string` |  |
+| `Country` | `string` |  |
+| `PhoneNumber` | `string` |  |
+| `EmailAddress` | `string` |  |
+| `isEmpty` | `boolean` |  |
+
+### `ChannelOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `UseChannelTax` | `boolean` | Validate if the tax should be overwritten on the order. |
+| `pkOrderId` | `string` | Used when IsNew is false to update the order |
+| `AutomaticallyLinkBySKU` | `boolean` | When the order is saved it will try and link by SKU after trying by channel sku mapping. |
+| `AutomaticallyLinkByBarcode` | `boolean` | When the order is saved it will try and link by Barcode after trying by channel sku mapping. |
+| `AutomaticallyLinkByASIN` | `boolean` | When the order is saved it will try and link by ASIN after trying by channel sku mapping. |
+| `Site` | `string` | Used to determine the site of the order. |
+| `MatchPostalServiceTag` | `string` | Match postal service method by name |
+| `PostalServiceName` | `string` | Postal service name used for saving new postal services |
+| `SavePostalServiceIfNotExist` | `boolean` | Determines wither or not to save postal service if it does not exist |
+| `MatchPaymentMethodTag` | `string` | Match payment method by name |
+| `PaymentMethodName` | `string` | Payment method name used for saving new payment methods |
+| `SavePaymentMethodIfNotExist` | `boolean` | Determines wither or not to save payment methods if it does not exist |
+| `MappingSource` | `string` | Overrides the mapping source for the channel for example if the Source is 'AMAZON FBA' MappingSource can be used to override to 'AMAZON' |
+| `OrderState` | `string` | State the order should be saved e.g. hold, parked, none |
+| `OrderFulfilmentType` | `string` | Defines type of fulfilment required for order |
+| `OrderStatusType` | `string` | The status of the order on the channel |
+| `OrderStatus` | `string` | The raw status text of the order on the channel |
+| `PaymentStatus` | `string` | Payment status of the order, eg Paid If Unpaid ChannelOrderAdapter.Save() will ensure order is PARKED |
+| `OrderItems` | `ChannelOrderItem[]` | List of order items |
+| `Locations` | `ChannelOrderLocation[]` | The order location(s) on the channel |
+| `ExtendedProperties` | `ChannelOrderExtendedProperty[]` | List of extended properties for the order |
+| `Notes` | `ChannelOrderNote[]` | List of notes for the order |
+| `Source` | `string` | Source |
+| `SubSource` | `string` | SubSource |
+| `ChannelBuyerName` | `string` | Channel buyer username / name |
+| `ReferenceNumber` | `string` | Reference number, should be the same as the one used for despatches |
+| `ExternalReference` | `string` | External Reference |
+| `SecondaryReferenceNumber` | `string` | Secondary reference number |
+| `Currency` | `string` | Currency of the order, if value is null, empty or white space it will default to UNK |
+| `ConversionRate` | `number` | The currency conversion rate Sale/Base |
+| `ReceivedDate` | `string` | UTC received date/time of the order |
+| `UpdatedDate` | `string` | UTC date/time the order was last updated at |
+| `DispatchBy` | `string` | UTC date/time the order should be despatched by |
+| `PaidOn` | `string` | Date the order was paid for |
+| `PostalServiceCost` | `number` | Postal service cost inclusive of tax after discount |
+| `PostalServiceTaxRate` | `number` | Tax percent for the postal service cost, eg 20 |
+| `PostalServiceDiscount` | `number` | Discount percent for the postal service cost, this will not calculate down the postal service cost |
+| `Discount` | `number` | This represents the final discount applied to the order, as a value (not a percentage), after all item-level discounts are applied. It will be split evenly across all order items |
+| `ItemsRefund` | `number` | The refund amount applied across all items |
+| `ShippingRefund` | `number` | The amount refunded for shipping (if known) |
+| `TotalRefund` | `number` | The total refund amount applied to the order across all items, services and order-level refunds |
+| `LineRefundAllocation` | `string` | The known refund allocation for the order lines |
+| `ShippingRefundAllocation` | `string` | The known refund allocation for the order shipping |
+| `BuyerTaxNumber` | `string` | The tax number of the buyer |
+| `DiscountType` | `string` | This represents how the discount will be split between items and postage. For an expsanation of each opiton, see the enum documentation |
+| `DiscountTaxType` | `string` | This represents if the discount is applied before or after tax |
+| `BillingAddress` | `ChannelAddress` | The orders billing address |
+| `DeliveryAddress` | `ChannelAddress` | The order delivery address |
+| `DeliveryStartDate` | `string` | Channel specified delivery start date (do not set where is not provided) |
+| `DeliveryEndDate` | `string` | Channel specified delivery end date (do not set where is not provided) |
+| `OrderIdentifierTags` | `string[]` | Order identifier tags |
+| `ForceReSaveFulfilledOrder` | `boolean` | Bool to re-save order |
+
+### `ChannelOrderExtendedProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` | Extended property name |
+| `Value` | `string` | Extended property value |
+| `Type` | `string` | Extended property type |
+
+### `ChannelOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `TaxCostInclusive` | `boolean` |  |
+| `UseChannelTax` | `boolean` | Validate if the tax should be overwritten on the order item. |
+| `PricePerUnit` | `number` | Individual price of the item |
+| `PostalServiceCost` | `number` | Postal service cost after discount |
+| `Qty` | `integer` | Quantity customer ordered |
+| `TaxRate` | `number` | Tax Rate as a whole number eg. 20 |
+| `LineDiscount` | `number` | Discount percentage on the line as a whole number eg. 10 |
+| `LineRefund` | `number` | The refund amount applied on the line, excluding shipping charges |
+| `RefundQuantity` | `number` | The quantity of items refunded (can be decimalised) |
+| `ShippingRefund` | `number` | The shipping refund for this line (if known) |
+| `TotalRefund` | `number` | The total refund amount applied on the line-level, including any shipping charges |
+| `ItemNumber` | `string` | Unique line number |
+| `ChannelReferenceId` | `string` | The item reference id on the channel |
+| `ChannelSKU` | `string` | SKU of the item ordered on the channel |
+| `IsService` | `boolean` | Indicates the item is a service and not a physical item |
+| `ItemTitle` | `string` | Title of the item ordered, or service name |
+| `Options` | `ChannelOrderItemOption[]` | Options on the item ordered |
+| `Taxes` | `ChannelOrderItemTax[]` |  |
+
+### `ChannelOrderItemLocationAllocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` |  |
+| `Quantity` | `integer` |  |
+
+### `ChannelOrderItemOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `Property` | `string` |  |
+| `Value` | `string` |  |
+
+### `ChannelOrderItemTax`
+
+| Property | Type | Description |
+|---|---|---|
+| `TaxType` | `string` |  |
+| `TaxValue` | `number` |  |
+| `IsSellerCollected` | `boolean` |  |
+
+### `ChannelOrderLocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `ExternalReference` | `string` | The order location id on the channel. |
+| `ItemAllocations` | `ChannelOrderItemLocationAllocation[]` | The item and quantity allocation. Only required if order is multi-location. |
+
+### `ChannelOrderNote`
+
+| Property | Type | Description |
+|---|---|---|
+| `Note` | `string` | Order Note |
+| `NoteEntryDate` | `string` | Creation Date of the note |
+| `NoteUserName` | `string` | User who added the note |
+| `Internal` | `boolean` | Declares if the note is an internal note |
+
+### `ClientContext`
+
+| Property | Type | Description |
+|---|---|---|
+| `Module` | `string` |  |
 
 ### `CouponValidationResult`
 
@@ -649,6 +897,16 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `PhoneNumber` | `string` |  |
 | `CountryId` | `string` |  |
 
+### `DateFieldFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `DateFrom` | `string` | Date from |
+| `DateTo` | `string` | Date to |
+| `Type` | `string` | Filter type |
+| `Value` | `integer` | Filtering input |
+| `FieldCode` | `string` |  |
+
 ### `ExtendedProperty`
 
 | Property | Type | Description |
@@ -657,6 +915,49 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Name` | `string` |  |
 | `Value` | `string` |  |
 | `Type` | `string` |  |
+
+### `Face`
+
+| Property | Type | Description |
+|---|---|---|
+| `TopLeft` | `PointF` |  |
+| `BottomLeft` | `PointF` |  |
+| `TopRight` | `PointF` |  |
+| `BottomRight` | `PointF` |  |
+
+### `FieldSorting`
+
+| Property | Type | Description |
+|---|---|---|
+| `FieldCode` | `string` | Field code to sort by |
+| `Direction` | `string` | Sorting direction (Ascending:0, descending:1) |
+| `Order` | `integer` | Priority of sorting (e.g. sort by date first, then by status) |
+
+### `FieldVisibility`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `Visible` | `boolean` |  |
+| `CanFilter` | `boolean` |  |
+| `CanSort` | `boolean` |  |
+| `FieldType` | `string` |  |
+| `Code` | `string` |  |
+| `SubFields` | `FieldVisibility[]` |  |
+| `IsFilterOnly` | `boolean` | Defines if the field can only be used as a filter |
+| `HotButtonIcon` | `string` |  |
+| `HotButtonKey` | `string` |  |
+
+### `FieldsFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `TextFields` | `TextFieldFilter[]` | Text type field filters |
+| `BooleanFields` | `BooleanFieldFilter[]` | Boolean type field filters |
+| `NumericFields` | `NumericFieldFilter[]` | Numerical type field filters |
+| `DateFields` | `DateFieldFilter[]` | Date type field filters |
+| `ListFields` | `ListFieldFilter[]` | List type field filters |
+| `FieldVisibility` | `FieldVisibility[]` |  |
 
 ### `GenericPagedResult_OpenOrder`
 
@@ -667,6 +968,12 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `TotalEntries` | `integer` |  |
 | `TotalPages` | `integer` |  |
 | `Data` | `OpenOrder[]` |  |
+
+### `GetAssignedOrderItemBatchesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRows` | `string[]` |  |
 
 ### `GetOrderAuditTrailsByIdsRequest`
 
@@ -712,6 +1019,17 @@ Retrieves a list of order details for a given order reference number, returns ma
 |---|---|---|
 | `OrderItemRowSerialValuesByOrderIds` | `object` |  |
 
+### `Identifier`
+
+| Property | Type | Description |
+|---|---|---|
+| `IdentifierId` | `integer` | Internal identifier id. Use to update image and name. |
+| `Name` | `string` |  |
+| `Tag` | `string` |  |
+| `IsCustom` | `boolean` | Is the tag user or system defined? |
+| `ImageId` | `string` |  |
+| `ImageUrl` | `string` |  |
+
 ### `KeyValuePair_Guid_Guid`
 
 | Property | Type | Description |
@@ -733,6 +1051,15 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Key` | `OrderSummary[]` |  |
 | `Value` | `string` |  |
 
+### `LinePricingRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PricePerUnit` | `number` | Price per unit (default from stock item) |
+| `DiscountPercentage` | `number` | Discount percentage (default 0) |
+| `TaxRatePercentage` | `number` | Tax rate percentage |
+| `TaxInclusive` | `boolean` | Tax inclusive (default true) |
+
 ### `LinkedItem`
 
 | Property | Type | Description |
@@ -741,6 +1068,14 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `ItemNumber` | `string` | Product SKU |
 | `ItemName` | `string` | Product title |
 
+### `ListFieldFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Value` | `string` | Filtering input |
+| `Type` | `string` | Filter type |
+| `FieldCode` | `string` |  |
+
 ### `MoveToLocationResult`
 
 | Property | Type | Description |
@@ -748,6 +1083,14 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Errors` | `string[]` | List of errors |
 | `OrdersMoved` | `string[]` | List of orders that were moved |
 | `KeyedErrors` | `object` | Dictionary of keyed errors. These are the same errors as per the Errors property, but indexable by orderId |
+
+### `NumericFieldFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` | Filter type |
+| `Value` | `number` | Filtering input |
+| `FieldCode` | `string` |  |
 
 ### `OpenOrder`
 
@@ -780,6 +1123,13 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Tag` | `string` | Audit trail record tag |
 | `TypeDescription` | `string` | Note type description |
 
+### `OrderAuditTrailExtended`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` | Order id |
+| `AuditTrail` | `OrderAuditTrail[]` | List of OrderAuditTrail entities |
+
 ### `OrderCountry`
 
 | Property | Type | Description |
@@ -790,6 +1140,14 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Continent` | `string` | Country continent |
 | `CustomsRequired` | `boolean` | If customs required |
 | `TaxRate` | `number` | Country tax rate |
+
+### `OrderCustomerInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelBuyerName` | `string` | Username of customer (Comes from channel) |
+| `Address` | `CustomerAddress` | Customer address |
+| `BillingAddress` | `CustomerAddress` | Customer billing address |
 
 ### `OrderDetails`
 
@@ -817,6 +1175,46 @@ Retrieves a list of order details for a given order reference number, returns ma
 |---|---|---|
 | `pkFolderId` | `string` | Folder ID |
 | `FolderName` | `string` | Folder name |
+
+### `OrderFulfillmentState`
+
+| Property | Type | Description |
+|---|---|---|
+| `FulfillmentState` | `string` |  |
+| `PurchaseOrderState` | `string` |  |
+
+### `OrderGeneralInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Status` | `integer` | Order Status (0 = UNPAID, 1 = PAID,2 = RETURN,3 = PENDING,4 = RESEND) |
+| `LabelPrinted` | `boolean` | Is label printed |
+| `LabelError` | `string` | Is there a label error |
+| `InvoicePrinted` | `boolean` | Is invoice printed |
+| `InvoicePrintError` | `string` | Is there invoice print error |
+| `PickListPrinted` | `boolean` | Is pick list printed |
+| `PickListPrintError` | `string` | Is there pick list print error |
+| `IsRuleRun` | `boolean` | If rules engine rule ran on an order |
+| `Notes` | `integer` | Quantity of order notes |
+| `PartShipped` | `boolean` | If order partly shipped |
+| `Marker` | `integer` | Order marker (0 = NOT TAG,1 = Tag 1,2 = Tag 2,3 = Tag 3,4 = Tag 4,5 = Tag 5,6 = Tag 6,7 = Parked) |
+| `IsParked` | `boolean` | Is the order parked? |
+| `Identifiers` | `Identifier[]` | Order identifiers. [Prime | Scheduled] |
+| `ReferenceNum` | `string` | Order reference number (Channel defined) |
+| `SecondaryReference` | `string` | An additional reference number for the orderr (Used by some channels) |
+| `ExternalReferenceNum` | `string` | This is an additional reference number from the sales channel, typically used by eBay |
+| `ReceivedDate` | `string` | The date and time at which the order was placed on the sales channel |
+| `Source` | `string` | Order ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Order Subsource (e.g. EBAY1) |
+| `SiteCode` | `string` | SiteCode used to differentiate between different sites from a single channel (eg. Amazon UK, Amazon US, Amazon FR...) |
+| `HoldOrCancel` | `boolean` | This shows whether the order has been marked as on hold, for processed orders if the order has been cancelled OnHold = 1 |
+| `DespatchByDate` | `string` | Despatch by Date |
+| `ScheduledDelivery` | `ScheduledDelivery` | Scheduled delivery dates. Take priority over despatch by date |
+| `HasScheduledDelivery` | `boolean` |  |
+| `Location` | `string` | Order location ID |
+| `NumItems` | `integer` | Quantity of order items |
+| `PickwaveIds` | `integer[]` | All related Pickwave Ids |
+| `StockAllocationType` | `string` |  |
 
 ### `OrderItem`
 
@@ -890,11 +1288,77 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `DespatchUnitValue` | `number` |  |
 | `AssignmentType` | `string` |  |
 
+### `OrderItemBatchExtended`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `OrderId` | `string` |  |
+| `Batches` | `OrderItemBatch[]` |  |
+
 ### `OrderItemBatchInfo`
 
 | Property | Type | Description |
 |---|---|---|
 | `pkOrderId` | `string` |  |
+
+### `OrderItemBinRack`
+
+| Property | Type | Description |
+|---|---|---|
+| `Quantity` | `integer` | Quantity for BinRack per Location |
+| `BinRack` | `string` | BinRack |
+| `Location` | `string` | LocationId of the BinRack |
+| `BatchId` | `integer` | If the item is batched, identifies the batch number |
+| `OrderItemBatchId` | `integer` | If the item is batched, identifies the unique order item batch row |
+
+### `OrderItemOnOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` | Primary key of the bound |
+| `Rowid` | `string` |  |
+| `pkPurchaseId` | `string` |  |
+| `ExternalInvoiceNumber` | `string` |  |
+| `fkSupplierId` | `string` |  |
+| `DateOfDelivery` | `string` |  |
+| `QuotedDeliveryDate` | `string` |  |
+| `SupplierName` | `string` |  |
+| `fkLocationId` | `string` |  |
+
+### `OrderItemOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOptionId` | `string` | Option ID |
+| `Property` | `string` | Option property |
+| `Value` | `string` | Value of the option |
+
+### `OrderItemOptionUpdate`
+
+| Property | Type | Description |
+|---|---|---|
+| `DeleteEntry` | `boolean` |  |
+| `pkOptionId` | `string` |  |
+| `Property` | `string` |  |
+| `Value` | `string` |  |
+
+### `OrderItemSerialModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowId` | `string` |  |
+| `CorrelationSerials` | `array[]` |  |
+
+### `OrderItemShippingBatchWithRow`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowId` | `string` |  |
+| `BatchNumber` | `string` |  |
+| `fkBinId` | `string` |  |
+| `fkOrderItemBatchId` | `integer` |  |
+| `Quantity` | `integer` |  |
 
 ### `OrderNote`
 
@@ -930,6 +1394,20 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Depth` | `number` | Depth |
 | `TrackingNumbers` | `string` | Tracking number |
 
+### `OrderPackagingSplitItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `AssignedBatches` | `OrderItemShippingBatchWithRow[]` | The batches that make up this row |
+| `RowId` | `string` |  |
+| `BoxId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `TrackingNumber` | `string` |  |
+| `Weight` | `number` |  |
+| `SKU` | `string` |  |
+| `Title` | `string` |  |
+| `IsBatched` | `boolean` | Is the order item batched |
+
 ### `OrderRelation`
 
 | Property | Type | Description |
@@ -939,6 +1417,60 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Parent` | `integer` | Parent order ID |
 | `Child` | `integer` | Child order ID |
 | `Type` | `string` | Relation type |
+
+### `OrderShippingInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Vendor` | `string` | Courier name (e.g. Royal Mail) |
+| `PostalServiceId` | `string` | Postal service ID |
+| `PostalServiceName` | `string` | Postal service name (e.g. Next day delivery) |
+| `TotalWeight` | `number` | Order total weight |
+| `ItemWeight` | `number` | If order is processed |
+| `PackageCategoryId` | `string` | Package category ID |
+| `PackageCategory` | `string` | Package category name |
+| `PackageTypeId` | `string` | Package type ID |
+| `PackageType` | `string` | Package type name |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost excluding tax |
+| `TrackingNumber` | `string` | Order tracking number provided by courier |
+| `ManualAdjust` | `boolean` | If there is an adjustment to shipping cost was made |
+
+### `OrderSplit`
+
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `OrderSplitOutItem[]` | Items |
+| `PostalServiceId` | `string` | Postal Service |
+| `ParkOrder` | `boolean` |  |
+
+### `OrderSplitOutItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `string` |  |
+| `Quantity` | `integer` |  |
+| `Weight` | `number` |  |
+| `UnitCost` | `number` |  |
+
+### `OrderSummary`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order ID (pkOrderId) |
+| `NumOrderId` | `integer` | Linnworks order number |
+| `ReceivedDate` | `string` | Date when order was received on a channel |
+| `ProcessDate` | `string` | Date when order was processed |
+| `Source` | `string` | Channel name / source (e.g. EBAY) |
+| `CustomerName` | `string` | Customer name |
+| `NumProducts` | `integer` | Quantity of products on an Order |
+| `FulfillmentLocationId` | `string` | Order location ID |
+
+### `OrderTaxInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `TaxNumber` | `string` | Customer Tax Number |
 
 ### `OrderTotalsInfo`
 
@@ -1469,6 +2001,63 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `rowguid` | `string` | Record row ID |
 | `PackageTypes` | `PackageType[]` | List of packaging types |
 
+### `PackageResult`
+
+| Property | Type | Description |
+|---|---|---|
+| `PackagingId` | `string` |  |
+| `Width` | `number` |  |
+| `Height` | `number` |  |
+| `Depth` | `number` |  |
+| `ItemWeight` | `number` |  |
+| `PackagingWeight` | `number` |  |
+| `Faces` | `Face[]` |  |
+| `Items` | `PackedItem[]` |  |
+| `LayerCount` | `integer` |  |
+| `LayerFace` | `object` |  |
+| `IsManualPackage` | `boolean` |  |
+
+### `PackageType`
+
+| Property | Type | Description |
+|---|---|---|
+| `PackageTypeId` | `string` |  |
+| `PackageGroupId` | `string` |  |
+| `PackageTitle` | `string` |  |
+| `FromGramms` | `number` |  |
+| `ToGramms` | `number` |  |
+| `PackagingWeight` | `number` |  |
+| `PackagingCapacity` | `number` |  |
+| `Rowguid` | `string` |  |
+| `Width` | `number` |  |
+| `Height` | `number` |  |
+| `Depth` | `number` |  |
+
+### `PackedItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ID` | `string` |  |
+| `PkStockItemId` | `string` |  |
+| `SKU` | `string` |  |
+| `Width` | `number` |  |
+| `Height` | `number` |  |
+| `Depth` | `number` |  |
+| `Weight` | `number` |  |
+| `X` | `number` |  |
+| `Y` | `number` |  |
+| `Z` | `number` |  |
+| `Layer` | `integer` |  |
+| `Faces` | `Face[]` |  |
+
+### `PackingResult`
+
+| Property | Type | Description |
+|---|---|---|
+| `TotalPackages` | `integer` |  |
+| `Packages` | `PackageResult[]` |  |
+| `UnpackedItems` | `object` |  |
+
 ### `PaymentMethod`
 
 | Property | Type | Description |
@@ -1476,6 +2065,34 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Name` | `string` | Payment method name |
 | `CanDelete` | `boolean` | If it can be deleted |
 | `PaymentMethodId` | `string` | Payment method ID |
+
+### `PointF`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsEmpty` | `boolean` |  |
+| `X` | `number` |  |
+| `Y` | `number` |  |
+
+### `PostageService`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPostalServiceId` | `string` | Postal service ID |
+| `PostalServiceName` | `string` | Postal service name |
+| `TrackingNumberRequired` | `boolean` | If tracking number is required for this service |
+| `Vendor` | `string` |  |
+| `IntegratedServiceID` | `string` |  |
+
+### `ProcessOrderByOrderIdOrReferenceRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderOrReferenceId` | `string` | The order id or reference id |
+| `LocationId` | `string` | The location to process the order from |
+| `ScansPerformed` | `boolean` | Defines if the batches have been scanned |
+| `OrderProcessingNotesAcknowledged` | `boolean` | Have the processing notes been acknowledged |
+| `WorkflowJobId` | `integer` | Workflow job id that the order is supposed to belong to |
 
 ### `ProcessOrderByOrderIdOrReferenceResponse`
 
@@ -1496,6 +2113,34 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `OrderId` | `string` | Order ID (pkOrderId) |
 | `Processed` | `boolean` | Order was processed |
 | `Error` | `string` | There was ab error during processing |
+
+### `ScheduledDelivery`
+
+| Property | Type | Description |
+|---|---|---|
+| `From` | `string` |  |
+| `To` | `string` |  |
+
+### `SetOrderPackagingRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkPackagingGroupId` | `string` | Packaging group Id |
+| `fkPackagingTypeId` | `string` | Packaging Type Id. It has to be one of types available for selected Group Id |
+| `pkOrderId` | `string` | Order Id to set the order packaging data |
+| `TotalWeight` | `number` | Total weight of order packaging |
+| `ManualAdjust` | `boolean` | Indicate if this data is manually adjusted with the rest of fields or is auto calculated |
+| `IsAutoSplit` | `boolean` | Indicates whether the order should be auto split. Usually via the 3D packaging methods. |
+| `TotalDepth` | `number` | Total packaging depth |
+| `TotalHeight` | `number` | Total Height |
+| `TotalWidth` | `number` | Total Width |
+
+### `SetPickListPrintedRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `string[]` | A list of orders that should be assigned the IsPrinted value |
+| `BatchAssignmentMode` | `string` | If stock batches needs to be assigned this defines how they should be assigned |
 
 ### `ShippingMethod`
 
@@ -1518,6 +2163,59 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Inventory` | `StockItemBatchInventory[]` | Batch records |
 | `IsDeleted` | `boolean` | Is the batch deleted |
 
+### `StockItemBatchInventory`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Stock item batch record ID |
+| `BatchId` | `integer` | Batch ID |
+| `StockLocationId` | `string` | Location ID |
+| `BinRack` | `string` | BinRack |
+| `PrioritySequence` | `integer` | Pick order |
+| `Quantity` | `integer` | Quantity |
+| `StockValue` | `number` | Current stock value |
+| `StartQuantity` | `integer` | Quantity originally booked in |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `BatchStatus` | `string` | Batch Status |
+| `IsDeleted` | `boolean` | Is BatchInventory deleted |
+| `WarehouseBinrackStandardType` | `integer` | Warehouse binrack standard type |
+| `WarehouseBinrackTypeName` | `string` | Warehouse binrack type friendly name |
+| `InTransfer` | `integer` | Number of items in Transfer phase. |
+| `BinRackId` | `integer` | Binrack Id (Use for WMS) |
+| `WarehouseBinrackTypeId` | `integer` | Warehouse binrack type unique id. |
+
+### `StockItemBoxConfiguration`
+
+| Property | Type | Description |
+|---|---|---|
+| `BoxId` | `integer` | Unique box id. |
+| `StockItemIntId` | `integer` |  |
+| `BoxName` | `string` | Box name max 16 characters |
+| `Width` | `number` | Width of the box |
+| `Height` | `number` | Height of the box |
+| `Length` | `number` | Depth of the box |
+| `Weight` | `number` | Total weight of the box. |
+| `ValuePercentage` | `number` | Value break down percentage |
+| `Barcode` | `string` | Box barcode, max 64 characters. |
+| `PackagingTypeId` | `string` | Packaging type id |
+| `LogicalDelete` | `boolean` | IsDeleted flag. |
+
+### `TextFieldFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` | Filter type |
+| `Text` | `string` | Filtering input |
+| `FieldCode` | `string` |  |
+
+### `UpdateAdditionalInfoRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Linnworks Order Id |
+| `OrderItemRowId` | `string` | The Row Id for the order item |
+| `AdditionalInfo` | `OrderItemOptionUpdate[]` | A list of additional information to update or delete from the order item |
+
 ### `UpdateOrderItemResult`
 
 | Property | Type | Description |
@@ -1526,6 +2224,17 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `Item` | `OrderItem` | Order items information |
 | `ItemWeight` | `number` | Order item weight |
 | `TotalWeight` | `number` | Order total weight |
+
+### `UpdateOrderShippingInfoRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PostalServiceId` | `string` | Postal service ID |
+| `TotalWeight` | `number` | Order total weight |
+| `ItemWeight` | `number` | If order is processed |
+| `PostageCost` | `number` | Order postage cost |
+| `TrackingNumber` | `string` | Order tracking number provided by courier |
+| `ManualAdjust` | `boolean` | If there is an adjustment to shipping cost was made |
 
 ### `UpdateTotalsResult`
 
@@ -1543,3 +2252,11 @@ Retrieves a list of order details for a given order reference number, returns ma
 | `OwnerName` | `string` | View owner name |
 | `AllowModify` | `boolean` | Can be modified |
 | `JSONDetail` | `string` |  |
+
+### `batchAssignment`
+
+| Property | Type | Description |
+|---|---|---|
+| `orderItemRowId` | `string` |  |
+| `batchInventoryId` | `integer` |  |
+| `quantity` | `integer` |  |

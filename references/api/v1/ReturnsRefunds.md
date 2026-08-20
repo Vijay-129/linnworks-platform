@@ -204,6 +204,14 @@ Gets a list of valid search types. These are needed to search processed orders. 
 
 ## Models
 
+### `AcknowledgeRMAErrorsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMAHeaderId` | `integer` | The unique identifier for the RMA header whose errors will be acknowledged |
+| `RMARowIds` | `integer[]` | A list of row ids to acknowledge errors for |
+| `AcknowledgeAllErrors` | `boolean` | Ignores the RefundRowIds list and acknowledges all errors for the given rma header id |
+
 ### `AcknowledgeRMAErrorsResponse`
 
 | Property | Type | Description |
@@ -213,6 +221,14 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `Items` | `VerifiedRMAItem[]` |  |
 | `Errors` | `string[]` |  |
 | `Info` | `string[]` |  |
+
+### `AcknowledgeRefundErrorsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | The unique identifier for the refund header whose errors will be acknowledged |
+| `RefundRowIds` | `string[]` | A list of row ids to acknowledge errors for. Can be left empty when "AcknowledgeAllErrors" is set to true |
+| `AcknowledgeAllErrors` | `boolean` | Ignores the RefundRowIds list and acknowledges all errors for the given refund header id |
 
 ### `AcknowledgeRefundErrorsResponse`
 
@@ -226,6 +242,32 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `Errors` | `string[]` |  |
 | `RefundLines` | `VerifiedRefund[]` |  |
 
+### `ActionForm`
+
+| Property | Type | Description |
+|---|---|---|
+| `caption` | `string` |  |
+| `controls` | `ActionFormControl[]` |  |
+
+### `ActionFormControl`
+
+| Property | Type | Description |
+|---|---|---|
+| `id` | `string` |  |
+| `caption` | `string` |  |
+| `description` | `string` |  |
+| `type` | `string` |  |
+| `value` | `string` |  |
+| `group` | `string` |  |
+
+### `ActionRMABookingRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMAHeaderId` | `integer` | The unique identifier for the RMA header to action |
+| `OrderId` | `string` | The order ID this RMA header pertains to. Used as a double-step verification to ensure the right RMA header is being actioned |
+| `Request` | `ActionForm` | When actioning an RMA beyond the initial approval, the channel may require additional information, which can be passed via this field. Not required |
+
 ### `ActionRMABookingResponse`
 
 | Property | Type | Description |
@@ -237,6 +279,14 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `Items` | `VerifiedRMAItem[]` |  |
 | `Errors` | `string[]` |  |
 | `Info` | `string[]` |  |
+
+### `ActionRefundRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | The unique identifier for the refund header to action |
+| `OrderId` | `string` | The order ID this refund header pertains to. Used as a double-step verification to ensure the right refund header is being actioned |
+| `Request` | `ActionForm` | When actioning a refund beyond the initial approval, the channel may require additional information, which can be passed via this field. Not required |
 
 ### `ActionRefundResponse`
 
@@ -250,6 +300,49 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `Errors` | `string[]` |  |
 | `RefundLines` | `VerifiedRefund[]` |  |
 
+### `ActionablePostSaleSearchFilters`
+
+| Property | Type | Description |
+|---|---|---|
+| `Actionable` | `boolean` |  |
+| `Type` | `string` |  |
+| `Value` | `string` |  |
+
+### `BookedReturnsExchangeItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkOrderItemRowId` | `string` | Order item record row ID |
+| `OrderItemBatchId` | `integer` | Order item batch id |
+| `StockItemId` | `string` | Stock Item Id |
+| `BatchInventoryId` | `integer` | Batch Inventory Id |
+| `BatchNumber` | `string` | Batch number |
+| `RowType` | `string` | Record type |
+| `SKU` | `string` | Product SKU |
+| `ItemTitle` | `string` | Product title |
+| `ReturnQty` | `integer` | Return quantity |
+| `MaxReturnQty` | `integer` | Maximum returned quantity |
+| `NewQty` | `integer` | New quantity after return |
+| `NewSKU` | `string` | New product SKU after return |
+| `NewTitle` | `string` | New product title after return |
+| `fkNewStockItemId` | `string` | New returned stock item ID |
+| `Category` | `string` | Product category |
+| `Reason` | `string` | Return result |
+| `fkReturnLocationId` | `string` | In which location item was returned (Location ID) |
+| `ReturnLocation` | `string` | In which location item was returned (Location name) |
+| `PendingRefundAmount` | `number` | Refund amount still pending |
+| `Scrapped` | `boolean` | If return scraped |
+| `ScrapQty` | `integer` | Scraped quantity |
+| `ParentOrderItemRowId` | `string` | Parent prder item record row ID |
+| `AdditionalCost` | `number` | Additional cost value |
+| `cCurrency` | `string` | Currency |
+| `pkReturnId` | `integer` | Return ID |
+| `ChannelReason` | `string` | Channel return ID |
+| `ChannelReasonSec` | `string` | Channel secondary reason ID |
+| `ReturnDate` | `string` | When return was made |
+| `DespatchUnitValue` | `number` | Unit value of item at time of despatch |
+| `BatchInventory` | `StockItemBatchInventory` | The batch inventory selected |
+
 ### `BookedReturnsExchangeOrder`
 
 | Property | Type | Description |
@@ -261,6 +354,41 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `cFullName` | `string` | Customer full name |
 | `ReturnDate` | `string` | Return date time |
 
+### `ChannelReason`
+
+| Property | Type | Description |
+|---|---|---|
+| `Types` | `string` |  |
+| `Tag` | `string` |  |
+| `DisplayName` | `string` |  |
+| `SubReasons` | `ChannelSubReason[]` |  |
+
+### `ChannelReasonBase`
+
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` |  |
+| `DisplayName` | `string` |  |
+| `SubReasons` | `ChannelSubReason[]` |  |
+
+### `ChannelSubReason`
+
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` |  |
+| `DisplayName` | `string` |  |
+
+### `CreateRMABookingRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelInitiated` | `boolean` | Determines whether the RMA request was initiated on the channel, or within Linnworks |
+| `OrderId` | `string` | The unique identifier for the order a return booking is being created for |
+| `ReturnItems` | `ReturnItem[]` | A collection of items to be returned as part of this booking |
+| `ExchangeItems` | `ExchangeItem[]` | A collection of items to be exchanged as part of this booking |
+| `ResendItems` | `ResendItem[]` | A collection of items to be resent as part of this booking |
+| `Reference` | `string` | (Optional) If provided, sets the External Reference of the RMA header to the provided value. Otherwise, this value is automatically generated |
+
 ### `CreateRMABookingResponse`
 
 | Property | Type | Description |
@@ -269,6 +397,14 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `Items` | `VerifiedRMAItem[]` |  |
 | `Errors` | `string[]` |  |
 | `Info` | `string[]` |  |
+
+### `CreateRefundRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelInitiated` | `boolean` | Determines whether the refund was initiated on the channel, or within Linnworks |
+| `OrderId` | `string` | The unique identifier for the order this refund is associated with |
+| `RefundLines` | `NewRefundLine[]` | A collection of line-level refunds detailing the refund as a whole |
 
 ### `CreateRefundResponse`
 
@@ -281,9 +417,79 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `Errors` | `string[]` |  |
 | `RefundLines` | `VerifiedRefund[]` |  |
 
+### `CustomerAddress`
+
+| Property | Type | Description |
+|---|---|---|
+| `EmailAddress` | `string` | Customer's email address. |
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `Address3` | `string` |  |
+| `Town` | `string` |  |
+| `Region` | `string` |  |
+| `PostCode` | `string` |  |
+| `Country` | `string` |  |
+| `Continent` | `string` |  |
+| `FullName` | `string` |  |
+| `Company` | `string` |  |
+| `PhoneNumber` | `string` |  |
+| `CountryId` | `string` |  |
+
+### `DeleteRMARequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMAHeaderId` | `integer` | Identifies the RMA header to be deleted |
+| `ReasonTag` | `string` | Reason for deleting the RMA. Channel Dependant |
+| `RejectOnChannel` | `boolean` | Bool to say whether rejection note should be sent to the channel |
+
 ### `DeleteRMAResponse`
 
+### `DeleteRefundRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | Identifies the refund header to be deleted |
+| `ReasonTag` | `string` | Reason for deleting the refund. Channel Dependant |
+| `RejectOnChannel` | `boolean` | Bool to say whether rejection note should be sent to the channel |
+
 ### `DeleteRefundResponse`
+
+### `ExchangeItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ExchangeStockItemId` | `string` | The stock item ID for the item that will replace the returned item |
+| `ExchangeSKU` | `string` | Identifies the SKU of the item that will replace the returned item |
+| `ExchangeTitle` | `string` | Identifies the title of the item that will replace the returned item |
+| `ExchangeQuantity` | `integer` | The number of this item to send as part of the exchange |
+| `DespatchLocationId` | `string` | The identifier for the location to create the exchange order in. This is where the item will have its stock deducted from |
+| `AdditionalCost` | `number` | This field denotes the additional cost that will be incurred to the customer for this exchange |
+| `OrderItemRowId` | `string` |  |
+| `ReturnItemSKU` | `string` |  |
+| `ReturnItemTitle` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `ReturnLocation` | `string` |  |
+| `ReturnQuantity` | `integer` |  |
+| `RefundAmount` | `number` |  |
+| `RefundRowId` | `string` |  |
+| `ScrapQuantity` | `integer` |  |
+| `ReasonCategory` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `Reason` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `BinrackOverride` | `string` |  |
+
+### `ExtendedProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `string` | Record row ID |
+| `Name` | `string` |  |
+| `Value` | `string` |  |
+| `Type` | `string` |  |
 
 ### `GenericPagedResult_ReturnsRefundsWeb`
 
@@ -295,6 +501,13 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `TotalPages` | `integer` |  |
 | `Data` | `ReturnsRefundsWeb[]` |  |
 
+### `GetActionableRMAHeadersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number to return for a given set of filters |
+| `Filters` | `ActionablePostSaleSearchFilters` | A set of filters to restrict the RMA headers output by the call |
+
 ### `GetActionableRMAHeadersResponse`
 
 | Property | Type | Description |
@@ -303,6 +516,13 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `TotalHeaders` | `integer` | A count of the total number of RMA headers matching the filter set by the request |
 | `HeadersPerPage` | `integer` | A count of the number of RMA headers returned per page |
 | `RMAHeaders` | `OrderRMAHeader[]` | A collection of RMA headers matching the filter set by the request |
+
+### `GetActionableRefundHeadersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number to return for a given set of filters |
+| `Filters` | `ActionablePostSaleSearchFilters` | A set of filters to restrict the refund headers output by the call |
 
 ### `GetActionableRefundHeadersResponse`
 
@@ -313,6 +533,13 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `HeadersPerPage` | `integer` | A count of the number of refund headers returned per page |
 | `RefundHeaders` | `OrderRefundHeader[]` | A collection of refund headers matching the filter set by the request |
 
+### `GetProcessedOrAckedErrorRMAHeadersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number to return for a given set of filters |
+| `Filters` | `ProcessedPostSaleSearchFilters` | A set of filters to restrict the refund headers output by the call |
+
 ### `GetProcessedOrAckedErrorRMAHeadersResponse`
 
 | Property | Type | Description |
@@ -321,6 +548,13 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `TotalHeaders` | `integer` | A count of the total number of RMA headers matching the filter set by the request |
 | `HeadersPerPage` | `integer` | A count of the number of RMA headers returned per page |
 | `RMAHeaders` | `OrderRMAHeader[]` | A collection of RMA headers matching the filter set by the request |
+
+### `GetProcessedOrAckedErrorRefundHeadersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Page` | `integer` | The page number to return for a given set of filters |
+| `Filters` | `ProcessedPostSaleSearchFilters` | A set of filters to restrict the refund headers output by the call |
 
 ### `GetProcessedOrAckedErrorRefundHeadersResponse`
 
@@ -331,17 +565,36 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `HeadersPerPage` | `integer` | A count of the number of refund headers returned per page |
 | `RefundHeaders` | `OrderRefundHeader[]` | A collection of refund headers matching the filter set by the request |
 
+### `GetRMAHeadersByOrderIdRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` |  |
+
 ### `GetRMAHeadersByOrderIdResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `RMAHeaders` | `OrderRMAHeader[]` |  |
 
+### `GetRefundHeadersByOrderIdRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` |  |
+
 ### `GetRefundHeadersByOrderIdResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `RefundHeaders` | `OrderRefundHeader[]` |  |
+
+### `GetRefundLinesByHeaderIdRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | The unique identifier for the refund header to load |
+| `OrderId` | `string` | The unique identifier for the order this refund pertains to. Used as a safety to ensure the correct refund is being worked with |
 
 ### `GetRefundLinesByHeaderIdResponse`
 
@@ -351,17 +604,377 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `RefundLines` | `VerifiedRefund[]` | A collection of all refunds associated with the loaded header |
 | `RefundOptions` | `RefundOptions` | Channel-specific information about refund requirements, e.g. accepted refund reasons |
 
+### `GetRefundOptionsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | If included, will return the relevant refund header as part of the RefundOptions object in the response |
+| `OrderId` | `string` |  |
+
 ### `GetRefundOptionsResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `RefundOptions` | `RefundOptions` |  |
 
+### `GetReturnOptionsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` |  |
+| `RMAHeaderId` | `integer` |  |
+
 ### `GetReturnOptionsResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ReturnOptions` | `ReturnOptions` |  |
+
+### `Identifier`
+
+| Property | Type | Description |
+|---|---|---|
+| `IdentifierId` | `integer` | Internal identifier id. Use to update image and name. |
+| `IsCustom` | `boolean` | Is the tag user or system defined? |
+| `ImageId` | `string` |  |
+| `ImageUrl` | `string` |  |
+| `Tag` | `string` |  |
+| `Name` | `string` |  |
+
+### `ItemizedRefundReason`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` |  |
+| `ItemId` | `string` |  |
+| `Reasons` | `ChannelReasonBase[]` |  |
+
+### `NewRefundLine`
+
+| Property | Type | Description |
+|---|---|---|
+| `ReturnRowId` | `integer` | If the refund line pertains to an existing order return, this field should be populated with the unique identifier for the relevant return line |
+| `OrderItemRowId` | `string` | If the refund line pertains to an order item, this field should be populated with the unique identifier of that order item. Can be left null for shipping/additional refunds |
+| `RefundedUnit` | `string` | Identifies the type of refund for this line |
+| `CancelledQuantity` | `integer` | If the refund is being created as part of a cancellation request, this field denotes the number of the item that were cancelled |
+| `ExternalReference` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `FreeTextOrNote` | `string` |  |
+| `Amount` | `number` |  |
+| `Quantity` | `integer` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `InsufficientRefundTag` | `string` |  |
+| `InsufficientRefundNote` | `string` |  |
+| `ReasonCategory` | `string` |  |
+
+### `OrderCustomerInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelBuyerName` | `string` | Username of customer (Comes from channel) |
+| `Address` | `CustomerAddress` | Customer address |
+| `BillingAddress` | `CustomerAddress` | Customer billing address |
+
+### `OrderDetails`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order ID (pkOrderId) |
+| `NumOrderId` | `integer` | Linnworks order number |
+| `Processed` | `boolean` | If order is processed |
+| `ProcessedDateTime` | `string` | Date and time when order was processed |
+| `FulfilmentLocationId` | `string` | Location ID |
+| `GeneralInfo` | `OrderGeneralInfo` | General information about order |
+| `ShippingInfo` | `OrderShippingInfo` | Order shipping information |
+| `CustomerInfo` | `OrderCustomerInfo` | Order Customer information (Name, email etc) |
+| `TotalsInfo` | `OrderTotalsInfo` | Order totals information |
+| `ExtendedProperties` | `ExtendedProperty[]` | Extended properties of an order |
+| `FolderName` | `string[]` | Folder names assigned to an order |
+| `Items` | `OrderItem[]` | List of order items |
+| `Notes` | `OrderNote[]` | List of order notes |
+| `PaidDateTime` | `string` | Date and time when the order was marked as paid |
+| `TaxId` | `string` | Buyer's tax number. |
+
+### `OrderGeneralInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Status` | `integer` | Order Status (0 = UNPAID, 1 = PAID,2 = RETURN,3 = PENDING,4 = RESEND) |
+| `LabelPrinted` | `boolean` | Is label printed |
+| `LabelError` | `string` | Is there a label error |
+| `InvoicePrinted` | `boolean` | Is invoice printed |
+| `InvoicePrintError` | `string` | Is there invoice print error |
+| `PickListPrinted` | `boolean` | Is pick list printed |
+| `PickListPrintError` | `string` | Is there pick list print error |
+| `IsRuleRun` | `boolean` | If rules engine rule ran on an order |
+| `Notes` | `integer` | Quantity of order notes |
+| `PartShipped` | `boolean` | If order partly shipped |
+| `Marker` | `integer` | Order marker (0 = NOT TAG,1 = Tag 1,2 = Tag 2,3 = Tag 3,4 = Tag 4,5 = Tag 5,6 = Tag 6,7 = Parked) |
+| `IsParked` | `boolean` | Is the order parked? |
+| `Identifiers` | `Identifier[]` | Order identifiers. [Prime | Scheduled] |
+| `ReferenceNum` | `string` | Order reference number (Channel defined) |
+| `SecondaryReference` | `string` | An additional reference number for the orderr (Used by some channels) |
+| `ExternalReferenceNum` | `string` | This is an additional reference number from the sales channel, typically used by eBay |
+| `ReceivedDate` | `string` | The date and time at which the order was placed on the sales channel |
+| `Source` | `string` | Order ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Order Subsource (e.g. EBAY1) |
+| `SiteCode` | `string` | SiteCode used to differentiate between different sites from a single channel (eg. Amazon UK, Amazon US, Amazon FR...) |
+| `HoldOrCancel` | `boolean` | This shows whether the order has been marked as on hold, for processed orders if the order has been cancelled OnHold = 1 |
+| `DespatchByDate` | `string` | Despatch by Date |
+| `ScheduledDelivery` | `ScheduledDelivery` | Scheduled delivery dates. Take priority over despatch by date |
+| `HasScheduledDelivery` | `boolean` |  |
+| `Location` | `string` | Order location ID |
+| `NumItems` | `integer` | Quantity of order items |
+| `PickwaveIds` | `integer[]` | All related Pickwave Ids |
+| `StockAllocationType` | `string` |  |
+
+### `OrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemId` | `string` | Stock Item ID |
+| `ItemNumber` | `string` | Item number as on channel |
+| `SKU` | `string` | Product SKU |
+| `ItemSource` | `string` | Item source / channel name |
+| `Title` | `string` | Item title |
+| `Quantity` | `integer` | Quantity |
+| `CategoryName` | `string` | Product category |
+| `CompositeAvailablity` | `integer` | Composite availability |
+| `StockLevelsSpecified` | `boolean` | If stock level specified |
+| `OnOrder` | `integer` | Level due in purchase orders |
+| `OnPurchaseOrder` | `OrderItemOnOrder` | Purchase order bound to this item |
+| `InOrderBook` | `integer` | Quantity currently in open orders |
+| `Level` | `integer` | Current stock level |
+| `MinimumLevel` | `integer` | Minimum level |
+| `AvailableStock` | `integer` | Currently available stock level (Level-InOrderBook) |
+| `PricePerUnit` | `number` | Unit price |
+| `UnitCost` | `number` | Unit cost |
+| `DespatchStockUnitCost` | `number` | Despatch stock unit cost |
+| `Discount` | `number` | Percentage (0%, 10%, 20%, etc...) |
+| `Tax` | `number` | Actual tax value on an item |
+| `TaxRate` | `number` | Tax rate |
+| `Cost` | `number` | Total item cost (exc tax) |
+| `CostIncTax` | `number` | Total item cost (inc tax) |
+| `CompositeSubItems` | `OrderItem[]` | List of order items |
+| `IsService` | `boolean` | if item is a service |
+| `SalesTax` | `number` | Sales Tax |
+| `TaxCostInclusive` | `boolean` | If tax is included in a cost |
+| `PartShipped` | `boolean` | If order is partly shipped |
+| `Weight` | `number` | Order weight |
+| `BarcodeNumber` | `string` | Product barcode |
+| `Market` | `integer` | Market |
+| `ChannelSKU` | `string` | Channel product SKU |
+| `ChannelTitle` | `string` | Channel product title |
+| `DiscountValue` | `number` |  |
+| `HasImage` | `boolean` | If item got an image |
+| `ImageId` | `string` | Image ID |
+| `AdditionalInfo` | `OrderItemOption[]` | List of order item options |
+| `StockLevelIndicator` | `integer` | Stock level indicator |
+| `ShippingCost` | `number` | If batch number scan required |
+| `PartShippedQty` | `integer` | ShippingCost |
+| `ItemName` | `string` | PartShippedQty |
+| `BatchNumberScanRequired` | `boolean` | ItemName |
+| `SerialNumberScanRequired` | `boolean` | If serial number scan required |
+| `BinRack` | `string` | Binrack location |
+| `BinRacks` | `OrderItemBinRack[]` | List of BinRacks used for OrderItem |
+| `InventoryTrackingType` | `integer` | Identifies whether the item has a sell by date or other defined order in which inventory is to be sold |
+| `isBatchedStockItem` | `boolean` | If item has batches |
+| `IsWarehouseManaged` | `boolean` |  |
+| `IsUnlinked` | `boolean` |  |
+| `StockItemIntId` | `integer` |  |
+| `Boxes` | `StockItemBoxConfiguration[]` |  |
+| `AddedDate` | `string` |  |
+| `RowId` | `string` |  |
+| `OrderId` | `string` |  |
+| `StockItemId` | `string` |  |
+
+### `OrderItemBinRack`
+
+| Property | Type | Description |
+|---|---|---|
+| `Quantity` | `integer` | Quantity for BinRack per Location |
+| `BinRack` | `string` | BinRack |
+| `Location` | `string` | LocationId of the BinRack |
+| `BatchId` | `integer` | If the item is batched, identifies the batch number |
+| `OrderItemBatchId` | `integer` | If the item is batched, identifies the unique order item batch row |
+
+### `OrderItemOnOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` | Primary key of the bound |
+| `Rowid` | `string` |  |
+| `pkPurchaseId` | `string` |  |
+| `ExternalInvoiceNumber` | `string` |  |
+| `fkSupplierId` | `string` |  |
+| `DateOfDelivery` | `string` |  |
+| `QuotedDeliveryDate` | `string` |  |
+| `SupplierName` | `string` |  |
+| `fkLocationId` | `string` |  |
+
+### `OrderItemOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOptionId` | `string` | Option ID |
+| `Property` | `string` | Option property |
+| `Value` | `string` | Value of the option |
+
+### `OrderNote`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderNoteId` | `string` | Order note ID |
+| `OrderId` | `string` | Order Id |
+| `NoteDate` | `string` | Date and time when note was added |
+| `Internal` | `boolean` | order note type (Internal or External) |
+| `Note` | `string` | Note's text |
+| `CreatedBy` | `string` | User that created note |
+| `NoteTypeId` | `integer` |  |
+
+### `OrderRMAHeader`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMAHeaderId` | `integer` |  |
+| `RMALines` | `VerifiedRMAItem[]` |  |
+| `OrderId` | `string` |  |
+| `NumOrderId` | `integer` |  |
+| `Status` | `PostSaleStatus` |  |
+| `OrderSource` | `string` |  |
+| `OrderSubSource` | `string` |  |
+| `ExternalReference` | `string` |  |
+| `ChannelInitiated` | `boolean` |  |
+| `CreatedDate` | `string` |  |
+| `Actioned` | `boolean` |  |
+| `LastActionDate` | `string` |  |
+
+### `OrderRefundHeader`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` |  |
+| `Currency` | `string` |  |
+| `Amount` | `number` |  |
+| `RefundLines` | `VerifiedRefund[]` |  |
+| `RefundLink` | `string` |  |
+| `OrderId` | `string` |  |
+| `NumOrderId` | `integer` |  |
+| `Status` | `PostSaleStatus` |  |
+| `OrderSource` | `string` |  |
+| `OrderSubSource` | `string` |  |
+| `ExternalReference` | `string` |  |
+| `ChannelInitiated` | `boolean` |  |
+| `CreatedDate` | `string` |  |
+| `Actioned` | `boolean` |  |
+| `LastActionDate` | `string` |  |
+
+### `OrderShippingInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Vendor` | `string` | Courier name (e.g. Royal Mail) |
+| `PostalServiceId` | `string` | Postal service ID |
+| `PostalServiceName` | `string` | Postal service name (e.g. Next day delivery) |
+| `TotalWeight` | `number` | Order total weight |
+| `ItemWeight` | `number` | If order is processed |
+| `PackageCategoryId` | `string` | Package category ID |
+| `PackageCategory` | `string` | Package category name |
+| `PackageTypeId` | `string` | Package type ID |
+| `PackageType` | `string` | Package type name |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost excluding tax |
+| `TrackingNumber` | `string` | Order tracking number provided by courier |
+| `ManualAdjust` | `boolean` | If there is an adjustment to shipping cost was made |
+
+### `OrderTotalsInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Subtotal` | `number` | Order subtotal |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost ex. tax |
+| `Tax` | `number` | Tax |
+| `TotalCharge` | `number` | Total charge |
+| `PaymentMethod` | `string` | Payment method |
+| `PaymentMethodId` | `string` | Payment method ID |
+| `ProfitMargin` | `number` | Profit margin |
+| `TotalDiscount` | `number` | Total discount applied to the order |
+| `Currency` | `string` | Order currency |
+| `CountryTaxRate` | `number` | Country tax rate |
+| `ConversionRate` | `number` | Currency conversion rate. Set at point of save by the currency |
+
+### `PostSaleStatus`
+
+| Property | Type | Description |
+|---|---|---|
+| `StatusHeader` | `string` | Identifies whether the refund is open, processed, or in an erroneous state |
+| `StatusDetail` | `PostSaleSubStatus` | Further identifies the state the refund is in, along with whether it can be actioned |
+
+### `PostSaleSubStatus`
+
+| Property | Type | Description |
+|---|---|---|
+| `StatusTag` | `string` | For an individual refund line, this identifies the line's state on the channel. For the header, if all its lines have the same StatusTag, it will also have the same StatusTag. If not, it will determine an appropriate StatusTag based on those of its lines |
+| `StatusDescription` | `string` | A user-friendly descriptor of the StatusTag |
+| `Actionable` | `boolean` | Determines whether the refund is in a state where it requires action from the user |
+| `ActionDescription` | `string` | A user-friendly descriptor of what "actioning" the refund will do on the channel |
+| `EditableFields` | `string[]` | Where certain fields need to be modified for the refund to be successfully actioned, this list is populated with a list of the field names, allowing them to be edited as necessary |
+
+### `ProcessedPostSaleSearchFilters`
+
+| Property | Type | Description |
+|---|---|---|
+| `Actionable` | `boolean` |  |
+| `Type` | `string` |  |
+| `Value` | `string` |  |
+
+### `RMAError`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMARowId` | `integer` |  |
+| `ErrorMessage` | `string` |  |
+| `DateStamp` | `string` |  |
+| `Acknowledged` | `boolean` |  |
+
+### `RefundError`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundRowId` | `string` |  |
+| `ErrorMessage` | `string` |  |
+| `DateStamp` | `string` |  |
+| `Acknowledged` | `boolean` |  |
+
+### `RefundOptions`
+
+| Property | Type | Description |
+|---|---|---|
+| `CanSendRejectionIfDeleted` | `boolean` |  |
+| `CanRefund` | `boolean` |  |
+| `CanRefundInternally` | `boolean` |  |
+| `CanRefundItems` | `boolean` |  |
+| `CanRefundServices` | `boolean` |  |
+| `CanRefundShipping` | `boolean` |  |
+| `CanRefundShippingIndependently` | `boolean` |  |
+| `CanRefundAdditionally` | `boolean` |  |
+| `CanRefundFreeText` | `boolean` |  |
+| `CanInsufficientRefundFreeText` | `boolean` |  |
+| `RefundFreeTextOrNoteMaxLength` | `integer` |  |
+| `SubStatuses` | `PostSaleSubStatus[]` |  |
+| `InsufficientRefundReasons` | `ChannelReason[]` |  |
+| `ItemRefundReasons` | `ChannelReason[]` |  |
+| `ServiceRefundReasons` | `ChannelReason[]` |  |
+| `ShippingRefundReasons` | `ChannelReason[]` |  |
+| `ItemizedRefundReasons` | `ItemizedRefundReason[]` |  |
+| `RejectionReasons` | `ChannelReason[]` |  |
+| `CannotRefundReason` | `string` |  |
+| `Order` | `OrderDetails` |  |
+| `RefundHeader` | `OrderRefundHeader` |  |
+| `AllExistingRefunds` | `VerifiedRefund[]` |  |
+| `Errors` | `string[]` |  |
 
 ### `RefundOrder`
 
@@ -382,6 +995,152 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `SubTotal` | `number` |  |
 | `Total` | `number` |  |
 | `TaxRate` | `number` |  |
+
+### `ResendItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ResendQuantity` | `integer` | The quantity of the selected item to resend |
+| `DespatchLocationId` | `string` | The identifier for the location to create the resend order in. This is where the item will have its stock deducted from |
+| `AdditionalCost` | `number` | This field denotes the additional cost that will be incurred to the customer for this resend |
+| `OrderItemRowId` | `string` |  |
+| `ReturnItemSKU` | `string` |  |
+| `ReturnItemTitle` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `ReturnLocation` | `string` |  |
+| `ReturnQuantity` | `integer` |  |
+| `RefundAmount` | `number` |  |
+| `RefundRowId` | `string` |  |
+| `ScrapQuantity` | `integer` |  |
+| `ReasonCategory` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `Reason` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `BinrackOverride` | `string` |  |
+
+### `ReturnItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowId` | `string` |  |
+| `ReturnItemSKU` | `string` |  |
+| `ReturnItemTitle` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `ReturnLocation` | `string` |  |
+| `ReturnQuantity` | `integer` |  |
+| `RefundAmount` | `number` |  |
+| `RefundRowId` | `string` |  |
+| `ScrapQuantity` | `integer` |  |
+| `ReasonCategory` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `Reason` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `BinrackOverride` | `string` |  |
+
+### `ReturnOptions`
+
+| Property | Type | Description |
+|---|---|---|
+| `CanSendRejectionIfDeleted` | `boolean` |  |
+| `CanReturn` | `boolean` |  |
+| `CanReturnInternally` | `boolean` |  |
+| `MustHaveRefund` | `boolean` |  |
+| `RefundAutoPopulated` | `boolean` |  |
+| `CanHaveRefund` | `boolean` |  |
+| `ReturnReasons` | `ChannelReason[]` |  |
+| `RejectionReasons` | `ChannelReason[]` |  |
+| `SubStatuses` | `PostSaleSubStatus[]` |  |
+| `RefundOptions` | `RefundOptions` |  |
+| `CannotReturnReason` | `string` |  |
+| `Order` | `OrderDetails` |  |
+| `RMAHeader` | `OrderRMAHeader` |  |
+| `AllExistingRMAs` | `VerifiedRMAItem[]` |  |
+| `Errors` | `string[]` |  |
+| `Info` | `string[]` |  |
+
+### `ReturnsRefundsWeb`
+
+| Property | Type | Description |
+|---|---|---|
+| `Row` | `integer` |  |
+| `pkOrderID` | `string` |  |
+| `cShippingAddress` | `string` |  |
+| `dProcessedOn` | `string` |  |
+| `fPostageCost` | `number` |  |
+| `fTotalCharge` | `number` |  |
+| `PostageCostExTax` | `number` |  |
+| `Subtotal` | `number` |  |
+| `fTax` | `number` |  |
+| `TotalDiscount` | `number` |  |
+| `CountryTaxRate` | `number` |  |
+| `nOrderId` | `integer` |  |
+| `cCurrency` | `string` |  |
+| `PostalTrackingNumber` | `string` |  |
+| `cCountry` | `string` |  |
+| `Source` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `PostalServiceCode` | `string` |  |
+| `Vendor` | `string` |  |
+| `ReferenceNum` | `string` |  |
+| `SecondaryReference` | `string` |  |
+| `ExternalReference` | `string` |  |
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `Address3` | `string` |  |
+| `Town` | `string` |  |
+| `Region` | `string` |  |
+| `BuyerPhoneNumber` | `string` |  |
+| `Company` | `string` |  |
+| `SubSource` | `string` |  |
+| `ChannelBuyerName` | `string` |  |
+| `AccountName` | `string` |  |
+| `cFullName` | `string` |  |
+| `cEmailAddress` | `string` |  |
+| `cPostCode` | `string` |  |
+| `dPaidOn` | `string` |  |
+| `cBillingAddress` | `string` |  |
+| `BillingName` | `string` |  |
+| `BillingCompany` | `string` |  |
+| `BillingAddress1` | `string` |  |
+| `BillingAddress2` | `string` |  |
+| `BillingAddress3` | `string` |  |
+| `BillingTown` | `string` |  |
+| `BillingRegion` | `string` |  |
+| `BillingPostCode` | `string` |  |
+| `BillingCountryName` | `string` |  |
+| `BillingPhoneNumber` | `string` |  |
+| `cItemNumber` | `string` |  |
+| `cItemName` | `string` |  |
+| `pkReturnId` | `integer` |  |
+| `RowType` | `string` |  |
+| `ReturnReference` | `string` |  |
+| `PendingRefundAmount` | `number` |  |
+| `LastDate` | `string` |  |
+| `Reason` | `string` |  |
+| `ChannelReason` | `string` |  |
+| `ChannelReasonSec` | `string` |  |
+| `Category` | `string` |  |
+| `ReturnQty` | `integer` |  |
+| `fkReturnLocationId` | `string` |  |
+| `Scrapped` | `boolean` |  |
+| `ScrapQty` | `integer` |  |
+| `ReturnDate` | `string` |  |
+| `Location` | `string` |  |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `NewQty` | `integer` |  |
+| `RefundReference` | `string` |  |
+| `pkRefundRowId` | `string` |  |
+| `Amount` | `number` |  |
+| `CreateDate` | `string` |  |
+| `CancellationQuantity` | `integer` |  |
+| `fkOrderItemReturnId` | `string` |  |
+| `ActionDate` | `string` |  |
+| `RefundStatus` | `string` |  |
 
 ### `ReturnsRefunds_AcknowledgeRMAErrorsRequest`
 
@@ -538,6 +1297,13 @@ Gets a list of valid search types. These are needed to search processed orders. 
 |---|---|---|
 | `request` | `UpdateRefundRequest` |  |
 
+### `ScheduledDelivery`
+
+| Property | Type | Description |
+|---|---|---|
+| `From` | `string` |  |
+| `To` | `string` |  |
+
 ### `SearchField`
 
 | Property | Type | Description |
@@ -547,6 +1313,54 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `AllowForAllDates` | `boolean` | If search for all dates |
 | `ExactSearchOptional` | `boolean` | If search is exact |
 
+### `StockItemBatchInventory`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Stock item batch record ID |
+| `BatchId` | `integer` | Batch ID |
+| `StockLocationId` | `string` | Location ID |
+| `BinRack` | `string` | BinRack |
+| `PrioritySequence` | `integer` | Pick order |
+| `Quantity` | `integer` | Quantity |
+| `StockValue` | `number` | Current stock value |
+| `StartQuantity` | `integer` | Quantity originally booked in |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `BatchStatus` | `string` | Batch Status |
+| `IsDeleted` | `boolean` | Is BatchInventory deleted |
+| `WarehouseBinrackStandardType` | `integer` | Warehouse binrack standard type |
+| `WarehouseBinrackTypeName` | `string` | Warehouse binrack type friendly name |
+| `InTransfer` | `integer` | Number of items in Transfer phase. |
+| `BinRackId` | `integer` | Binrack Id (Use for WMS) |
+| `WarehouseBinrackTypeId` | `integer` | Warehouse binrack type unique id. |
+
+### `StockItemBoxConfiguration`
+
+| Property | Type | Description |
+|---|---|---|
+| `BoxId` | `integer` | Unique box id. |
+| `StockItemIntId` | `integer` |  |
+| `BoxName` | `string` | Box name max 16 characters |
+| `Width` | `number` | Width of the box |
+| `Height` | `number` | Height of the box |
+| `Length` | `number` | Depth of the box |
+| `Weight` | `number` | Total weight of the box. |
+| `ValuePercentage` | `number` | Value break down percentage |
+| `Barcode` | `string` | Box barcode, max 64 characters. |
+| `PackagingTypeId` | `string` | Packaging type id |
+| `LogicalDelete` | `boolean` | IsDeleted flag. |
+
+### `UpdateRMABookingRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | The unique identifier for the order the return lines pertain to |
+| `RMAHeaderId` | `integer` | The unique identifier for the RMA header to update |
+| `ReturnItems` | `UpdatedReturnItem[]` | A collection of updated return items |
+| `ExchangeItems` | `UpdatedExchangeItem[]` | A collection of updated exchange items |
+| `ResendItems` | `UpdatedResendItem[]` | A collection of updated resend items |
+| `AllowCreationOfNewOrder` | `boolean` | If an existing RMA order has been deleted or cancelled, this flag determines whether a new one should be created, or an error should be returned |
+
 ### `UpdateRMABookingResponse`
 
 | Property | Type | Description |
@@ -555,6 +1369,14 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `Items` | `VerifiedRMAItem[]` |  |
 | `Errors` | `string[]` |  |
 | `Info` | `string[]` |  |
+
+### `UpdateRefundRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` | The identifier for the refund header to update |
+| `OrderId` | `string` | The unique identifier for the order the refund lines pertain to |
+| `RefundLines` | `UpdatedRefundLine[]` | A list of refund lines to update within the given refund |
 
 ### `UpdateRefundResponse`
 
@@ -566,6 +1388,185 @@ Gets a list of valid search types. These are needed to search processed orders. 
 | `CannotRefundReason` | `string` |  |
 | `Errors` | `string[]` |  |
 | `RefundLines` | `VerifiedRefund[]` |  |
+
+### `UpdatedExchangeItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMARowId` | `integer` | The RMA row identifier for this line |
+| `RemoveFromBooking` | `boolean` | If set to true, will remove the line from the booking |
+| `ExchangeStockItemId` | `string` |  |
+| `ExchangeSKU` | `string` |  |
+| `ExchangeTitle` | `string` |  |
+| `ExchangeQuantity` | `integer` |  |
+| `DespatchLocationId` | `string` |  |
+| `AdditionalCost` | `number` |  |
+| `OrderItemRowId` | `string` |  |
+| `ReturnItemSKU` | `string` |  |
+| `ReturnItemTitle` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `ReturnLocation` | `string` |  |
+| `ReturnQuantity` | `integer` |  |
+| `RefundAmount` | `number` |  |
+| `RefundRowId` | `string` |  |
+| `ScrapQuantity` | `integer` |  |
+| `ReasonCategory` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `Reason` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `BinrackOverride` | `string` |  |
+
+### `UpdatedRefundLine`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundRowId` | `string` | Identifies the refund line |
+| `RemoveFromRefund` | `boolean` | Determines whether to remove the line from the refund |
+| `ExternalReference` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `FreeTextOrNote` | `string` |  |
+| `Amount` | `number` |  |
+| `Quantity` | `integer` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `InsufficientRefundTag` | `string` |  |
+| `InsufficientRefundNote` | `string` |  |
+| `ReasonCategory` | `string` |  |
+
+### `UpdatedResendItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMARowId` | `integer` | The RMA row identifier for this line |
+| `RemoveFromBooking` | `boolean` | If set to true, will remove the line from the booking |
+| `ResendQuantity` | `integer` |  |
+| `DespatchLocationId` | `string` |  |
+| `AdditionalCost` | `number` |  |
+| `OrderItemRowId` | `string` |  |
+| `ReturnItemSKU` | `string` |  |
+| `ReturnItemTitle` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `ReturnLocation` | `string` |  |
+| `ReturnQuantity` | `integer` |  |
+| `RefundAmount` | `number` |  |
+| `RefundRowId` | `string` |  |
+| `ScrapQuantity` | `integer` |  |
+| `ReasonCategory` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `Reason` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `BinrackOverride` | `string` |  |
+
+### `UpdatedReturnItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMARowId` | `integer` | The RMA row identifier for this line |
+| `RemoveFromBooking` | `boolean` | If set to true, will remove the line from the booking |
+| `OrderItemRowId` | `string` |  |
+| `ReturnItemSKU` | `string` |  |
+| `ReturnItemTitle` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `ReturnLocation` | `string` |  |
+| `ReturnQuantity` | `integer` |  |
+| `RefundAmount` | `number` |  |
+| `RefundRowId` | `string` |  |
+| `ScrapQuantity` | `integer` |  |
+| `ReasonCategory` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `Reason` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `Status` | `PostSaleStatus` |  |
+| `BinrackOverride` | `string` |  |
+
+### `VerifiedRMAItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RMARowId` | `integer` | A unique identifier for the RMA line |
+| `RMAHeaderId` | `integer` | A unique identifier for the header this RMA line belongs to |
+| `Type` | `string` | Identifies the type of RMA for this line |
+| `Status` | `PostSaleStatus` | A detailed description of this RMA line's status |
+| `ExternalReference` | `string` | The channel reference number for this RMA |
+| `CreatedDate` | `string` | The timestamp for when the RMA was created |
+| `Actioned` | `boolean` | Line-level indicator of whether the refund has been actioned |
+| `ActionedDate` | `string` | If an RMA has been actioned, this denotes the date it was actioned. For not actioned lines, this value is null |
+| `Deleted` | `boolean` | Identifies whether the line has been removed from the RMA, and is pending an update to the database to reflect this |
+| `ResendQuantity` | `integer` |  |
+| `NewOrderId` | `string` | In the case of an exchange or resend line, this is the identifier for the created order |
+| `ValidationError` | `string` | Identifies any validation or submission errors for this RMA item |
+| `Error` | `string` |  |
+| `Errors` | `RMAError[]` |  |
+| `Info` | `string` | Identifies any validation or submission information for this RMA item |
+| `ExchangeStockItemId` | `string` |  |
+| `ExchangeSKU` | `string` |  |
+| `ExchangeTitle` | `string` |  |
+| `ExchangeQuantity` | `integer` |  |
+| `DespatchLocationId` | `string` |  |
+| `AdditionalCost` | `number` |  |
+| `OrderItemRowId` | `string` |  |
+| `ReturnItemSKU` | `string` |  |
+| `ReturnItemTitle` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `ReturnLocation` | `string` |  |
+| `ReturnQuantity` | `integer` |  |
+| `RefundAmount` | `number` |  |
+| `RefundRowId` | `string` |  |
+| `ScrapQuantity` | `integer` |  |
+| `ReasonCategory` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `Reason` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `BinrackOverride` | `string` |  |
+
+### `VerifiedRefund`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundRowId` | `string` | A unique identifier for the refund line |
+| `RefundHeaderId` | `integer` | A unique identifier for the refund header this line belongs to |
+| `Status` | `PostSaleStatus` | A detailed description of this refund line's status |
+| `RefundedUnit` | `string` | Identifies the type of refund for this line |
+| `IsShippingRefund` | `boolean` | Identifies whether the refund is a shipping refund |
+| `IsAdditionalRefund` | `boolean` | Identifies whether the refund is an additional refund |
+| `IsCancellation` | `boolean` | Identifies whether the refund row is a cancellation |
+| `RefundedItem` | `VerifiedRefundItem` | Used mainly to associate an item with an error, this identifies the order item to which the refund line applies |
+| `ValidationError` | `string` | If validation has failed for this item, the field will be populated with the appropriate error message |
+| `Error` | `string` |  |
+| `Errors` | `RefundError[]` |  |
+| `Actioned` | `boolean` | Line-level indicator of whether the refund has been actioned |
+| `ActionedDate` | `string` | If a refund has been actioned, this denotes the date it was actioned. For not actioned lines, this value is null |
+| `ChannelInitiated` | `boolean` | Identifies whether the refund was created manually in Linnworks, or downloaded from the channel automatically |
+| `Internal` | `boolean` | Identifies whether the line is processed only internally or also on a third-party channel |
+| `Deleted` | `boolean` | Identifies whether the line has been removed from the refund, and is pending an update to the database to reflect this |
+| `ExternalReference` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `FreeTextOrNote` | `string` |  |
+| `Amount` | `number` |  |
+| `Quantity` | `integer` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `InsufficientRefundTag` | `string` |  |
+| `InsufficientRefundNote` | `string` |  |
+| `ReasonCategory` | `string` |  |
+
+### `VerifiedRefundItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowId` | `string` | The unique order item identifier |
+| `ReturnRowId` | `integer` | A unique identifier for the return line this refund relates to. If null, it is an independent refund |
+| `ItemSKU` | `string` | The Linnworks SKU for the item, assuming it is linked. If it is not, this matches the channel SKU |
+| `ChannelSKU` | `string` | The channel's SKU for the item |
+| `ItemTitle` | `string` | For a linked item, the Linnworks item title for this channel (or the default item title where a specific channel title does not exist). For an unlinked item, this is the title provided by the channel |
+| `Cost` | `number` | The tax-inclusive cost for this line |
+| `CancelledQuantity` | `integer` | If a refund is linked to a cancellation request, this field denotes the amount of the item cancelled |
 
 ### `WarehouseLocation`
 

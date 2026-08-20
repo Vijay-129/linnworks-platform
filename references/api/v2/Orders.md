@@ -61,12 +61,38 @@ Update fulfillment status for requested order id
 
 ## Models
 
+### `APIResultResponse_OrderFulfillmentStatus`
+
+| Property | Type | Description |
+|---|---|---|
+| `Result` | `OrderFulfillmentStatus` |  |
+| `ResultStatus` | `APIResultStatus` |  |
+| `Message` | `string` |  |
+
+### `APIResultStatus`
+
 ### `AnonymousGetOrdersResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `OpenOrders` | `AnonymousOrder[]` |  |
 | `ProcessedOrders` | `AnonymousProcessedOrder[]` |  |
+
+### `AnonymousOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `GeneralInfo` | `OrderGeneralInfo` |  |
+| `Items` | `object[]` |  |
+
+### `AnonymousProcessedOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `GeneralInfo` | `ProcessedOrderGeneralInfo` |  |
+| `Items` | `object[]` |  |
+
+### `FulfillmentStatus`
 
 ### `FulfillmentStatusRequest`
 
@@ -81,12 +107,85 @@ Update fulfillment status for requested order id
 | `OpenOrders` | `Order[]` |  |
 | `ProcessedOrders` | `ProcessedOrder[]` |  |
 
+### `Order`
+
+| Property | Type | Description |
+|---|---|---|
+| `GeneralInfo` | `OrderGeneralInfo` |  |
+| `CustomerInfo` | `OrderCustomerInfo` |  |
+| `Items` | `OrderItemWithChildren[]` |  |
+| `Notes` | `OrderNote[]` |  |
+
+### `OrderCustomerInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelBuyerName` | `string` | Username of customer (Comes from channel) |
+| `Address` | `ShippingAddress` | Customer address |
+| `BillingAddress` | `object` | Customer billing address |
+| `TaxId` | `string` |  |
+
 ### `OrderFulfillmentStatus`
 
 | Property | Type | Description |
 |---|---|---|
 | `OrderId` | `string` |  |
 | `FulfillmentStatus` | `FulfillmentStatus` |  |
+
+### `OrderGeneralInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsParked` | `boolean` | Is the order parked? |
+| `IsMerged` | `boolean` |  |
+| `IsLocked` | `boolean` |  |
+| `IsRuleRun` | `boolean` | If rules engine rule ran on an order |
+
+### `OrderItemOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `OptionId` | `string` |  |
+| `Property` | `string` | Option property |
+| `Value` | `string` | Value of the option |
+
+### `OrderItemWithChildren`
+
+| Property | Type | Description |
+|---|---|---|
+| `AdditionalInfo` | `OrderItemOption[]` |  |
+
+### `OrderNote`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderNoteId` | `string` | Order note ID |
+| `NoteDate` | `string` | Date and time when note was added |
+| `Internal` | `boolean` | order note type (Internal or External) |
+| `Note` | `string` | Note's text |
+| `CreatedBy` | `string` | User that created note |
+| `NoteTypeId` | `integer` |  |
+
+### `ProcessedOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `GeneralInfo` | `ProcessedOrderGeneralInfo` |  |
+| `CustomerInfo` | `OrderCustomerInfo` |  |
+| `Items` | `OrderItemWithChildren[]` |  |
+| `Notes` | `OrderNote[]` |  |
+
+### `ProcessedOrderGeneralInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsCancelled` | `boolean` |  |
+
+### `ShippingAddress`
+
+| Property | Type | Description |
+|---|---|---|
+| `Continent` | `string` |  |
 
 ### `UpdateFulfillmentStatusesResponse`
 

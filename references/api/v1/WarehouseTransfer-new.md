@@ -848,6 +848,23 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `shipmentWeightUnitId` | `integer` |  |
 | `isStacked` | `boolean` |  |
 
+### `AmazonPrepInstructionItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `prepInstruction` | `SkuPrepInstruction` |  |
+| `currencyCode` | `string` |  |
+| `currencyValue` | `number` |  |
+| `prepOwner` | `PrepOwners` |  |
+
+### `AmazonShipmentCarrierType`
+
+### `AmazonShipmentDimensionUnit`
+
+### `AmazonShipmentType`
+
+### `AmazonShipmentWeightUnit`
+
 ### `AmazonTransportDocumentResponseModel`
 
 | Property | Type | Description |
@@ -860,6 +877,36 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 |---|---|---|
 | `shipmentId` | `integer` |  |
 | `statusId` | `integer` |  |
+
+### `BinRackResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `binRackId` | `integer` |  |
+| `binRack` | `string` |  |
+| `binRackTypeId` | `integer` |  |
+| `binRackTypeName` | `string` |  |
+| `routingSequence` | `integer` |  |
+
+### `CsvSeparator`
+
+| Property | Type | Description |
+|---|---|---|
+| `type` | `CsvSeparatorType` |  |
+| `value` | `string` |  |
+| `name` | `string` |  |
+
+### `CsvSeparatorType`
+
+### `FailedShippingItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `sku` | `string` |  |
+| `stockItemId` | `integer` |  |
+| `batchNumber` | `string` |  |
+| `batchInventoryId` | `integer` |  |
+| `failMessage` | `string` |  |
 
 ### `GetBatchesByShippingPlanIdResponse`
 
@@ -993,6 +1040,8 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `amazonShipmentPackageLabelTypes` | `ShipmentPackageLabelTypeModel[]` |  |
 | `amazonPartneredCarrierSupportedCountries` | `string[]` |  |
 
+### `ImportProductColumn`
+
 ### `ImportProductsToShipmentResponse`
 
 | Property | Type | Description |
@@ -1015,11 +1064,83 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `insertedIds` | `integer[]` |  |
 | `updatedIds` | `integer[]` |  |
 
+### `ImportStockRequestColumn`
+
+### `ImportStockTransferColumn`
+
+### `Int32StringKeyValuePair`
+
+| Property | Type | Description |
+|---|---|---|
+| `key` | `integer` |  |
+| `value` | `string` |  |
+
+### `ItemReceiveResult`
+
+| Property | Type | Description |
+|---|---|---|
+| `transferItemId` | `integer` |  |
+| `isReceived` | `boolean` |  |
+| `message` | `string` |  |
+
+### `PrepOwners`
+
 ### `ReceiveSelectedTransferItemsForWmsResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `results` | `ItemReceiveResult[]` |  |
+
+### `ShipmentBoxModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `shipmentBoxId` | `integer` |  |
+| `shipmentId` | `integer` |  |
+| `shipmentPalletId` | `integer` |  |
+| `name` | `string` |  |
+| `height` | `number` |  |
+| `depth` | `number` |  |
+| `width` | `number` |  |
+| `shipmentDimensionUnit` | `AmazonShipmentDimensionUnit` |  |
+| `weight` | `number` |  |
+| `shipmentWeightUnit` | `AmazonShipmentWeightUnit` |  |
+| `trackingNumber` | `string` |  |
+
+### `ShipmentBoxRecordType`
+
+### `ShipmentCarrierModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `shipmentCarrierId` | `integer` |  |
+| `isPartnered` | `boolean` |  |
+| `name` | `string` |  |
+| `country` | `string` |  |
+
+### `ShipmentDimensionUnit`
+
+### `ShipmentItemBatchResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `batchId` | `integer` |  |
+| `batchInventoryId` | `integer` |  |
+| `batchNumber` | `string` |  |
+| `batchStatus` | `string` |  |
+| `available` | `integer` |  |
+| `quantity` | `integer` |  |
+| `quantityToShip` | `integer` |  |
+| `shipmentItemId` | `integer` |  |
+
+### `ShipmentItemImportRow`
+
+| Property | Type | Description |
+|---|---|---|
+| `type` | `ImportProductColumn` |  |
+| `name` | `string` |  |
+| `sample` | `string` |  |
+| `group` | `integer` |  |
 
 ### `ShipmentItemResponse`
 
@@ -1047,6 +1168,54 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `title` | `string` |  |
 | `prepInstructions` | `AmazonPrepInstructionItem[]` |  |
 
+### `ShipmentItemWithBoxAndPalletViewModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `id` | `string` |  |
+| `name` | `string` |  |
+| `shipmentItemId` | `integer` |  |
+| `shipmentId` | `integer` |  |
+| `shipmentPalletId` | `integer` |  |
+| `shipmentBoxId` | `integer` |  |
+| `shipmentBoxItemId` | `integer` |  |
+| `sellerSku` | `string` |  |
+| `sku` | `string` |  |
+| `stockItemIntId` | `integer` |  |
+| `stockItemId` | `string` |  |
+| `title` | `string` |  |
+| `weight` | `number` |  |
+| `depth` | `number` |  |
+| `height` | `number` |  |
+| `width` | `number` |  |
+| `quantityToShip` | `integer` |  |
+| `thumbnailSource` | `string` |  |
+| `batchBinRacks` | `string` |  |
+| `type` | `ShipmentBoxRecordType` |  |
+| `palletBoxHierarchy` | `string[]` |  |
+| `packSize` | `integer` |  |
+| `trackingNumber` | `string` |  |
+
+### `ShipmentItemsImportMetaFields`
+
+| Property | Type | Description |
+|---|---|---|
+| `csvSeparatorMappings` | `CsvSeparator[]` |  |
+| `shipmentItemRows` | `ShipmentItemImportRow[]` |  |
+| `stockRequestItemRows` | `StockRequestItemImportRow[]` |  |
+| `stockTransferItemRows` | `StockTransferItemImportRow[]` |  |
+
+### `ShipmentPackageLabelTypeModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `amazonPageType` | `string` |  |
+| `countries` | `string[]` |  |
+| `carrierTypes` | `AmazonShipmentCarrierType[]` |  |
+| `shipmentCarrier` | `string` |  |
+| `paperSizeInfo` | `string` |  |
+| `isVisibleForPallet` | `boolean` |  |
+
 ### `ShipmentResponse`
 
 | Property | Type | Description |
@@ -1064,6 +1233,31 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `warehouseAddress` | `string` |  |
 | `isConvertedToSendToAmazon` | `boolean` |  |
 
+### `ShipmentSearchModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `shipmentId` | `string` |  |
+| `name` | `string` |  |
+
+### `ShipmentSellerFreightModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `shipmentSellerFreightId` | `integer` |  |
+| `name` | `string` |  |
+
+### `ShipmentTransportationStatus`
+
+### `ShipmentTypeModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `id` | `integer` |  |
+| `name` | `string` |  |
+
+### `ShipmentWeightUnit`
+
 ### `ShippingLocationModel`
 
 | Property | Type | Description |
@@ -1080,6 +1274,69 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `phoneNumber` | `string` |  |
 | `countryCode` | `string` |  |
 
+### `SkuPrepBarcodeInstruction`
+
+### `SkuPrepGuidance`
+
+### `SkuPrepInstruction`
+
+### `SkuPrepInstructionItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `shipmentItemId` | `integer` |  |
+| `itemTitle` | `string` |  |
+| `quantityToSend` | `integer` |  |
+| `labelType` | `string` |  |
+| `sellerSKU` | `string` |  |
+| `sku` | `string` |  |
+| `asin` | `string` |  |
+| `thumbnailSource` | `string` |  |
+| `stockItemIdGuid` | `string` |  |
+| `barcodeInstruction` | `SkuPrepBarcodeInstruction` |  |
+| `prepGuidance` | `SkuPrepGuidance` |  |
+| `prepInstructionList` | `AmazonPrepInstructionItem[]` |  |
+| `feeAmountPerUnit` | `object` |  |
+| `totalFeeAmount` | `object` |  |
+
+### `StockItemBatchResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkBinRackId` | `integer` |  |
+| `batchId` | `integer` |  |
+| `batchInventoryId` | `integer` |  |
+| `binRackType` | `BinRackResponse` |  |
+| `binRack` | `string` |  |
+| `expiresOn` | `string` |  |
+| `number` | `string` |  |
+| `prioritySequence` | `integer` |  |
+| `available` | `integer` |  |
+| `quantity` | `integer` |  |
+| `sellBy` | `string` |  |
+| `status` | `string` |  |
+| `stockItemIntId` | `integer` |  |
+| `stockItemId` | `string` |  |
+| `stockLocationId` | `string` |  |
+| `stockValue` | `number` |  |
+
+### `StockItemModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `string` |  |
+| `stockItemIntId` | `integer` |  |
+| `asin` | `string` |  |
+| `sellerSku` | `string` |  |
+| `thumbnailSource` | `string` |  |
+| `itemNumber` | `string` |  |
+| `itemTitle` | `string` |  |
+| `condition` | `string` |  |
+| `fbaTotalStock` | `integer` |  |
+| `quantity` | `integer` |  |
+| `inOrderBook` | `integer` |  |
+| `available` | `integer` |  |
+
 ### `StockItemModelGenericPagedResult`
 
 | Property | Type | Description |
@@ -1089,6 +1346,50 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `totalEntries` | `integer` |  |
 | `totalPages` | `integer` |  |
 | `data` | `StockItemModel[]` |  |
+
+### `StockItemSearchModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `barcodeNumber` | `string` |  |
+| `itemNumber` | `string` |  |
+| `itemTitle` | `string` |  |
+| `sellerSKU` | `string` |  |
+| `asin` | `string` |  |
+
+### `StockRequestItemImportRow`
+
+| Property | Type | Description |
+|---|---|---|
+| `type` | `ImportStockRequestColumn` |  |
+| `name` | `string` |  |
+| `sample` | `string` |  |
+| `group` | `integer` |  |
+
+### `StockTransferItemImportRow`
+
+| Property | Type | Description |
+|---|---|---|
+| `type` | `ImportStockTransferColumn` |  |
+| `name` | `string` |  |
+| `sample` | `string` |  |
+| `group` | `integer` |  |
+
+### `TransferItemBatchViewModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `batchId` | `integer` |  |
+| `batchInventoryId` | `integer` |  |
+| `batchNumber` | `string` |  |
+| `batchStatus` | `string` |  |
+| `availableQuantity` | `integer` |  |
+| `quantity` | `integer` |  |
+| `expiryDate` | `string` |  |
+| `sellBy` | `string` |  |
+| `prioritySequence` | `integer` |  |
+| `unitCost` | `number` |  |
+| `binRack` | `string` |  |
 
 ### `TransferItemViewModel`
 
@@ -1110,6 +1411,10 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `fromLocationBatches` | `TransferItemBatchViewModel[]` |  |
 | `toLocationBatches` | `TransferItemBatchViewModel[]` |  |
 
+### `TransferStatus`
+
+### `TransferType`
+
 ### `UpdateQuantityResult`
 
 | Property | Type | Description |
@@ -1130,6 +1435,20 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 |---|---|---|
 | `fileId` | `string` |  |
 | `expirationDate` | `string` |  |
+
+### `WarehouseTransferStockItemModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `string` |  |
+| `stockItemIntId` | `integer` |  |
+| `itemNumber` | `string` |  |
+| `itemTitle` | `string` |  |
+| `fromAvailableQuantity` | `integer` |  |
+| `destinationAvailableQuantity` | `integer` |  |
+| `fromDueQuantity` | `integer` |  |
+| `thumbnailSource` | `string` |  |
+| `rowsCount` | `integer` |  |
 
 ### `WarehouseTransferStockItemModelGenericPagedResult`
 
@@ -1159,3 +1478,5 @@ Use this call to update transfer item receive quantity with the sent quantity fo
 | `totalRequestedQuantity` | `integer` |  |
 | `totalReceivedQuantity` | `integer` |  |
 | `totalSentQuantity` | `integer` |  |
+
+### `WhoPreps`

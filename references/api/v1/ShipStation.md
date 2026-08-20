@@ -41,6 +41,13 @@ Used for ShipStation to update a ShipStation integration
 
 ## Models
 
+### `ShipService`
+
+| Property | Type | Description |
+|---|---|---|
+| `ShipStationServiceId` | `string` | The unique identifier for the ShipStation service |
+| `LinnworksServiceId` | `string` | The unique identifier for the linnworks service |
+
 ### `ShipStationConfig`
 
 | Property | Type | Description |

@@ -204,6 +204,35 @@ Use this call to delete a Big Commerce template.
 
 ## Models
 
+### `AmazonAttribute`
+
+| Property | Type | Description |
+|---|---|---|
+| `AttrName` | `string` |  |
+| `DisplayName` | `string` |  |
+| `LinnworksProperty` | `string` |  |
+| `ListingProperty` | `string` |  |
+| `DefaultValue` | `string` |  |
+| `Required` | `string` |  |
+| `Type` | `string` |  |
+| `RealType` | `string` |  |
+| `ValidValues` | `LinnLiveKeyValue[]` |  |
+| `Path` | `string` |  |
+| `IsVariation` | `boolean` |  |
+| `IsInvalidValue` | `boolean` |  |
+| `ErrorMessage` | `string` |  |
+| `CanBeVariation` | `boolean` |  |
+
+### `AmazonBNode`
+
+| Property | Type | Description |
+|---|---|---|
+| `NodeId` | `string` |  |
+| `NodePath` | `string` |  |
+| `ItemType` | `string` |  |
+| `DepartmentName` | `string` |  |
+| `IsDefault` | `boolean` |  |
+
 ### `AmazonConfig`
 
 | Property | Type | Description |
@@ -239,6 +268,162 @@ Use this call to delete a Big Commerce template.
 | `UseMainItemImages` | `boolean` |  |
 | `IgnoreIncorrectVariationChildren` | `boolean` |  |
 
+### `AmazonListing`
+
+| Property | Type | Description |
+|---|---|---|
+| `TemplateId` | `string` |  |
+| `InventoryItemId` | `string` |  |
+| `VariationGroupName` | `string` |  |
+| `Version` | `integer` |  |
+| `MerchantName` | `string` |  |
+| `ConfigId` | `string` |  |
+| `ConfigName` | `string` |  |
+| `ProductURL` | `string` |  |
+| `ImageURL` | `string` |  |
+| `Title` | `string` |  |
+| `Description` | `string` |  |
+| `ASIN` | `string` |  |
+| `SKU` | `string` |  |
+| `Barcode` | `string` |  |
+| `BarcodeType` | `string` |  |
+| `TitleSource` | `string` |  |
+| `Price` | `number` |  |
+| `BusinessPrice` | `KeyValueGeneric_Guid_Double` |  |
+| `Quantity` | `integer` |  |
+| `Category` | `string` |  |
+| `SubType` | `string` |  |
+| `BrowseNodes` | `AmazonBNode[]` |  |
+| `Attributes` | `AmazonAttribute[]` |  |
+| `Pictures` | `AmazonAttribute[]` |  |
+| `UseMainItemImages` | `boolean` |  |
+| `VariationTheme` | `string` |  |
+| `Variations` | `AmazonVariation[]` |  |
+| `OldVariations` | `AmazonVariation[]` |  |
+| `Status` | `string` |  |
+| `IsReadOnly` | `boolean` |  |
+| `ReportId` | `string` |  |
+| `ErrorMsg` | `string` |  |
+| `MessageIds` | `string[]` |  |
+| `ShipOptions` | `string[]` |  |
+| `IsCatalog` | `boolean` |  |
+| `ConditionType` | `string` |  |
+| `ConditionNote` | `string` |  |
+| `LowestNewPriceFormated` | `string` |  |
+| `DecimalSalesRank` | `number` |  |
+| `ToList` | `boolean` |  |
+| `Matches` | `integer` |  |
+| `NoMatches` | `boolean` |  |
+| `Adjustments` | `integer` |  |
+| `IsReFeeded` | `boolean` |  |
+
+### `AmazonShipping`
+
+| Property | Type | Description |
+|---|---|---|
+| `ShipOption` | `string` |  |
+| `ServiceLevel` | `string` |  |
+| `ShippingCost` | `number` |  |
+| `ShippingCost_ExtendedProperty` | `string` |  |
+| `Type` | `string` |  |
+| `IsShippingRestricted` | `boolean` |  |
+
+### `AmazonVariation`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsIgnored` | `boolean` |  |
+| `IgnoredMsg` | `string` |  |
+| `CollisionNumber` | `integer` |  |
+| `StockItemId` | `string` |  |
+| `SKU` | `string` |  |
+| `Title` | `string` |  |
+| `Barcode` | `string` |  |
+| `Price` | `number` |  |
+| `BusinessPrice` | `KeyValueGeneric_Guid_Double` |  |
+| `Quantity` | `integer` |  |
+| `Pictures` | `AmazonAttribute[]` |  |
+| `Attributes` | `AmazonAttribute[]` |  |
+| `MessageIds` | `string[]` |  |
+
+### `AssignedOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `IdV3` | `integer` |  |
+| `Id` | `integer` |  |
+| `Values` | `OptionValue[]` |  |
+| `OptionDisplayName` | `string` |  |
+| `OptionName` | `string` |  |
+| `MappedFromBC` | `boolean` |  |
+| `AssignmentId` | `integer` |  |
+| `Type` | `string` |  |
+
+### `AssignedOptionSet`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `integer` |  |
+| `Name` | `string` |  |
+| `MappedFromBC` | `boolean` |  |
+| `Options` | `AssignedOption[]` |  |
+
+### `AssociatedTemplate`
+
+| Property | Type | Description |
+|---|---|---|
+| `TemplateId` | `string` |  |
+| `UsedConfigId` | `string` |  |
+| `Name` | `string` |  |
+| `Site` | `string` |  |
+
+### `AssociationTable`
+
+| Property | Type | Description |
+|---|---|---|
+| `TableName` | `string` |  |
+| `Source` | `string` |  |
+| `Destination` | `string` |  |
+
+### `BigCommerceAssignedProducts`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+| `ChildId` | `string` |  |
+| `SkuId` | `integer` |  |
+| `SKU` | `string` |  |
+| `UPC` | `string` |  |
+| `MPN` | `string` |  |
+| `GTIN` | `string` |  |
+| `Name` | `string` |  |
+| `Price` | `number` |  |
+| `ManageStock` | `boolean` |  |
+| `CollisionNumber` | `integer` |  |
+| `Status` | `string` |  |
+| `Quantity` | `integer` |  |
+| `Weight` | `number` |  |
+| `Depth` | `number` |  |
+| `Height` | `number` |  |
+| `Width` | `number` |  |
+| `InStockChannel` | `boolean` |  |
+| `ProductImageURL` | `string` |  |
+| `OptionsValues` | `ChildOption[]` |  |
+| `SalePrice` | `number` |  |
+| `RetailPrice` | `number` |  |
+
+### `BigCommerceConfigAttributes`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `Type` | `string` |  |
+| `MaxLength` | `integer` |  |
+| `Label` | `string` |  |
+| `Value` | `string` |  |
+| `ExtendedProperty` | `string` |  |
+| `Default` | `boolean` |  |
+
 ### `BigCommerceConfigurator`
 
 | Property | Type | Description |
@@ -264,6 +449,149 @@ Use this call to delete a Big Commerce template.
 | `VarTitleExtProperty` | `string` |  |
 | `UseMainItemImages` | `boolean` |  |
 | `GltConfiguratorId` | `integer` |  |
+
+### `BigCommerceCustomField`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `integer` |  |
+| `BigCommerceId` | `integer` |  |
+| `FlexSettingsItemId` | `string` |  |
+| `Name` | `string` |  |
+| `Value` | `string` |  |
+
+### `BigCommerceImageData`
+
+| Property | Type | Description |
+|---|---|---|
+| `Thumb` | `boolean` |  |
+| `sortOrder` | `integer` |  |
+| `Id` | `integer` |  |
+| `IsChild` | `boolean` |  |
+| `ImageId` | `string` |  |
+| `URL` | `string` |  |
+| `Label` | `string` |  |
+| `Show` | `boolean` |  |
+| `IsNative` | `boolean` |  |
+
+### `BigCommerceListing`
+
+| Property | Type | Description |
+|---|---|---|
+| `Adjustments` | `integer` |  |
+| `Width` | `number` |  |
+| `Height` | `number` |  |
+| `Depth` | `number` |  |
+| `Attributes` | `BigCommerceConfigAttributes[]` |  |
+| `VarAttributes` | `VarAttribute[]` |  |
+| `Children` | `BigCommerceAssignedProducts[]` |  |
+| `OldChildren` | `BigCommerceAssignedProducts[]` |  |
+| `OptionSet` | `AssignedOptionSet` |  |
+| `Images` | `BigCommerceImageData[]` |  |
+| `Version` | `integer` |  |
+| `ListingId` | `string` |  |
+| `TemplateId` | `string` |  |
+| `InventoryItemId` | `string` |  |
+| `ConfigId` | `string` |  |
+| `UsedConfigName` | `string` |  |
+| `ProductId` | `integer` |  |
+| `UpdateConfig` | `boolean` |  |
+| `Type` | `string` |  |
+| `ListingURL` | `string` |  |
+| `Name` | `string` |  |
+| `Description` | `string` |  |
+| `ShortDescription` | `string` |  |
+| `SKU` | `string` |  |
+| `Barcode` | `string` |  |
+| `TitleSource` | `string` |  |
+| `Price` | `number` |  |
+| `Weight` | `number` |  |
+| `ShowListing` | `boolean` |  |
+| `ManageStock` | `boolean` |  |
+| `Quantity` | `integer` |  |
+| `IsReadOnly` | `boolean` |  |
+| `Categories` | `ConfigCategory[]` |  |
+| `HasCollisions` | `boolean` |  |
+| `UseMainItemImages` | `boolean` |  |
+| `Status` | `string` |  |
+| `Site` | `string` |  |
+| `IsErrorMsg` | `boolean` |  |
+| `CustomFields` | `BigCommerceCustomField[]` |  |
+
+### `ChildImage`
+
+| Property | Type | Description |
+|---|---|---|
+| `ImageName` | `string` |  |
+| `ImageURL` | `string` |  |
+| `Path` | `string` |  |
+| `ImageId` | `string` |  |
+| `ParentImageId` | `string` |  |
+
+### `ChildImagesList`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChildId` | `string` |  |
+| `Images` | `ChildImage[]` |  |
+
+### `ChildOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `OptionId` | `integer` |  |
+| `ValueId` | `integer` |  |
+| `Name` | `string` |  |
+| `Label` | `string` |  |
+
+### `ConfigCategory`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `Name` | `string` |  |
+| `Path` | `string` |  |
+| `Default` | `boolean` |  |
+
+### `ConfigUserAttributes`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `Type` | `string` |  |
+| `Name` | `string` |  |
+| `ExtendedProperty` | `string` |  |
+| `IsRequired` | `boolean` |  |
+| `MaxFileSize` | `integer` |  |
+| `AllowedFileTypes` | `string` |  |
+| `SelectOptions` | `string` |  |
+| `SortOrder` | `integer` |  |
+
+### `CreateTemplatesInBulkChannelParameters`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelId` | `integer` |  |
+| `ConfiguratorId` | `string` |  |
+
+### `CreateTemplatesInBulkParameters`
+
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` |  |
+| `ChannelsConfigurators` | `CreateTemplatesInBulkChannelParameters[]` |  |
+
+### `EbayAttribute`
+
+| Property | Type | Description |
+|---|---|---|
+| `AttrName` | `string` |  |
+| `Value` | `string` |  |
+| `ErrorMessage` | `string` |  |
+| `CurrentProductValue` | `string` |  |
+| `IsUserDefined` | `boolean` |  |
+| `IsRequired` | `boolean` |  |
+| `ValidValues` | `string[]` |  |
 
 ### `EbayConfig`
 
@@ -371,6 +699,238 @@ Use this call to delete a Big Commerce template.
 | `UseNewApi` | `boolean` |  |
 | `ChannelLocationIdentifier` | `string` |  |
 | `DimensionMeasure` | `string` |  |
+
+### `EbayListing`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsCreatedWithMappingTool` | `boolean` |  |
+| `TemplateId` | `string` |  |
+| `InventoryItemId` | `string` |  |
+| `VariationGroupName` | `string` |  |
+| `ConfigId` | `string` |  |
+| `ConfigName` | `string` |  |
+| `ListingIds` | `string[]` |  |
+| `SKU` | `string` |  |
+| `AccountId` | `string` |  |
+| `Barcode` | `string` |  |
+| `BarcodeErrorMessage` | `string` |  |
+| `MultipleIdentifiers` | `KeyValue[]` |  |
+| `Price` | `EbayPrices` |  |
+| `AvailableQuantity` | `integer` |  |
+| `Title` | `string` |  |
+| `SubTitle` | `string` |  |
+| `Description` | `string` |  |
+| `ePID` | `string` |  |
+| `IsCatalogMatch` | `boolean` |  |
+| `IsProductRequired` | `boolean` |  |
+| `Attributes` | `EbayAttribute[]` |  |
+| `Pictures` | `ImageData[]` |  |
+| `Categories` | `LinnworksEbayCategory[]` |  |
+| `StoreCategories` | `LinnworksEbayCategory[]` |  |
+| `DontUseVariationPictures` | `boolean` |  |
+| `VariationPictureSpecific` | `string` |  |
+| `Variations` | `EbayVariation[]` |  |
+| `VariationsPositions` | `KeyList[]` |  |
+| `OldVariations` | `EbayVariation[]` |  |
+| `OldVariationSpecifics` | `KeyList[]` |  |
+| `IsProductConfirmationRequired` | `boolean` |  |
+| `Status` | `string` |  |
+| `ErrorMessage` | `string` |  |
+| `Adjustments` | `integer` |  |
+| `TitleSource` | `string` |  |
+| `IsPendingRelist` | `boolean` |  |
+| `StartTime` | `string` |  |
+| `IsReadOnly` | `boolean` |  |
+| `IsVirtualTemplate` | `boolean` |  |
+| `Site` | `string` |  |
+| `Currency` | `string` |  |
+| `UseSuggestedCategory` | `boolean` |  |
+| `AllowCategoryChange` | `boolean` |  |
+| `LotSize` | `integer` |  |
+| `IsRecommendation` | `boolean` |  |
+| `RecommendationMessage` | `string` |  |
+| `UseNewApi` | `boolean` |  |
+
+### `EbayListingAudit`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` |  |
+| `ActionType` | `string` |  |
+| `ActionText` | `string` |  |
+| `AffectivefkStockItemId` | `string` |  |
+| `ListId` | `string` |  |
+| `ActionDateTime` | `string` |  |
+| `SetQuantity` | `integer` |  |
+| `SetPrice` | `number` |  |
+| `IsError` | `boolean` |  |
+| `SKU` | `string` |  |
+
+### `EbayPriceRule`
+
+| Property | Type | Description |
+|---|---|---|
+| `FromPrice` | `number` |  |
+| `ToPrice` | `number` |  |
+
+### `EbayPrices`
+
+| Property | Type | Description |
+|---|---|---|
+| `StartPrice` | `number` |  |
+| `ReservePrice` | `number` |  |
+| `BINPrice` | `number` |  |
+| `AutoAccept` | `number` |  |
+| `AutoDecline` | `number` |  |
+| `OriginalRetailPrice` | `number` |  |
+
+### `EbaySellerProfile`
+
+| Property | Type | Description |
+|---|---|---|
+| `ProfileId` | `integer` |  |
+| `ProfileType` | `string` |  |
+| `ProfileName` | `string` |  |
+| `ErrorMessage` | `string` |  |
+| `SellerProfileExtendedProperty` | `string` |  |
+
+### `EbayShippingService`
+
+| Property | Type | Description |
+|---|---|---|
+| `ServiceId` | `string` |  |
+| `ServiceName` | `string` |  |
+| `isInternationalService` | `boolean` |  |
+| `isExpeditedService` | `boolean` |  |
+| `ServiceType` | `string` |  |
+
+### `EbaySpecification`
+
+| Property | Type | Description |
+|---|---|---|
+| `SpecName` | `string` |  |
+| `DefaultValue` | `string` |  |
+| `LinnworksProperty` | `string` |  |
+| `PossibleValues` | `string[]` |  |
+| `AssociationTable` | `AssociationTable` |  |
+| `CategoryIds` | `integer[]` |  |
+| `IsUserDefined` | `boolean` |  |
+| `IsRequired` | `boolean` |  |
+
+### `EbayVariation`
+
+| Property | Type | Description |
+|---|---|---|
+| `CollisionNumber` | `integer` |  |
+| `IsLinked` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `Barcode` | `string` |  |
+| `MultipleIdentifiers` | `KeyValue[]` |  |
+| `Title` | `string` |  |
+| `SKU` | `string` |  |
+| `ePID` | `string` |  |
+| `IsCatalogMatch` | `boolean` |  |
+| `Attributes` | `EbayAttribute[]` |  |
+| `ErrorMesage` | `string` |  |
+| `Pictures` | `ImageData[]` |  |
+| `Price` | `EbayPrices` |  |
+| `LotSize` | `integer` |  |
+
+### `EbayWeightRule`
+
+| Property | Type | Description |
+|---|---|---|
+| `Disabled` | `boolean` |  |
+| `FromWeight` | `number` |  |
+| `ToWeight` | `number` |  |
+| `Price` | `number` |  |
+| `AdditionalPrice` | `number` |  |
+| `IsFirst` | `boolean` |  |
+
+### `EndListingsPendingRelistRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Listings` | `EbayListingAudit[]` |  |
+
+### `GetTemplatesParameters`
+
+| Property | Type | Description |
+|---|---|---|
+| `TemplateIds` | `string[]` |  |
+| `OnlyWithErrors` | `boolean` |  |
+| `Source` | `string` |  |
+| `SubSource` | `string` |  |
+| `ConfigId` | `string` |  |
+| `InventoryItemIds` | `string[]` |  |
+| `SelectedRegions` | `Tuple_Int32_Int32[]` |  |
+| `Token` | `string` |  |
+| `TemplatesType` | `string` |  |
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `IsMigrated` | `boolean` |  |
+| `SiteFilter` | `SiteFilter` |  |
+
+### `ImageData`
+
+| Property | Type | Description |
+|---|---|---|
+| `URL` | `string` |  |
+| `IsEnabled` | `boolean` |  |
+
+### `KeyList`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Values` | `string[]` |  |
+
+### `KeyValue`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `string` |  |
+
+### `KeyValueGeneric_Guid_Double`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `number` |  |
+
+### `LinnLiveKeyValue`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `string` |  |
+
+### `LinnworksEbayCategory`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsDefault` | `boolean` |  |
+| `LotSizeDisabled` | `boolean` |  |
+| `IsProductRequired` | `boolean` |  |
+| `VariationsEnabled` | `boolean` |  |
+| `SiteSupported` | `boolean` |  |
+| `CategoryId` | `string` |  |
+| `CategoryName` | `string` |  |
+
+### `ListingAttributes`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `Code` | `string` |  |
+| `Type` | `string` |  |
+| `Variation` | `boolean` |  |
+| `Label` | `string` |  |
+| `Value` | `string` |  |
+| `ExtendedProperty` | `string` |  |
+| `Default` | `boolean` |  |
 
 ### `Listings_CancelListingBulkOperationRequest`
 
@@ -567,6 +1127,48 @@ Use this call to delete a Big Commerce template.
 |---|---|---|
 | `configs` | `EbayConfig[]` |  |
 
+### `MagentoAssignedProducts`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChildId` | `string` |  |
+| `CollisionNumber` | `integer` |  |
+| `AddWebsite` | `boolean` |  |
+| `IsAssigned` | `boolean` |  |
+| `CustomPrice` | `boolean` |  |
+| `CalculatedPrice` | `number` |  |
+| `ConvertedWeight` | `number` |  |
+| `Attributes` | `ListingAttributes[]` |  |
+| `IdentifierType` | `string` |  |
+| `Version` | `integer` |  |
+| `ListingId` | `string` |  |
+| `TemplateId` | `string` |  |
+| `InventoryItemId` | `string` |  |
+| `ConfigId` | `string` |  |
+| `UsedConfigName` | `string` |  |
+| `ProductId` | `integer` |  |
+| `UpdateConfig` | `boolean` |  |
+| `Type` | `string` |  |
+| `ListingURL` | `string` |  |
+| `Name` | `string` |  |
+| `Description` | `string` |  |
+| `ShortDescription` | `string` |  |
+| `SKU` | `string` |  |
+| `Barcode` | `string` |  |
+| `TitleSource` | `string` |  |
+| `Price` | `number` |  |
+| `Weight` | `number` |  |
+| `ShowListing` | `boolean` |  |
+| `ManageStock` | `boolean` |  |
+| `Quantity` | `integer` |  |
+| `IsReadOnly` | `boolean` |  |
+| `Categories` | `ConfigCategory[]` |  |
+| `HasCollisions` | `boolean` |  |
+| `UseMainItemImages` | `boolean` |  |
+| `Status` | `string` |  |
+| `Site` | `string` |  |
+| `IsErrorMsg` | `boolean` |  |
+
 ### `MagentoConfig`
 
 | Property | Type | Description |
@@ -604,6 +1206,113 @@ Use this call to delete a Big Commerce template.
 | `UseMainItemImages` | `boolean` |  |
 | `GltConfiguratorId` | `integer` |  |
 
+### `MagentoConfigAttributes`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `Code` | `string` |  |
+| `ExtendedProperty` | `string` |  |
+| `Type` | `string` |  |
+| `Label` | `string` |  |
+| `Value` | `string` |  |
+| `Requirement` | `string` |  |
+
+### `MagentoImageData`
+
+| Property | Type | Description |
+|---|---|---|
+| `Base` | `boolean` |  |
+| `Small` | `boolean` |  |
+| `Thumb` | `boolean` |  |
+| `IsChild` | `boolean` |  |
+| `ImageId` | `string` |  |
+| `URL` | `string` |  |
+| `Label` | `string` |  |
+| `Show` | `boolean` |  |
+| `IsNative` | `boolean` |  |
+
+### `MagentoListing`
+
+| Property | Type | Description |
+|---|---|---|
+| `Adjustments` | `integer` |  |
+| `Images` | `MagentoImageData[]` |  |
+| `VarAttributes` | `MagentoVariationsAttributes[]` |  |
+| `AttributesSetId` | `string` |  |
+| `AttributesSetName` | `string` |  |
+| `ParentTemplateId` | `string` |  |
+| `RelatedProducts` | `RelatedProduct[]` |  |
+| `OldRelatedProducts` | `RelatedProduct[]` |  |
+| `AssociatedTemplates` | `AssociatedTemplate[]` |  |
+| `Children` | `MagentoAssignedProducts[]` |  |
+| `OldChildren` | `MagentoAssignedProducts[]` |  |
+| `ChildrenImages` | `ChildImagesList[]` |  |
+| `Store` | `string` |  |
+| `ConvertedWeight` | `number` |  |
+| `Attributes` | `ListingAttributes[]` |  |
+| `IdentifierType` | `string` |  |
+| `Version` | `integer` |  |
+| `ListingId` | `string` |  |
+| `TemplateId` | `string` |  |
+| `InventoryItemId` | `string` |  |
+| `ConfigId` | `string` |  |
+| `UsedConfigName` | `string` |  |
+| `ProductId` | `integer` |  |
+| `UpdateConfig` | `boolean` |  |
+| `Type` | `string` |  |
+| `ListingURL` | `string` |  |
+| `Name` | `string` |  |
+| `Description` | `string` |  |
+| `ShortDescription` | `string` |  |
+| `SKU` | `string` |  |
+| `Barcode` | `string` |  |
+| `TitleSource` | `string` |  |
+| `Price` | `number` |  |
+| `Weight` | `number` |  |
+| `ShowListing` | `boolean` |  |
+| `ManageStock` | `boolean` |  |
+| `Quantity` | `integer` |  |
+| `IsReadOnly` | `boolean` |  |
+| `Categories` | `ConfigCategory[]` |  |
+| `HasCollisions` | `boolean` |  |
+| `UseMainItemImages` | `boolean` |  |
+| `Status` | `string` |  |
+| `Site` | `string` |  |
+| `IsErrorMsg` | `boolean` |  |
+
+### `MagentoVariationsAttributes`
+
+| Property | Type | Description |
+|---|---|---|
+| `Title` | `string` |  |
+| `Prices` | `VariationsAttributesPrices[]` |  |
+| `Id` | `string` |  |
+| `Code` | `string` |  |
+| `ExtendedProperty` | `string` |  |
+| `Type` | `string` |  |
+| `Label` | `string` |  |
+| `Value` | `string` |  |
+| `Requirement` | `string` |  |
+
+### `OptionValue`
+
+| Property | Type | Description |
+|---|---|---|
+| `IdV3` | `integer` |  |
+| `Id` | `integer` |  |
+| `MappedFromBC` | `boolean` |  |
+| `SortOrder` | `integer` |  |
+| `Label` | `string` |  |
+| `OptionValueData` | `OptionValueData` |  |
+
+### `OptionValueData`
+
+| Property | Type | Description |
+|---|---|---|
+| `Color` | `string` |  |
+| `ImageUrl` | `string` |  |
+
 ### `PagedResult_AmazonListing`
 
 | Property | Type | Description |
@@ -639,3 +1348,139 @@ Use this call to delete a Big Commerce template.
 | `TotalItems` | `integer` |  |
 | `CurrentPage` | `integer` |  |
 | `EntriesPerPage` | `integer` |  |
+
+### `PickupLocationTime`
+
+| Property | Type | Description |
+|---|---|---|
+| `EBayLocation` | `string` |  |
+| `FulfillmentValue` | `integer` |  |
+| `FulfillmentType` | `string` |  |
+| `ExtendedPropertyValue` | `string` |  |
+| `ExtendedPropertyType` | `string` |  |
+
+### `ProcessTemplatesParameters`
+
+| Property | Type | Description |
+|---|---|---|
+| `Source` | `string` |  |
+| `SubSource` | `string` |  |
+| `ConfigId` | `string` |  |
+| `InventoryItemIds` | `string[]` |  |
+| `SelectedRegions` | `Tuple_Int32_Int32[]` |  |
+| `Token` | `string` |  |
+| `TemplatesType` | `string` |  |
+
+### `RelatedProduct`
+
+| Property | Type | Description |
+|---|---|---|
+| `TemplateId` | `string` |  |
+| `ProductId` | `integer` |  |
+| `Name` | `string` |  |
+| `LinkAssigned` | `boolean` |  |
+| `Type` | `string` |  |
+
+### `SetListingStrikeOffStateRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ListingAudits` | `EbayListingAudit[]` | Listing audit details |
+| `Listings` | `eBayItem[]` | Channel Listings |
+| `StrikeReason` | `string` | Reason of strike off |
+| `StrikeOffState` | `boolean` | Listing strike off state |
+| `ListingsStatus` | `string` | Status of listings search |
+
+### `Shipping`
+
+| Property | Type | Description |
+|---|---|---|
+| `ShippingService` | `EbayShippingService` |  |
+| `Price` | `number` |  |
+| `Price_ExtendedProperty` | `string` |  |
+| `AdditionalPrice` | `number` |  |
+| `AdditionalPrice_ExtendedProperty` | `string` |  |
+| `HandlingPrice` | `number` |  |
+| `ShippingLocations` | `KeyValue[]` |  |
+| `WeightRules` | `EbayWeightRule[]` |  |
+| `PriceAssociationRules` | `EbayPriceRule[]` |  |
+
+### `SimpleShipping`
+
+| Property | Type | Description |
+|---|---|---|
+| `ExpeditedShipping` | `LinnLiveKeyValue` |  |
+| `WillShipInternationally` | `LinnLiveKeyValue` |  |
+
+### `SiteFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Source` | `string` |  |
+| `SubSource` | `string` |  |
+| `Sites` | `string` |  |
+| `SelectedSites` | `string[]` |  |
+
+### `Tuple_Int32_Int32`
+
+| Property | Type | Description |
+|---|---|---|
+| `Item1` | `integer` |  |
+| `Item2` | `integer` |  |
+
+### `VarAttribute`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `ExtendedProperty` | `string` |  |
+| `Type` | `string` |  |
+| `TypeLabel` | `string` |  |
+
+### `VariationsAttributesPrices`
+
+| Property | Type | Description |
+|---|---|---|
+| `SelectValue` | `string` |  |
+| `SelectLabel` | `string` |  |
+| `PriceDiff` | `number` |  |
+| `IsFixed` | `boolean` |  |
+
+### `eBayItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` |  |
+| `Title` | `string` |  |
+| `SKU` | `string` |  |
+| `MappedBy` | `string` |  |
+| `RelistPending` | `boolean` |  |
+| `Quantity` | `integer` |  |
+| `IsSuggestedToLink` | `boolean` |  |
+| `IsLinked` | `boolean` |  |
+| `ChannelSKURowId` | `string` |  |
+| `LinkedItemId` | `string` |  |
+| `MaxListedQuantity` | `integer` |  |
+| `EndWhenStock` | `integer` |  |
+| `StockPercentage` | `number` |  |
+| `LinkedItemSku` | `string` |  |
+| `LinkedItemTitle` | `string` |  |
+| `IgnoreSync` | `boolean` |  |
+| `ChannelReferenceId` | `string` |  |
+| `StrickenOff` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `StartTime` | `string` |  |
+| `EndTime` | `string` |  |
+| `StrikeOffDate` | `string` |  |
+| `StrikeReason` | `string` |  |
+| `LinkedWith` | `string` |  |
+| `IsVariation` | `boolean` |  |
+| `FixedPrice` | `boolean` |  |
+| `ReslistedFrom` | `string` |  |
+| `ListId` | `string` |  |
+| `ListingPrice` | `number` |  |
+| `VariationItems` | `eBayItem[]` |  |
+| `IsGTC` | `boolean` |  |
+| `IsActive` | `boolean` |  |
+| `IsMatchByTitle` | `boolean` |  |
+| `TotalRows` | `integer` |  |

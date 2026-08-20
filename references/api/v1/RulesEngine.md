@@ -242,6 +242,14 @@ Use this call to copy an action from one condition to another condition. Actions
 | `DisplayType` | `string` |  |
 | `FieldType` | `string` |  |
 
+### `ActionTypeDescriptorProperties`
+
+| Property | Type | Description |
+|---|---|---|
+| `DisplayName` | `string` |  |
+| `DisplayType` | `string` |  |
+| `FieldType` | `string` |  |
+
 ### `ActionWeb`
 
 | Property | Type | Description |
@@ -251,6 +259,14 @@ Use this call to copy an action from one condition to another condition. Actions
 | `ActionName` | `string` |  |
 | `ActionType` | `string` |  |
 | `Properties` | `ActionWebProperty[]` |  |
+
+### `ActionWebProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `ActionPropertyId` | `integer` |  |
+| `DisplayName` | `string` |  |
+| `Value` | `string` |  |
 
 ### `ConditionHeaderBasic`
 
@@ -262,6 +278,17 @@ Use this call to copy an action from one condition to another condition. Actions
 | `ConditionName` | `string` |  |
 | `Enabled` | `boolean` |  |
 | `Conditions` | `ConditionItemBasic[]` |  |
+
+### `ConditionItemBasic`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkConditionItemId` | `integer` |  |
+| `fkConditionId` | `integer` |  |
+| `FieldName` | `string` |  |
+| `Evaluation` | `string` |  |
+| `Values` | `string[]` |  |
+| `KeyValue` | `string` |  |
 
 ### `EvaluatorDescriptor`
 
@@ -292,6 +319,15 @@ Use this call to copy an action from one condition to another condition. Actions
 | `DisplayType` | `string` |  |
 | `ExactMatchRequired` | `boolean` |  |
 
+### `FieldKeys`
+
+| Property | Type | Description |
+|---|---|---|
+| `FieldName` | `string` |  |
+| `Keys` | `string[]` |  |
+
+### `IRuleConditionItem`
+
 ### `MultiKeyOptionResponse`
 
 | Property | Type | Description |
@@ -308,6 +344,13 @@ Use this call to copy an action from one condition to another condition. Actions
 | `Options` | `string[]` | Evaluation options |
 | `KeyedOptions` | `OptionBase[]` |  |
 
+### `OptionBase`
+
+| Property | Type | Description |
+|---|---|---|
+| `Text` | `string` |  |
+| `Value` | `string` |  |
+
 ### `RuleAction`
 
 | Property | Type | Description |
@@ -320,6 +363,15 @@ Use this call to copy an action from one condition to another condition. Actions
 | `RuleVersion` | `integer` |  |
 | `fkRuleId` | `integer` |  |
 | `Properties` | `RuleActionProperty[]` |  |
+
+### `RuleActionProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `ActionPropertyId` | `integer` |  |
+| `ActionId` | `integer` |  |
+| `DisplayName` | `string` |  |
+| `Value` | `string` |  |
 
 ### `RuleConditionHeader`
 
@@ -504,3 +556,11 @@ Use this call to copy an action from one condition to another condition. Actions
 | `FieldNames` | `string[]` |  |
 | `FieldKeys` | `object` |  |
 | `IdName` | `string` |  |
+
+### `TestpadValue`
+
+| Property | Type | Description |
+|---|---|---|
+| `FieldName` | `string` |  |
+| `Key` | `string` |  |
+| `Values` | `string[]` |  |

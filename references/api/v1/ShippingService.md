@@ -54,6 +54,12 @@ Cancels the shipping label for an order Permissions Required: GlobalPermissions.
 
 ## Models
 
+### `CancelOrderShippingLabelRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` | Unique Order id |
+
 ### `CancelOrderShippingLabelResponse`
 
 | Property | Type | Description |
@@ -62,6 +68,52 @@ Cancels the shipping label for an order Permissions Required: GlobalPermissions.
 | `MustCancelManually` | `boolean` | Identifies that the label is canceled in Linnworks Only and must also be canceled manually with the courier. This normally indicates that the courier does not support label cancelation. |
 | `IsError` | `boolean` | Is error |
 | `ErrorMessage` | `string` | Error Message if IsError is true |
+
+### `Consignment`
+
+| Property | Type | Description |
+|---|---|---|
+| `ConsignmentId` | `integer` |  |
+| `OrderId` | `integer` |  |
+| `Customer` | `string` |  |
+| `Email` | `string` |  |
+| `PostalCode` | `string` |  |
+| `Country` | `string` |  |
+| `Weight` | `number` |  |
+| `TrackingNumbers` | `string[]` |  |
+| `Packages` | `integer` |  |
+| `ConsignmentPackages` | `ManifestPackage[]` |  |
+| `Properties` | `ServiceProperty[]` |  |
+| `Deferred` | `boolean` |  |
+| `Service` | `string` |  |
+
+### `FileUploadItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `EncodedFile` | `string` |  |
+| `Name` | `string` |  |
+| `DocType` | `string` |  |
+| `ExpirationDate` | `string` |  |
+| `DocUsageType` | `string` |  |
+| `OrderId` | `string` |  |
+| `AccountId` | `string` |  |
+| `Vendor` | `string` |  |
+
+### `FiledManifest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ManifestId` | `integer` |  |
+| `Date` | `string` |  |
+| `ExternalManifestId` | `string` |  |
+| `Reference` | `string` |  |
+| `IsError` | `boolean` |  |
+| `Vendor` | `string` |  |
+| `AccountId` | `string` |  |
+| `NumConsignments` | `integer` |  |
+| `fkShippingAPIConfigId` | `integer` |  |
+| `IsComplete` | `boolean` |  |
 
 ### `GenericPagedResult_Consignment`
 
@@ -83,11 +135,76 @@ Cancels the shipping label for an order Permissions Required: GlobalPermissions.
 | `TotalPages` | `integer` |  |
 | `Data` | `FiledManifest[]` |  |
 
+### `ManifestPackage`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderReference` | `string` |  |
+| `PackageSeqNo` | `integer` |  |
+| `Weight` | `number` |  |
+| `Depth` | `number` |  |
+| `Width` | `number` |  |
+| `Height` | `number` |  |
+| `PackageFormat` | `string` |  |
+| `TrackingNumber` | `string` |  |
+| `Value` | `number` |  |
+| `Items` | `SavedItem[]` |  |
+
 ### `PostShipmentUploadRequest`
 
 | Property | Type | Description |
 |---|---|---|
 | `FileUploadItems` | `FileUploadItem[]` |  |
+
+### `PrintZoneConfig`
+
+| Property | Type | Description |
+|---|---|---|
+| `PrintZoneCode` | `string` |  |
+| `PrinterDestination` | `string` |  |
+| `PrinterName` | `string` |  |
+
+### `PrinterConfig`
+
+| Property | Type | Description |
+|---|---|---|
+| `PrinterName` | `string` |  |
+| `TemplateId` | `string` |  |
+| `LabelFormat` | `string` |  |
+| `MarginLeft` | `number` |  |
+| `MarginTop` | `number` |  |
+| `Duplex` | `boolean` |  |
+| `UserConfig` | `PrinterUserConfig[]` |  |
+| `PrintZoneConfig` | `PrintZoneConfig[]` |  |
+
+### `PrinterUserConfig`
+
+| Property | Type | Description |
+|---|---|---|
+| `UserId` | `string` |  |
+| `PrinterName` | `string` |  |
+| `MarginLeft` | `number` |  |
+| `MarginTop` | `number` |  |
+| `TemplateId` | `string` |  |
+| `LabelFormat` | `string` |  |
+| `Duplex` | `boolean` |  |
+
+### `SavedItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `Quantity` | `integer` |  |
+| `UnitValue` | `number` |  |
+| `UnitValueCurrency` | `string` |  |
+
+### `ServiceProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `PropertyName` | `string` |  |
+| `PropertyValue` | `string` |  |
+| `ServiceId` | `string` |  |
 
 ### `ShippingService_CancelOrderShippingLabelRequest`
 

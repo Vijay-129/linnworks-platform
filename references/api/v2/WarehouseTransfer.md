@@ -349,6 +349,41 @@ Retrieves a specific transfer by unique id
 
 ## Models
 
+### `AmazonConfigErrorResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `errorMessage` | `string` |  |
+| `channelId` | `integer` |  |
+
+### `AmazonPrepInstructionItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `prepInstruction` | `SkuPrepInstruction` |  |
+| `currencyCode` | `string` |  |
+| `currencyValue` | `number` |  |
+| `prepOwner` | `PrepOwner` |  |
+
+### `AvailabilityType`
+
+### `BinRackResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `binRackId` | `integer` |  |
+| `binRack` | `string` |  |
+| `binRackTypeId` | `integer` |  |
+| `binRackTypeName` | `string` |  |
+| `routingSequence` | `integer` |  |
+
+### `CurrencyModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `amount` | `number` |  |
+| `code` | `string` |  |
+
 ### `GetBillOfLadingByShipmentIdResponse`
 
 | Property | Type | Description |
@@ -431,6 +466,38 @@ Retrieves a specific transfer by unique id
 | `prepOwners` | `Int32StringKeyValuePair[]` |  |
 | `labelOwners` | `Int32StringKeyValuePair[]` |  |
 
+### `IncentiveModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `value` | `CurrencyModel` |  |
+| `target` | `string` |  |
+| `description` | `string` |  |
+
+### `Int32StringKeyValuePair`
+
+| Property | Type | Description |
+|---|---|---|
+| `key` | `integer` |  |
+| `value` | `string` |  |
+
+### `ItemModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `asin` | `string` |  |
+| `fnsku` | `string` |  |
+| `labelOwner` | `string` |  |
+| `manufacturingLotCode` | `string` |  |
+| `msku` | `string` |  |
+| `quantity` | `integer` |  |
+| `thumbnailSource` | `string` |  |
+| `title` | `string` |  |
+| `stockItemId` | `string` |  |
+| `prepInstructions` | `PrepInstructionsModel[]` |  |
+
+### `LabelOwner`
+
 ### `ListDeliveryWindowOptionResponse`
 
 | Property | Type | Description |
@@ -451,6 +518,28 @@ Retrieves a specific transfer by unique id
 | `type` | `OperationType` |  |
 | `createdDate` | `string` |  |
 | `problems` | `OperationProblemModel[]` |  |
+
+### `OperationProblemModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `severity` | `SeverityProblem` |  |
+| `message` | `string` |  |
+| `details` | `string` |  |
+| `code` | `string` |  |
+
+### `OperationStatus`
+
+### `OperationType`
+
+### `OptionStatus`
+
+### `PackingGroupModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `packingGroupId` | `string` |  |
+| `items` | `ItemModel[]` |  |
 
 ### `PackingOptionModel`
 
@@ -474,6 +563,56 @@ Retrieves a specific transfer by unique id
 | `fees` | `IncentiveModel[]` |  |
 | `discounts` | `IncentiveModel[]` |  |
 | `shipments` | `ShipmentAmazonModel[]` |  |
+
+### `PrepInstructionsModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `fee` | `CurrencyModel` |  |
+| `prepOwner` | `PrepOwner` |  |
+| `prepType` | `PrepType` |  |
+
+### `PrepOwner`
+
+### `PrepType`
+
+### `SeverityProblem`
+
+### `ShipmentAmazonModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `placementOptionId` | `string` |  |
+| `shipmentId` | `string` |  |
+| `name` | `string` |  |
+| `shippingItems` | `ItemModel[]` |  |
+| `warehouseId` | `string` |  |
+| `warehouseAddress` | `string` |  |
+
+### `ShipmentBoxItemExtendedModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `id` | `string` |  |
+| `shippingPlanId` | `integer` |  |
+| `shipmentId` | `integer` |  |
+| `packingGroupId` | `integer` |  |
+| `stockItemIntId` | `integer` |  |
+| `stockItemId` | `string` |  |
+| `sellerSku` | `string` |  |
+| `sku` | `string` |  |
+| `weight` | `number` |  |
+| `length` | `number` |  |
+| `height` | `number` |  |
+| `width` | `number` |  |
+| `quantityToShip` | `integer` |  |
+| `thumbnailSource` | `string` |  |
+| `type` | `ShipmentBoxRecordType` |  |
+| `dataPath` | `string[]` |  |
+| `shipmentBoxId` | `integer` |  |
+| `shipmentBoxItemId` | `integer` |  |
+| `shipmentBoxName` | `string` |  |
+| `title` | `string` |  |
 
 ### `ShipmentBoxItemModel`
 
@@ -501,6 +640,60 @@ Retrieves a specific transfer by unique id
 | `weight` | `number` |  |
 | `shipmentWeightUnit` | `UnitOfWeight` |  |
 | `quantity` | `integer` |  |
+
+### `ShipmentBoxRecordType`
+
+### `ShipmentCardModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `channelId` | `integer` |  |
+| `createDate` | `string` |  |
+| `updateDate` | `string` |  |
+| `fromLocation` | `string` |  |
+| `id` | `integer` |  |
+| `amazonShipmentId` | `string` |  |
+| `shippingPlanId` | `integer` |  |
+| `packingType` | `integer` |  |
+| `planId` | `string` |  |
+| `shipmentItemsCount` | `integer` |  |
+| `shipmentReceived` | `integer` |  |
+| `shipmentShipped` | `integer` |  |
+| `status` | `ShipmentStatus` |  |
+| `toLocation` | `string` |  |
+| `type` | `TransferCard` |  |
+| `items` | `StockItemSearchModel[]` |  |
+| `shipments` | `ShipmentSearchModel[]` |  |
+
+### `ShipmentItemBatchResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `batchId` | `integer` |  |
+| `batchInventoryId` | `integer` |  |
+| `batchNumber` | `string` |  |
+| `batchStatus` | `string` |  |
+| `available` | `integer` |  |
+| `quantity` | `integer` |  |
+| `quantityToShip` | `integer` |  |
+| `shipmentItemId` | `integer` |  |
+
+### `ShipmentItemModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `stockItemId` | `integer` |  |
+| `id` | `integer` |  |
+| `quantityToShip` | `integer` |  |
+| `receivedQty` | `integer` |  |
+| `shipmentId` | `integer` |  |
+| `shippedQty` | `integer` |  |
+| `sellerSku` | `string` |  |
+| `sku` | `string` |  |
+| `title` | `string` |  |
+| `barcodeInstructionId` | `SkuPrepBarcodeInstruction` |  |
+| `prepGuidanceId` | `SkuPrepGuidance` |  |
+| `unitCost` | `number` |  |
 
 ### `ShipmentItemPrepInstructionModel`
 
@@ -570,6 +763,34 @@ Retrieves a specific transfer by unique id
 | `updateDate` | `string` |  |
 | `warehouseAddress` | `string` |  |
 
+### `ShipmentSearchModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `amazonShipmentId` | `string` |  |
+| `name` | `string` |  |
+
+### `ShipmentStatus`
+
+### `ShippingConfigurationModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `shippingMode` | `ShippingMode` |  |
+| `shippingSolution` | `ShippingSolution` |  |
+
+### `ShippingMode`
+
+### `ShippingPlanStatus`
+
+### `ShippingSolution`
+
+### `SkuPrepBarcodeInstruction`
+
+### `SkuPrepGuidance`
+
+### `SkuPrepInstruction`
+
 ### `StockItemBatchResponse`
 
 | Property | Type | Description |
@@ -590,6 +811,26 @@ Retrieves a specific transfer by unique id
 | `stockItemId` | `string` |  |
 | `stockLocationId` | `string` |  |
 | `stockValue` | `number` |  |
+
+### `StockItemSearchModel`
+
+| Property | Type | Description |
+|---|---|---|
+| `barcodeNumber` | `string` |  |
+| `itemNumber` | `string` |  |
+| `itemTitle` | `string` |  |
+| `sellerSKU` | `string` |  |
+| `asin` | `string` |  |
+
+### `TransferCard`
+
+### `TransferStatus`
+
+### `TransferType`
+
+### `UnitOfMeasurement`
+
+### `UnitOfWeight`
 
 ### `WarehouseTransferModel`
 

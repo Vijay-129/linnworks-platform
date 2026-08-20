@@ -183,6 +183,20 @@ def get_definitions(spec: dict) -> dict:
     return spec.get("components", {}).get("schemas", {})
 
 
+def direct_refs(defn: dict) -> set:
+    """Type names a model's own properties reference directly (a $ref property,
+    or an array of $ref items) - one level, not transitive."""
+    refs = set()
+    for p in defn.get("properties", {}).values():
+        if "$ref" in p:
+            refs.add(ref_name(p["$ref"]))
+        elif p.get("type") == "array":
+            items = p.get("items", {})
+            if "$ref" in items:
+                refs.add(ref_name(items["$ref"]))
+    return refs
+
+
 def model_properties(defn: dict, model_name: str, sdk_descriptions: dict):
     """Returns (name, type, description) triples. description comes from
     vendor/LinnworksNetSDK/ClassBase/<model_name>.cs's XML doc comments (see
@@ -220,6 +234,22 @@ def render_markdown(controller: str, version: str, spec_file: pathlib.Path, spec
             if m:
                 for name in m.split(" | "):
                     referenced.add(name.replace("[]", ""))
+
+    # Transitive closure - a type referenced only as a nested property (e.g.
+    # GetItemBinracksResponse.PickableBins: BinRackStockItem[]) wasn't reachable
+    # before, even though the spec fully defines it - get_model() had nothing to
+    # find for it. Walk each referenced model's own properties for further $refs,
+    # repeating until nothing new turns up.
+    worklist = list(referenced)
+    while worklist:
+        name = worklist.pop()
+        defn = defs.get(name)
+        if not defn:
+            continue
+        for nested in direct_refs(defn):
+            if nested not in referenced:
+                referenced.add(nested)
+                worklist.append(nested)
 
     sdk_methods = sdk_descriptions.get("methods", {}).get(controller, {})
 

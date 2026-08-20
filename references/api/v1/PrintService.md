@@ -61,6 +61,12 @@ Creates a PDF file of return shipping labels for a single order
 
 ## Models
 
+### `ClientContext`
+
+| Property | Type | Description |
+|---|---|---|
+| `Module` | `string` |  |
+
 ### `CreatePDFResult`
 
 | Property | Type | Description |
@@ -71,6 +77,27 @@ Creates a PDF file of return shipping labels for a single order
 | `ProcessedIds` | `object` |  |
 | `PageCount` | `integer` |  |
 | `PrintErrors` | `string[]` | List of OrderId / Error message |
+
+### `KeyValue_Guid_Int32`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `integer` |  |
+
+### `KeyValue_String_Int32`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `integer` |  |
+
+### `KeyValue_String_String`
+
+| Property | Type | Description |
+|---|---|---|
+| `Key` | `string` |  |
+| `Value` | `string` |  |
 
 ### `PermissionsUser`
 
@@ -83,6 +110,22 @@ Creates a PDF file of return shipping labels for a single order
 | `UserType` | `string` |  |
 | `TotpAuthenticationEnabled` | `boolean` |  |
 | `PasswordProblems` | `integer` |  |
+
+### `PrintError`
+
+| Property | Type | Description |
+|---|---|---|
+| `TemplateType` | `string` |  |
+| `Id` | `string` |  |
+| `Error` | `string` |  |
+| `Tags` | `PrintErrorTags[]` |  |
+
+### `PrintErrorTags`
+
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` |  |
+| `Value` | `string` |  |
 
 ### `PrintService_CreatePDFfromJobForceTemplateRequest`
 
@@ -144,6 +187,15 @@ Creates a PDF file of return shipping labels for a single order
 | Property | Type | Description |
 |---|---|---|
 | `templateId` | `integer` |  |
+
+### `PrintingKey`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` |  |
+| `Key` | `string` |  |
+| `LocationId` | `string` |  |
+| `Quantity` | `integer` |  |
 
 ### `TemplateHeader`
 

@@ -123,11 +123,46 @@ Updates the batch/binrack for allocated pickwave item. Only applicable to pickwa
 
 ## Models
 
+### `BinRackStockItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `BinRackId` | `integer` | Unique id for the binrack |
+| `StandardType` | `integer` | Bin Rack type name |
+| `BatchId` | `integer` | Batch id |
+| `BatchInventoryId` | `integer` | Batch inventory id |
+| `PrioritySequence` | `integer` | Consume priority sequence |
+| `BatchStatus` | `string` | Batch status, "Available", "Restricted", "Damaged", "Expired" |
+| `BinRack` | `string` | BinRack name |
+| `CurrentFullPercentage` | `number` | Maximum volumetric capacity of the location WxDxH = volumetric |
+| `Quantity` | `integer` | Quantity available in the location |
+| `InTransit` | `integer` | Quantity of items currently in transit |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `InventoryTrackingType` | `integer` | 0 - None, 1 - Order by sell by date, 2 - Ordered by priority sequence |
+| `StockItemId` | `string` | Product ID |
+| `BatchNumber` | `string` | Batch number |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
+| `BinrackTypeName` | `string` |  |
+| `LocationId` | `string` |  |
+
+### `CheckAllocatableToPickwaveRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `integer[]` | List of integer order ids |
+
 ### `CheckAllocatableToPickwaveResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `Results` | `PickWaveAllocateCheckResult[]` | List of results |
+
+### `DeleteOrdersFromPickingWavesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderIds` | `integer[]` | List of Linnworks OrderIds |
 
 ### `DeleteOrdersFromPickingWavesResponse`
 
@@ -173,6 +208,84 @@ Updates the batch/binrack for allocated pickwave item. Only applicable to pickwa
 |---|---|---|
 | `PickingWaves` | `PickingWave[]` |  |
 
+### `PickWaveAllocateCheckResult`
+
+| Property | Type | Description |
+|---|---|---|
+| `SortOrder` | `integer` |  |
+| `OrderId` | `integer` | Order Id interger |
+| `OrderId_Guid` | `string` | Order Id uniqueidentifier |
+| `Errors` | `PickWaveAllocateCheckResultError[]` | Errors |
+| `HasErrors` | `boolean` | Has Errors |
+| `OrderDetails` | `PickWaveAllocateCheckResultOrderDetails[]` |  |
+
+### `PickWaveAllocateCheckResultError`
+
+| Property | Type | Description |
+|---|---|---|
+| `Error` | `string` | Error message |
+| `ErrorType` | `string` | Error type enum. |
+| `OrderItemRowId` | `string` | Order item row id, if null or guid empty then top level order error. |
+
+### `PickWaveAllocateCheckResultOrderDetails`
+
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` | Location the order resides in |
+| `OrderItemRowId` | `string` | Order item row id |
+| `BatchInventoryId` | `integer` | Batch inventory id, if the order item contains batches. |
+| `StockItemId` | `string` | Stock item id |
+| `SKU` | `string` | SKU |
+| `ItemTitle` | `string` | Item title |
+| `Binrack` | `string` | Binrack |
+| `BatchNumber` | `string` | Batch number |
+| `Quantity` | `integer` | Quantity on either order item row or allocated batch row. |
+| `RoutingSequence` | `integer` | (WMS only) Routing sequence of the binrack. |
+
+### `PickingWave`
+
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` | Location Id |
+| `UserId` | `integer` | Allocated user id |
+| `EmailAddress` | `string` | Allocated user EmailAddress |
+| `CreatedDate` | `string` | Creation date |
+| `OrderCount` | `integer` | Order Count - Number of orders in pickwave. |
+| `ItemCount` | `integer` | Item Count - Number of items in pickwave. |
+| `ItemsPicked` | `integer` | Items Picked - Number of items picked in pickwave. |
+| `OrdersPicked` | `integer` | Orders Picked - Number of orders picked in pickwave. |
+| `AccumulatedInProgressSeconds` | `integer` | Time taken in pickwave |
+| `StartTime` | `string` | Start date time of pickwave |
+| `EndTime` | `string` | End date time of pickwave |
+| `GroupType` | `string` | Pickwave group type |
+| `SortType` | `string` |  |
+| `Orders` | `PickingWaveOrder[]` | Orders in pickwave. This data is not returned if just headers are requested. |
+| `Options` | `PickingWaveOptions` |  |
+| `PickingWaveId` | `integer` |  |
+| `State` | `string` |  |
+
+### `PickingWaveDetailed`
+
+| Property | Type | Description |
+|---|---|---|
+| `LocationId` | `string` | Location Id |
+| `UserId` | `integer` | Allocated user id |
+| `EmailAddress` | `string` | Allocated user EmailAddress |
+| `CreatedDate` | `string` | Creation date |
+| `OrderCount` | `integer` | Order Count - Number of orders in pickwave. |
+| `ItemCount` | `integer` | Item Count - Number of items in pickwave. |
+| `ItemsPicked` | `integer` | Items Picked - Number of items picked in pickwave. |
+| `OrdersPicked` | `integer` | Orders Picked - Number of orders picked in pickwave. |
+| `AccumulatedInProgressSeconds` | `integer` | Time taken in pickwave |
+| `StartTime` | `string` | Start date time of pickwave |
+| `EndTime` | `string` | End date time of pickwave |
+| `GroupType` | `string` | Pickwave group type |
+| `SortingType` | `string` |  |
+| `Orders` | `PickingWaveOrderDetailed[]` | Orders in pickwave. |
+| `Options` | `PickingWaveOptions` |  |
+| `PickingWaveId` | `integer` |  |
+| `State` | `string` |  |
+
 ### `PickingWaveGenerate`
 
 | Property | Type | Description |
@@ -183,6 +296,155 @@ Updates the batch/binrack for allocated pickwave item. Only applicable to pickwa
 | `Orders` | `PickingWaveGenerateOrder[]` | Pickwave items |
 | `Pickwaves` | `PickingWaveGenerateMulti[]` | Collection of pickwaves and their orders to generate. All order singular or composite child row ids must be provided, if batches exist on the order item then batch id must be supplied); |
 | `GroupType` | `string` | Pickwave group type |
+
+### `PickingWaveGenerateItemMulti`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowId` | `string` | Order item row id |
+| `BatchInventoryId` | `integer` | Batch inventory id, if the item is batched or location is warehouse managed and id is not supplied then the whole order item will be added to the pickwave. |
+
+### `PickingWaveGenerateMulti`
+
+| Property | Type | Description |
+|---|---|---|
+| `Orders` | `PickingWaveGenerateOrderMulti[]` | Orders |
+| `GroupType` | `string` | Pickwave group type (optional, if not set parent sort will be used) |
+
+### `PickingWaveGenerateOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `integer` | Order Id (Integer) |
+| `SortOrder` | `integer` |  |
+
+### `PickingWaveGenerateOrderMulti`
+
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `PickingWaveGenerateItemMulti[]` | Items to be added to the pickwave. |
+| `OrderId` | `integer` |  |
+| `SortOrder` | `integer` |  |
+
+### `PickingWaveItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveItemsRowId` | `integer` | Pickwave item row id |
+| `PickingWaveId` | `integer` | Pickwave id |
+| `PickedQuantity` | `integer` | Quatity picked |
+| `TotBarcode` | `string` | Tote Barcode |
+| `SortOrder` | `integer` |  |
+| `ToPickQuantity` | `integer` |  |
+| `TOTId` | `integer` |  |
+| `TrayTag` | `string` |  |
+| `PickingTag` | `string` |  |
+| `ItemState` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `OrderId` | `integer` |  |
+| `OrderItemRowId` | `string` |  |
+| `StockItemId` | `string` |  |
+| `OrderSortOrder` | `integer` |  |
+
+### `PickingWaveItemComposition`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | Stock item id |
+| `OrderItemRowId` | `string` | Composite parent order item row id |
+| `Quantity` | `integer` | Quantity of composite. |
+| `Children` | `PickingWaveItemComposition[]` | Child row relationships to parent |
+
+### `PickingWaveItemDetailed`
+
+| Property | Type | Description |
+|---|---|---|
+| `SortOrder` | `integer` | Sort order |
+| `ToPickQuantity` | `integer` | Quantity to pick |
+| `TOTId` | `integer` | ToT Id |
+| `TrayTag` | `string` | Tray tag |
+| `PickingTag` | `string` | Picking tag |
+| `PickingWaveItemsRowId` | `integer` | Pickwave item row id |
+| `PickingWaveId` | `integer` | Pickwave id |
+| `PickedQuantity` | `integer` | Quatity picked |
+| `ItemState` | `string` | Pickwave item state |
+| `Totes` | `PickingWaveItemTote[]` | Collection of pickwave item totes. |
+| `BatchInventoryId` | `integer` |  |
+| `OrderId` | `integer` |  |
+| `OrderItemRowId` | `string` |  |
+| `StockItemId` | `string` |  |
+| `OrderSortOrder` | `integer` |  |
+
+### `PickingWaveItemTote`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `integer` |  |
+| `PickingWaveItemsRowId` | `integer` |  |
+| `ToteId` | `integer` |  |
+| `TrayTag` | `string` |  |
+| `PickedQuantity` | `integer` |  |
+
+### `PickingWaveItemUpdate`
+
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveItemsRowId` | `integer` | Pickwave item row id |
+| `TOTId` | `integer` | ToT Id |
+| `TrayTag` | `string` | Tray tag |
+| `PickingTag` | `string` | Picking tag |
+| `PickedQuantity` | `integer` | Picked quantity |
+| `OrderState` | `string` | Order State |
+| `ItemState` | `string` | Item State |
+| `ToPickQuantity` | `integer` | To Pick Quantity |
+
+### `PickingWaveItemUpdateRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `WaveItemUpdates` | `PickingWaveItemUpdate[]` | List of pickwave items to update |
+
+### `PickingWaveOptions`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemScanType` | `string` | Item scan type, dictates if the user must scan all items or can provide aggregate count |
+| `TrayScanRequired` | `boolean` | If the user must scan the tray the item went into. |
+| `TotScanRequired` | `boolean` | If the user must scan the tot before scanning items. |
+| `BinRackScanRequired` | `boolean` | If the user must scan the binrack before picking an item. |
+
+### `PickingWaveOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveOrdersRowId` | `integer` | Pickwave order id |
+| `PickingWaveId` | `integer` | Pickwave id |
+| `OrderId` | `integer` | Order Id |
+| `PickState` | `string` | Pick state |
+| `SortOrder` | `integer` | Sort order |
+| `ItemCount` | `integer` | Items count |
+| `PickedItemsCount` | `integer` | Picked items count |
+| `Items` | `PickingWaveItem[]` | Pickwave order items. |
+
+### `PickingWaveOrderDetailed`
+
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveOrdersRowId` | `integer` | Pickwave order id |
+| `PickingWaveId` | `integer` | Pickwave id |
+| `OrderId` | `integer` | Order Id |
+| `PickState` | `string` | Pick state |
+| `SortOrder` | `integer` | Sort order |
+| `ItemCount` | `integer` | Items count |
+| `PickedItemsCount` | `integer` | Picked items count |
+| `Items` | `PickingWaveItemDetailed[]` | Pickwave order items. |
+| `Composition` | `PickingWaveItemComposition[]` | Relationship between pickwave items and composite parent rows. |
+| `OrderId_Guid` | `string` | Internal guid orderid |
+| `IsProcessed` | `boolean` | Is order processed |
+| `IsCancelled` | `boolean` | Is order hold or cancelled |
+| `IsOnHold` | `boolean` | Is order on hold status |
+| `IsLocked` | `boolean` | Is order locked. |
+| `IsPaid` | `boolean` | Is order paid |
 
 ### `PickingWaveUpdateRequest`
 
@@ -218,8 +480,80 @@ Updates the batch/binrack for allocated pickwave item. Only applicable to pickwa
 |---|---|---|
 | `request` | `UpdatePickingWaveItemWithNewBinrackRequest` |  |
 
+### `StockItemBatch`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchId` | `integer` | Batch ID |
+| `SKU` | `string` | Product SKU |
+| `InventoryTrackingType` | `integer` | 0 - None, 1 - Order by sell by date, 2 - Ordered by priority sequence |
+| `StockItemId` | `string` | Product ID |
+| `BatchNumber` | `string` | Batch number |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
+| `Inventory` | `StockItemBatchInventory[]` | Batch records |
+| `IsDeleted` | `boolean` | Is the batch deleted |
+
+### `StockItemBatchInventory`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Stock item batch record ID |
+| `BatchId` | `integer` | Batch ID |
+| `StockLocationId` | `string` | Location ID |
+| `BinRack` | `string` | BinRack |
+| `PrioritySequence` | `integer` | Pick order |
+| `Quantity` | `integer` | Quantity |
+| `StockValue` | `number` | Current stock value |
+| `StartQuantity` | `integer` | Quantity originally booked in |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `BatchStatus` | `string` | Batch Status |
+| `IsDeleted` | `boolean` | Is BatchInventory deleted |
+| `WarehouseBinrackStandardType` | `integer` | Warehouse binrack standard type |
+| `WarehouseBinrackTypeName` | `string` | Warehouse binrack type friendly name |
+| `InTransfer` | `integer` | Number of items in Transfer phase. |
+| `BinRackId` | `integer` | Binrack Id (Use for WMS) |
+| `WarehouseBinrackTypeId` | `integer` | Warehouse binrack type unique id. |
+
+### `StockItemIdentifier`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | Stock item id |
+| `Type` | `string` | Product identifier type |
+| `Value` | `string` | Product identifier |
+
+### `StockItemInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKU` | `string` | Item SKU |
+| `StockItemId` | `string` | Item unique id |
+| `ItemTitle` | `string` | Item Title |
+| `Barcode` | `string` | Barcode number on the item header |
+| `PrimaryImageURL` | `string` | Image URL |
+| `Identifiers` | `StockItemIdentifier[]` | Product identifiers |
+
 ### `UpdatePickedItemDeltaRequest`
 
 | Property | Type | Description |
 |---|---|---|
 | `Deltas` | `UpdatePickedItemDeltaRequestItem[]` |  |
+
+### `UpdatePickedItemDeltaRequestItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveItemsRowId` | `integer` | Picking wave row id |
+| `ToteId` | `integer` | Tote id |
+| `TrayTag` | `string` | Tray tag (optional) |
+| `PickedQuantityDelta` | `integer` | Picked quantity delta |
+
+### `UpdatePickingWaveItemWithNewBinrackRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PickingWaveId` | `integer` | Pickwave id |
+| `PickingWaveItemRowIds` | `integer[]` | List of pickwave item row ids to replace with the new location |
+| `NewBatchInventoryId` | `integer` | The new batch inventory to pick |
+| `SortType` | `string` | Dictates how the returned pickwave should be sorted |

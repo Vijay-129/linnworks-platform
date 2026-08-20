@@ -808,6 +808,47 @@ Use this call to create stock item prices for a specific channel Permissions Req
 
 ## Models
 
+### `APIResultResponse_DeleteInventoryItemBulkResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `Result` | `DeleteInventoryItemBulkResponse` |  |
+| `ResultStatus` | `string` |  |
+| `Message` | `string` |  |
+
+### `APIResultResponse_DeleteInventoryItemImagesResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `Result` | `DeleteInventoryItemImagesResponse` |  |
+| `ResultStatus` | `string` |  |
+| `Message` | `string` |  |
+
+### `APIResultResponse_Guid`
+
+| Property | Type | Description |
+|---|---|---|
+| `Result` | `string` |  |
+| `ResultStatus` | `string` |  |
+| `Message` | `string` |  |
+
+### `APIResultResponse_StockItemProductIdentifier`
+
+| Property | Type | Description |
+|---|---|---|
+| `Result` | `StockItemProductIdentifier` |  |
+| `ResultStatus` | `string` |  |
+| `Message` | `string` |  |
+
+### `AddImageToInventoryItemRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` | SKU number of an item |
+| `StockItemId` | `string` | pkStockItemId of an item |
+| `IsMain` | `boolean` | Whether you want to set the image as main |
+| `ImageUrl` | `string` | Image URL |
+
 ### `AddImageToInventoryItemResponse`
 
 | Property | Type | Description |
@@ -817,17 +858,57 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `ImageUrl` | `string` | Image new URL |
 | `ImageThumbnailUrl` | `string` | Image Thumbnail URL |
 
+### `AddInventoryItemRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItems` | `StockItemHeader[]` |  |
+
+### `AddProductIdentifiersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ProductIdentifiers` | `StockItemProductIdentifier[]` |  |
+
+### `AddScrapCategoriesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `CategoryNames` | `string[]` |  |
+
 ### `AddScrapCategoriesResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ScrapCategories` | `ScrapCategory[]` |  |
 
+### `AddScrapItemRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ScrapItem` | `ScrapItem` |  |
+| `LocationId` | `string` |  |
+| `IgnoreConsumption` | `boolean` | Consumption should not be recorded for this scrap request |
+
 ### `AddScrapItemResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ScrapItem` | `ScrapItem` |  |
+
+### `AdjustmentOptions`
+
+| Property | Type | Description |
+|---|---|---|
+| `Title` | `boolean` | Product title |
+| `Price` | `boolean` | Product price |
+| `Description` | `boolean` | Product description |
+| `AddExtendedProperties` | `boolean` | If product extended properties needs to be added |
+| `ReviseExtendedProperties` | `boolean` | Revise product extended properties |
+| `UpdateImages` | `boolean` | Update product images |
+| `VariationAttributes` | `boolean` | Product variation attributes |
+| `ReloadAllImages` | `boolean` | Reload all images for the template |
+| `RemoveOldAttributes` | `boolean` | Removes old attributes |
 
 ### `AnyConfig`
 
@@ -896,6 +977,35 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `SubSource` | `string` |  |
 | `HeaderAuditValues` | `Channel_Setting_Audit[]` |  |
 
+### `BatchDatesUpdateItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowIndex` | `integer` |  |
+| `BatchNumber` | `string` |  |
+| `SellBy` | `string` |  |
+| `Expiry` | `string` |  |
+| `SKU` | `string` |  |
+
+### `BatchDatesUpdateItemResult`
+
+| Property | Type | Description |
+|---|---|---|
+| `Errors` | `string[]` |  |
+| `HasError` | `boolean` |  |
+| `RowIndex` | `integer` |  |
+| `BatchNumber` | `string` |  |
+| `SellBy` | `string` |  |
+| `Expiry` | `string` |  |
+| `SKU` | `string` |  |
+
+### `BatchInformation`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | Stock item id |
+| `ItemBatchInformation` | `StockItemBatch[]` | Stock item batch data |
+
 ### `BatchedAPIResponse_DeleteInventoryItemBulkResponse`
 
 | Property | Type | Description |
@@ -935,6 +1045,295 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `LocationId` | `string` |  |
 | `ScrapItems` | `ScrapItemExtended[]` |  |
 
+### `ChannelPaymentMethod`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkChannelId` | `integer` |  |
+| `pkRowId` | `integer` |  |
+| `FriendlyName` | `string` |  |
+| `Tag` | `string` |  |
+| `Site` | `string` |  |
+| `IsChanged` | `boolean` |  |
+
+### `ChannelPostalService`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkChannelId` | `integer` |  |
+| `pkRowId` | `integer` |  |
+| `FriendlyName` | `string` |  |
+| `Tag` | `string` |  |
+| `Site` | `string` |  |
+| `IsChanged` | `boolean` |  |
+
+### `Channel_Setting_Audit`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkAuditId` | `integer` |  |
+| `fkChannelId` | `integer` |  |
+| `PropertyName` | `string` |  |
+| `PropertyValueIs` | `string` |  |
+| `AuditDateTime` | `string` |  |
+| `UserName` | `string` |  |
+
+### `Column`
+
+| Property | Type | Description |
+|---|---|---|
+| `ColumnName` | `string` |  |
+| `DisplayName` | `string` |  |
+| `ExportName` | `string` |  |
+| `Group` | `string` |  |
+| `Field` | `string` |  |
+| `SortDirection` | `string` |  |
+| `Width` | `number` |  |
+| `IsEditable` | `boolean` |  |
+
+### `ConfigButton`
+
+| Property | Type | Description |
+|---|---|---|
+| `FieldName` | `string` |  |
+| `GroupName` | `string` |  |
+| `DisplayName` | `string` |  |
+| `FunctionName` | `string` |  |
+
+### `ConfigChannelLocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkChannelLocationId` | `integer` |  |
+| `Identifier` | `string` |  |
+| `Name` | `string` |  |
+| `ExternalReference` | `string` |  |
+| `OrderDownloadLocation` | `string` |  |
+| `InventorySyncLocations` | `string[]` |  |
+| `Types` | `string` |  |
+| `Deleted` | `boolean` |  |
+| `IsFulfilment` | `boolean` |  |
+| `AdditionalFields` | `object` |  |
+
+### `ConfigChannelLocationBinding`
+
+| Property | Type | Description |
+|---|---|---|
+| `Locations` | `ConfigChannelLocation[]` |  |
+
+### `ConfigItemExternal`
+
+| Property | Type | Description |
+|---|---|---|
+| `ListValues` | `ConfigItemListItem[]` |  |
+| `ValueType` | `string` |  |
+| `ConfigItemId` | `string` |  |
+| `Name` | `string` |  |
+| `Description` | `string` |  |
+| `GroupName` | `string` |  |
+| `SortOrder` | `integer` |  |
+| `SelectedValue` | `string` |  |
+| `RegExValidation` | `string` |  |
+| `RegExError` | `string` |  |
+| `MustBeSpecified` | `boolean` |  |
+| `ReadOnly` | `boolean` |  |
+| `HidesHeaderAttribute` | `boolean` |  |
+
+### `ConfigItemListItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Display` | `string` |  |
+| `Value` | `string` |  |
+
+### `ConfigItem_Boolean`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPropertyId` | `integer` |  |
+| `Loaded` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `boolean` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigItem_DateTime`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPropertyId` | `integer` |  |
+| `Loaded` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `string` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigItem_Double`
+
+| Property | Type | Description |
+|---|---|---|
+| `Loaded` | `boolean` |  |
+| `pkPropertyId` | `integer` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `number` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigItem_Int32`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPropertyId` | `integer` |  |
+| `Loaded` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `integer` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigItem_String`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPropertyId` | `integer` |  |
+| `Loaded` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `string` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigPaymentMethodMapping`
+
+| Property | Type | Description |
+|---|---|---|
+| `Mapping` | `ConfigPaymentMethodMappingItem[]` |  |
+| `ChannelServices` | `ChannelPaymentMethod[]` |  |
+| `IsChanged` | `boolean` |  |
+
+### `ConfigPaymentMethodMappingItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkChannelId` | `integer` |  |
+| `pkRowId` | `integer` |  |
+| `Tag` | `string` |  |
+| `fkBankId` | `string` |  |
+| `PaymentMethodName` | `string` |  |
+| `Site` | `string` |  |
+| `IsChanged` | `boolean` |  |
+
+### `ConfigPostalServiceMapping`
+
+| Property | Type | Description |
+|---|---|---|
+| `Mapping` | `ConfigPostalServiceMappingItem[]` |  |
+| `ChannelServices` | `ChannelPostalService[]` |  |
+| `IsChanged` | `boolean` |  |
+
+### `ConfigPostalServiceMappingItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkChannelId` | `integer` |  |
+| `pkRowId` | `integer` |  |
+| `Tag` | `string` |  |
+| `fkPostalServiceId` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `Site` | `string` |  |
+| `IsChanged` | `boolean` |  |
+
+### `ConfigPropertySelectionList_SelectStringValueOption_Guid`
+
+| Property | Type | Description |
+|---|---|---|
+| `OnGetSelectionList` | `GetSelectionList_SelectStringValueOption` |  |
+| `Loaded` | `boolean` |  |
+| `pkPropertyId` | `integer` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `string` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigPropertySelectionList_SelectStringValueOption_String`
+
+| Property | Type | Description |
+|---|---|---|
+| `OnGetSelectionList` | `GetSelectionList_SelectStringValueOption` |  |
+| `pkPropertyId` | `integer` |  |
+| `Loaded` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `string` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigProperty_Boolean`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPropertyId` | `integer` |  |
+| `Loaded` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `boolean` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigProperty_String`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPropertyId` | `integer` |  |
+| `Loaded` | `boolean` |  |
+| `IsChanged` | `boolean` |  |
+| `PropertyValue` | `string` |  |
+| `PropertyType` | `string` |  |
+
+### `ConfigRule`
+
+| Property | Type | Description |
+|---|---|---|
+| `FieldName` | `string` |  |
+| `Rules` | `PropertyRule[]` |  |
+
+### `ConfigStockLocation`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkStockLocationId` | `string` |  |
+| `Deleted` | `boolean` |  |
+| `fkChannelLocationId` | `integer` |  |
+
+### `ConfigStockLocationBinding`
+
+| Property | Type | Description |
+|---|---|---|
+| `Locations` | `ConfigStockLocation[]` |  |
+
+### `ConstructorInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `MemberType` | `string` |  |
+| `MethodImplementationFlags` | `string` |  |
+| `MethodHandle` | `object` |  |
+| `Attributes` | `string` |  |
+| `CallingConvention` | `string` |  |
+| `IsGenericMethodDefinition` | `boolean` |  |
+| `ContainsGenericParameters` | `boolean` |  |
+| `IsGenericMethod` | `boolean` |  |
+| `IsSecurityCritical` | `boolean` |  |
+| `IsSecuritySafeCritical` | `boolean` |  |
+| `IsSecurityTransparent` | `boolean` |  |
+| `IsPublic` | `boolean` |  |
+| `IsPrivate` | `boolean` |  |
+| `IsFamily` | `boolean` |  |
+| `IsAssembly` | `boolean` |  |
+| `IsFamilyAndAssembly` | `boolean` |  |
+| `IsFamilyOrAssembly` | `boolean` |  |
+| `IsStatic` | `boolean` |  |
+| `IsFinal` | `boolean` |  |
+| `IsVirtual` | `boolean` |  |
+| `IsHideBySig` | `boolean` |  |
+| `IsAbstract` | `boolean` |  |
+| `IsSpecialName` | `boolean` |  |
+| `IsConstructor` | `boolean` |  |
+| `Name` | `string` |  |
+| `DeclaringType` | `string` |  |
+| `ReflectedType` | `string` |  |
+| `CustomAttributes` | `CustomAttributeData[]` |  |
+| `MetadataToken` | `integer` |  |
+| `Module` | `object` |  |
+
 ### `Country`
 
 | Property | Type | Description |
@@ -950,11 +1349,61 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `Regions` | `CountryRegion[]` | Country region |
 | `RegionsCount` | `integer` | Count of regions |
 
+### `CountryRegion`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkRegionRowId` | `integer` | Region row ID |
+| `RegionCode` | `string` | Region code |
+| `RegionName` | `string` | Region name |
+| `TaxRate` | `number` | Tax rate |
+| `fkCountryId` | `string` | Country ID |
+| `ReplaceWith` | `string` |  |
+| `IsHomeRegion` | `boolean` | If this region is home region |
+| `TagsCount` | `integer` | Quantity of tags |
+
+### `CreateCountryRegionsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `regions` | `CountryRegion[]` | List of country regions |
+
 ### `CreateCountryRegionsResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `regions` | `CountryRegion[]` |  |
+
+### `CustomAttributeData`
+
+| Property | Type | Description |
+|---|---|---|
+| `AttributeType` | `string` |  |
+| `Constructor` | `ConstructorInfo` |  |
+| `ConstructorArguments` | `CustomAttributeTypedArgument[]` |  |
+| `NamedArguments` | `CustomAttributeNamedArgument[]` |  |
+
+### `CustomAttributeNamedArgument`
+
+| Property | Type | Description |
+|---|---|---|
+| `MemberInfo` | `MemberInfo` |  |
+| `TypedValue` | `CustomAttributeTypedArgument` |  |
+| `MemberName` | `string` |  |
+| `IsField` | `boolean` |  |
+
+### `CustomAttributeTypedArgument`
+
+| Property | Type | Description |
+|---|---|---|
+| `ArgumentType` | `string` |  |
+| `Value` | `object` |  |
+
+### `DeleteEbayCompatibilityListRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `EbayCompatibilityList` | `StockItemEbayCompatibility[]` |  |
 
 ### `DeleteEbayCompatibilityListResponse`
 
@@ -968,6 +1417,77 @@ Use this call to create stock item prices for a specific channel Permissions Req
 |---|---|---|
 | `InventoryItemIds` | `string[]` | List of items by ids to delete. If not provided, you must provide ItemNumbers |
 | `ItemNumbers` | `string[]` | List of items by item number to delete. If InventoryItemIds is provided, ItemNumbers will be ignored |
+
+### `DeleteInventoryItemBulkResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` | The ItemNumber (SKU) for the stock item. Only provided if passed in the request |
+| `InventoryItemId` | `string` | The Id for the stock item. Always provided unless not found |
+
+### `DeleteInventoryItemImagesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemId` | `string` | The id of the item. If not provided, you must provide ItemNumber |
+| `ItemNumber` | `string` | The item number (SKU) for the item. If InventoryItemId is provided, this will be ignored. |
+| `ImageIds` | `string[]` | A list of images by image ids to delete for the item |
+
+### `DeleteInventoryItemImagesResponse`
+
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemId` | `string` | InventoryItemId/StockItemId |
+| `ItemNumber` | `string` | The Item Number (SKU). Only provided if passed in the request |
+| `ImageId` | `string` | Image Id |
+
+### `DeleteInventoryItemsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemIds` | `string[]` |  |
+| `SelectedRegions` | `Tuple_Int32_Int32[]` |  |
+| `Token` | `string` |  |
+
+### `DeleteProductIdentifiersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ProductIdentifierIds` | `integer[]` |  |
+
+### `DeleteScrapCategoriesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `CategoryIds` | `integer[]` |  |
+
+### `Filter`
+
+| Property | Type | Description |
+|---|---|---|
+| `FilterName` | `string` |  |
+| `DisplayName` | `string` |  |
+| `FilterNameExact` | `string[]` |  |
+| `Field` | `string` |  |
+| `Condition` | `string` |  |
+| `ConditionDisplayName` | `string` |  |
+| `Value` | `string` |  |
+
+### `GenericPagedResult_ScrapItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+| `TotalEntries` | `integer` |  |
+| `TotalPages` | `integer` |  |
+| `Data` | `ScrapItem[]` |  |
+
+### `GetBatchAuditRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemId` | `string` |  |
 
 ### `GetBatchAuditResponse`
 
@@ -988,17 +1508,78 @@ Use this call to create stock item prices for a specific channel Permissions Req
 |---|---|---|
 | `Batches` | `StockItemBatch[]` |  |
 
+### `GetExtendedPropertyFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `PropertyName` | `string` |  |
+| `PropertyType` | `string` |  |
+
+### `GetImagesInBulkRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemIds` | `string[]` |  |
+| `SKUS` | `string[]` |  |
+
 ### `GetImagesInBulkResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `Images` | `GetImagesInBulkResponseImage[]` |  |
 
+### `GetImagesInBulkResponseImage`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKU` | `string` | SKU |
+| `IsMain` | `boolean` | Is main image |
+| `pkRowId` | `string` | Image row id |
+| `ChecksumValue` | `string` | Checksum |
+| `RawChecksum` | `string` | Raw file checksum (original and unaltered) |
+| `SortOrder` | `integer` | Sort order |
+| `StockItemId` | `string` | Stockitem id |
+| `FullSource` | `string` | Full image path |
+| `FullSourceThumbnail` | `string` | Thumbnail image path |
+
+### `GetInventoryItemAuditTrailPagedRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Action` | `string` |  |
+| `FromDate` | `string` |  |
+| `ToDate` | `string` |  |
+| `PageSize` | `integer` |  |
+| `PageNumber` | `integer` |  |
+
+### `GetInventoryItemBatchInformationByIdsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemIds` | `string[]` | A list of stock item ids |
+| `StockLocationId` | `string` | The location to get the batch information from |
+| `AvailableOnly` | `boolean` | Defines whether we should only return available items |
+
 ### `GetInventoryItemBatchInformationByIdsResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `InventoryItemBatchInformation` | `BatchInformation[]` | A list of stock item batch data |
+
+### `GetInventoryItemBatchInformationRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` | The item id |
+| `StockLocationId` | `string` | The location to get the batch information from |
+| `AvailableOnly` | `boolean` | Defines whether we should only return available items |
+| `AssignableOnly` | `boolean` | Only return warehouse locations that can have orders assigned to them for picking |
+
+### `GetInventoryItemsCompositionByIdsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemIds` | `string[]` |  |
 
 ### `GetInventoryItemsCompositionByIdsResponse`
 
@@ -1024,6 +1605,12 @@ Use this call to create stock item prices for a specific channel Permissions Req
 |---|---|---|
 | `StockItemIds` | `string[]` |  |
 
+### `GetProductIdentifiersByStockItemIdRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+
 ### `GetProductIdentifiersByStockItemIdResponse`
 
 | Property | Type | Description |
@@ -1048,11 +1635,33 @@ Use this call to create stock item prices for a specific channel Permissions Req
 |---|---|---|
 | `ScrapCategories` | `ScrapCategory[]` |  |
 
+### `GetScrapHistoryRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+
 ### `GetScrapHistoryResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ScrapHistory` | `GenericPagedResult_ScrapItem` |  |
+
+### `GetSelectionList_SelectStringValueOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `Method` | `MethodInfo` |  |
+| `Target` | `object` |  |
+
+### `GetStockItemBatchesByLocationRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+| `LocationId` | `string` |  |
+| `OnlyAvailable` | `boolean` |  |
 
 ### `GetStockItemBatchesByLocationResponse`
 
@@ -1065,6 +1674,25 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | Property | Type | Description |
 |---|---|---|
 | `Items` | `GetStockItemIdsBySKUItem[]` | Response items of StockItemId and SKU |
+
+### `GetStockItemIdsBySKUItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+| `SKU` | `string` |  |
+
+### `GetStockItemIdsBySKURequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `SKUS` | `string[]` | List of SKU's to search for |
+
+### `HasStockItemStockLevelRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
 
 ### `HasStockItemStockLevelResponse`
 
@@ -1139,11 +1767,38 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `SubSource` | `string` |  |
 | `HeaderAuditValues` | `Channel_Setting_Audit[]` |  |
 
+### `ICustomAttributeProvider`
+
+### `InsertUpdateEbayCompatibilityListRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `EbayCompatibilityList` | `StockItemEbayCompatibility[]` |  |
+
 ### `InsertUpdateEbayCompatibilityListResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `EbayCompatibilityList` | `StockItemEbayCompatibility[]` |  |
+
+### `InventoryChannel`
+
+| Property | Type | Description |
+|---|---|---|
+| `Source` | `string` |  |
+| `SubSource` | `string` |  |
+| `SourceVersion` | `string` |  |
+| `SourceType` | `string` |  |
+| `Width` | `number` |  |
+| `ChannelId` | `integer` |  |
+
+### `InventoryParametersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `InventoryItemIds` | `string[]` | List of stock item ids |
+| `SelectedRegions` | `Tuple_Int32_Int32[]` | A list of row numbers for items selected in the my inventory grid. For instance if the first entry in the list is 4, 4; the selection was from the fourth row, to the fourth row. |
+| `Token` | `string` | An internal token used to identify the list of inventory items within a certain view. From this, the inventory item ids can be extracted with the selected regions. |
 
 ### `InventoryView`
 
@@ -1762,6 +2417,56 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `StructureCategoryId` | `integer` | Structure Category Id to which this product category is assigned to, nullable if not available |
 | `ProductCategoryId` | `integer` |  |
 
+### `MemberInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `MemberType` | `string` |  |
+| `Name` | `string` |  |
+| `DeclaringType` | `string` |  |
+| `ReflectedType` | `string` |  |
+| `CustomAttributes` | `CustomAttributeData[]` |  |
+| `MetadataToken` | `integer` |  |
+| `Module` | `object` |  |
+
+### `MethodInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `MemberType` | `string` |  |
+| `ReturnType` | `string` |  |
+| `ReturnParameter` | `ParameterInfo` |  |
+| `ReturnTypeCustomAttributes` | `ICustomAttributeProvider` |  |
+| `MethodImplementationFlags` | `string` |  |
+| `MethodHandle` | `object` |  |
+| `Attributes` | `string` |  |
+| `CallingConvention` | `string` |  |
+| `IsGenericMethodDefinition` | `boolean` |  |
+| `ContainsGenericParameters` | `boolean` |  |
+| `IsGenericMethod` | `boolean` |  |
+| `IsSecurityCritical` | `boolean` |  |
+| `IsSecuritySafeCritical` | `boolean` |  |
+| `IsSecurityTransparent` | `boolean` |  |
+| `IsPublic` | `boolean` |  |
+| `IsPrivate` | `boolean` |  |
+| `IsFamily` | `boolean` |  |
+| `IsAssembly` | `boolean` |  |
+| `IsFamilyAndAssembly` | `boolean` |  |
+| `IsFamilyOrAssembly` | `boolean` |  |
+| `IsStatic` | `boolean` |  |
+| `IsFinal` | `boolean` |  |
+| `IsVirtual` | `boolean` |  |
+| `IsHideBySig` | `boolean` |  |
+| `IsAbstract` | `boolean` |  |
+| `IsSpecialName` | `boolean` |  |
+| `IsConstructor` | `boolean` |  |
+| `Name` | `string` |  |
+| `DeclaringType` | `string` |  |
+| `ReflectedType` | `string` |  |
+| `CustomAttributes` | `CustomAttributeData[]` |  |
+| `MetadataToken` | `integer` |  |
+| `Module` | `object` |  |
+
 ### `PagedResult_StockItemAuditTrail`
 
 | Property | Type | Description |
@@ -1770,6 +2475,26 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `TotalItems` | `integer` |  |
 | `CurrentPage` | `integer` |  |
 | `EntriesPerPage` | `integer` |  |
+
+### `ParameterInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `ParameterType` | `string` |  |
+| `Name` | `string` |  |
+| `HasDefaultValue` | `boolean` |  |
+| `DefaultValue` | `object` |  |
+| `RawDefaultValue` | `object` |  |
+| `Position` | `integer` |  |
+| `Attributes` | `string` |  |
+| `Member` | `MemberInfo` |  |
+| `IsIn` | `boolean` |  |
+| `IsOut` | `boolean` |  |
+| `IsLcid` | `boolean` |  |
+| `IsRetval` | `boolean` |  |
+| `IsOptional` | `boolean` |  |
+| `MetadataToken` | `integer` |  |
+| `CustomAttributes` | `CustomAttributeData[]` |  |
 
 ### `PictureSource`
 
@@ -1780,11 +2505,109 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `IsMain` | `boolean` |  |
 | `SortOrder` | `integer` |  |
 
+### `ProductIdentifierInformation`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` |  |
+| `DisplayName` | `string` |  |
+| `ScannedAtDispatch` | `boolean` |  |
+| `Sources` | `string[]` |  |
+
+### `PropertyRule`
+
+| Property | Type | Description |
+|---|---|---|
+| `RuleType` | `string` |  |
+| `Options` | `string` |  |
+| `DependantField` | `string` |  |
+
+### `ScrapBatchedItemRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ScrapItem` | `ScrapItem` |  |
+| `LocationId` | `string` | Deprecated: no longer used by ScrapBatchedItem. Location is derived from the batch record identified by BatchInventoryId. |
+| `BatchInventoryId` | `integer` |  |
+| `IgnoreConsumption` | `boolean` | Consumption should not be recorded for this scrap request |
+
 ### `ScrapBatchedItemResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ScrapItem` | `ScrapItem` |  |
+
+### `ScrapCategory`
+
+| Property | Type | Description |
+|---|---|---|
+| `CategoryId` | `integer` |  |
+| `CategoryName` | `string` |  |
+
+### `ScrapItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `string` |  |
+| `StockItemId` | `string` |  |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `Quantity` | `integer` |  |
+| `CategoryName` | `string` |  |
+| `ScrapReason` | `string` |  |
+| `TotalCost` | `number` |  |
+| `UserName` | `string` |  |
+| `CreatedDate` | `string` |  |
+| `StockLocationId` | `string` | Stock location Id, nullable as historically this filed has not been set and therefore some entries in the database may not have location against the scrap item. |
+
+### `ScrapItemExtended`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkScrapId` | `string` | Nullable |
+| `BatchInventoryId` | `integer` | Inventory batch id |
+| `fkStockItemId` | `string` | Stock item id to scrap |
+| `Quantity` | `integer` | Quantity to scrap |
+| `ScrapCategory` | `string` | Scrap category |
+| `ScrapReason` | `string` | Scrap reason (max 600 characters) |
+
+### `StockItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemDescription` | `string` | Item Description(Metadata) |
+| `Quantity` | `integer` | Quantity in stock |
+| `InOrder` | `integer` | Quantity in order book |
+| `Due` | `integer` | Quantity due in purchase orders |
+| `MinimumLevel` | `integer` | Minimum level of stock item. -1 is not tracked. Null value when adding will use user default minimum level |
+| `Available` | `integer` | Available level. Quantity - InOrder |
+| `IsCompositeParent` | `boolean` | Item is a composite parent |
+| `ShippedSeparately` | `boolean` |  |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `BarcodeNumber` | `string` |  |
+| `MetaData` | `string` |  |
+| `IsVariationParent` | `boolean` |  |
+| `isBatchedStockType` | `boolean` |  |
+| `PurchasePrice` | `number` |  |
+| `RetailPrice` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PostalServiceId` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `CategoryId` | `string` |  |
+| `CategoryName` | `string` |  |
+| `PackageGroupId` | `string` |  |
+| `PackageGroupName` | `string` |  |
+| `Height` | `number` |  |
+| `Width` | `number` |  |
+| `Depth` | `number` |  |
+| `Weight` | `number` |  |
+| `CreationDate` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `BatchNumberScanRequired` | `boolean` |  |
+| `SerialNumberScanRequired` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
 
 ### `StockItemAuditTrail`
 
@@ -1810,6 +2633,44 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `SellBy` | `string` | Batch sell by date |
 | `Inventory` | `StockItemBatchInventory[]` | Batch records |
 | `IsDeleted` | `boolean` | Is the batch deleted |
+
+### `StockItemBatchAudit`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchId` | `integer` |  |
+| `BatchInventoryId` | `integer` |  |
+| `QuantityDelta` | `integer` |  |
+| `StockValueDelta` | `number` |  |
+| `ChangeNote` | `string` |  |
+| `Username` | `string` |  |
+| `ChangeDate` | `string` |  |
+| `BinRack` | `string` |  |
+| `BatchNumber` | `string` |  |
+| `Location` | `string` |  |
+| `fkJobId` | `integer` |  |
+| `OrderId` | `integer` |  |
+
+### `StockItemBatchInventory`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Stock item batch record ID |
+| `BatchId` | `integer` | Batch ID |
+| `StockLocationId` | `string` | Location ID |
+| `BinRack` | `string` | BinRack |
+| `PrioritySequence` | `integer` | Pick order |
+| `Quantity` | `integer` | Quantity |
+| `StockValue` | `number` | Current stock value |
+| `StartQuantity` | `integer` | Quantity originally booked in |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `BatchStatus` | `string` | Batch Status |
+| `IsDeleted` | `boolean` | Is BatchInventory deleted |
+| `WarehouseBinrackStandardType` | `integer` | Warehouse binrack standard type |
+| `WarehouseBinrackTypeName` | `string` | Warehouse binrack type friendly name |
+| `InTransfer` | `integer` | Number of items in Transfer phase. |
+| `BinRackId` | `integer` | Binrack Id (Use for WMS) |
+| `WarehouseBinrackTypeId` | `integer` | Warehouse binrack type unique id. |
 
 ### `StockItemChannelSKU`
 
@@ -1913,6 +2774,57 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `PropertyValue` | `string` | Property value |
 | `PropertyType` | `string` | Property type |
 
+### `StockItemExtendedPropertyUpsertItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `fkStockItemId` | `string` | Stock Item ID, optional if SKU provided |
+| `SKU` | `string` | Stock Item ID, optional if fkStockItemId provided |
+| `ProperyName` | `string` | Property name |
+| `PropertyValue` | `string` | Property value |
+| `PropertyType` | `string` | Property type |
+
+### `StockItemExtendedPropertyWithSku`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` | The ItemNumber (SKU) of the item This is used to calculate the StockItemId if it has been omitted |
+| `pkRowId` | `string` |  |
+| `fkStockItemId` | `string` |  |
+| `ProperyName` | `string` |  |
+| `PropertyValue` | `string` |  |
+| `PropertyType` | `string` |  |
+
+### `StockItemHeader`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` | SKU |
+| `ItemTitle` | `string` | Item title |
+| `BarcodeNumber` | `string` | Barcode number |
+| `MetaData` | `string` | Item description |
+| `IsVariationParent` | `boolean` | Is Variation Parent |
+| `isBatchedStockType` | `boolean` | Returns true is the stock item is tracked by batch |
+| `PurchasePrice` | `number` | Default item purchase price |
+| `RetailPrice` | `number` | Default item retail price |
+| `TaxRate` | `number` | Default item tax rate. Set -1 to use country tax rate |
+| `PostalServiceId` | `string` | Default postal service id |
+| `PostalServiceName` | `string` | Default postal service name |
+| `CategoryId` | `string` | Default category id |
+| `CategoryName` | `string` | Default category name |
+| `PackageGroupId` | `string` | Default package group id |
+| `PackageGroupName` | `string` | Default package group name |
+| `Height` | `number` | Item height |
+| `Width` | `number` | Item width |
+| `Depth` | `number` | Item depth |
+| `Weight` | `number` | Item weight |
+| `CreationDate` | `string` | Stock item creation date |
+| `InventoryTrackingType` | `integer` | Stock item tracking type. 0 = none. 1 = Ordered by Sell by Date. 2 = Ordered by Priority Sequence |
+| `BatchNumberScanRequired` | `boolean` | User must scan batch number when procesing orders |
+| `SerialNumberScanRequired` | `boolean` | User must scan item serial number when processing ordesr |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
 ### `StockItemImage`
 
 | Property | Type | Description |
@@ -1925,6 +2837,18 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `SortOrder` | `integer` |  |
 | `ChecksumValue` | `string` |  |
 | `RawChecksum` | `string` |  |
+| `StockItemId` | `string` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `StockItemImageSimple`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkRowId` | `string` | Unique id of image |
+| `IsMain` | `boolean` | Is the image the main image |
+| `SortOrder` | `integer` | Sort order for the image |
+| `ChecksumValue` | `string` | Internal checksum value |
+| `RawChecksum` | `string` | Raw file checksum (Used for UI to determine if the image file is the same before submitting for upload) |
 | `StockItemId` | `string` |  |
 | `StockItemIntId` | `integer` |  |
 
@@ -2015,6 +2939,18 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `LowerBound` | `integer` | Lower level |
 | `Value` | `number` | Value/Price level |
 
+### `StockItemProductIdentifier`
+
+| Property | Type | Description |
+|---|---|---|
+| `PkId` | `integer` |  |
+| `StockItemId` | `string` |  |
+| `Type` | `string` |  |
+| `Value` | `string` |  |
+| `ModifiedDate` | `string` |  |
+| `ModifiedUserName` | `string` |  |
+| `Site` | `string` |  |
+
 ### `StockItemSupplierStat`
 
 | Property | Type | Description |
@@ -2087,6 +3023,13 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | `WebPage` | `string` | Web page |
 | `Currency` | `string` | Currency used |
 
+### `Tuple_Int32_Int32`
+
+| Property | Type | Description |
+|---|---|---|
+| `Item1` | `integer` |  |
+| `Item2` | `integer` |  |
+
 ### `UpdateBatchDatesRequest`
 
 | Property | Type | Description |
@@ -2098,3 +3041,69 @@ Use this call to create stock item prices for a specific channel Permissions Req
 | Property | Type | Description |
 |---|---|---|
 | `Items` | `BatchDatesUpdateItemResult[]` |  |
+
+### `UpdateBatchDetailsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `StockItemId` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `BatchNumberScanRequired` | `boolean` |  |
+| `ResetBatchDates` | `boolean` |  |
+
+### `UpdateCountryRegionsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `regions` | `CountryRegion[]` |  |
+
+### `UpdateInventoryItemRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `VariationGroupName` | `string` |  |
+| `StockItemId` | `string` | Stock Item Id. If not provided, it will be retrieved using the Item Number |
+| `ItemDescription` | `string` |  |
+| `Quantity` | `integer` |  |
+| `InOrder` | `integer` |  |
+| `Due` | `integer` |  |
+| `MinimumLevel` | `integer` |  |
+| `Available` | `integer` |  |
+| `IsCompositeParent` | `boolean` |  |
+| `ShippedSeparately` | `boolean` |  |
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `BarcodeNumber` | `string` |  |
+| `MetaData` | `string` |  |
+| `IsVariationParent` | `boolean` |  |
+| `isBatchedStockType` | `boolean` |  |
+| `PurchasePrice` | `number` |  |
+| `RetailPrice` | `number` |  |
+| `TaxRate` | `number` |  |
+| `PostalServiceId` | `string` |  |
+| `PostalServiceName` | `string` |  |
+| `CategoryId` | `string` |  |
+| `CategoryName` | `string` |  |
+| `PackageGroupId` | `string` |  |
+| `PackageGroupName` | `string` |  |
+| `Height` | `number` |  |
+| `Width` | `number` |  |
+| `Depth` | `number` |  |
+| `Weight` | `number` |  |
+| `CreationDate` | `string` |  |
+| `InventoryTrackingType` | `integer` |  |
+| `BatchNumberScanRequired` | `boolean` |  |
+| `SerialNumberScanRequired` | `boolean` |  |
+| `StockItemIntId` | `integer` |  |
+
+### `UpdateProductIdentifiersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ProductIdentifiers` | `StockItemProductIdentifier[]` |  |
+
+### `UpdateScrapCategoriesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `Categories` | `ScrapCategory[]` |  |

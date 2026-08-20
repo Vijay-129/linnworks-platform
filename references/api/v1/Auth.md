@@ -80,3 +80,11 @@ Generates a sesssion and provide Authorization Token and server in response.
 | `Email` | `string` |  |
 | `Server` | `string` |  |
 | `PushServer` | `string` |  |
+
+### `StatusDetails`
+
+| Property | Type | Description |
+|---|---|---|
+| `State` | `string` |  |
+| `Reason` | `string` |  |
+| `Parameters` | `object` |  |

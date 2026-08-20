@@ -72,6 +72,15 @@ Use this call to delete a configurator. More information on configurators can be
 
 ## Models
 
+### `CreateConfiguratorRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ConfiguratorName` | `string` |  |
+| `ChannelId` | `integer` |  |
+| `ChannelName` | `string` |  |
+
 ### `CreateConfiguratorResponse`
 
 | Property | Type | Description |
@@ -79,12 +88,30 @@ Use this call to delete a configurator. More information on configurators can be
 | `CreatedConfiguratorInfo` | `object` |  |
 | `CreatedConfiguratorId` | `integer` |  |
 
+### `CreateTemplatesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `Parameters` | `InventorySearchParameters` |  |
+| `PaginationParameters` | `PaginationParameters` |  |
+| `ConfiguratorId` | `integer` |  |
+
 ### `CreateTemplatesResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `TemplatesInfo` | `object[]` |  |
 | `AllCreatedIds` | `integer[]` |  |
+
+### `DeleteConfiguratorsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `ConfiguratorIds` | `integer[]` |  |
 
 ### `DeleteConfiguratorsResponse`
 
@@ -164,6 +191,16 @@ Use this call to delete a configurator. More information on configurators can be
 |---|---|---|
 | `request` | `SaveTemplateFieldsRequest` |  |
 
+### `GetConfiguratorDataRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `DataKey` | `string` |  |
+| `ConfiguratorId` | `integer` |  |
+| `IgnoreCache` | `boolean` |  |
+
 ### `GetConfiguratorDataResponse`
 
 | Property | Type | Description |
@@ -176,11 +213,44 @@ Use this call to delete a configurator. More information on configurators can be
 |---|---|---|
 | `Data` | `string` |  |
 
+### `GetConfiguratorsInfoPagedRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `PaginationParameters` | `PaginationParameters` |  |
+| `IsByConfiguratorIds` | `boolean` |  |
+| `ConfiguratorIds` | `integer[]` |  |
+| `SelectedRegions` | `Tuple_Int32_Int32[]` |  |
+| `Token` | `string` |  |
+
 ### `GetConfiguratorsInfoResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ConfiguratorsInfo` | `object[]` |  |
+
+### `IValidationResults`
+
+### `InventorySearchParameters`
+
+| Property | Type | Description |
+|---|---|---|
+| `SelectedRegions` | `Tuple_Int32_Int32[]` |  |
+| `Token` | `string` |  |
+| `InventoryItemIds` | `string[]` |  |
+| `ChannelId` | `integer` |  |
+
+### `OpenTemplatesByInventoryRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `Parameters` | `InventorySearchParameters` |  |
+| `PaginationParameters` | `PaginationParameters` |  |
+| `SelectOnlyWithErrors` | `boolean` |  |
 
 ### `OpenTemplatesByInventoryResponse`
 
@@ -189,7 +259,33 @@ Use this call to delete a configurator. More information on configurators can be
 | `TotalEntries` | `integer` |  |
 | `TemplatesInfo` | `object[]` |  |
 
+### `PaginationParameters`
+
+| Property | Type | Description |
+|---|---|---|
+| `PageNumber` | `integer` |  |
+| `EntriesPerPage` | `integer` |  |
+
+### `ProcessTemplatesRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `TemplateRequests` | `TemplateToProcess[]` |  |
+
 ### `ProcessTemplatesResponse`
+
+### `SaveConfiguratorDataRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `DataKey` | `string` |  |
+| `Ids` | `integer[]` |  |
+| `Data` | `object` | Here should come the same data, that was returned from GetConfiguratorData request, with only modifications, allowed by appropriate layout. |
+| `ForceSave` | `boolean` | Not valid to use |
 
 ### `SaveConfiguratorDataResponse`
 
@@ -198,6 +294,15 @@ Use this call to delete a configurator. More information on configurators can be
 | `IsSaved` | `boolean` |  |
 | `ValidationResults` | `IValidationResults` | Whether this particular configurator data is valid to send to channel. |
 
+### `SaveConfiguratorDescriptionRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `Description` | `string` |  |
+| `ConfiguratorIds` | `integer[]` |  |
+
 ### `SaveConfiguratorDescriptionResponse`
 
 | Property | Type | Description |
@@ -205,6 +310,38 @@ Use this call to delete a configurator. More information on configurators can be
 | `IsSaved` | `boolean` |  |
 | `ErrorMessage` | `string` |  |
 
+### `SaveConfiguratorFieldsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `ConfiguratorId` | `integer` |  |
+| `FieldsToSave` | `object` | info key : value |
+
 ### `SaveConfiguratorFieldsResponse`
 
+### `SaveTemplateFieldsRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelType` | `string` |  |
+| `ChannelName` | `string` |  |
+| `TemplateId` | `integer` |  |
+| `FieldsToSave` | `object` | info key : value |
+
 ### `SaveTemplateFieldsResponse`
+
+### `TemplateToProcess`
+
+| Property | Type | Description |
+|---|---|---|
+| `TemplateId` | `integer` |  |
+| `Action` | `string` |  |
+
+### `Tuple_Int32_Int32`
+
+| Property | Type | Description |
+|---|---|---|
+| `Item1` | `integer` |  |
+| `Item2` | `integer` |  |

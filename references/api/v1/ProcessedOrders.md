@@ -275,6 +275,24 @@ Checks if order was fully returned
 | `DisplayName` | `string` | Order item record row ID |
 | `SubReasons` | `ChannelRefundSubReason[]` | List of refund reasons |
 
+### `ChannelRefundSubReason`
+
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` | Tag |
+| `DisplayName` | `string` | Display name |
+
+### `DownloadOrdersToCSVRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `SearchTerm` | `string` | Search Term |
+| `SearchFilters` | `SearchFilters[]` | Search Filters |
+| `DateField` | `string` | Date Field Type |
+| `FromDate` | `string` | From Date |
+| `ToDate` | `string` | To Date |
+| `SearchSorting` | `SearchSorting` | Search Sorting |
+
 ### `DownloadOrdersToCSVResponse`
 
 | Property | Type | Description |
@@ -324,12 +342,51 @@ Checks if order was fully returned
 | `PropertyValue` | `string` | Property value |
 | `PropertyType` | `string` | Property type |
 
+### `OrderItemBatch`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemBatchId` | `integer` |  |
+| `OrderItemRowId` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `Batch` | `StockItemBatch` |  |
+| `DespatchUnitValue` | `number` |  |
+| `AssignmentType` | `string` |  |
+
 ### `OrderItemReturnInfo`
 
 | Property | Type | Description |
 |---|---|---|
 | `ChildItems` | `OrderItemReturnInfo[]` | List of child items (populated if the return is a composite item) |
 | `Batches` | `OrderItemReturnInfoBatched[]` | Order Item Batches |
+| `OrderId` | `string` |  |
+| `fkOrderItemRowId` | `string` |  |
+| `ParentRowId` | `string` |  |
+| `ReturnableQty` | `integer` |  |
+| `OrderQty` | `integer` |  |
+| `ReturnedQty` | `integer` |  |
+| `SKU` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `UnitValue` | `number` |  |
+| `TaxRate` | `number` |  |
+| `TaxCostInclusive` | `boolean` |  |
+| `Currency` | `string` |  |
+| `IsCompositeParent` | `boolean` |  |
+| `IsPartialCompositeReturn` | `boolean` |  |
+| `ParentRatio` | `integer` |  |
+| `pkStockItemId` | `string` |  |
+| `ResentQty` | `integer` |  |
+| `fkRefundRowId` | `string` |  |
+
+### `OrderItemReturnInfoBatched`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemBatchId` | `integer` |  |
+| `BatchInventoryId` | `integer` |  |
+| `BatchNumber` | `string` |  |
+| `DespatchUnitValue` | `number` |  |
 | `OrderId` | `string` |  |
 | `fkOrderItemRowId` | `string` |  |
 | `ParentRowId` | `string` |  |
@@ -611,6 +668,20 @@ Checks if order was fully returned
 | `ChannelReasonSec` | `string` | Secondary channel reason for a refund |
 | `IsNew` | `boolean` |  |
 
+### `RefundItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkRefundRowId` | `string` | For updating refund amounts |
+| `IsManualRefund` | `boolean` | Manual refunds will never be passed to the channel validation routines |
+| `Type` | `string` | The type of refund item |
+| `fkOrderItemId` | `string` | The order item or service to refund |
+| `RefundQty` | `integer` | In the case of item refunds, the number of items |
+| `RefundAmount` | `number` | The amount of money the refund is for. |
+| `Reason` | `string` | The seller's text reason for the refund |
+| `ChannelReason` | `string` | The primary channel reason |
+| `ChannelReasonSec` | `string` | The secondary channel reason |
+
 ### `RefundScreenOptions`
 
 | Property | Type | Description |
@@ -678,11 +749,52 @@ Checks if order was fully returned
 | `fTotalCharge` | `number` | OrdOrder total charge |
 | `RefundLink` | `string` | Link to order refund |
 
+### `RowQty`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowId` | `string` | Order item record row ID |
+| `OrderItemBatchId` | `integer` | Batch inventory id |
+| `Refund` | `number` | Refund amount |
+| `Qty` | `integer` | Affected quantity |
+| `ScrapQty` | `integer` | Scrapped quantity |
+| `Batch` | `OrderItemBatch` | The batch related to the rowqty |
+| `AdditionalCost` | `number` | Additional costs |
+| `NewStockItemId` | `string` | New (returned) stock item ID |
+| `NewQty` | `integer` | Returned qty |
+
+### `SearchFilters`
+
+| Property | Type | Description |
+|---|---|---|
+| `SearchField` | `string` |  |
+| `SearchTerm` | `string` |  |
+
+### `SearchProcessedOrdersRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `SearchTerm` | `string` | Search Term |
+| `SearchFilters` | `SearchFilters[]` | Search Filters |
+| `DateField` | `string` | Date Field Type |
+| `FromDate` | `string` | From Date |
+| `ToDate` | `string` | To Date |
+| `PageNumber` | `integer` | Page Number |
+| `ResultsPerPage` | `integer` | Results Per Page |
+| `SearchSorting` | `SearchSorting` | Search Sorting |
+
 ### `SearchProcessedOrdersResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `ProcessedOrders` | `GenericPagedResult_ProcessedOrderWeb` |  |
+
+### `SearchSorting`
+
+| Property | Type | Description |
+|---|---|---|
+| `SortField` | `string` |  |
+| `SortDirection` | `string` |  |
 
 ### `ServiceItem`
 
@@ -709,6 +821,60 @@ Checks if order was fully returned
 | `Weight` | `number` | Item weight |
 | `TrackingNumber` | `string` | Tracking number |
 | `BinIndex` | `integer` | Bin split index |
+
+### `StockItemBatch`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchId` | `integer` | Batch ID |
+| `SKU` | `string` | Product SKU |
+| `InventoryTrackingType` | `integer` | 0 - None, 1 - Order by sell by date, 2 - Ordered by priority sequence |
+| `StockItemId` | `string` | Product ID |
+| `BatchNumber` | `string` | Batch number |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
+| `Inventory` | `StockItemBatchInventory[]` | Batch records |
+| `IsDeleted` | `boolean` | Is the batch deleted |
+
+### `StockItemBatchInventory`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Stock item batch record ID |
+| `BatchId` | `integer` | Batch ID |
+| `StockLocationId` | `string` | Location ID |
+| `BinRack` | `string` | BinRack |
+| `PrioritySequence` | `integer` | Pick order |
+| `Quantity` | `integer` | Quantity |
+| `StockValue` | `number` | Current stock value |
+| `StartQuantity` | `integer` | Quantity originally booked in |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `BatchStatus` | `string` | Batch Status |
+| `IsDeleted` | `boolean` | Is BatchInventory deleted |
+| `WarehouseBinrackStandardType` | `integer` | Warehouse binrack standard type |
+| `WarehouseBinrackTypeName` | `string` | Warehouse binrack type friendly name |
+| `InTransfer` | `integer` | Number of items in Transfer phase. |
+| `BinRackId` | `integer` | Binrack Id (Use for WMS) |
+| `WarehouseBinrackTypeId` | `integer` | Warehouse binrack type unique id. |
+
+### `TrackingURLRequestItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `integer` |  |
+| `Vendor` | `string` |  |
+| `PostalTrackingNumber` | `string` |  |
+| `Postcode` | `string` |  |
+
+### `TrackingURLResponseItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `TrackingURL` | `string` |  |
+| `OrderId` | `integer` |  |
+| `Vendor` | `string` |  |
+| `PostalTrackingNumber` | `string` |  |
+| `Postcode` | `string` |  |
 
 ### `ValidationResult`
 

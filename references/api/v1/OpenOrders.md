@@ -113,6 +113,20 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 |---|---|---|
 | `BatchActionResult` | `BatchActionResult_OrderItemBatchExtended_Guid` |  |
 
+### `BatchActionResult_Int32_Int32`
+
+| Property | Type | Description |
+|---|---|---|
+| `ProcessedOrders` | `integer[]` |  |
+| `UnprocessedOrders` | `object` |  |
+
+### `BatchActionResult_OrderItemBatchExtended_Guid`
+
+| Property | Type | Description |
+|---|---|---|
+| `ProcessedOrders` | `OrderItemBatchExtended[]` |  |
+| `UnprocessedOrders` | `object` |  |
+
 ### `ChangeOrderIdentifierRequest`
 
 | Property | Type | Description |
@@ -126,11 +140,38 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 |---|---|---|
 | `OrderIds` | `integer[]` |  |
 
+### `CustomerAddress`
+
+| Property | Type | Description |
+|---|---|---|
+| `EmailAddress` | `string` | Customer's email address. |
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `Address3` | `string` |  |
+| `Town` | `string` |  |
+| `Region` | `string` |  |
+| `PostCode` | `string` |  |
+| `Country` | `string` |  |
+| `Continent` | `string` |  |
+| `FullName` | `string` |  |
+| `Company` | `string` |  |
+| `PhoneNumber` | `string` |  |
+| `CountryId` | `string` |  |
+
 ### `DeleteIdentifiersRequest`
 
 | Property | Type | Description |
 |---|---|---|
 | `Tag` | `string` | Tag of the order identifier to delete. E.g. CUSTOM_PRINT. It is not possible to delete a system tag such as AMAZON_PRIME |
+
+### `ExtendedProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `string` | Record row ID |
+| `Name` | `string` |  |
+| `Value` | `string` |  |
+| `Type` | `string` |  |
 
 ### `GenericOrderOperationResult`
 
@@ -232,11 +273,132 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 | `ImageId` | `string` |  |
 | `ImageUrl` | `string` |  |
 
+### `IndicatorRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemId` | `string` |  |
+| `StockItemId` | `string` |  |
+
 ### `MarkReadyForCollectionRequest`
 
 | Property | Type | Description |
 |---|---|---|
 | `OrderIds` | `string[]` |  |
+
+### `OpenOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `NumOrderId` | `integer` | Linnworks order number |
+| `GeneralInfo` | `OrderGeneralInfo` | General information about an order |
+| `ShippingInfo` | `OrderShippingInfo` | Order shipping information |
+| `CustomerInfo` | `OrderCustomerInfo` | Order customer information |
+| `TotalsInfo` | `OrderTotalsInfo` | Linnworks order totals information |
+| `TaxInfo` | `OrderTaxInfo` |  |
+| `FolderName` | `string[]` | Folder name of an order if any assigned |
+| `IsPostFilteredOut` | `boolean` |  |
+| `CanFulfil` | `boolean` |  |
+| `Fulfillment` | `OrderFulfillmentState` |  |
+| `Items` | `OrderItem[]` |  |
+| `HasItems` | `boolean` |  |
+| `TotalItemsSum` | `integer` |  |
+| `OrderId` | `string` |  |
+
+### `OpenOrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `CompositeChild` | `OrderItemBase[]` |  |
+| `ProductIdentifiers` | `ProductIdentifier[]` |  |
+| `ContainsComposites` | `boolean` |  |
+| `StockItemId` | `string` |  |
+| `SKU` | `string` |  |
+| `BarcodeNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `Quantity` | `integer` |  |
+
+### `OpenOrderLowFidelity`
+
+| Property | Type | Description |
+|---|---|---|
+| `Items` | `OpenOrderItem[]` | Order items |
+| `OrderId` | `integer` | Order Id - numeric |
+| `pkOrderID` | `string` | Unique order id. |
+| `Status` | `integer` | Order status as numeric field, 0 - unpaid, 1 - paid, 3 - resend |
+| `ReferenceNum` | `string` | Order reference |
+| `ExternalReference` | `string` | ExternalReference order reference |
+| `PostalTrackingNumber` | `string` | Tracking number, (of the leading package) |
+| `OrderDate` | `string` | Order date, UTC time when the order was placed in the system |
+| `DispatchBy` | `string` | Dispatch by datetime UTC |
+
+### `OrderCustomerInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelBuyerName` | `string` | Username of customer (Comes from channel) |
+| `Address` | `CustomerAddress` | Customer address |
+| `BillingAddress` | `CustomerAddress` | Customer billing address |
+
+### `OrderDetails`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order ID (pkOrderId) |
+| `NumOrderId` | `integer` | Linnworks order number |
+| `Processed` | `boolean` | If order is processed |
+| `ProcessedDateTime` | `string` | Date and time when order was processed |
+| `FulfilmentLocationId` | `string` | Location ID |
+| `GeneralInfo` | `OrderGeneralInfo` | General information about order |
+| `ShippingInfo` | `OrderShippingInfo` | Order shipping information |
+| `CustomerInfo` | `OrderCustomerInfo` | Order Customer information (Name, email etc) |
+| `TotalsInfo` | `OrderTotalsInfo` | Order totals information |
+| `ExtendedProperties` | `ExtendedProperty[]` | Extended properties of an order |
+| `FolderName` | `string[]` | Folder names assigned to an order |
+| `Items` | `OrderItem[]` | List of order items |
+| `Notes` | `OrderNote[]` | List of order notes |
+| `PaidDateTime` | `string` | Date and time when the order was marked as paid |
+| `TaxId` | `string` | Buyer's tax number. |
+
+### `OrderFulfillmentState`
+
+| Property | Type | Description |
+|---|---|---|
+| `FulfillmentState` | `string` |  |
+| `PurchaseOrderState` | `string` |  |
+
+### `OrderGeneralInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Status` | `integer` | Order Status (0 = UNPAID, 1 = PAID,2 = RETURN,3 = PENDING,4 = RESEND) |
+| `LabelPrinted` | `boolean` | Is label printed |
+| `LabelError` | `string` | Is there a label error |
+| `InvoicePrinted` | `boolean` | Is invoice printed |
+| `InvoicePrintError` | `string` | Is there invoice print error |
+| `PickListPrinted` | `boolean` | Is pick list printed |
+| `PickListPrintError` | `string` | Is there pick list print error |
+| `IsRuleRun` | `boolean` | If rules engine rule ran on an order |
+| `Notes` | `integer` | Quantity of order notes |
+| `PartShipped` | `boolean` | If order partly shipped |
+| `Marker` | `integer` | Order marker (0 = NOT TAG,1 = Tag 1,2 = Tag 2,3 = Tag 3,4 = Tag 4,5 = Tag 5,6 = Tag 6,7 = Parked) |
+| `IsParked` | `boolean` | Is the order parked? |
+| `Identifiers` | `Identifier[]` | Order identifiers. [Prime | Scheduled] |
+| `ReferenceNum` | `string` | Order reference number (Channel defined) |
+| `SecondaryReference` | `string` | An additional reference number for the orderr (Used by some channels) |
+| `ExternalReferenceNum` | `string` | This is an additional reference number from the sales channel, typically used by eBay |
+| `ReceivedDate` | `string` | The date and time at which the order was placed on the sales channel |
+| `Source` | `string` | Order ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Order Subsource (e.g. EBAY1) |
+| `SiteCode` | `string` | SiteCode used to differentiate between different sites from a single channel (eg. Amazon UK, Amazon US, Amazon FR...) |
+| `HoldOrCancel` | `boolean` | This shows whether the order has been marked as on hold, for processed orders if the order has been cancelled OnHold = 1 |
+| `DespatchByDate` | `string` | Despatch by Date |
+| `ScheduledDelivery` | `ScheduledDelivery` | Scheduled delivery dates. Take priority over despatch by date |
+| `HasScheduledDelivery` | `boolean` |  |
+| `Location` | `string` | Order location ID |
+| `NumItems` | `integer` | Quantity of order items |
+| `PickwaveIds` | `integer[]` | All related Pickwave Ids |
+| `StockAllocationType` | `string` |  |
 
 ### `OrderIdentifier`
 
@@ -249,6 +411,202 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 | `ImageUrl` | `string` |  |
 | `Tag` | `string` |  |
 | `Name` | `string` |  |
+
+### `OrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemId` | `string` | Stock Item ID |
+| `ItemNumber` | `string` | Item number as on channel |
+| `SKU` | `string` | Product SKU |
+| `ItemSource` | `string` | Item source / channel name |
+| `Title` | `string` | Item title |
+| `Quantity` | `integer` | Quantity |
+| `CategoryName` | `string` | Product category |
+| `CompositeAvailablity` | `integer` | Composite availability |
+| `StockLevelsSpecified` | `boolean` | If stock level specified |
+| `OnOrder` | `integer` | Level due in purchase orders |
+| `OnPurchaseOrder` | `OrderItemOnOrder` | Purchase order bound to this item |
+| `InOrderBook` | `integer` | Quantity currently in open orders |
+| `Level` | `integer` | Current stock level |
+| `MinimumLevel` | `integer` | Minimum level |
+| `AvailableStock` | `integer` | Currently available stock level (Level-InOrderBook) |
+| `PricePerUnit` | `number` | Unit price |
+| `UnitCost` | `number` | Unit cost |
+| `DespatchStockUnitCost` | `number` | Despatch stock unit cost |
+| `Discount` | `number` | Percentage (0%, 10%, 20%, etc...) |
+| `Tax` | `number` | Actual tax value on an item |
+| `TaxRate` | `number` | Tax rate |
+| `Cost` | `number` | Total item cost (exc tax) |
+| `CostIncTax` | `number` | Total item cost (inc tax) |
+| `CompositeSubItems` | `OrderItem[]` | List of order items |
+| `IsService` | `boolean` | if item is a service |
+| `SalesTax` | `number` | Sales Tax |
+| `TaxCostInclusive` | `boolean` | If tax is included in a cost |
+| `PartShipped` | `boolean` | If order is partly shipped |
+| `Weight` | `number` | Order weight |
+| `BarcodeNumber` | `string` | Product barcode |
+| `Market` | `integer` | Market |
+| `ChannelSKU` | `string` | Channel product SKU |
+| `ChannelTitle` | `string` | Channel product title |
+| `DiscountValue` | `number` |  |
+| `HasImage` | `boolean` | If item got an image |
+| `ImageId` | `string` | Image ID |
+| `AdditionalInfo` | `OrderItemOption[]` | List of order item options |
+| `StockLevelIndicator` | `integer` | Stock level indicator |
+| `ShippingCost` | `number` | If batch number scan required |
+| `PartShippedQty` | `integer` | ShippingCost |
+| `ItemName` | `string` | PartShippedQty |
+| `BatchNumberScanRequired` | `boolean` | ItemName |
+| `SerialNumberScanRequired` | `boolean` | If serial number scan required |
+| `BinRack` | `string` | Binrack location |
+| `BinRacks` | `OrderItemBinRack[]` | List of BinRacks used for OrderItem |
+| `InventoryTrackingType` | `integer` | Identifies whether the item has a sell by date or other defined order in which inventory is to be sold |
+| `isBatchedStockItem` | `boolean` | If item has batches |
+| `IsWarehouseManaged` | `boolean` |  |
+| `IsUnlinked` | `boolean` |  |
+| `StockItemIntId` | `integer` |  |
+| `Boxes` | `StockItemBoxConfiguration[]` |  |
+| `AddedDate` | `string` |  |
+| `RowId` | `string` |  |
+| `OrderId` | `string` |  |
+| `StockItemId` | `string` |  |
+
+### `OrderItemBase`
+
+| Property | Type | Description |
+|---|---|---|
+| `ProductIdentifiers` | `ProductIdentifier[]` |  |
+| `StockItemId` | `string` | Unique stock item id |
+| `SKU` | `string` | Stock Keeping Unit |
+| `BarcodeNumber` | `string` | Main product barcode number |
+| `ItemTitle` | `string` | Item title |
+| `Quantity` | `integer` | Quantity on order |
+
+### `OrderItemBatch`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemBatchId` | `integer` |  |
+| `OrderItemRowId` | `string` |  |
+| `BatchInventoryId` | `integer` |  |
+| `Quantity` | `integer` |  |
+| `Batch` | `StockItemBatch` |  |
+| `DespatchUnitValue` | `number` |  |
+| `AssignmentType` | `string` |  |
+
+### `OrderItemBatchExtended`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOrderId` | `string` |  |
+| `OrderId` | `string` |  |
+| `Batches` | `OrderItemBatch[]` |  |
+
+### `OrderItemBinRack`
+
+| Property | Type | Description |
+|---|---|---|
+| `Quantity` | `integer` | Quantity for BinRack per Location |
+| `BinRack` | `string` | BinRack |
+| `Location` | `string` | LocationId of the BinRack |
+| `BatchId` | `integer` | If the item is batched, identifies the batch number |
+| `OrderItemBatchId` | `integer` | If the item is batched, identifies the unique order item batch row |
+
+### `OrderItemIndicator`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemId` | `string` |  |
+| `StockItemId` | `string` |  |
+| `Indicator` | `integer` |  |
+| `FulfillmentState` | `string` |  |
+| `PurchaseOrderState` | `string` |  |
+
+### `OrderItemOnOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` | Primary key of the bound |
+| `Rowid` | `string` |  |
+| `pkPurchaseId` | `string` |  |
+| `ExternalInvoiceNumber` | `string` |  |
+| `fkSupplierId` | `string` |  |
+| `DateOfDelivery` | `string` |  |
+| `QuotedDeliveryDate` | `string` |  |
+| `SupplierName` | `string` |  |
+| `fkLocationId` | `string` |  |
+
+### `OrderItemOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOptionId` | `string` | Option ID |
+| `Property` | `string` | Option property |
+| `Value` | `string` | Value of the option |
+
+### `OrderNote`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderNoteId` | `string` | Order note ID |
+| `OrderId` | `string` | Order Id |
+| `NoteDate` | `string` | Date and time when note was added |
+| `Internal` | `boolean` | order note type (Internal or External) |
+| `Note` | `string` | Note's text |
+| `CreatedBy` | `string` | User that created note |
+| `NoteTypeId` | `integer` |  |
+
+### `OrderShippingInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Vendor` | `string` | Courier name (e.g. Royal Mail) |
+| `PostalServiceId` | `string` | Postal service ID |
+| `PostalServiceName` | `string` | Postal service name (e.g. Next day delivery) |
+| `TotalWeight` | `number` | Order total weight |
+| `ItemWeight` | `number` | If order is processed |
+| `PackageCategoryId` | `string` | Package category ID |
+| `PackageCategory` | `string` | Package category name |
+| `PackageTypeId` | `string` | Package type ID |
+| `PackageType` | `string` | Package type name |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost excluding tax |
+| `TrackingNumber` | `string` | Order tracking number provided by courier |
+| `ManualAdjust` | `boolean` | If there is an adjustment to shipping cost was made |
+
+### `OrderTaxInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `TaxNumber` | `string` | Customer Tax Number |
+
+### `OrderTotalsInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Subtotal` | `number` | Order subtotal |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost ex. tax |
+| `Tax` | `number` | Tax |
+| `TotalCharge` | `number` | Total charge |
+| `PaymentMethod` | `string` | Payment method |
+| `PaymentMethodId` | `string` | Payment method ID |
+| `ProfitMargin` | `number` | Profit margin |
+| `TotalDiscount` | `number` | Total discount applied to the order |
+| `Currency` | `string` | Order currency |
+| `CountryTaxRate` | `number` | Country tax rate |
+| `ConversionRate` | `number` | Currency conversion rate. Set at point of save by the currency |
+
+### `OrderViewIds`
+
+| Property | Type | Description |
+|---|---|---|
+| `ViewId` | `integer` |  |
+| `LocationId` | `string` |  |
+| `TotalOrders` | `integer` |  |
+| `OrderIds` | `string[]` |  |
+| `Count` | `integer` |  |
 
 ### `OrderViewStats`
 
@@ -268,6 +626,14 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 | `Owner` | `ViewUser` |  |
 | `IsCacheable` | `boolean` |  |
 
+### `OrderViewUserPreference`
+
+| Property | Type | Description |
+|---|---|---|
+| `ViewId` | `integer` |  |
+| `IsVisible` | `boolean` |  |
+| `Sequence` | `integer` |  |
+
 ### `PostFilterPagedResponse_OpenOrder`
 
 | Property | Type | Description |
@@ -279,11 +645,26 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 | `TotalPages` | `integer` |  |
 | `Data` | `OpenOrder[]` |  |
 
+### `ProductIdentifier`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` | Product identifier type |
+| `Value` | `string` | Product identifier value |
+| `Site` | `string` | Product identifier site |
+
 ### `SaveIdentifiersRequest`
 
 | Property | Type | Description |
 |---|---|---|
 | `Identifier` | `Identifier` |  |
+
+### `ScheduledDelivery`
+
+| Property | Type | Description |
+|---|---|---|
+| `From` | `string` |  |
+| `To` | `string` |  |
 
 ### `SearchOrdersRequest`
 
@@ -299,3 +680,87 @@ Permissions Required: GlobalPermissions.OrderBook.OpenOrdersNode
 |---|---|---|
 | `OpenOrders` | `OrderViewIds[]` |  |
 | `ProcessedOrders` | `string[]` |  |
+
+### `ServiceInformation`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `Identifier` | `string` |  |
+| `Logo` | `string` |  |
+
+### `StockItemBatch`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchId` | `integer` | Batch ID |
+| `SKU` | `string` | Product SKU |
+| `InventoryTrackingType` | `integer` | 0 - None, 1 - Order by sell by date, 2 - Ordered by priority sequence |
+| `StockItemId` | `string` | Product ID |
+| `BatchNumber` | `string` | Batch number |
+| `ExpiresOn` | `string` | Batch expiry date |
+| `SellBy` | `string` | Batch sell by date |
+| `Inventory` | `StockItemBatchInventory[]` | Batch records |
+| `IsDeleted` | `boolean` | Is the batch deleted |
+
+### `StockItemBatchInventory`
+
+| Property | Type | Description |
+|---|---|---|
+| `BatchInventoryId` | `integer` | Stock item batch record ID |
+| `BatchId` | `integer` | Batch ID |
+| `StockLocationId` | `string` | Location ID |
+| `BinRack` | `string` | BinRack |
+| `PrioritySequence` | `integer` | Pick order |
+| `Quantity` | `integer` | Quantity |
+| `StockValue` | `number` | Current stock value |
+| `StartQuantity` | `integer` | Quantity originally booked in |
+| `PickedQuantity` | `integer` | Indicate how many units are now allocated in open orders |
+| `BatchStatus` | `string` | Batch Status |
+| `IsDeleted` | `boolean` | Is BatchInventory deleted |
+| `WarehouseBinrackStandardType` | `integer` | Warehouse binrack standard type |
+| `WarehouseBinrackTypeName` | `string` | Warehouse binrack type friendly name |
+| `InTransfer` | `integer` | Number of items in Transfer phase. |
+| `BinRackId` | `integer` | Binrack Id (Use for WMS) |
+| `WarehouseBinrackTypeId` | `integer` | Warehouse binrack type unique id. |
+
+### `StockItemBoxConfiguration`
+
+| Property | Type | Description |
+|---|---|---|
+| `BoxId` | `integer` | Unique box id. |
+| `StockItemIntId` | `integer` |  |
+| `BoxName` | `string` | Box name max 16 characters |
+| `Width` | `number` | Width of the box |
+| `Height` | `number` | Height of the box |
+| `Length` | `number` | Depth of the box |
+| `Weight` | `number` | Total weight of the box. |
+| `ValuePercentage` | `number` | Value break down percentage |
+| `Barcode` | `string` | Box barcode, max 64 characters. |
+| `PackagingTypeId` | `string` | Packaging type id |
+| `LogicalDelete` | `boolean` | IsDeleted flag. |
+
+### `ViewGroup`
+
+| Property | Type | Description |
+|---|---|---|
+| `GroupId` | `integer` |  |
+| `Name` | `string` |  |
+
+### `ViewUser`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `IsOwner` | `boolean` |  |
+| `UserId` | `integer` |  |
+| `EmailAddress` | `string` |  |
+| `UserType` | `string` |  |
+
+### `ViewUserManagement`
+
+| Property | Type | Description |
+|---|---|---|
+| `ViewId` | `integer` |  |
+| `ViewUsers` | `ViewUser[]` |  |
+| `ViewGroups` | `ViewGroup[]` |  |

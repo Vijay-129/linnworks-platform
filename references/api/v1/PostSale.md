@@ -26,6 +26,24 @@ This method is used to further validate and create a cancellation in Linnworks, 
 
 ## Models
 
+### `ActionForm`
+
+| Property | Type | Description |
+|---|---|---|
+| `caption` | `string` |  |
+| `controls` | `ActionFormControl[]` |  |
+
+### `ActionFormControl`
+
+| Property | Type | Description |
+|---|---|---|
+| `id` | `string` |  |
+| `caption` | `string` |  |
+| `description` | `string` |  |
+| `type` | `string` |  |
+| `value` | `string` |  |
+| `group` | `string` |  |
+
 ### `CancellationOptions`
 
 | Property | Type | Description |
@@ -44,11 +62,363 @@ This method is used to further validate and create a cancellation in Linnworks, 
 | `Errors` | `string[]` |  |
 | `OrderIsLockedOnUnhandledError` | `boolean` |  |
 
+### `CancellationRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `IsChannelCancellation` | `boolean` |  |
+| `IsChannelInitiated` | `boolean` |  |
+| `IsChannelCancellationConfirmed` | `boolean` |  |
+| `IsFreeText` | `boolean` |  |
+| `FreeTextOrNote` | `string` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `CreateFullRefund` | `boolean` |  |
+| `RefundAlreadyProcessed` | `boolean` |  |
+| `RefundStatusTag` | `string` |  |
+| `RefundReference` | `string` |  |
+| `HeaderId` | `integer` |  |
+| `OrderId` | `string` |  |
+| `InternalOnly` | `boolean` |  |
+| `IsRetry` | `boolean` |  |
+| `ActionForm` | `ActionForm` |  |
+
+### `ChannelExistingCancellation`
+
+| Property | Type | Description |
+|---|---|---|
+| `Sku` | `string` |  |
+| `Quantity` | `integer` |  |
+| `Reason` | `string` |  |
+
+### `ChannelReason`
+
+| Property | Type | Description |
+|---|---|---|
+| `Types` | `string` |  |
+| `Tag` | `string` |  |
+| `DisplayName` | `string` |  |
+| `SubReasons` | `ChannelSubReason[]` |  |
+
+### `ChannelSubReason`
+
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` |  |
+| `DisplayName` | `string` |  |
+
+### `CustomerAddress`
+
+| Property | Type | Description |
+|---|---|---|
+| `EmailAddress` | `string` | Customer's email address. |
+| `Address1` | `string` |  |
+| `Address2` | `string` |  |
+| `Address3` | `string` |  |
+| `Town` | `string` |  |
+| `Region` | `string` |  |
+| `PostCode` | `string` |  |
+| `Country` | `string` |  |
+| `Continent` | `string` |  |
+| `FullName` | `string` |  |
+| `Company` | `string` |  |
+| `PhoneNumber` | `string` |  |
+| `CountryId` | `string` |  |
+
+### `ExtendedProperty`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowId` | `string` | Record row ID |
+| `Name` | `string` |  |
+| `Value` | `string` |  |
+| `Type` | `string` |  |
+
+### `Identifier`
+
+| Property | Type | Description |
+|---|---|---|
+| `IdentifierId` | `integer` | Internal identifier id. Use to update image and name. |
+| `IsCustom` | `boolean` | Is the tag user or system defined? |
+| `ImageId` | `string` |  |
+| `ImageUrl` | `string` |  |
+| `Tag` | `string` |  |
+| `Name` | `string` |  |
+
+### `OrderCustomerInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `ChannelBuyerName` | `string` | Username of customer (Comes from channel) |
+| `Address` | `CustomerAddress` | Customer address |
+| `BillingAddress` | `CustomerAddress` | Customer billing address |
+
+### `OrderDetails`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderId` | `string` | Order ID (pkOrderId) |
+| `NumOrderId` | `integer` | Linnworks order number |
+| `Processed` | `boolean` | If order is processed |
+| `ProcessedDateTime` | `string` | Date and time when order was processed |
+| `FulfilmentLocationId` | `string` | Location ID |
+| `GeneralInfo` | `OrderGeneralInfo` | General information about order |
+| `ShippingInfo` | `OrderShippingInfo` | Order shipping information |
+| `CustomerInfo` | `OrderCustomerInfo` | Order Customer information (Name, email etc) |
+| `TotalsInfo` | `OrderTotalsInfo` | Order totals information |
+| `ExtendedProperties` | `ExtendedProperty[]` | Extended properties of an order |
+| `FolderName` | `string[]` | Folder names assigned to an order |
+| `Items` | `OrderItem[]` | List of order items |
+| `Notes` | `OrderNote[]` | List of order notes |
+| `PaidDateTime` | `string` | Date and time when the order was marked as paid |
+| `TaxId` | `string` | Buyer's tax number. |
+
+### `OrderGeneralInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Status` | `integer` | Order Status (0 = UNPAID, 1 = PAID,2 = RETURN,3 = PENDING,4 = RESEND) |
+| `LabelPrinted` | `boolean` | Is label printed |
+| `LabelError` | `string` | Is there a label error |
+| `InvoicePrinted` | `boolean` | Is invoice printed |
+| `InvoicePrintError` | `string` | Is there invoice print error |
+| `PickListPrinted` | `boolean` | Is pick list printed |
+| `PickListPrintError` | `string` | Is there pick list print error |
+| `IsRuleRun` | `boolean` | If rules engine rule ran on an order |
+| `Notes` | `integer` | Quantity of order notes |
+| `PartShipped` | `boolean` | If order partly shipped |
+| `Marker` | `integer` | Order marker (0 = NOT TAG,1 = Tag 1,2 = Tag 2,3 = Tag 3,4 = Tag 4,5 = Tag 5,6 = Tag 6,7 = Parked) |
+| `IsParked` | `boolean` | Is the order parked? |
+| `Identifiers` | `Identifier[]` | Order identifiers. [Prime | Scheduled] |
+| `ReferenceNum` | `string` | Order reference number (Channel defined) |
+| `SecondaryReference` | `string` | An additional reference number for the orderr (Used by some channels) |
+| `ExternalReferenceNum` | `string` | This is an additional reference number from the sales channel, typically used by eBay |
+| `ReceivedDate` | `string` | The date and time at which the order was placed on the sales channel |
+| `Source` | `string` | Order ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Order Subsource (e.g. EBAY1) |
+| `SiteCode` | `string` | SiteCode used to differentiate between different sites from a single channel (eg. Amazon UK, Amazon US, Amazon FR...) |
+| `HoldOrCancel` | `boolean` | This shows whether the order has been marked as on hold, for processed orders if the order has been cancelled OnHold = 1 |
+| `DespatchByDate` | `string` | Despatch by Date |
+| `ScheduledDelivery` | `ScheduledDelivery` | Scheduled delivery dates. Take priority over despatch by date |
+| `HasScheduledDelivery` | `boolean` |  |
+| `Location` | `string` | Order location ID |
+| `NumItems` | `integer` | Quantity of order items |
+| `PickwaveIds` | `integer[]` | All related Pickwave Ids |
+| `StockAllocationType` | `string` |  |
+
+### `OrderItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemId` | `string` | Stock Item ID |
+| `ItemNumber` | `string` | Item number as on channel |
+| `SKU` | `string` | Product SKU |
+| `ItemSource` | `string` | Item source / channel name |
+| `Title` | `string` | Item title |
+| `Quantity` | `integer` | Quantity |
+| `CategoryName` | `string` | Product category |
+| `CompositeAvailablity` | `integer` | Composite availability |
+| `StockLevelsSpecified` | `boolean` | If stock level specified |
+| `OnOrder` | `integer` | Level due in purchase orders |
+| `OnPurchaseOrder` | `OrderItemOnOrder` | Purchase order bound to this item |
+| `InOrderBook` | `integer` | Quantity currently in open orders |
+| `Level` | `integer` | Current stock level |
+| `MinimumLevel` | `integer` | Minimum level |
+| `AvailableStock` | `integer` | Currently available stock level (Level-InOrderBook) |
+| `PricePerUnit` | `number` | Unit price |
+| `UnitCost` | `number` | Unit cost |
+| `DespatchStockUnitCost` | `number` | Despatch stock unit cost |
+| `Discount` | `number` | Percentage (0%, 10%, 20%, etc...) |
+| `Tax` | `number` | Actual tax value on an item |
+| `TaxRate` | `number` | Tax rate |
+| `Cost` | `number` | Total item cost (exc tax) |
+| `CostIncTax` | `number` | Total item cost (inc tax) |
+| `CompositeSubItems` | `OrderItem[]` | List of order items |
+| `IsService` | `boolean` | if item is a service |
+| `SalesTax` | `number` | Sales Tax |
+| `TaxCostInclusive` | `boolean` | If tax is included in a cost |
+| `PartShipped` | `boolean` | If order is partly shipped |
+| `Weight` | `number` | Order weight |
+| `BarcodeNumber` | `string` | Product barcode |
+| `Market` | `integer` | Market |
+| `ChannelSKU` | `string` | Channel product SKU |
+| `ChannelTitle` | `string` | Channel product title |
+| `DiscountValue` | `number` |  |
+| `HasImage` | `boolean` | If item got an image |
+| `ImageId` | `string` | Image ID |
+| `AdditionalInfo` | `OrderItemOption[]` | List of order item options |
+| `StockLevelIndicator` | `integer` | Stock level indicator |
+| `ShippingCost` | `number` | If batch number scan required |
+| `PartShippedQty` | `integer` | ShippingCost |
+| `ItemName` | `string` | PartShippedQty |
+| `BatchNumberScanRequired` | `boolean` | ItemName |
+| `SerialNumberScanRequired` | `boolean` | If serial number scan required |
+| `BinRack` | `string` | Binrack location |
+| `BinRacks` | `OrderItemBinRack[]` | List of BinRacks used for OrderItem |
+| `InventoryTrackingType` | `integer` | Identifies whether the item has a sell by date or other defined order in which inventory is to be sold |
+| `isBatchedStockItem` | `boolean` | If item has batches |
+| `IsWarehouseManaged` | `boolean` |  |
+| `IsUnlinked` | `boolean` |  |
+| `StockItemIntId` | `integer` |  |
+| `Boxes` | `StockItemBoxConfiguration[]` |  |
+| `AddedDate` | `string` |  |
+| `RowId` | `string` |  |
+| `OrderId` | `string` |  |
+| `StockItemId` | `string` |  |
+
+### `OrderItemBinRack`
+
+| Property | Type | Description |
+|---|---|---|
+| `Quantity` | `integer` | Quantity for BinRack per Location |
+| `BinRack` | `string` | BinRack |
+| `Location` | `string` | LocationId of the BinRack |
+| `BatchId` | `integer` | If the item is batched, identifies the batch number |
+| `OrderItemBatchId` | `integer` | If the item is batched, identifies the unique order item batch row |
+
+### `OrderItemOnOrder`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPurchaseItemId` | `string` | Primary key of the bound |
+| `Rowid` | `string` |  |
+| `pkPurchaseId` | `string` |  |
+| `ExternalInvoiceNumber` | `string` |  |
+| `fkSupplierId` | `string` |  |
+| `DateOfDelivery` | `string` |  |
+| `QuotedDeliveryDate` | `string` |  |
+| `SupplierName` | `string` |  |
+| `fkLocationId` | `string` |  |
+
+### `OrderItemOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkOptionId` | `string` | Option ID |
+| `Property` | `string` | Option property |
+| `Value` | `string` | Value of the option |
+
+### `OrderNote`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderNoteId` | `string` | Order note ID |
+| `OrderId` | `string` | Order Id |
+| `NoteDate` | `string` | Date and time when note was added |
+| `Internal` | `boolean` | order note type (Internal or External) |
+| `Note` | `string` | Note's text |
+| `CreatedBy` | `string` | User that created note |
+| `NoteTypeId` | `integer` |  |
+
+### `OrderRefundHeader`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundHeaderId` | `integer` |  |
+| `Currency` | `string` |  |
+| `Amount` | `number` |  |
+| `RefundLines` | `VerifiedRefund[]` |  |
+| `RefundLink` | `string` |  |
+| `OrderId` | `string` |  |
+| `NumOrderId` | `integer` |  |
+| `Status` | `PostSaleStatus` |  |
+| `OrderSource` | `string` |  |
+| `OrderSubSource` | `string` |  |
+| `ExternalReference` | `string` |  |
+| `ChannelInitiated` | `boolean` |  |
+| `CreatedDate` | `string` |  |
+| `Actioned` | `boolean` |  |
+| `LastActionDate` | `string` |  |
+
+### `OrderShippingInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Vendor` | `string` | Courier name (e.g. Royal Mail) |
+| `PostalServiceId` | `string` | Postal service ID |
+| `PostalServiceName` | `string` | Postal service name (e.g. Next day delivery) |
+| `TotalWeight` | `number` | Order total weight |
+| `ItemWeight` | `number` | If order is processed |
+| `PackageCategoryId` | `string` | Package category ID |
+| `PackageCategory` | `string` | Package category name |
+| `PackageTypeId` | `string` | Package type ID |
+| `PackageType` | `string` | Package type name |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost excluding tax |
+| `TrackingNumber` | `string` | Order tracking number provided by courier |
+| `ManualAdjust` | `boolean` | If there is an adjustment to shipping cost was made |
+
+### `OrderTotalsInfo`
+
+| Property | Type | Description |
+|---|---|---|
+| `Subtotal` | `number` | Order subtotal |
+| `PostageCost` | `number` | Order postage cost |
+| `PostageCostExTax` | `number` | Order postage cost ex. tax |
+| `Tax` | `number` | Tax |
+| `TotalCharge` | `number` | Total charge |
+| `PaymentMethod` | `string` | Payment method |
+| `PaymentMethodId` | `string` | Payment method ID |
+| `ProfitMargin` | `number` | Profit margin |
+| `TotalDiscount` | `number` | Total discount applied to the order |
+| `Currency` | `string` | Order currency |
+| `CountryTaxRate` | `number` | Country tax rate |
+| `ConversionRate` | `number` | Currency conversion rate. Set at point of save by the currency |
+
+### `PostSaleStatus`
+
+| Property | Type | Description |
+|---|---|---|
+| `StatusHeader` | `string` | Identifies whether the refund is open, processed, or in an erroneous state |
+| `StatusDetail` | `PostSaleSubStatus` | Further identifies the state the refund is in, along with whether it can be actioned |
+
+### `PostSaleSubStatus`
+
+| Property | Type | Description |
+|---|---|---|
+| `StatusTag` | `string` | For an individual refund line, this identifies the line's state on the channel. For the header, if all its lines have the same StatusTag, it will also have the same StatusTag. If not, it will determine an appropriate StatusTag based on those of its lines |
+| `StatusDescription` | `string` | A user-friendly descriptor of the StatusTag |
+| `Actionable` | `boolean` | Determines whether the refund is in a state where it requires action from the user |
+| `ActionDescription` | `string` | A user-friendly descriptor of what "actioning" the refund will do on the channel |
+| `EditableFields` | `string[]` | Where certain fields need to be modified for the refund to be successfully actioned, this list is populated with a list of the field names, allowing them to be edited as necessary |
+
 ### `PostSale_CreateCancellationRequest`
 
 | Property | Type | Description |
 |---|---|---|
 | `request` | `CancellationRequest` |  |
+
+### `RefundError`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundRowId` | `string` |  |
+| `ErrorMessage` | `string` |  |
+| `DateStamp` | `string` |  |
+| `Acknowledged` | `boolean` |  |
+
+### `ScheduledDelivery`
+
+| Property | Type | Description |
+|---|---|---|
+| `From` | `string` |  |
+| `To` | `string` |  |
+
+### `StockItemBoxConfiguration`
+
+| Property | Type | Description |
+|---|---|---|
+| `BoxId` | `integer` | Unique box id. |
+| `StockItemIntId` | `integer` |  |
+| `BoxName` | `string` | Box name max 16 characters |
+| `Width` | `number` | Width of the box |
+| `Height` | `number` | Height of the box |
+| `Length` | `number` | Depth of the box |
+| `Weight` | `number` | Total weight of the box. |
+| `ValuePercentage` | `number` | Value break down percentage |
+| `Barcode` | `string` | Box barcode, max 64 characters. |
+| `PackagingTypeId` | `string` | Packaging type id |
+| `LogicalDelete` | `boolean` | IsDeleted flag. |
 
 ### `ValidatedCancellation`
 
@@ -64,3 +434,46 @@ This method is used to further validate and create a cancellation in Linnworks, 
 | `CancellationHeader` | `OrderRefundHeader` |  |
 | `AllowRefundOnCancel` | `boolean` |  |
 | `OrderIsLockedOnUnhandledError` | `boolean` |  |
+
+### `VerifiedRefund`
+
+| Property | Type | Description |
+|---|---|---|
+| `RefundRowId` | `string` | A unique identifier for the refund line |
+| `RefundHeaderId` | `integer` | A unique identifier for the refund header this line belongs to |
+| `Status` | `PostSaleStatus` | A detailed description of this refund line's status |
+| `RefundedUnit` | `string` | Identifies the type of refund for this line |
+| `IsShippingRefund` | `boolean` | Identifies whether the refund is a shipping refund |
+| `IsAdditionalRefund` | `boolean` | Identifies whether the refund is an additional refund |
+| `IsCancellation` | `boolean` | Identifies whether the refund row is a cancellation |
+| `RefundedItem` | `VerifiedRefundItem` | Used mainly to associate an item with an error, this identifies the order item to which the refund line applies |
+| `ValidationError` | `string` | If validation has failed for this item, the field will be populated with the appropriate error message |
+| `Error` | `string` |  |
+| `Errors` | `RefundError[]` |  |
+| `Actioned` | `boolean` | Line-level indicator of whether the refund has been actioned |
+| `ActionedDate` | `string` | If a refund has been actioned, this denotes the date it was actioned. For not actioned lines, this value is null |
+| `ChannelInitiated` | `boolean` | Identifies whether the refund was created manually in Linnworks, or downloaded from the channel automatically |
+| `Internal` | `boolean` | Identifies whether the line is processed only internally or also on a third-party channel |
+| `Deleted` | `boolean` | Identifies whether the line has been removed from the refund, and is pending an update to the database to reflect this |
+| `ExternalReference` | `string` |  |
+| `IsFreeText` | `boolean` |  |
+| `FreeTextOrNote` | `string` |  |
+| `Amount` | `number` |  |
+| `Quantity` | `integer` |  |
+| `ReasonTag` | `string` |  |
+| `SubReasonTag` | `string` |  |
+| `InsufficientRefundTag` | `string` |  |
+| `InsufficientRefundNote` | `string` |  |
+| `ReasonCategory` | `string` |  |
+
+### `VerifiedRefundItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `OrderItemRowId` | `string` | The unique order item identifier |
+| `ReturnRowId` | `integer` | A unique identifier for the return line this refund relates to. If null, it is an independent refund |
+| `ItemSKU` | `string` | The Linnworks SKU for the item, assuming it is linked. If it is not, this matches the channel SKU |
+| `ChannelSKU` | `string` | The channel's SKU for the item |
+| `ItemTitle` | `string` | For a linked item, the Linnworks item title for this channel (or the default item title where a specific channel title does not exist). For an unlinked item, this is the title provided by the channel |
+| `Cost` | `number` | The tax-inclusive cost for this line |
+| `CancelledQuantity` | `integer` | If a refund is linked to a cancellation request, this field denotes the amount of the item cancelled |

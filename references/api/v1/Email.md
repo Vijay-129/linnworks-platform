@@ -36,6 +36,17 @@ Generate a custom email Permissions Required: GlobalPermissions.Email.SendEmails
 
 ## Models
 
+### `EmailParsableCreator`
+
+### `EmailStubCustomTag`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkEmailStubTagId` | `integer` | Row id |
+| `fkEmailStubId` | `integer` | Relation to email_stub |
+| `TagName` | `string` | Name of the tag |
+| `TagValue` | `string` | Value which will be inserted into the template |
+
 ### `EmailTemplate`
 
 | Property | Type | Description |
@@ -70,6 +81,21 @@ Generate a custom email Permissions Required: GlobalPermissions.Email.SendEmails
 | `IsAdhoc` | `boolean` | Indicates if the email type is adhoc |
 | `HTML` | `boolean` | Indicates whether the email is a HTML email |
 
+### `EmailTemplateType`
+
+| Property | Type | Description |
+|---|---|---|
+| `AttachedFileName` | `string` |  |
+| `AttachmentHelpText` | `string` |  |
+| `Type` | `string` |  |
+| `Name` | `string` |  |
+| `IsAdhoc` | `boolean` |  |
+| `IsDesignerVisible` | `boolean` |  |
+| `ParsableCreator` | `EmailParsableCreator` |  |
+| `Tags` | `TemplateTag[]` |  |
+| `AttachPDFAvailable` | `boolean` |  |
+| `PrintingTemplateType` | `string` |  |
+
 ### `Email_GenerateAdhocEmailRequest`
 
 | Property | Type | Description |
@@ -82,6 +108,15 @@ Generate a custom email Permissions Required: GlobalPermissions.Email.SendEmails
 |---|---|---|
 | `request` | `GenerateFreeTextEmailRequest` |  |
 
+### `GenerateAdhocEmailRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ids` | `string[]` | List of ids to send template for |
+| `templateId` | `integer` | Template id to send |
+| `tags` | `EmailStubCustomTag[]` | Tags to append to email |
+| `attachments` | `string[]` | List of attachments to send with the email |
+
 ### `GenerateAdhocEmailResponse`
 
 | Property | Type | Description |
@@ -89,9 +124,27 @@ Generate a custom email Permissions Required: GlobalPermissions.Email.SendEmails
 | `isComplete` | `boolean` | Send custom emails completed |
 | `FailedRecipients` | `string[]` | List of failed recipients |
 
+### `GenerateFreeTextEmailRequest`
+
+| Property | Type | Description |
+|---|---|---|
+| `ids` | `string[]` | List of ids to send template for |
+| `subject` | `string` | Subject of email |
+| `body` | `string` | Body of email |
+| `templateType` | `string` |  |
+
 ### `GenerateFreeTextEmailResponse`
 
 | Property | Type | Description |
 |---|---|---|
 | `isComplete` | `boolean` | Send custom emails completed |
 | `FailedRecipients` | `string[]` | List of failed recipients |
+
+### `TemplateTag`
+
+| Property | Type | Description |
+|---|---|---|
+| `Tag` | `string` | Tag which is inserted into the template as [{Tag}] |
+| `Name` | `string` | Human readable name of the tag |
+| `SelectionPath` | `string` | Defines how the tag will be rendered in the menu |
+| `IsList` | `boolean` | Identifies whether the item is a list (FOREACH loop) |

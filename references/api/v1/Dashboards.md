@@ -130,6 +130,15 @@ Use this call to retrieve report about "Stock info for products in a specific ca
 | `StockLevel` | `integer` |  |
 | `StockValue` | `number` |  |
 
+### `StockCategoryLocationProduct`
+
+| Property | Type | Description |
+|---|---|---|
+| `ItemNumber` | `string` |  |
+| `ItemTitle` | `string` |  |
+| `StockLevel` | `integer` |  |
+| `StockValue` | `number` |  |
+
 ### `TopProductData`
 
 | Property | Type | Description |

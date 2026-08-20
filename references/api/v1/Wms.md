@@ -198,3 +198,74 @@ Permissions Required: GlobalPermissions.Inventory.WarehouseManagement.Administra
 | Property | Type | Description |
 |---|---|---|
 | `Type` | `WarehouseZoneType` |  |
+
+### `WarehouseBinrackToZone`
+
+| Property | Type | Description |
+|---|---|---|
+| `ZoneId` | `integer` |  |
+| `BinrackId` | `integer` |  |
+
+### `WarehouseBinrackToZoneRequestItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `RowIndex` | `integer` |  |
+| `ZoneId` | `integer` |  |
+| `BinrackId` | `integer` |  |
+
+### `WarehouseBinrackToZoneResponseItem`
+
+| Property | Type | Description |
+|---|---|---|
+| `Errors` | `string[]` |  |
+| `RowIndex` | `integer` |  |
+| `ZoneId` | `integer` |  |
+| `BinrackId` | `integer` |  |
+
+### `WarehouseZone`
+
+| Property | Type | Description |
+|---|---|---|
+| `ZoneId` | `integer` | Unique zone id |
+| `ZoneTypeId` | `integer` | Zone type Id |
+| `Name` | `string` | Zone name, unique to location |
+| `ParentZoneId` | `integer` | Parent zone id (immediate parent in hierarchy) |
+| `HierarchyLevel` | `integer` | Hierarchy level from top most parent. |
+| `StockLocationIntId` | `integer` | Stock location interger id |
+
+### `WarehouseZoneBinrackCount`
+
+| Property | Type | Description |
+|---|---|---|
+| `ZoneId` | `integer` |  |
+| `Count` | `integer` |  |
+
+### `WarehouseZoneGroup`
+
+| Property | Type | Description |
+|---|---|---|
+| `ZoneGroupId` | `integer` |  |
+| `Name` | `string` |  |
+
+### `WarehouseZoneGroupToZone`
+
+| Property | Type | Description |
+|---|---|---|
+| `ZoneId` | `integer` |  |
+| `ZoneGroupId` | `integer` |  |
+
+### `WarehouseZoneToZone`
+
+| Property | Type | Description |
+|---|---|---|
+| `ZoneId` | `integer` |  |
+| `ZoneIdParent` | `integer` |  |
+
+### `WarehouseZoneType`
+
+| Property | Type | Description |
+|---|---|---|
+| `ZoneTypeId` | `integer` |  |
+| `Name` | `string` |  |
+| `StockLocationIntId` | `integer` |  |

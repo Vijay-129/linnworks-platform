@@ -28,6 +28,27 @@ Get all the macro configurations for the user account Permissions Required: Glob
 |---|---|---|
 | `Macros` | `InstalledMacro[]` |  |
 
+### `InstalledMacro`
+
+| Property | Type | Description |
+|---|---|---|
+| `ApplicationName` | `string` |  |
+| `ApplicationLogo` | `string` |  |
+| `MacroName` | `string` |  |
+| `MacroDescription` | `string` |  |
+| `ExecutionType` | `string` |  |
+| `SourceCodeType` | `string` |  |
+| `Parameters` | `ParameterDefinition[]` |  |
+
+### `MacroParameter`
+
+| Property | Type | Description |
+|---|---|---|
+| `MacroId` | `integer` |  |
+| `ParameterName` | `string` |  |
+| `ParameterValue` | `string` |  |
+| `IsSecure` | `boolean` |  |
+
 ### `MacroRegister`
 
 | Property | Type | Description |
@@ -46,3 +67,40 @@ Get all the macro configurations for the user account Permissions Required: Glob
 | `TimeZoneOffset` | `number` |  |
 | `MacroType` | `string` |  |
 | `Migrated` | `integer` | DST migration flag. 0 - not migrated; 1 - migrated; 2 - migration failed; |
+
+### `NamedScheduleConfiguration`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` | User visible name for a schedule configuration |
+| `RepetitionType` | `string` |  |
+| `OneTimeDate` | `string` |  |
+| `DailyFrequency` | `string` |  |
+| `OccursFrequencyStartingDate` | `string` |  |
+| `OccursFrequencyEveryX` | `integer` |  |
+| `WeeklyDays` | `string` |  |
+| `OccursFrequency` | `string` |  |
+| `OccursOnceAtTime` | `string` |  |
+| `OccursEveryHours` | `integer` |  |
+| `StartingTime` | `string` |  |
+| `EndingTime` | `string` |  |
+| `Enabled` | `boolean` |  |
+
+### `ParameterDefinition`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` |  |
+| `Name` | `string` |  |
+| `IsRequired` | `boolean` |  |
+| `DefaultValue` | `string` |  |
+| `FriendlyName` | `string` |  |
+| `ParameterDescription` | `string` |  |
+| `RegexValidation` | `string` |  |
+| `RegexErrorMessage` | `string` |  |
+| `MustBeSpecified1` | `boolean` |  |
+| `isHidden` | `boolean` |  |
+| `isReadOnly` | `boolean` |  |
+| `IsSecure` | `boolean` |  |
+| `GroupName` | `string` |  |
+| `Sortorder` | `integer` |  |

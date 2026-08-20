@@ -41,6 +41,15 @@ Returns Channel Service Link Information Permissions Required: GlobalPermissions
 
 ## Models
 
+### `Channel`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPostalServiceId` | `string` | Postal service ID |
+| `PostalServiceName` | `string` | Postal service name |
+| `Source` | `string` | ChannelName/Source (e.g. EBAY) |
+| `SubSource` | `string` | Subsource name (e.g. EBAY1) |
+
 ### `ChannelServiceLinks`
 
 | Property | Type | Description |
@@ -108,3 +117,13 @@ Returns Channel Service Link Information Permissions Required: GlobalPermissions
 | Property | Type | Description |
 |---|---|---|
 | `PostalServiceDetails` | `PostalService` |  |
+
+### `ShippingService`
+
+| Property | Type | Description |
+|---|---|---|
+| `pkPostalServiceId` | `string` | Postal service ID |
+| `PostalServiceName` | `string` | Postal service name |
+| `vendor` | `string` | Courier name (e.g. Royal Mail) |
+| `accountid` | `string` | Shipping account ID |
+| `vendorFriendlyName` | `string` | Courier Friendly Name (e.g. FedEx (US) for ShipEngine) |

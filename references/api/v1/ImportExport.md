@@ -79,6 +79,44 @@ Get all existing exports Permissions Required: GlobalPermissions.Settings.Import
 
 ## Models
 
+### `AddData`
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` |  |
+| `Value` | `string` |  |
+
+### `BooleanFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Value` | `boolean` |  |
+
+### `DateRangeFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `ValueFrom` | `string` |  |
+| `ValueTo` | `string` |  |
+| `Days` | `integer` |  |
+| `Enabled` | `boolean` |  |
+| `Type` | `string` |  |
+
+### `ExecutionOption`
+
+| Property | Type | Description |
+|---|---|---|
+| `OptionDetails` | `ExecutionOptionType` |  |
+| `DisplayName` | `string` |  |
+| `Value` | `object` |  |
+
+### `ExecutionOptionType`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` |  |
+| `Key` | `string` |  |
+
 ### `Export`
 
 | Property | Type | Description |
@@ -86,6 +124,31 @@ Get all existing exports Permissions Required: GlobalPermissions.Settings.Import
 | `Specification` | `ExportSpecification` |  |
 | `Register` | `ExportRegister` |  |
 | `Schedules` | `Schedule[]` |  |
+
+### `ExportColumn`
+
+| Property | Type | Description |
+|---|---|---|
+| `Order` | `integer` |  |
+| `Filters` | `Filters` |  |
+| `ExportToFile` | `boolean` |  |
+| `SubQuerySelection` | `SubQueryOutputMappingSelectionField[]` |  |
+| `FileColumn` | `string` |  |
+| `Column` | `string` |  |
+| `Expression` | `string` |  |
+| `DefaultValue` | `string` |  |
+| `Visible` | `boolean` |  |
+
+### `ExportGenericFeed`
+
+| Property | Type | Description |
+|---|---|---|
+| `FeedType` | `string` |  |
+| `FileName` | `string` |  |
+| `FilePath` | `string` |  |
+| `TempFileName` | `string` |  |
+| `IfFileExist` | `string` |  |
+| `discriminator` | `string` |  |
 
 ### `ExportRegister`
 
@@ -106,6 +169,49 @@ Get all existing exports Permissions Required: GlobalPermissions.Settings.Import
 | `AllSchedulesDisabled` | `boolean` |  |
 | `TimeZoneOffset` | `number` |  |
 | `NextSchedule` | `string` |  |
+
+### `ExportRegisterPublicSchedules`
+
+| Property | Type | Description |
+|---|---|---|
+| `LastQueryExecuted` | `string` |  |
+| `Id` | `integer` |  |
+| `Type` | `string` |  |
+| `FriendlyName` | `string` |  |
+| `Executing` | `boolean` |  |
+| `Started` | `string` |  |
+| `Completed` | `string` |  |
+| `IsQueued` | `boolean` |  |
+| `Enabled` | `boolean` |  |
+| `justOnce` | `boolean` |  |
+| `Schedules` | `Schedule[]` |  |
+| `LastExportStatus` | `boolean` |  |
+| `IsNew` | `boolean` |  |
+| `AllSchedulesDisabled` | `boolean` |  |
+| `TimeZoneOffset` | `number` |  |
+| `NextSchedule` | `string` |  |
+
+### `ExportSpecification`
+
+| Property | Type | Description |
+|---|---|---|
+| `ExportColumnNames` | `boolean` |  |
+| `Delimiter` | `string` |  |
+| `Escape` | `string` |  |
+| `CustomScript` | `string` |  |
+| `ExportTimeZone` | `string` |  |
+| `Feed` | `ExportGenericFeed` |  |
+| `ColumnMappings` | `ExportColumn[]` |  |
+| `ExecutionOptions` | `ExecutionOption[]` |  |
+
+### `Filters`
+
+| Property | Type | Description |
+|---|---|---|
+| `NumericFilters` | `NumericFilter[]` |  |
+| `BooleanFilter` | `BooleanFilter` |  |
+| `DateRangeFilters` | `DateRangeFilter[]` |  |
+| `StringFilters` | `StringFilter[]` |  |
 
 ### `FulfilmentCenterImportExportSettings`
 
@@ -138,6 +244,17 @@ Get all existing exports Permissions Required: GlobalPermissions.Settings.Import
 | `Specification` | `Specification_ImportGenericFeed_ImportColumn` |  |
 | `Register` | `ImportRegister` |  |
 | `Schedules` | `Schedule[]` |  |
+
+### `ImportColumn`
+
+| Property | Type | Description |
+|---|---|---|
+| `AdditionalData` | `AddData[]` |  |
+| `FileColumn` | `string` |  |
+| `Column` | `string` |  |
+| `Expression` | `string` |  |
+| `DefaultValue` | `string` |  |
+| `Visible` | `boolean` |  |
 
 ### `ImportExport_DeleteExportRequest`
 
@@ -177,6 +294,18 @@ Get all existing exports Permissions Required: GlobalPermissions.Settings.Import
 |---|---|---|
 | `importId` | `integer` |  |
 
+### `ImportGenericFeed`
+
+| Property | Type | Description |
+|---|---|---|
+| `FeedType` | `string` |  |
+| `Encoding` | `string` |  |
+| `Delimiter` | `string` |  |
+| `Comment` | `string` |  |
+| `HasHeaders` | `boolean` |  |
+| `Escape` | `string` |  |
+| `Quote` | `string` |  |
+
 ### `ImportRegister`
 
 | Property | Type | Description |
@@ -197,3 +326,83 @@ Get all existing exports Permissions Required: GlobalPermissions.Settings.Import
 | `AllSchedulesDisabled` | `boolean` |  |
 | `TimeZoneOffset` | `number` |  |
 | `NextSchedule` | `string` |  |
+
+### `ImportRegisterPublicSchedules`
+
+| Property | Type | Description |
+|---|---|---|
+| `Schedules` | `Schedule[]` |  |
+| `LastFileChecksum` | `string` |  |
+| `ImportStatus` | `string` |  |
+| `ImportSkipped` | `boolean` |  |
+| `Id` | `integer` |  |
+| `Type` | `string` |  |
+| `FriendlyName` | `string` |  |
+| `Executing` | `boolean` |  |
+| `justOnce` | `boolean` |  |
+| `Started` | `string` |  |
+| `Completed` | `string` |  |
+| `IsQueued` | `boolean` |  |
+| `Enabled` | `boolean` |  |
+| `IsNew` | `boolean` |  |
+| `AllSchedulesDisabled` | `boolean` |  |
+| `TimeZoneOffset` | `number` |  |
+| `NextSchedule` | `string` |  |
+
+### `NumericFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` |  |
+| `Value` | `number` |  |
+
+### `Schedule`
+
+| Property | Type | Description |
+|---|---|---|
+| `Id` | `integer` |  |
+| `Order` | `integer` |  |
+| `Name` | `string` |  |
+| `OwnerId` | `integer` |  |
+| `Migrated` | `integer` |  |
+| `ScheduleXML` | `string` |  |
+| `Configuration` | `ScheduleConfiguration` |  |
+
+### `ScheduleConfiguration`
+
+| Property | Type | Description |
+|---|---|---|
+| `RepetitionType` | `string` |  |
+| `OneTimeDate` | `string` |  |
+| `DailyFrequency` | `string` |  |
+| `OccursFrequencyStartingDate` | `string` |  |
+| `OccursFrequencyEveryX` | `integer` |  |
+| `WeeklyDays` | `string` |  |
+| `OccursFrequency` | `string` |  |
+| `OccursOnceAtTime` | `string` |  |
+| `OccursEveryHours` | `integer` |  |
+| `StartingTime` | `string` |  |
+| `EndingTime` | `string` |  |
+| `Enabled` | `boolean` |  |
+
+### `Specification_ImportGenericFeed_ImportColumn`
+
+| Property | Type | Description |
+|---|---|---|
+| `Feed` | `ImportGenericFeed` |  |
+| `ColumnMappings` | `ImportColumn[]` |  |
+| `ExecutionOptions` | `ExecutionOption[]` |  |
+
+### `StringFilter`
+
+| Property | Type | Description |
+|---|---|---|
+| `Type` | `string` |  |
+| `Value` | `string` |  |
+
+### `SubQueryOutputMappingSelectionField`
+
+| Property | Type | Description |
+|---|---|---|
+| `SelectionFieldName` | `string` |  |
+| `SelectionFieldValue` | `string` |  |
