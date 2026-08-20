@@ -237,6 +237,14 @@ Every macro must log once at the very start of `Execute` and once at the very en
 before the final "finished" line) is worth copying for any macro that processes a
 batch of records: it turns the log into an audit trail, not just a heartbeat.
 
+Start/end is the mandatory minimum, not the whole picture for a macro that
+processes many records: log at three levels — run (start/end + summary), record
+(one line per order/etc stating what was decided and why), and sub-record if one
+exists (e.g. one line per SKU within an order) — and route per-candidate noise
+(bins considered and rejected, raw IDs, API response oddities) through
+`Logger.WriteDebug`, not `WriteInfo`, so real decisions aren't buried under
+thousands of lines. See `references/macro/patterns/log_tiering.md`.
+
 ## 3. Logging: human-readable IDs only, never raw GUIDs
 
 Log `order.NumOrderId` (int), not `order.OrderId` (Guid). For inventory, log SKU,

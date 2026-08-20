@@ -44,6 +44,9 @@ needs visible and where - there's no single required storage mechanism, only the
 requirement that *some* durable, inspectable record of the outcome exists beyond
 a log line that scrolls away.
 
+This doc is about *where the outcome is stored*; `log_tiering.md` is about *what
+the log lines themselves say and at what verbosity* - read both together.
+
 ## Example
 
 ```csharp
