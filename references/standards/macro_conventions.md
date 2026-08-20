@@ -5,6 +5,41 @@ each other — every rule below cites which example demonstrates it and which
 example(s) violate it. Read `golden_examples/README.md` for the full per-file
 breakdown; this file is the checklist to write new macros against.
 
+This file lives on the MCP/server side, not inside any one agent's prompt -
+Claude (via `mcp-server`), Antigravity, and ChatGPT (via `chatgpt-action-macro`,
+which wraps the same `get_macro_conventions`/`check_against_standards` tools) all
+read the identical rules from here. Anything **mechanically checkable** (a regex
+over the code - see `check_against_standards`) belongs here, because it then
+applies to every agent automatically and gets enforced, not just suggested.
+Anything **behavioral** (ask the user when a requirement is ambiguous, follow a
+particular order of steps, never present unverified code) can only be enforced by
+each agent's own instructions/system prompt - an MCP tool response is data an
+agent chooses to act on, it can't compel a calling order. `chatgpt-action-macro/README.md`'s
+GPT instructions text is where that half lives for ChatGPT specifically.
+
+## Process every agent should follow, in order
+
+1. **Fully understand the requirement first** - trigger type (see 1.1), scope,
+   what "done" looks like, what should happen on partial failure. If anything
+   here is genuinely ambiguous, ask before writing code (see 1.1's guidance on
+   asking vs guessing) - guessing wrong here means rewriting logic later.
+2. **Find the best-fit API and filter for that scope** (rule 5) - server-side
+   filtering/paging over "fetch everything, filter in code", and a batch/bulk
+   endpoint over one-call-per-record (rule 7). Check the actual request/response
+   shape with `get_model`/`get_endpoint` before writing the call (rule 9) - don't
+   assume a field name or required-ness from memory.
+3. **Design the full logic, including edge cases**, before it's considered done:
+   empty/zero-length working sets, a record that fails mid-batch (per-order
+   isolation - rule 1.1/rule_macro.md), idempotency (rule 6), and the specific
+   `Guid.Empty`-is-not-"all" trap (section 0.1).
+4. **Verify before presenting anything** - `check_against_standards` then
+   `check_macro_compiles`, fix what either flags, repeat until clean.
+5. **Suggest concrete test scenarios to the user** when you hand over the
+   finished macro - not just "let me know if it works." At minimum: the normal
+   case, an empty/no-match case, and whichever edge case from step 3 is riskiest
+   to get wrong for this specific macro (e.g. "test with an order at a
+   non-Default location" for anything location-scoped).
+
 ## 0. Language features: macros compile separately from LinnworksAPI itself
 
 `LinnworksAPI/LinnworksAPI.csproj` targets netstandard2.0/C# 7.3 (no nullable
@@ -112,6 +147,21 @@ location (or per relevant subset) - never rely on an empty/default Guid to mean
 "unfiltered." This generalizes beyond `GetOpenOrders` - treat any location-typed
 (or similarly-typed) filter parameter with the same suspicion until checked; the
 API doesn't reliably use "empty means unset" semantics.
+
+**This is not a location-only rule.** The same failure shape applies to every
+reference-entity ID a macro might treat as a filter: vendor (`Guid.Empty` is
+whichever vendor is named "Default", not "any vendor"), category, shipping
+method, and any other `*Id`-typed parameter that looks optional. Before writing
+`someId ?? Guid.Empty` for *any* of these, resolve the real set of values first
+(`Inventory.GetStockLocations()`, the vendor list endpoint, the category tree,
+etc.) the same way as the location case above - don't assume the pattern is safe
+just because it's a different entity type than the one that was live-tested.
+`check_against_standards` flags any `?? Guid.Empty` occurrence for this reason -
+treat a flag on it as a real bug to investigate, not noise.
+
+**This rule applies identically no matter which agent is writing the macro** -
+Claude, Antigravity, or ChatGPT. It's documented here (not only in any one
+agent's prompt) precisely so it can't be forgotten by switching tools.
 
 ## 1. Structure
 
@@ -328,3 +378,51 @@ treating that window as a hard constraint, not an afterthought:
   judgment call, not an absolute - a real state machine with named outcomes (e.g.
   `03`'s `ProcessingOutcome` enum, used for control flow and logging) earns its
   keep; a one-off snapshot struct usually doesn't.
+- **Compact code, not padded code.** Don't insert a blank line between every
+  statement or put a brace on its own line where the golden examples don't -
+  match the density they already use (Allman braces, one blank line to separate
+  logical groups, not one after every line). Compactness is in service of the
+  ~5-minute-budget mindset above (less to read while debugging a run that's about
+  to time out), not a hard line-count target - never compact by dropping the
+  mandatory structure (rule 1), logging (rule 2), or error handling.
+
+## 8. Execute parameters: one documented scalar per value - never a blob
+
+Every parameter on `Execute` needs an XML `/// <param name="x">description</param>`
+doc comment directly above it. This isn't cosmetic: Linnworks' macro settings UI
+renders that description next to the field when someone configures the macro (see
+`03_PickListMonitoring.cs`'s `viewName`/`location` doc comments - "Optional
+Linnworks open-order view. Leave empty to scan all open orders." is exactly what
+a non-developer configuring the macro sees). A parameter with no description is a
+blank, unexplained text box in that UI.
+
+**Never combine several logical values into one JSON- or CSV-encoded string
+parameter** (`Execute(string configJson)` parsed with
+`JsonConvert.DeserializeObject` inside, or a single `"a,b,c"` parameter split in
+code) to avoid declaring several parameters. Linnworks' settings UI edits one text
+field per `Execute` parameter - a blob parameter isn't editable there in any
+user-friendly way, it just moves the problem from "the macro has no config UI" to
+"the macro has a config UI that shows one cryptic text box." Declare one `string`
+parameter per logical value instead, each with its own description. Every
+parameter is a plain `string` regardless of its real meaning (a count, a Guid, a
+flag) - the settings UI only edits text - so parse/validate the string inside
+`Execute`, don't expect the engine to coerce it.
+
+`scaffold_macro`'s `config_params` argument takes `"name:description"` pairs
+(separated by `|`) for exactly this reason, and refuses to generate a parameter
+with no description - use it rather than hand-writing the signature, so this rule
+can't be silently skipped.
+
+## 9. Verify the request/response shape before writing an API call
+
+A macro calling an API with a malformed or incomplete request object fails at
+**runtime** with a generic "Bad Request" - not at compile time, and not with a
+message that points at which field was wrong. Before writing a call that
+constructs a request object (`Search_PurchaseOrder2Request`, `AddOrderNote`
+parameters, anything with more than one or two fields), call `get_model` (or
+`get_endpoint` for the controller) to check the real field names, which are
+required vs optional, and their actual types - don't recall the shape from
+memory or infer it from a similarly-named type. This is especially easy to get
+wrong for request types that look like their response counterpart but aren't
+(different required fields, different casing) - checking first is one tool call;
+debugging a live "Bad Request" with no field-level detail is not.

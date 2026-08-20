@@ -40,7 +40,7 @@ import reference_tools  # noqa: E402
 import server as macro_server  # noqa: E402  (mcp-server/server.py, imported as a plain module)
 
 from fastapi import FastAPI, Query
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import uvicorn
 
 # ChatGPT's Action importer requires an OpenAPI `servers` entry - the generated
@@ -191,20 +191,20 @@ def search_golden_examples(query: str = Query(...), max_results: int = Query(def
 # ---- Scaffolding and verification ----
 
 class ScaffoldRequest(BaseModel):
-    macro_name: str
-    trigger: str
-    config_params: str = ""
+    macro_name: str = Field(..., description='PascalCase identifier used as both namespace and class name, e.g. "OrderSyncMacro". Name it for what the macro does - never a placeholder like "LinnworksMacro".')
+    trigger: str = Field(..., description='"rule" or "scheduled" - never both. Ask the user if the trigger type is unclear from their requirement.')
+    config_params: str = Field(default="", description='"name:description" pairs separated by "|" - ONE per configurable value, e.g. "locationName:Name of the stock location to scan|maxOrders:Maximum orders to process per run". Never pass a single JSON/CSV blob here - each value must be its own named, described parameter, since Linnworks\' macro settings UI edits one text field per Execute parameter. A pair with no ":description" is rejected.')
 
 
 @app.post("/scaffold_macro", operation_id="scaffold_macro",
           summary="Generate a starting skeleton with the mandatory macro structure filled in",
-          description="Generate a starting macro skeleton with the mandatory structure filled in: start/end logging, try/catch, and the rate-limit-safe ExecuteApi wrapper. trigger is 'rule' or 'scheduled' - never both. Business logic is left as TODOs, not a finished macro.")
+          description="Generate a starting macro skeleton: logging, try/catch, rate-limit wrapper, an XML <param> doc per parameter. trigger is 'rule' or 'scheduled' - never both. config_params is 'name:description' pairs separated by '|', never a blob. Business logic left as TODOs, not a finished macro.")
 def scaffold_macro(body: ScaffoldRequest) -> str:
     return macro_server.scaffold_macro(body.macro_name, body.trigger, body.config_params)
 
 
 class CodeRequest(BaseModel):
-    code: str
+    code: str = Field(..., description="A complete C# macro file - full using directives, namespace, and a class deriving LinnworksMacroBase with its Execute method. Not a bare snippet.")
 
 
 @app.post("/check_against_standards", operation_id="check_against_standards",

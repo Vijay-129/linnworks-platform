@@ -317,6 +317,10 @@ _RATE_LIMIT_HELPERS = '''\
 # Rule shape mirrors rule_macro.md's own example: Guid[] OrderIds first param,
 # per-order try/catch delegated to a helper (one bad order can't stop the batch),
 # distinct-order loop. ExecuteApi wraps the one real Api.* call already present.
+# Every parameter (OrderIds included) gets an XML <param> doc comment - Linnworks'
+# macro settings UI surfaces these to whoever configures the macro (the pattern
+# 03_PickListMonitoring.cs already uses for its Execute params), so a parameter
+# with no description is a real usability gap, not a cosmetic one.
 _RULE_TEMPLATE = '''\
 using System;
 using System.Linq;
@@ -328,7 +332,11 @@ namespace __MACRO_NAME__
 {
     public class __MACRO_NAME__ : LinnworksMacroBase
     {
-        public void Execute(Guid[] OrderIds)
+        /// <summary>
+        /// Rule-triggered entry point.
+        /// </summary>
+__PARAMS_DOC__
+        public void Execute(__PARAMS_DECL__)
         {
             Logger.WriteInfo("__MACRO_NAME__ started.");
 
@@ -385,7 +393,11 @@ __RATE_LIMIT_HELPERS__
 '''
 
 # Scheduled shape mirrors scheduled_macro.md's own example: no OrderIds, scalar
-# config params only, elapsed-time + processed-count in the final log line.
+# config params only, elapsed-time + processed-count in the final log line. Each
+# param gets an XML <param> doc comment (see 03_PickListMonitoring.cs) - that's
+# what Linnworks' macro settings UI shows as the field label/description, so an
+# undocumented parameter is a real gap for whoever configures the macro, not a
+# style nit.
 _SCHEDULED_TEMPLATE = '''\
 using System;
 using System.Collections.Generic;
@@ -399,6 +411,10 @@ namespace __MACRO_NAME__
     {
         private const int PageSize = 200;
 
+        /// <summary>
+        /// Scheduled entry point.
+        /// </summary>
+__CONFIG_PARAMS_DOC__
         public void Execute(__CONFIG_PARAMS__)
         {
             var startedUtc = DateTime.UtcNow;
@@ -438,18 +454,52 @@ __RATE_LIMIT_HELPERS__
 '''
 
 
+_PARAM_LIST_SEP = "|"
+_PARAM_NAME_DESC_SEP = ":"
+
+
+def _parse_config_params(config_params: str):
+    """Parse "name:description|name:description" into [(name, description), ...].
+    Returns a string error message instead of a list if the input is malformed -
+    callers must check `isinstance(result, str)` before using it as a list."""
+    entries = []
+    for raw in config_params.split(_PARAM_LIST_SEP):
+        raw = raw.strip()
+        if not raw:
+            continue
+        if _PARAM_NAME_DESC_SEP not in raw:
+            return (
+                f'"{raw}" in config_params is missing a description. config_params must be '
+                f'"name:description" pairs separated by "|", e.g. '
+                f'"locationName:Name of the stock location to scan|maxOrders:Maximum number of '
+                f'orders to process this run". Every Execute parameter needs a human-readable '
+                f"description, because Linnworks' macro settings UI shows it to whoever configures "
+                f'the macro (see how 03_PickListMonitoring.cs documents its Execute parameters with '
+                f"XML <param> comments) - a bare parameter name by itself isn't enough."
+            )
+        name, description = raw.split(_PARAM_NAME_DESC_SEP, 1)
+        name, description = name.strip(), description.strip()
+        if not _MACRO_NAME_RE.match(name):
+            return f'"{name}" in config_params is not a valid C# parameter name.'
+        if not description:
+            return f'"{name}" in config_params has an empty description - every parameter needs one (see above).'
+        entries.append((name, description))
+    return entries
+
+
 @mcp.tool()
 def scaffold_macro(macro_name: str, trigger: str, config_params: str = "") -> str:
     """Generate a starting skeleton for a new macro that already has the mandatory
     structure from get_macro_conventions() filled in, instead of leaving the caller
     to reproduce it from prose each time: start/end logging (rule 2), top-level
-    try/catch/finally (rule 1), per-order error isolation for Rule macros, and the
-    full rate-limit-safe ExecuteApi/PaceApiCall wrapper (rule 4 - proactive pacing +
-    HTTP 429 retry with exponential backoff, copied verbatim from
-    02_ContainerEtaFolderSync.cs, the reference implementation). The business logic
-    is left as TODO comments pointing at the relevant convention/golden-example -
-    this removes the boilerplate a macro is required to have, it does not write the
-    macro's actual purpose for you.
+    try/catch/finally (rule 1), per-order error isolation for Rule macros, the full
+    rate-limit-safe ExecuteApi/PaceApiCall wrapper (rule 4), and an XML <param> doc
+    comment for every Execute parameter (rule 8) - each parameter is always a plain
+    `string` (Linnworks' macro settings UI only edits text fields; parse/validate
+    inside Execute if you need a number/Guid/bool). The business logic is left as
+    TODO comments pointing at the relevant convention/golden-example - this removes
+    the boilerplate a macro is required to have, it does not write the macro's
+    actual purpose for you.
 
     macro_name: PascalCase identifier used as both the namespace and class name
     (e.g. "OrderSyncMacro"). Real approved macros each use their own distinct name
@@ -465,12 +515,19 @@ def scaffold_macro(macro_name: str, trigger: str, config_params: str = "") -> st
     based on the actual trigger semantics described, or ask - don't guess and don't
     hedge by writing both into one macro.
 
-    config_params: scheduled macros only - comma-separated scalar parameter names
-    (e.g. "locationName,folderPrefix"), each generated as an optional `string`
-    parameter. Ignored for a rule macro, which always takes Guid[] OrderIds first.
-    Leave blank for a parameterless scheduled macro (still generates one
-    placeholder param, since every real scheduled golden example takes at least
-    one).
+    config_params: "name:description" pairs separated by "|", one per configurable
+    value the macro needs - e.g. "locationName:Name of the stock location to
+    scan|maxOrders:Maximum number of orders to process this run". Never combine
+    several values into one JSON- or CSV-blob parameter for the caller to parse -
+    Linnworks' macro settings UI edits one text field per Execute parameter, so a
+    blob parameter isn't user-editable there and defeats the point (rule 8). For a
+    rule macro these are appended after the mandatory `Guid[] OrderIds` (mirrors
+    01_ShopifyPaymentMethodMapping.cs's real `Execute(Guid[] OrderIds, string
+    Source, ...)` shape) and may be left blank if the macro needs no extra config.
+    For a scheduled macro, at least one is required - a scheduled macro has no
+    OrderIds and needs some way to know its working set (leaving this blank
+    generates one placeholder `someParam` with a TODO description, but that's a
+    prompt to go back and name/describe the real parameter, not a valid final state).
 
     This is a starting point, not a finished macro - run check_against_standards
     and check_macro_compiles on the result after filling in the TODOs, same as any
@@ -486,17 +543,29 @@ def scaffold_macro(macro_name: str, trigger: str, config_params: str = "") -> st
     if trigger_normalized not in ("rule", "scheduled"):
         return f'trigger must be "rule" or "scheduled", got "{trigger}".'
 
+    extra_params = _parse_config_params(config_params)
+    if isinstance(extra_params, str):
+        return extra_params
+
     if trigger_normalized == "rule":
-        template = _RULE_TEMPLATE
+        params_doc = ['/// <param name="OrderIds">Order IDs matched by the Rules Engine condition that triggered this macro.</param>']
+        params_decl = ["Guid[] OrderIds"]
+        for name, description in extra_params:
+            params_doc.append(f'/// <param name="{name}">{description}</param>')
+            params_decl.append(f'string {name} = ""')
+        template = (
+            _RULE_TEMPLATE.replace("__PARAMS_DOC__", "\n".join(f"        {d}" for d in params_doc))
+            .replace("__PARAMS_DECL__", ", ".join(params_decl))
+        )
     else:
-        param_names = [p.strip() for p in config_params.split(",") if p.strip()]
-        if not param_names:
-            param_names = ["someParam"]
-        for p in param_names:
-            if not _MACRO_NAME_RE.match(p):
-                return f'"{p}" in config_params is not a valid C# parameter name.'
-        params_declaration = ", ".join(f'string {p} = ""' for p in param_names)
-        template = _SCHEDULED_TEMPLATE.replace("__CONFIG_PARAMS__", params_declaration)
+        if not extra_params:
+            extra_params = [("someParam", "TODO: describe what this parameter controls and how someone configuring the macro should set it.")]
+        params_doc = [f'/// <param name="{name}">{description}</param>' for name, description in extra_params]
+        params_decl = [f'string {name} = ""' for name, _ in extra_params]
+        template = (
+            _SCHEDULED_TEMPLATE.replace("__CONFIG_PARAMS_DOC__", "\n".join(f"        {d}" for d in params_doc))
+            .replace("__CONFIG_PARAMS__", ", ".join(params_decl))
+        )
 
     code = (
         template.replace("__RATE_LIMIT_HELPERS__", _RATE_LIMIT_HELPERS)
@@ -520,6 +589,18 @@ _INTERFACE_DECL_RE = re.compile(r"public\s+interface\s+(\w+)")
 _CONSOLE_LOG_RE = re.compile(r"\b(Console\.WriteLine|Debug\.WriteLine|Trace\.WriteLine)\s*\(")
 _EMPTY_CATCH_RE = re.compile(r"catch\s*\([^)]*\)\s*\{\s*\}")
 _ASYNC_RE = re.compile(r"\basync\s+(Task|void)\b")
+# macro_conventions.md section 0.1 - Guid.Empty is a real location's ID, not a
+# wildcard for "unfiltered". `?? Guid.Empty` is the exact shape of the confirmed
+# bug in 03_PickListMonitoring.cs (92% of open orders silently invisible).
+_GUID_EMPTY_DEFAULT_RE = re.compile(r"\?\?\s*Guid\.Empty\b")
+_EXECUTE_SIGNATURE_RE = re.compile(r"public\s+void\s+Execute\s*\(([^)]*)\)", re.DOTALL)
+_PARAM_DECL_RE = re.compile(r"(?:^|,)\s*[\w<>\[\],\s]+?\s(\w+)\s*(?:=|$)")
+_PARAM_DOC_RE = re.compile(r'<param\s+name="(\w+)"')
+# heuristic for macro_conventions.md rule 8 - a single Execute string parameter
+# fed into a JSON/CSV parser is exactly the "one blob parameter" shape rule 8
+# forbids (Linnworks' macro settings UI edits one text field per parameter, so a
+# blob isn't user-editable there).
+_BLOB_PARSE_RE = re.compile(r"\b(JsonConvert\.DeserializeObject|JsonFormatter\.ConvertFromJson)\s*[<(]")
 
 
 def _lines_with(pattern: re.Pattern, text: str):
@@ -529,13 +610,17 @@ def _lines_with(pattern: re.Pattern, text: str):
 @mcp.tool()
 def check_against_standards(code: str) -> str:
     """Lint a C# code snippet against the mechanically-checkable rules in
-    references/standards/conventions.md: nullable reference types (invalid in this
-    project's C# 7.3 target), enums missing StringEnumConverter, interfaces not
-    prefixed "I", logging calls inside SDK-layer code, empty/swallowing catch
-    blocks, and async usage (the SDK is synchronous throughout). This is a regex
-    linter, not a compiler - it can miss things and can false-positive. Read
-    get_standards() for the full rules; this only covers the subset that's
-    checkable without full-file/cross-file context."""
+    references/standards/conventions.md and macro_conventions.md: nullable
+    reference types (invalid in this project's C# 7.3 target), enums missing
+    StringEnumConverter, interfaces not prefixed "I", logging calls inside
+    SDK-layer code, empty/swallowing catch blocks, async usage (the SDK is
+    synchronous throughout), `?? Guid.Empty` used as a location/vendor/category
+    default (macro_conventions.md section 0.1 - a confirmed real bug shape),
+    Execute parameters with no XML <param> doc comment, and a JSON/CSV blob
+    standing in for several Execute parameters (macro_conventions.md rule 8). This
+    is a regex linter, not a compiler - it can miss things and can false-positive.
+    Read get_standards()/get_macro_conventions() for the full rules; this only
+    covers the subset that's checkable without full-file/cross-file context."""
     findings = []
 
     for lineno, line in _lines_with(_NULLABLE_REF_TYPE_RE, code):
@@ -575,6 +660,39 @@ def check_against_standards(code: str) -> str:
             f"line {lineno}: async/await (\"{line.strip()}\") - the SDK is synchronous throughout; "
             f"introducing async here is inconsistent unless it's a deliberate, whole-SDK decision."
         )
+
+    for lineno, line in _lines_with(_GUID_EMPTY_DEFAULT_RE, code):
+        findings.append(
+            f'line {lineno}: "{line.strip()}" - Guid.Empty is a real entity\'s ID (a location, vendor, '
+            f'category, etc - whichever one your account has named "Default"), not a wildcard for '
+            f'"unfiltered"/"all". Confirmed live (macro_conventions.md section 0.1): this exact pattern '
+            f"in a real macro made 92% of the account's open orders invisible. If \"no filter\" is the "
+            f"actual intent, resolve every real value (e.g. Inventory.GetStockLocations()) and "
+            f"loop/branch over them explicitly instead of relying on an empty/default Guid."
+        )
+
+    execute_match = _EXECUTE_SIGNATURE_RE.search(code)
+    if execute_match:
+        param_names = _PARAM_DECL_RE.findall(execute_match.group(1))
+        documented = set(_PARAM_DOC_RE.findall(code))
+        undocumented = [p for p in param_names if p not in documented]
+        if undocumented:
+            findings.append(
+                f"Execute parameter(s) {', '.join(undocumented)} have no XML <param name=\"...\"> doc "
+                f"comment above Execute - Linnworks' macro settings UI shows that text to whoever "
+                f"configures the macro (see 03_PickListMonitoring.cs), so an undocumented parameter is a "
+                f"real usability gap (macro_conventions.md rule 8), not just a missing comment. Use "
+                f"scaffold_macro's config_params (\"name:description\" pairs) to generate these correctly."
+            )
+        if _BLOB_PARSE_RE.search(code):
+            findings.append(
+                "Execute's body deserializes something with JsonConvert.DeserializeObject / "
+                "JsonFormatter.ConvertFromJson - if that's parsing an Execute parameter rather than an "
+                "external API/webhook response, that parameter is a JSON blob standing in for several "
+                "config values. Linnworks' macro settings UI edits one text field per Execute parameter, "
+                "so a blob isn't user-editable there - use one scalar, documented parameter per value "
+                "instead (macro_conventions.md rule 8)."
+            )
 
     if not findings:
         return "No mechanically-checkable violations found. This does not mean the code is correct - see get_standards() for rules this linter can't check (file/class naming match, LinnObject inheritance, etc)."
