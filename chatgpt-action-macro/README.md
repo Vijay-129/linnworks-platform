@@ -10,25 +10,35 @@ source and internal conventions become reachable through this URL. That's not a
 new decision made here - it's the same one already made for hosting `mcp-server`
 itself publicly (2026-08-14), just applied to this REST surface too.
 
-## 1. Run it
-
-```
-pip install -r requirements.txt
-python server.py
-```
-
-Serves on `http://0.0.0.0:8791`. `/docs` to try it locally, `/openapi.json` for
-the schema. Requires the `.NET SDK` on PATH for `check_macro_compiles` to work
-(same requirement as `mcp-server`'s tool of the same name) - it degrades to a
-plain error message if missing, doesn't crash the server.
-
-## 2. Expose it over HTTPS
+## 1. Start the tunnel first (you need the URL before starting the server)
 
 ```
 cloudflared tunnel --url http://localhost:8791
 ```
+(or `ngrok http 8791` if you're using ngrok instead - either works.) Copy the
+printed `https://...` URL - you need it for the next step.
 
-Give the GPT Builder `<that URL>/openapi.json`.
+## 2. Run the server, with that URL set
+
+```
+pip install -r requirements.txt
+PUBLIC_BASE_URL=https://<your-tunnel-url> python server.py
+```
+
+**`PUBLIC_BASE_URL` is required for ChatGPT's Action importer to accept the
+schema** - without it, `/openapi.json` has no `servers` entry and the importer
+rejects it with *"Could not find a valid URL in `servers`"* (a real error hit
+and fixed 2026-08-20 - see `server.py`'s comment for why). The server prints a
+warning to stderr if you forget it, but it will still start - so if the GPT
+Builder rejects the schema, check this first.
+
+Serves on `http://0.0.0.0:8791`. `/docs` to try it locally, `/openapi.json` for
+the schema (confirm `"servers"` is actually populated in it before importing).
+Requires the `.NET SDK` on PATH for `check_macro_compiles` to work (same
+requirement as `mcp-server`'s tool of the same name) - it degrades to a plain
+error message if missing, doesn't crash the server.
+
+Give the GPT Builder `<your-tunnel-url>/openapi.json`.
 
 ## 3. Create the Custom GPT
 

@@ -11,27 +11,34 @@ No business logic lives here - every route is a one-line call into
 `mcp-shared/reference_tools.py`, the same code both MCP servers use. This can
 never answer differently than they do for the same query.
 
-## 1. Run it
-
-```
-pip install -r requirements.txt
-python server.py
-```
-
-Serves on `http://0.0.0.0:8790`. Visit `http://localhost:8790/docs` to see/try
-the endpoints locally, or `/openapi.json` for the raw schema.
-
-## 2. Expose it over HTTPS
+## 1. Start the tunnel first (you need the URL before starting the server)
 
 ChatGPT Actions require a real HTTPS URL - same approach as the MCP servers (see
-`../mcp-server/README.md`). In a separate terminal:
+`../mcp-server/README.md`):
 
 ```
 cloudflared tunnel --url http://localhost:8790
 ```
+(or `ngrok http 8790`.) That prints a `https://...` URL - copy it, you need it
+for the next step.
 
-That prints a `https://*.trycloudflare.com` URL. Your OpenAPI schema is at
-`<that URL>/openapi.json` - that's what you give the GPT Builder.
+## 2. Run the server, with that URL set
+
+```
+pip install -r requirements.txt
+PUBLIC_BASE_URL=https://<your-tunnel-url> python server.py
+```
+
+**`PUBLIC_BASE_URL` is required** - without it, `/openapi.json` has no `servers`
+entry and ChatGPT's Action importer rejects the schema with *"Could not find a
+valid URL in `servers`"* (a real error hit and fixed 2026-08-20). The server
+still starts without it, just prints a warning - if the GPT Builder rejects the
+schema, check this first.
+
+Serves on `http://0.0.0.0:8790`. Visit `http://localhost:8790/docs` to see/try
+the endpoints locally, or `/openapi.json` for the raw schema - confirm
+`"servers"` is actually populated before importing it. Your OpenAPI schema is
+at `<your-tunnel-url>/openapi.json` - that's what you give the GPT Builder.
 
 ## 3. Create the Custom GPT
 
