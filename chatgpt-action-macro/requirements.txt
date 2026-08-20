@@ -1,0 +1,5 @@
+# fastapi<0.115 breaks against modern starlette (Router.__init__() got an
+# unexpected keyword argument 'on_startup') - confirmed on this machine 2026-08-20,
+# same issue as ../chatgpt-action/requirements.txt.
+fastapi>=0.115.0
+uvicorn>=0.30.0

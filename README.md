@@ -69,6 +69,14 @@ chatgpt-action/              Plain REST wrapper (FastAPI) over the same mcp-shar
                             lookup tools, for ChatGPT Custom GPT Actions - Actions
                             don't speak MCP, they need an OpenAPI schema over plain
                             REST. See chatgpt-action/README.md.
+
+chatgpt-action-macro/        Same idea, wrapping mcp-server's full macro toolset
+                            instead (conventions, golden examples, scaffold_macro,
+                            check_macro_compiles - real dotnet build verification).
+                            Includes the GPT instructions text that makes the GPT
+                            search first, pick the best endpoint, verify before
+                            replying, and ask when a requirement is ambiguous. See
+                            chatgpt-action-macro/README.md.
 ```
 
 ## Rules
