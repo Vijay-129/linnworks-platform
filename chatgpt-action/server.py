@@ -21,6 +21,7 @@ http://localhost:8790` in another terminal, and give the GPT Builder the printed
 https://*.trycloudflare.com/openapi.json URL.
 """
 
+import os
 import pathlib
 import sys
 from typing import Optional
@@ -30,6 +31,22 @@ import reference_tools  # noqa: E402
 
 from fastapi import FastAPI, Query
 import uvicorn
+
+# ChatGPT's Action importer requires an OpenAPI `servers` entry, or it rejects the
+# schema with "Could not find a valid URL in `servers`" (confirmed 2026-08-20,
+# same fix as chatgpt-action-macro/server.py - see that file's comment). Set this
+# to whatever HTTPS URL currently reaches this process before starting:
+#   PUBLIC_BASE_URL=https://your-tunnel-url.example python server.py
+_PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+_SERVERS = [{"url": _PUBLIC_BASE_URL}] if _PUBLIC_BASE_URL else None
+
+if not _PUBLIC_BASE_URL:
+    print(
+        "WARNING: PUBLIC_BASE_URL is not set - /openapi.json will have no `servers` "
+        "entry and ChatGPT's Action importer will reject it. Set it to your current "
+        "tunnel URL before starting if you're about to import this into a GPT.",
+        file=sys.stderr,
+    )
 
 app = FastAPI(
     title="Linnworks API Lookup",
@@ -41,6 +58,7 @@ app = FastAPI(
         "knowledge for anything about Linnworks endpoints or models - this reflects "
         "Linnworks' own published API specs, not training data which may be stale."
     ),
+    servers=_SERVERS,
 )
 
 

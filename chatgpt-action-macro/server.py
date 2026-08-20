@@ -28,6 +28,7 @@ terminal, give the GPT Builder the printed https://*.trycloudflare.com/openapi.j
 URL. See README.md for the exact GPT instructions text to paste in.
 """
 
+import os
 import pathlib
 import sys
 from typing import Optional
@@ -42,6 +43,17 @@ from fastapi import FastAPI, Query
 from pydantic import BaseModel
 import uvicorn
 
+# ChatGPT's Action importer requires an OpenAPI `servers` entry - the generated
+# schema only has relative paths ("/list_controllers"), so without this it
+# rejects the schema with "Could not find a valid URL in `servers`" (confirmed
+# 2026-08-20). FastAPI doesn't add one on its own. Set PUBLIC_BASE_URL to
+# whatever HTTPS URL currently reaches this process (the ngrok/cloudflared
+# tunnel URL) before starting - it's ephemeral on the free tiers, so this has
+# to be set per run, not hardcoded:
+#   PUBLIC_BASE_URL=https://your-tunnel-url.example python server.py
+_PUBLIC_BASE_URL = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+_SERVERS = [{"url": _PUBLIC_BASE_URL}] if _PUBLIC_BASE_URL else None
+
 app = FastAPI(
     title="Linnworks Macro Assistant",
     version="1.0.0",
@@ -55,7 +67,17 @@ app = FastAPI(
         "check_against_standards then check_macro_compiles before presenting "
         "generated code as final."
     ),
+    servers=_SERVERS,
 )
+
+if not _PUBLIC_BASE_URL:
+    print(
+        "WARNING: PUBLIC_BASE_URL is not set - the /openapi.json this serves will "
+        "have no `servers` entry, and ChatGPT's Action importer will reject it "
+        "with \"Could not find a valid URL in `servers`\". Set it to your current "
+        "tunnel URL before starting if you're about to import this into a GPT.",
+        file=sys.stderr,
+    )
 
 
 # ---- API lookup (same 4 as chatgpt-action/, reused for endpoint/filter selection) ----
