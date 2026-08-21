@@ -1,0 +1,5 @@
+{
+  "extraPaths": ["../mcp-shared"],
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "off"
+}

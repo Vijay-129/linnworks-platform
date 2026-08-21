@@ -221,5 +221,120 @@ def check_macro_compiles(body: CodeRequest) -> str:
     return macro_server.check_macro_compiles(body.code)
 
 
+# ---------------------------------------------------------------------------
+# Knowledge layer — concept, workflow, find_relevant_operations, verify_api_usage
+# ---------------------------------------------------------------------------
+
+@app.get("/list_linnworks_concepts", operation_id="list_linnworks_concepts",
+         summary="List available Linnworks concept docs",
+         description=(
+             "List available Linnworks concept docs (references/macro/concepts/). "
+             "Each concept covers a domain area: what it is, core identifiers, important "
+             "model names, common operations, lifecycle, and gotchas with provenance. "
+             "Call find_relevant_operations first — this is a drill-down discovery tool."
+         ))
+def list_linnworks_concepts() -> str:
+    return macro_server.list_linnworks_concepts()
+
+
+@app.get("/get_linnworks_concept", operation_id="get_linnworks_concept",
+         summary="Read one Linnworks concept doc in full by slug or title",
+         description=(
+             "Read one Linnworks concept doc in full by slug or title. "
+             "Covers: what the entity is, core identifiers, important model names "
+             "(use get_model for full field lists), common operations "
+             "(use get_endpoint for HTTP signatures), lifecycle, and gotchas with "
+             "inline source provenance. Use list_linnworks_concepts to discover slugs."
+         ))
+def get_linnworks_concept(
+    name: str = Query(..., description="Concept slug or title, e.g. 'open_orders' or 'Open Orders'"),
+) -> str:
+    return macro_server.get_linnworks_concept(name)
+
+
+@app.get("/list_linnworks_workflows", operation_id="list_linnworks_workflows",
+         summary="List available Linnworks workflow docs",
+         description=(
+             "List available Linnworks workflow docs (references/macro/workflows/). "
+             "Each workflow covers a common macro task: intent, preconditions, step "
+             "sequence, decision points, relevant operations, and gotchas. "
+             "Call find_relevant_operations first — this is a drill-down discovery tool."
+         ))
+def list_linnworks_workflows() -> str:
+    return macro_server.list_linnworks_workflows()
+
+
+@app.get("/get_linnworks_workflow", operation_id="get_linnworks_workflow",
+         summary="Read one Linnworks workflow doc in full by slug",
+         description=(
+             "Read one Linnworks workflow doc in full by slug. "
+             "Covers: intent, preconditions, step-by-step sequence, decision points, "
+             "relevant operations (Controller.Method + reason — use get_endpoint for "
+             "signatures), gotchas with inline provenance, and counter-cases. "
+             "Use list_linnworks_workflows to discover slugs."
+         ))
+def get_linnworks_workflow(
+    name: str = Query(..., description="Workflow slug, e.g. 'modify_open_orders_by_sku'"),
+) -> str:
+    return macro_server.get_linnworks_workflow(name)
+
+
+class FindRelevantOperationsRequest(BaseModel):
+    goal: str = Field(
+        ...,
+        description=(
+            "Natural-language description of the macro task, e.g. "
+            "'modify open orders containing SKU ABC and move them to the Review folder'."
+        ),
+    )
+
+
+@app.post("/find_relevant_operations", operation_id="find_relevant_operations",
+          summary="Primary knowledge entry point — resolve a macro goal to workflows, concepts, and operations",
+          description=(
+              "Primary knowledge entry point. Given a natural-language goal, returns structured "
+              "JSON with: best-matching workflow, relevant concepts, candidate API operations "
+              "(controller + method + reason — use get_endpoint for signatures), known gotchas "
+              "with source provenance, match confidence evidence, and any ambiguities that must "
+              "be resolved before generating code. Always call this first for any new macro task. "
+              "Does NOT return method signatures — use get_endpoint and get_model for those."
+          ))
+def find_relevant_operations(body: FindRelevantOperationsRequest) -> str:
+    return macro_server.find_relevant_operations(body.goal)
+
+
+class VerifyApiUsageRequest(BaseModel):
+    controller: str = Field(..., description="Controller name, e.g. 'OpenOrders', 'Orders', 'Inventory'")
+    method: str = Field(..., description="Method name, e.g. 'GetOpenOrders', 'SetExtendedProperties'")
+    model: Optional[str] = Field(
+        None,
+        description="Optional request model name to verify, e.g. 'GetOpenOrdersRequest'",
+    )
+    fields: Optional[list[str]] = Field(
+        None,
+        description="Optional list of field names to verify against the model, e.g. ['ViewId', 'LocationId']",
+    )
+
+
+@app.post("/verify_api_usage", operation_id="verify_api_usage",
+          summary="Pre-generation API verification — confirm controller/method/model/fields exist",
+          description=(
+              "Pre-generation conceptual check. Confirms a controller/method pair exists in the "
+              "endpoint reference; optionally verifies a model name and specific field names. "
+              "Returns structured JSON with: valid flag, matched request/response models, HTTP "
+              "method type, rate limit, field-level problems with suggestions, and source "
+              "provenance. Use this BEFORE writing code to catch wrong field names and wrong "
+              "controllers. Distinct from check_macro_compiles (real dotnet build, post-generation). "
+              "Both are needed."
+          ))
+def verify_api_usage(body: VerifyApiUsageRequest) -> str:
+    return macro_server.verify_api_usage(
+        body.controller,
+        body.method,
+        body.model,
+        body.fields,
+    )
+
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8791)

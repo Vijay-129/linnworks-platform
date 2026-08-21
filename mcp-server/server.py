@@ -770,21 +770,25 @@ def check_against_standards(code: str) -> str:
             f"a growing data set regardless of per-call speed. Page it instead (rule 7)."
         )
     for lineno, line in _lines_with(_THREAD_SLEEP_MS_RE, code):
-        ms = int(_THREAD_SLEEP_MS_RE.search(line).group(1))
-        if ms >= _SLEEP_MS_THRESHOLD:
-            findings.append(
-                f'line {lineno}: "{line.strip()}" - a literal {ms}ms (~{ms / 1000:.0f}s) sleep. Repeated '
-                f"across a batch this adds up fast against the ~5-minute budget (rule 11) - if a "
-                f"deliberate pause is really needed, make it small enough that the worst case still fits."
-            )
+        m = _THREAD_SLEEP_MS_RE.search(line)
+        if m:
+            ms = int(m.group(1))
+            if ms >= _SLEEP_MS_THRESHOLD:
+                findings.append(
+                    f'line {lineno}: "{line.strip()}" - a literal {ms}ms (~{ms / 1000:.0f}s) sleep. Repeated '
+                    f"across a batch this adds up fast against the ~5-minute budget (rule 11) - if a "
+                    f"deliberate pause is really needed, make it small enough that the worst case still fits."
+                )
     for lineno, line in _lines_with(_THREAD_SLEEP_SEC_RE, code):
-        sec = int(_THREAD_SLEEP_SEC_RE.search(line).group(1))
-        if sec >= _SLEEP_SEC_THRESHOLD:
-            findings.append(
-                f'line {lineno}: "{line.strip()}" - a literal {sec}s sleep. Repeated across a batch this '
-                f"adds up fast against the ~5-minute budget (rule 11) - if a deliberate pause is really "
-                f"needed, make it small enough that the worst case still fits."
-            )
+        m = _THREAD_SLEEP_SEC_RE.search(line)
+        if m:
+            sec = int(m.group(1))
+            if sec >= _SLEEP_SEC_THRESHOLD:
+                findings.append(
+                    f'line {lineno}: "{line.strip()}" - a literal {sec}s sleep. Repeated across a batch this '
+                    f"adds up fast against the ~5-minute budget (rule 11) - if a deliberate pause is really "
+                    f"needed, make it small enough that the worst case still fits."
+                )
     for cap_name in sorted(set(_CAP_DECL_RE.findall(_masked))):
         if len(re.findall(rf"\b{re.escape(cap_name)}\b", _masked)) <= 1:
             findings.append(
@@ -884,7 +888,677 @@ def check_macro_compiles(code: str) -> str:
     return f"{len(lines)} compile error(s):\n" + "\n".join(lines)
 
 
+
+# ---------------------------------------------------------------------------
+# Knowledge layer — concepts, workflows, find_relevant_operations,
+# verify_api_usage
+# ---------------------------------------------------------------------------
+
+# Directory constants
+CONCEPTS_DIR = MACRO_DIR / "concepts"
+WORKFLOWS_DIR = MACRO_DIR / "workflows"
+LLMS_TXT_FILE = PLATFORM_ROOT / "vendor" / "llms.txt"
+
+# ---------------------------------------------------------------------------
+# Synonym expansion
+# Bidirectional: any member of a group expands to all other members.
+# ---------------------------------------------------------------------------
+_GOAL_SYNONYMS: dict[str, list[str]] = {
+    "modify": ["update", "change", "edit", "set"],
+    "stock": ["inventory", "stock item", "stockitem"],
+    "property": ["extended property", "extendedproperty", "metadata"],
+    "shipping": ["postal service", "postalservice", "shipping service"],
+    "folder": ["order folder"],
+    "sku": ["item number", "itemnumber", "channel sku", "channelsku"],
+}
+
+# Pre-build: token → set of all synonymous tokens (including itself)
+_SYNONYM_EXPANSION: dict[str, set[str]] = {}
+for _can, _vars in _GOAL_SYNONYMS.items():
+    _group = {_can} | set(_vars)
+    for _t in _group:
+        for _tok in re.findall(r"[a-z0-9]+", _t.lower()):
+            _SYNONYM_EXPANSION.setdefault(_tok, set()).update(
+                tok for phrase in _group for tok in re.findall(r"[a-z0-9]+", phrase.lower())
+            )
+
+# ---------------------------------------------------------------------------
+# YAML frontmatter parser (PyYAML optional — falls back to empty dict)
+# ---------------------------------------------------------------------------
+try:
+    import yaml as _yaml
+    _HAS_YAML = True
+except ImportError:  # pragma: no cover
+    _HAS_YAML = False
+
+_FM_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
+
+
+def _parse_frontmatter(text: str) -> tuple[dict, str]:
+    """Return (metadata_dict, body_without_frontmatter)."""
+    m = _FM_RE.match(text)
+    if not m:
+        return {}, text
+    body = text[m.end():]
+    if _HAS_YAML:
+        try:
+            meta = _yaml.safe_load(m.group(1)) or {}
+        except Exception:
+            meta = {}
+    else:
+        meta = {}
+    return meta, body
+
+
+# ---------------------------------------------------------------------------
+# Section / operation / gotcha extraction helpers
+# ---------------------------------------------------------------------------
+_OP_LINE_RE = re.compile(r"^\s*-\s+`(\w+)\.(\w+)`\s+[—–\-]+\s+(.+)$", re.MULTILINE)
+_GOTCHA_BLOCK_RE = re.compile(
+    r"^###\s+(.+?)\n(.*?)(?=^###\s+|\Z)", re.MULTILINE | re.DOTALL
+)
+_SOURCE_INLINE_RE = re.compile(
+    r"\*\*Source:\*\*\s+`([\w_]+)`\s+[—–\-]+\s+`(.+?)`"
+)
+
+
+def _get_section(body: str, heading: str) -> str:
+    """Extract the body of a ## Heading section (stops at next ## or end-of-string)."""
+    m = re.search(
+        r"^##\s+" + re.escape(heading) + r"\s*\n(.*?)(?=^## |\Z)",
+        body,
+        re.MULTILINE | re.DOTALL,
+    )
+    return m.group(1) if m else ""
+
+
+def _extract_operations(section_text: str) -> list[dict]:
+    ops = []
+    for m in _OP_LINE_RE.finditer(section_text):
+        ops.append(
+            {"controller": m.group(1), "method": m.group(2), "reason": m.group(3).strip()}
+        )
+    return ops
+
+
+def _extract_gotchas(body: str) -> list[dict]:
+    section = _get_section(body, "Gotchas")
+    if not section:
+        return []
+    gotchas: list[dict] = []
+    for m in _GOTCHA_BLOCK_RE.finditer(section):
+        title = m.group(1).strip()
+        block = m.group(2).strip()
+        src_m = _SOURCE_INLINE_RE.search(block)
+        clean = _SOURCE_INLINE_RE.sub("", block).strip()
+        clean = re.sub(r"\n+", " ", clean).strip()
+        text = f"{title}. {clean}" if clean else title
+        g: dict = {"text": text}
+        if src_m:
+            g["source"] = {"type": src_m.group(1), "ref": src_m.group(2)}
+        gotchas.append(g)
+    return gotchas
+
+
+# ---------------------------------------------------------------------------
+# llms.txt search — title + one-line description matching
+# ---------------------------------------------------------------------------
+_LLMS_LINE_RE = re.compile(r"^\s*-\s+\[([^\]]+)\]\([^)]+\)(?::\s+(.+))?$")
+
+
+def _search_llms_txt(query_words: set[str], max_hits: int = 8) -> list[str]:
+    if not LLMS_TXT_FILE.exists():
+        return []
+    hits: list[str] = []
+    try:
+        for line in LLMS_TXT_FILE.read_text(encoding="utf-8", errors="replace").splitlines():
+            m = _LLMS_LINE_RE.match(line)
+            if not m:
+                continue
+            title = (m.group(1) or "").lower()
+            desc = (m.group(2) or "").lower()
+            doc_words = set(re.findall(r"[a-z0-9]+", f"{title} {desc}"))
+            if any(qw in doc_words for qw in query_words):
+                hits.append(m.group(2) or m.group(1))
+                if len(hits) >= max_hits:
+                    break
+    except Exception:
+        pass
+    return hits
+
+
+# ---------------------------------------------------------------------------
+# Goal normalisation and weighted scoring
+# ---------------------------------------------------------------------------
+_STOP_WORDS = {"a", "an", "the", "and", "or", "to", "for", "in", "on", "at", "by", "from", "with", "is", "it", "of", "all", "each"}
+
+
+def _normalize_and_expand(goal: str) -> tuple[list[str], set[str]]:
+    """Return (original_tokens, expanded_token_set) after synonym expansion."""
+    tokens = re.findall(r"[a-z0-9]+", goal.lower())
+    expanded: set[str] = set(tokens)
+    for tok in tokens:
+        expanded.update(_SYNONYM_EXPANSION.get(tok, {tok}))
+    return tokens, expanded
+
+
+def _semantic_coverage(goal_tokens: list[str], text: str) -> float:
+    """Calculates what fraction of meaningful goal tokens (or their synonyms) match in text."""
+    meaningful = [t for t in goal_tokens if t not in _STOP_WORDS and len(t) > 1]
+    if not meaningful:
+        return 0.0
+    doc_tokens = set(re.findall(r"[a-z0-9]+", text.lower()))
+    matched = 0
+    for tok in meaningful:
+        synonyms = _SYNONYM_EXPANSION.get(tok, {tok}) | {tok}
+        if any(s in doc_tokens or (len(s) >= 4 and any(d.startswith(s[:4]) for d in doc_tokens)) for s in synonyms):
+            matched += 1
+    return matched / len(meaningful)
+
+
+def _word_score(query_words: set[str], text: str) -> float:
+    """Fraction of query_words that appear in text (prefix-aware for words ≥4 chars)."""
+    if not query_words:
+        return 0.0
+    doc_words = set(re.findall(r"[a-z0-9]+", text.lower()))
+    hits = sum(
+        1
+        for qw in query_words
+        if qw in doc_words or (len(qw) >= 4 and any(dw.startswith(qw[:4]) for dw in doc_words))
+    )
+    return hits / len(query_words)
+
+
+# ---------------------------------------------------------------------------
+# File iteration helpers
+# ---------------------------------------------------------------------------
+def _iter_concept_files() -> list[pathlib.Path]:
+    CONCEPTS_DIR.mkdir(parents=True, exist_ok=True)
+    return sorted(CONCEPTS_DIR.glob("*.md"))
+
+
+def _iter_workflow_files() -> list[pathlib.Path]:
+    WORKFLOWS_DIR.mkdir(parents=True, exist_ok=True)
+    return sorted(WORKFLOWS_DIR.glob("*.md"))
+
+
+def _load_doc(path: pathlib.Path) -> tuple[dict, str]:
+    return _parse_frontmatter(_read(path))
+
+
+# ---------------------------------------------------------------------------
+# MCP tools — drill-down helpers
+# ---------------------------------------------------------------------------
+@mcp.tool()
+def list_linnworks_concepts() -> str:
+    """List available Linnworks concept docs (references/macro/concepts/).
+
+    Each concept covers a Linnworks domain area: what it is, core identifiers,
+    important model names, common operations, lifecycle, and gotchas with provenance.
+
+    Use get_linnworks_concept to read one in full. Call find_relevant_operations
+    first — this is a drill-down discovery tool, not the primary entry point."""
+    files = _iter_concept_files()
+    if not files:
+        return "No concept docs found under references/macro/concepts/."
+    lines = []
+    for f in files:
+        meta, body = _load_doc(f)
+        slug = meta.get("slug", f.stem)
+        title = meta.get("title", slug)
+        purpose_section = _get_section(body, "Purpose")
+        first_line = purpose_section.strip().split("\n")[0] if purpose_section else ""
+        entry = f"{slug}: {title}"
+        if first_line:
+            entry += f" — {first_line[:100]}"
+        lines.append(entry)
+    return "\n".join(lines)
+
+
+@mcp.tool()
+def get_linnworks_concept(name: str) -> str:
+    """Read one Linnworks concept doc in full by slug or title.
+
+    Covers: what the entity is, core identifiers, important model names (not signatures —
+    use get_model for full field lists), common operations (Controller.Method only — use
+    get_endpoint for HTTP details), lifecycle, and gotchas with inline source provenance.
+
+    Use list_linnworks_concepts to discover available concept slugs."""
+    # Direct stem match
+    f = _find_by_stem(CONCEPTS_DIR, name)
+    if not f:
+        # Fall back to title/slug match in frontmatter
+        for fp in _iter_concept_files():
+            meta, _ = _load_doc(fp)
+            if (
+                meta.get("slug", "").lower() == name.lower()
+                or meta.get("title", "").lower() == name.lower()
+            ):
+                f = fp
+                break
+    if not f:
+        available = [p.stem for p in _iter_concept_files()]
+        return f'No concept named "{name}". Available: {", ".join(available)}'
+    return _read(f)
+
+
+@mcp.tool()
+def list_linnworks_workflows() -> str:
+    """List available Linnworks workflow docs (references/macro/workflows/).
+
+    Each workflow covers a common macro task: intent, preconditions, step-by-step
+    sequence, decision points, relevant operations (names only), and gotchas.
+
+    Use get_linnworks_workflow to read one in full. Call find_relevant_operations
+    first — this is a drill-down discovery tool, not the primary entry point."""
+    files = _iter_workflow_files()
+    if not files:
+        return "No workflow docs found under references/macro/workflows/."
+    lines = []
+    for f in files:
+        meta, _ = _load_doc(f)
+        slug = meta.get("slug", f.stem)
+        intent = meta.get("intent", "")
+        entry = f"{slug}: {intent[:120]}" if intent else slug
+        lines.append(entry)
+    return "\n".join(lines)
+
+
+@mcp.tool()
+def get_linnworks_workflow(name: str) -> str:
+    """Read one Linnworks workflow doc in full by slug.
+
+    Covers: intent, preconditions, inputs, step-by-step sequence, decision points,
+    relevant operations (Controller.Method + reason — use get_endpoint for signatures),
+    gotchas with inline provenance, counter-cases, and related concepts/workflows.
+
+    Use list_linnworks_workflows to discover available workflow slugs."""
+    f = _find_by_stem(WORKFLOWS_DIR, name)
+    if not f:
+        for fp in _iter_workflow_files():
+            meta, _ = _load_doc(fp)
+            if meta.get("slug", "").lower() == name.lower():
+                f = fp
+                break
+    if not f:
+        available = [p.stem for p in _iter_workflow_files()]
+        return f'No workflow named "{name}". Available: {", ".join(available)}'
+    return _read(f)
+
+
+# ---------------------------------------------------------------------------
+# MCP tool — find_relevant_operations (primary knowledge entry point)
+# ---------------------------------------------------------------------------
+@mcp.tool()
+def find_relevant_operations(goal: str) -> str:
+    """Primary entry point for macro knowledge retrieval.
+
+    Given a natural-language goal, returns structured JSON identifying: the
+    best-matching workflow, relevant Linnworks concepts, candidate API operations
+    (controller + method + reason), known gotchas with source provenance, match
+    confidence evidence, and any ambiguities MA2 must resolve before generating code.
+
+    Does NOT return method signatures or field details. Use get_endpoint and get_model
+    for those. Always call this tool first for any new macro task.
+
+    Search order (deterministic, weighted):
+      1. Workflow docs — title, slug, intent
+      2. Concept docs — title, slug, purpose section
+      3. vendor/llms.txt — title + description matching (recall improvement)
+      4. Existing API reference search (search_api)
+    """
+    import json
+
+    goal_tokens, expanded = _normalize_and_expand(goal)
+
+    # ------------------------------------------------------------------
+    # 1. Score workflow docs
+    # ------------------------------------------------------------------
+    best_wf_slug: Optional[str] = None
+    best_wf_score = 0.0
+    wf_operations: list[dict] = []
+    wf_gotchas: list[dict] = []
+    wf_ambiguities: list[dict] = []
+
+    for f in _iter_workflow_files():
+        meta, body = _load_doc(f)
+        slug = meta.get("slug", f.stem)
+        title = meta.get("title", slug)
+        intent = meta.get("intent", "")
+        score = _semantic_coverage(goal_tokens, f"{slug} {title} {intent}")
+        if score > best_wf_score:
+            best_wf_score = score
+            best_wf_slug = slug
+            rel_ops_section = _get_section(body, "Relevant operations")
+            wf_operations = _extract_operations(rel_ops_section)
+            wf_gotchas = _extract_gotchas(body)
+            wf_ambiguities = meta.get("ambiguities", []) or []
+
+    # If workflow score is below confidence threshold (e.g. 0.40), treat as no workflow match
+    if best_wf_score < 0.40:
+        best_wf_slug = None
+        best_wf_score = 0.0
+        wf_operations = []
+        wf_gotchas = []
+        wf_ambiguities = []
+
+    # ------------------------------------------------------------------
+    # 2. Score concept docs
+    # ------------------------------------------------------------------
+    scored_concepts: list[tuple[float, str, list[dict], list[dict]]] = []
+
+    for f in _iter_concept_files():
+        meta, body = _load_doc(f)
+        slug = meta.get("slug", f.stem)
+        title = meta.get("title", slug)
+        purpose = _get_section(body, "Purpose")
+        common_ops_sec = _get_section(body, "Common operations")
+        concept_ops = _extract_operations(common_ops_sec)
+        
+        slug_title_tokens = set(re.findall(r"[a-z0-9]+", f"{slug} {title}".lower()))
+        has_direct_term = any(w in slug_title_tokens for w in expanded)
+        
+        score = _semantic_coverage(goal_tokens, f"{slug} {title} {purpose[:200]}")
+        if has_direct_term:
+            score += 0.35
+            
+        if score >= 0.30:
+            scored_concepts.append((score, slug, _extract_gotchas(body), concept_ops))
+
+    scored_concepts.sort(key=lambda x: x[0], reverse=True)
+    matched_concepts: list[str] = []
+    concept_gotchas: list[dict] = []
+    concept_suggested_ops: list[dict] = []
+
+    for _, c_slug, c_gotchas, c_ops in scored_concepts[:5]:
+        matched_concepts.append(c_slug)
+        concept_gotchas.extend(c_gotchas)
+        if not best_wf_slug:
+            concept_suggested_ops.extend(c_ops[:3])
+
+    # ------------------------------------------------------------------
+    # 3. Search llms.txt (terminology recall improvement)
+    # ------------------------------------------------------------------
+    llms_hits = _search_llms_txt(expanded)
+
+    # ------------------------------------------------------------------
+    # 4. Fall back to existing API reference search
+    # ------------------------------------------------------------------
+    api_operations: list[dict] = list(concept_suggested_ops)
+    had_api_hits = False
+    try:
+        raw = reference_tools.search_api(goal, max_results=6)
+        if "No matches" not in raw:
+            had_api_hits = True
+            # Parse Controller/Method pairs from lines like:
+            # "OpenOrders (v1):12: ### POST `/api/OpenOrders/GetOpenOrders`"
+            for m in re.finditer(
+                r"/api/(\w+)/(\w+)", raw
+            ):
+                ctrl, meth = m.group(1), m.group(2)
+                if not any(
+                    op["controller"] == ctrl and op["method"] == meth
+                    for op in wf_operations + api_operations
+                ):
+                    api_operations.append(
+                        {"controller": ctrl, "method": meth, "reason": "Matched from API reference search"}
+                    )
+    except Exception:
+        pass
+
+    # ------------------------------------------------------------------
+    # 5. Merge operations (workflow ops take precedence)
+    # ------------------------------------------------------------------
+    seen_ops: set[tuple[str, str]] = {(op["controller"], op["method"]) for op in wf_operations}
+    for op in api_operations:
+        key = (op["controller"], op["method"])
+        if key not in seen_ops:
+            wf_operations.append(op)
+            seen_ops.add(key)
+    all_operations = wf_operations[:8]
+
+    # ------------------------------------------------------------------
+    # 6. Merge gotchas (deduplicate by text prefix)
+    # ------------------------------------------------------------------
+    all_gotchas: list[dict] = list(wf_gotchas)
+    seen_texts = {g["text"][:60] for g in all_gotchas}
+    for g in concept_gotchas:
+        if g["text"][:60] not in seen_texts:
+            all_gotchas.append(g)
+            seen_texts.add(g["text"][:60])
+
+    # ------------------------------------------------------------------
+    # 7. Compute match evidence
+    # ------------------------------------------------------------------
+    matched_content = f"{best_wf_slug or ''} {' '.join(matched_concepts)}"
+    matched_terms = list(
+        dict.fromkeys(  # preserve order, deduplicate
+            tok for tok in goal_tokens if tok in matched_content.lower() or tok in expanded
+        )
+    )[:6]
+
+    source_hits: list[str] = []
+    if best_wf_score > 0:
+        source_hits.append("workflow")
+    if matched_concepts:
+        source_hits.append("concept")
+    if llms_hits:
+        source_hits.append("llms")
+    if had_api_hits:
+        source_hits.append("api")
+
+    # ------------------------------------------------------------------
+    # 8. Build response
+    # ------------------------------------------------------------------
+    result = {
+        "goal": goal,
+        "match": {
+            "workflow": best_wf_slug,
+            "score": round(best_wf_score, 2),
+            "matched_terms": matched_terms,
+            "source_hits": source_hits,
+        },
+        "concepts": matched_concepts,
+        "operations": all_operations,
+        "gotchas": all_gotchas,
+        "needs_more_information": wf_ambiguities,
+    }
+
+    return json.dumps(result, indent=2, ensure_ascii=False)
+
+
+# ---------------------------------------------------------------------------
+# MCP tool — verify_api_usage (pre-generation validation)
+# ---------------------------------------------------------------------------
+@mcp.tool()
+def verify_api_usage(
+    controller: str,
+    method: str,
+    model: Optional[str] = None,
+    fields: Optional[list[str]] = None,
+) -> str:
+    """Pre-generation API verification. Confirms a controller/method pair exists in the
+    endpoint reference; optionally verifies a model name and specific field names.
+
+    Returns structured JSON with: valid flag, matched request/response models, HTTP method
+    type, rate limit, field-level problems with available alternatives, and source provenance.
+
+    This is a pre-generation conceptual check — it catches wrong field names and wrong
+    controllers BEFORE code is written. It is distinct from check_macro_compiles, which
+    runs the real dotnet compiler AFTER code is generated. Both are needed.
+
+    controller: e.g. "OpenOrders", "Orders", "Inventory"
+    method: e.g. "GetOpenOrders", "SetExtendedProperties"
+    model: optional request model name to verify, e.g. "GetOpenOrdersRequest"
+    fields: optional list of field names to verify against the model"""
+    import json
+
+    problems: list[dict] = []
+    sources: list[dict] = []
+
+    # ------------------------------------------------------------------
+    # Locate controller endpoint reference file
+    # ------------------------------------------------------------------
+    ctrl_file: Optional[pathlib.Path] = None
+    for version in ("v1", "v2"):
+        ctrl_file = _find_by_stem(API_DIR / version, controller)
+        if ctrl_file:
+            sources.append(
+                {"type": "public_api_spec", "ref": f"references/api/{version}/{ctrl_file.name}"}
+            )
+            break
+
+    if not ctrl_file:
+        return json.dumps(
+            {
+                "valid": False,
+                "operation": {"controller": controller, "method": method},
+                "problems": [
+                    {
+                        "field": None,
+                        "problem": (
+                            f'Controller "{controller}" not found in endpoint reference. '
+                            "Use list_controllers to see available controllers."
+                        ),
+                        "available_matches": [],
+                    }
+                ],
+                "request": None,
+                "response": None,
+                "metadata": {},
+                "sources": [],
+            },
+            indent=2,
+        )
+
+    # Add SDK source if available
+    sdk_ctrl = (
+        PLATFORM_ROOT / "vendor" / "LinnworksNetSDK" / "Controllers" / f"{controller}.cs"
+    )
+    if sdk_ctrl.exists():
+        sources.append(
+            {"type": "sdk_source", "ref": f"vendor/LinnworksNetSDK/Controllers/{controller}.cs"}
+        )
+
+    ctrl_text = _read(ctrl_file)
+
+    # ------------------------------------------------------------------
+    # Find method in endpoint table
+    # Table columns: | Method | Path | Summary | Rate limit | Request model | Response model |
+    # The method name appears in the Path column as /api/Controller/MethodName
+    # ------------------------------------------------------------------
+    method_found = False
+    http_method_type = ""
+    rate_limit = ""
+    request_model_name = ""
+    response_model_name = ""
+
+    for line in ctrl_text.splitlines():
+        if "|" not in line:
+            continue
+        cells = [c.strip().strip("`") for c in line.split("|")[1:-1]]
+        if len(cells) < 6:
+            continue
+        path = cells[1]
+        summary = cells[2]
+        if summary == method or path.rstrip("/").endswith(f"/{method}"):
+            method_found = True
+            http_method_type = cells[0]
+            rate_limit = cells[3]
+            request_model_name = cells[4] if cells[4] not in ("-", "") else ""
+            response_model_name = cells[5] if cells[5] not in ("-", "") else ""
+            break
+
+    if not method_found:
+        # Suggest similar methods from the path column
+        available = re.findall(r"/api/\w+/(\w+)", ctrl_text)
+        return json.dumps(
+            {
+                "valid": False,
+                "operation": {"controller": controller, "method": method},
+                "problems": [
+                    {
+                        "field": None,
+                        "problem": f'Method "{method}" not found on {controller}.',
+                        "available_matches": sorted(set(available))[:10],
+                    }
+                ],
+                "request": None,
+                "response": None,
+                "metadata": {"rate_limit": ""},
+                "sources": sources,
+            },
+            indent=2,
+        )
+
+    # ------------------------------------------------------------------
+    # Optional: verify model fields
+    # ------------------------------------------------------------------
+    target_model = model or request_model_name
+    verified_fields: list[str] = []
+    field_problems: list[dict] = []
+
+    if target_model and fields:
+        # Find model section in endpoint reference
+        model_m = re.search(
+            r"### `?" + re.escape(target_model) + r"`?\s*\n(.*?)(?=\n### |\Z)",
+            ctrl_text,
+            re.DOTALL,
+        )
+        if not model_m:
+            field_problems.append(
+                {
+                    "field": None,
+                    "problem": f'Model "{target_model}" not found in {controller} reference.',
+                    "available_matches": re.findall(r"### `(\w+)`", ctrl_text)[:10],
+                }
+            )
+        else:
+            model_text = model_m.group(1)
+            known_fields = re.findall(r"^\|\s*`(\w+)`\s*\|", model_text, re.MULTILINE)
+            for field in fields:
+                if field in known_fields:
+                    verified_fields.append(field)
+                else:
+                    close = [f for f in known_fields if field.lower() in f.lower() or f.lower() in field.lower()]
+                    field_problems.append(
+                        {
+                            "field": field,
+                            "problem": f'Field "{field}" not found on {target_model}.',
+                            "available_matches": close or known_fields[:5],
+                        }
+                    )
+
+    is_valid = method_found and not field_problems
+
+    return json.dumps(
+        {
+            "valid": is_valid,
+            "operation": {
+                "controller": controller,
+                "method": method,
+                "http_method": http_method_type,
+            },
+            "request": {
+                "model": target_model or None,
+                "verified_fields": verified_fields or None,
+            },
+            "response": {
+                "model": response_model_name or None,
+            },
+            "metadata": {
+                "rate_limit": rate_limit,
+            },
+            "problems": field_problems,
+            "sources": sources,
+        },
+        indent=2,
+        ensure_ascii=False,
+    )
+
+
 def main():
+
     parser = argparse.ArgumentParser()
     add_http_args(parser, default_port=8788)
     args = parser.parse_args()
