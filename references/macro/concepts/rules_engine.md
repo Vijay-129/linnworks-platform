@@ -10,90 +10,134 @@ sources:
     ref: vendor/PublicApiSpecs/1.0/rulesengine.json
   - type: public_api_spec
     ref: vendor/PublicApiSpecs/1.0/orders.json
+  - type: macro_convention
+    ref: references/standards/macro_conventions.md
 ---
 
 ## Purpose
 
-The automated business rules evaluation engine in Linnworks. The Rules Engine evaluates incoming
-open orders against condition trees (e.g. order total, weight, country, channel, SKU, order tag)
-and automatically executes actions (assigning postal services, moving to folders, adding order notes,
-or setting extended properties).
+The automated business rules evaluation engine in Linnworks.
 
-Macros interact with the Rules Engine either by triggering batch re-evaluations (`Orders.RunRulesEngine`)
-after macro modifications, or by inspecting/updating rule condition sets.
+The Rules Engine evaluates open orders against configured condition trees (e.g. order totals, package
+weights, destination countries, sales channels, item SKUs, or order tags) and executes automated actions
+(such as assigning postal services, moving to folders, allocating fulfillment locations, setting extended
+properties, adding order notes, or invoking macros).
 
-## Core identifiers
+Macros interact with the Rules Engine by triggering batch re-evaluations on open orders
+(`Orders.RunRulesEngine`) after executing programmatic modifications, or by reading and managing
+rule configurations.
+
+---
+
+## Core Identifiers and Fields
 
 | Identifier | Type | Description |
 |---|---|---|
-| `pkRuleId` | `integer` | Unique ID of a rules engine rule header. |
-| `pkConditionId` | `integer` | Unique ID of a condition node within a rule. |
-| `pkActionId` | `integer` | Unique ID of an action attached to a condition node. |
+| `pkRuleId` | `int32` | Unique integer identifier of the rule header. |
+| `pkConditionId` | `int32` | Unique integer identifier of a condition-tree node. |
+| `pkActionId` | `int32` | Unique integer identifier of an action attached to a condition node. |
 | `RuleName` | `string` | Human-readable name of the rule (e.g. `UK Express Shipping Allocation`). |
-| `RuleSetType` | `enum` / `string` | Scope of the rule (e.g. `Orders`). |
+| `RuleType` | `string enum` | Scope/family of the rule. Current values include `Orders` and `Test`. |
+| `RunOrder` | `int32` | Configured execution sequence priority of the rule. |
+| `Enabled` | `boolean` | Indicates whether the rule or condition node is active. |
 
-## Important models
+---
+
+## Important Models
 
 | Model | Description |
 |---|---|
-| `RuleHeaderBasic` | Summary of a rule: name, order priority, enabled/disabled state. |
-| `RuleConditionHeader` | Condition tree node with evaluator expressions (equals, contains, greater than). |
-| `RuleAction` | Action executed when condition evaluates to true (e.g. Assign Postal Service, Assign Folder). |
-| `RuleEvaluationResult` | Evaluation outcome trace for an order against rules. |
+| `RuleHeaderBasic` | Rule summary: `pkRuleId`, `RuleName`, `RuleType`, `Enabled`, `RunOrder`, `pkRuleId_Draft`, `Draft`, `RuleTypeDisplayName`. |
+| `RuleConditionHeader` | Condition-tree node: `pkConditionId`, `fkRuleId`, `RunOrder`, `Enabled`, `ConditionName`, `fkParentConditionId`, `Conditions`, `Action`, `Subrules`. |
+| `RuleAction` | Action attached to a condition node: `pkActionId`, `ActionName`, `ActionType`, `ActionValue`, `fkConditionId`, `Properties`. |
+| `RuleEvaluationResult` | Result returned by `TestEvaluateRule`, identifying the last condition and action reached (`LastConditionId`, `LastActionId`). |
+| `FieldDescriptor` / `EvaluatorDescriptor` | Schema models describing available evaluation fields and comparison operator groups (e.g. `BasicEquality`, `Range`, `Set`, `StringEquality`). |
 
-Use `get_model` to see full field lists.
+Use `get_model` to see complete field schemas.
 
-## Common operations
+---
 
-- `Orders.RunRulesEngine` — Force Linnworks to re-run the Rules Engine over a specific list of open orders. Call this after a macro modifies order weight or items.
-- `RulesEngine.GetRules` / `GetRuleHeaders` — Query existing rules configured in the account.
-- `RulesEngine.AddAction` / `CopyAction` — Programmatically attach new action steps to rule conditions.
-- `RulesEngine.SwapRules` — Reorder rule priority execution sequence.
+## Endpoint Decision Table
 
-## Rules Engine Flow
+| Requirement | Preferred Endpoint | Important Semantics |
+|---|---|---|
+| **Run rules against open orders** | `Orders.RunRulesEngine` | Re-evaluates rules on `orderIds` (`Guid[]`). Supply `ruleId` (int32) or null for all rules. |
+| **List configured rules** | `RulesEngine.GetRules` / `GetRulesByType` | Retrieves rule headers across the account, optionally filtered by `RuleType`. |
+| **Retrieve condition tree for a rule** | `RulesEngine.GetRuleConditionNodes` | Returns the hierarchy of condition nodes for `pkRuleId`. |
+| **Discover valid evaluation fields** | `RulesEngine.GetEvaluationFields` | Returns available order/item fields that can be evaluated for a rule type. |
+| **Discover valid evaluation operators** | `RulesEngine.GetEvaluatorTypes` | Returns supported comparison operators grouped by type. |
+| **Discover supported action types** | `RulesEngine.GetActionTypes` | Returns valid rule actions (e.g. `AssignShippingService`, `AssignToFolder`, `ExecuteMacro`). |
+| **Discover valid options for an action** | `RulesEngine.GetActionOptions` | Returns available target values for an `ActionType` (e.g. available postal service IDs). |
+| **Test evaluate rule with mock values** | `RulesEngine.TestEvaluateRule` | Simulates rule execution against supplied test values without mutating live orders. |
+| **Add action step to a condition node** | `RulesEngine.AddAction` | Attaches an action to a condition (cannot be attached to nodes with subconditions). |
+| **Copy action between condition nodes** | `RulesEngine.CopyAction` | Duplicates an action to a target parent condition node. |
+| **Reorder rule execution sequence** | `RulesEngine.SwapRules` | Swaps the `RunOrder` priority between two rules (`pkRuleId1`, `pkRuleId2`). |
+| **Create draft copy for editing** | `RulesEngine.CreateDraftFromExisting` | Creates an editable draft rule copy. |
+| **Publish draft rule to live** | `RulesEngine.SetDraftLive` | Promotes draft rule to live, replacing the previous active rule version. |
+| **Enable/disable rule or condition** | `RulesEngine.SetRuleEnabled` / `SetConditionEnabled` | Toggles active status of a rule or condition branch. |
+
+---
+
+## Rules Engine Evaluation Flow
 
 ```
-Open Order Created or Updated
-       ↓
-Rule 1 (Evaluation Tree) ──[True]──► Execute Rule 1 Actions ──► Stop or Continue
-       │ [False]
+Open Order Received or Re-evaluated (Orders.RunRulesEngine)
+       │
        ▼
-Rule 2 (Evaluation Tree) ──[True]──► Execute Rule 2 Actions ──► Stop or Continue
-       │ [False]
+Applicable Enabled Rules (Evaluated according to RunOrder)
+       │
        ▼
-Default System Routing
+Rule Condition Tree
+       │
+       ├─ Condition Matched ──────► Execute Configured Action (e.g. Assign Folder / Service)
+       │
+       └─ Condition Not Matched ──► Evaluate Next Subcondition or Subsequent Rule
 ```
 
-## Gotchas
+---
 
-### Triggering Rules Engine after macro order changes
+## Gotchas & Operational Rules
 
-If a macro changes order properties (such as updating shipping address, adding items, or recalculating totals),
-the Rules Engine does NOT automatically re-evaluate unless explicitly triggered. Call `Orders.RunRulesEngine`
-with the list of modified order IDs.
+### Explicitly rerun rules when workflows depend on changed order data
 
-**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
+When a macro or integration modifies order properties (such as updating shipping address, changing line items, recalculating packaging, or modifying extended properties), do not assume rules will automatically re-evaluate in the background.
+- If subsequent order routing depends on the updated values, explicitly call `Orders.RunRulesEngine(orderIds, ruleId)` for the affected open orders.
 
-### Rule evaluation stops at the first terminal rule match
+**Source:** `macro_convention` — `references/standards/macro_conventions.md` | `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
 
-Rules are evaluated in strict priority order (`SwapRules`). Unless a rule is explicitly configured
-as "continue evaluating subsequent rules", matching a rule terminates further rule execution for that order.
+### Action attachment restrictions
 
-**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/rulesengine.json`
+`RulesEngine.AddAction` and `RulesEngine.CopyAction` enforce strict placement rules:
+- Actions may only be attached to terminal condition nodes.
+- Actions cannot be attached to the root rule header or to condition nodes that contain child subconditions.
 
-### Macros vs Rules Engine execution boundary
+**Source:** `sdk_source` — `vendor/LinnworksNetSDK/Controllers/RulesEngine.cs`
 
-A macro that mutates an order can cause circular logic if its mutation triggers a rule that invokes the
-same macro. Ensure idempotency flags or folder checks prevent recursive loops.
+### Guard against recursive loops with `ExecuteMacro`
+
+The Rules Engine supports executing macros via the `ExecuteMacro` action type.
+- If a macro called by the Rules Engine subsequently invokes `Orders.RunRulesEngine` or makes modifications that re-trigger the same rule, circular execution can occur.
+- Design automated macros to be idempotent and verify guard conditions (such as checking folder assignment or an extended property flag) before performing mutations.
 
 **Source:** `macro_convention` — `references/standards/macro_conventions.md`
 
-## Related concepts
+### Discover rule fields and action types dynamically
 
-- `open_orders` — Rules Engine evaluates and routes open orders
-- `folders` — Common action is moving matched orders to specific folders
-- `shipping` — Common action is assigning designated postal services
+Do not hardcode action values or condition field names. Use `RulesEngine.GetEvaluationFields`, `RulesEngine.GetActionTypes`, and `RulesEngine.GetActionOptions` to resolve available fields, postal service IDs, and folder options dynamically from the account.
 
-## Related workflows
+**Source:** `sdk_source` — `vendor/LinnworksNetSDK/Controllers/RulesEngine.cs`
 
-- `modify_open_orders_by_sku` — Can trigger `Orders.RunRulesEngine` after updates
+---
+
+## Related Concepts
+
+- [`open_orders`](open_orders.md) — Open orders are the primary subject of Rules Engine evaluation
+- [`folders`](folders.md) — Moving orders into folders is a primary automated rule action
+- [`shipping`](shipping.md) — Assigning postal services and shipping methods based on weight/destination
+- [`extended_properties`](extended_properties.md) — Rules can evaluate or assign order extended properties
+
+---
+
+## Related Workflows
+
+- [`modify_open_orders_by_sku`](../workflows/modify_open_orders_by_sku.md) — Can invoke `Orders.RunRulesEngine` following order line adjustments

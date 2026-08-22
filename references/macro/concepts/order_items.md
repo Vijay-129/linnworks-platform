@@ -105,7 +105,7 @@ bool ItemContainsSku(OrderItem item, string targetSku)
 
 ### Order lines are not guaranteed to be linked to inventory
 
-An order line can be an unmapped channel listing or a service line (`item.IsService == true`). Before invoking inventory-specific operations (`Inventory.GetStockLevel`, `Inventory.GetInventoryItemById`), verify that `item.ItemId != Guid.Empty`.
+An order line can be an unmapped channel listing or a service line (`item.IsService == true`). Before invoking inventory-specific operations (`Stock.GetStockItemsFull`, `Inventory.GetInventoryItemById`), verify that `item.ItemId != Guid.Empty`.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
 

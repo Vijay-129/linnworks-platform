@@ -28,7 +28,7 @@ warehouse location, `Delivered` quantities are updated, and outstanding `Due` ba
 | Identifier | Type | Description |
 |---|---|---|
 | `pkPurchaseID` | `Guid` (string) | Primary system GUID of the purchase order. |
-| `ExternalInvoiceNumber` | `string` | Purchase order reference number (e.g. `PO-10042`). |
+| `ExternalInvoiceNumber` | `string` | External/reference number associated with the PO (commonly used as the PO reference in integrations). |
 | `SupplierReferenceNumber` | `string` | Supplier-side reference or order acknowledgement code. |
 | `fkSupplierId` | `Guid` (string) | Supplier unique identifier in Linnworks. |
 | `fkLocationId` | `Guid` (string) | Destination stock location UUID where goods will be received. |
@@ -40,11 +40,12 @@ warehouse location, `Delivered` quantities are updated, and outstanding `Due` ba
 
 | Model | Description |
 |---|---|
-| `CommonPurchaseOrderHeader` | Header summary: `pkPurchaseID`, `ExternalInvoiceNumber`, `fkSupplierId`, `fkLocationId`, `Status`, `TotalCost`, `PostageTax`. |
+| `CommonPurchaseOrderHeader` | Header summary: `pkPurchaseID`, `ExternalInvoiceNumber`, `SupplierReferenceNumber`, `fkSupplierId`, `fkLocationId`, `Status`, `TotalCost`, `PostageTax`. |
 | `CommonPurchaseOrderItem` | PO line item: `pkPurchaseItemId`, `fkStockItemId` (Guid), `SKU`, `ItemTitle`, `Quantity`, `Cost`, `Delivered`, `TaxRate`, `PackSize`. |
 | `PurchaseOrderResponse` | Full PO object returned by `Get_PurchaseOrder`: contains header and line item list. |
-| `Search_PurchaseOrders2_Response` | Paged search result containing matched PO headers. |
-| `DeliverPurchaseOrderItemRequest` | Line delivery payload: `pkPurchaseId`, `pkPurchaseItemId`, `DeliveredQuantity`, `BatchNumber`, `BinRack`. |
+| `Search_PurchaseOrder2Request` | Search payload for `Search_PurchaseOrders2`: date ranges, status, supplier, location, search type, and search value. |
+| `Search_PurchaseOrdersResult` | Paged search result containing matched PO headers and total entries count. |
+| `DeliverPurchaseOrderItemRequest` | Line delivery payload: `pkPurchaseId`, `pkPurchaseItemId`, `Delivered`, `AddToDelivered`, `BatchNumber`, `BinRack`, `PrioritySequence`. |
 
 Use `get_model` to see complete field schemas.
 
@@ -80,38 +81,44 @@ PurchaseOrder.Create_PurchaseOrder_Initial
         │
         ▼
    PENDING Status
-     • Add, update, and delete line items (Add_PurchaseOrderItem)
+     • Add, update, and delete line items (Add_PurchaseOrderItem, Update_PurchaseOrderItem, Delete_PurchaseOrderItem)
      • Configure costs, pack quantities, and supplier settings
         │
         │ PurchaseOrder.Change_PurchaseOrderStatus (PENDING → OPEN)
         ▼
      OPEN Status
      • Due / OnOrder counters populated in Inventory stock levels
-     • Line item structure is locked
+     • Line-item structure is locked; header fields remain editable
         │
-        │ Inbound Delivery / Goods Receipt (Deliver_PurchaseItem*)
+        │ Goods Receipt (Deliver_PurchaseItem*)
         ▼
     PARTIAL Status (if quantities remain outstanding)
-     • Physical on-hand stock credited for delivered units
+     • Current physical stock credited for delivered units
      • Delivered counter incremented on PO line
      • Outstanding Due balance reduced
         │
-        │ Final Delivery Completed (or Change_PurchaseOrderStatus → DELIVERED)
+        ├── 1. Receive Remaining Quantities (Deliver_PurchaseItem*)
+        │       → Automatically transitions to DELIVERED when fully received
+        │
+        └── 2. Explicitly Close PO (Change_PurchaseOrderStatus: PARTIAL → DELIVERED)
+                → Outstanding Due counters consolidated/cleared
+                → Does NOT receive outstanding stock into inventory
+        │
         ▼
    DELIVERED Status
-     • All line receipts completed
-     • Due counters fully consolidated
+     • PO is closed; outstanding Due quantities consolidated/cleared
+     • If resulting from delivery, all expected stock receipts have been completed
 ```
 
 ---
 
 ## Gotchas & Operational Rules
 
-### PO line structure is locked after opening
+### Line-item structure is locked to PENDING status
 
 Adding, updating, and deleting individual item lines (`Add_PurchaseOrderItem`, `Update_PurchaseOrderItem`, `Delete_PurchaseOrderItem`, `Modify_PurchaseOrderItems_Bulk`) is strictly restricted to **`PENDING`** purchase orders.
 - Complete all line item quantities, supplier costs, and pack sizes before transitioning the PO to `OPEN`.
-- Header details (`Update_PurchaseOrderHeader`) can be updated while the PO is open, but line structures cannot be altered.
+- Header information (`Update_PurchaseOrderHeader`) can be updated while the PO is not `DELIVERED`; line-item modification is restricted to `PENDING`.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/purchaseorder.json`
 
@@ -121,11 +128,18 @@ Creating a PO in `PENDING` state does not alter inventory stock counters. It is 
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/purchaseorder.json`
 
+### Goods receipt vs closing PO as DELIVERED
+
+Do not confuse goods receipt with manually transitioning PO status to `DELIVERED`:
+- **Physical Goods Receipt (`Deliver_PurchaseItem*`):** Increases physical on-hand stock at the destination `fkLocationId`, increments `Delivered` on the line item, reduces `Due`, and automatically moves the PO status to `DELIVERED` once all items are fully received.
+- **Manual Status Change (`Change_PurchaseOrderStatus: OPEN/PARTIAL → DELIVERED`):** Consolidates and clears remaining `Due` counters in stock levels without booking the remaining units into physical stock.
+- Lines where `Delivered > 0` cannot be deleted from a PO.
+
+**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/purchaseorder.json`
+
 ### Goods receipt credits physical on-hand stock
 
-Executing delivery endpoints (`Deliver_PurchaseItem`, `Deliver_PurchaseItemAll`) increases physical on-hand stock at the destination `fkLocationId` and increments `Delivered` on the line item.
-- Do not equate goods receipt directly to free-to-sell `Available` stock, as open orders may immediately allocate arriving units (`InOrderBook`).
-- Lines where `Delivered > 0` cannot be deleted from a PO.
+Executing delivery endpoints increases physical on-hand stock at the destination `fkLocationId`. Do not equate goods receipt directly to free-to-sell `Available` stock, as open orders may immediately allocate arriving units (`InOrderBook`).
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/purchaseorder.json`
 
@@ -133,7 +147,7 @@ Executing delivery endpoints (`Deliver_PurchaseItem`, `Deliver_PurchaseItemAll`)
 
 Do not use `Deliver_PurchaseItemAll` indiscriminately if items utilize batch tracking.
 - Linnworks provides `PurchaseOrder.Deliver_PurchaseItemAll_ExceptBatchItems` to separate standard items from batch-tracked lines.
-- Batch-tracked items must be received with explicit `BatchNumber`, expiry dates, and binrack assignments via `Deliver_PurchaseItem`.
+- Batch-tracked items require batch-aware receipt information; confirm the required batch, expiry/sell-by, and bin-rack fields from the delivery request model for the item's inventory-tracking configuration.
 
 **Source:** `sdk_source` — `vendor/LinnworksNetSDK/Controllers/PurchaseOrder.cs`
 

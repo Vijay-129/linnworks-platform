@@ -39,10 +39,11 @@ custom channel references, payment authorization codes, or warehouse routing dec
 
 | Field | Type | Meaning & Constraints |
 |---|---|---|
-| `RowId` | `Guid` (string) | Unique ID of an individual property record. Present in `ExtendedProperty` when retrieved or updated. |
-| `Name` | `string` | Logical property key name (e.g. `ERP_SyncStatus`). Treat as a logical key with consistent naming. |
-| `Value` | `string` | Property value. Always represented as a string; parse/format in macro code if representing booleans or numbers. |
-| `Type` | `string` | Property type/category label. Valid values are obtained from `Orders.GetExtendedPropertyTypes` or defined by workflow rules. |
+| `RowId` | `Guid` (string) | Unique record ID of an individual order extended-property record. |
+| `Name` | `string` | Logical property key name (e.g. `ERP_SyncStatus`). |
+| `Value` | `string` | Property value string. |
+| `Type` | `string` | Property type category string (e.g. `Attribute`, `Shipping`, `Info`). Obtain valid values from `Orders.GetExtendedPropertyTypes`. |
+| `CreatedDate` / `LastUpdatedDate` | `DateTime` | System timestamps populated on `ExtendedProperty` records. |
 
 ---
 
@@ -50,11 +51,12 @@ custom channel references, payment authorization codes, or warehouse routing dec
 
 | Model | Description |
 |---|---|
-| `ExtendedProperty` | Order property model returned by `GetExtendedProperties` and used by `SetExtendedProperties`: `RowId` (Guid), `Name` (string), `Value` (string), `Type` (string). |
-| `BasicExtendedProperty` | Lightweight property model used by `AddExtendedProperties`: `Name` (string), `Value` (string), `Type` (string) — no `RowId`. |
-| `AddExtendedPropertiesRequest` | Request payload for `Orders.AddExtendedProperties`: `OrderId` (Guid) and `ExtendedProperties` (`BasicExtendedProperty[]`). |
-| `Orders_SetExtendedPropertiesRequest` | Request payload for `Orders.SetExtendedProperties`: `orderId` (Guid) and `ExtendedProperties` (`ExtendedProperty[]`). |
-| `StockItemExtendedProperty` | Inventory item extended property model returned by `Inventory.GetInventoryItemExtendedProperties`. |
+| `ExtendedProperty` | Order property model returned by `GetExtendedProperties` and accepted by `SetExtendedProperties`: `RowId` (`Guid`), `CreatedDate` (`DateTime`), `LastUpdatedDate` (`DateTime`), `Name` (`string`), `Value` (`string`), `Type` (`string`). |
+| `BasicExtendedProperty` | Lightweight property model used by `AddExtendedProperties`: `Name` (`string`), `Value` (`string`), `Type` (`string`) — no `RowId`. |
+| `AddExtendedPropertiesRequest` | Request payload for `Orders.AddExtendedProperties`: `OrderId` (`Guid`) and `ExtendedProperties` (`BasicExtendedProperty[]`). |
+| `StockItemExtendedProperty` | Product property model returned by `Inventory.GetInventoryItemExtendedProperties`: `pkRowId` (`Guid`), `fkStockItemId` (`Guid`), `ProperyName` (`string` — exact SDK spelling), `PropertyValue` (`string`), `PropertyType` (`string`). |
+| `StockItemExtendedPropertyUpsertItem` | Input model for `Inventory.CreateInventoryItemExtendedProperties`: `fkStockItemId` (`Guid?`), `SKU` (`string`), `ProperyName` (`string`), `PropertyValue` (`string`), `PropertyType` (`string`). |
+| `StockItemExtendedPropertyWithSku` | Input model for `Inventory.UpdateInventoryItemExtendedProperties`: `ItemNumber` (`string`), `pkRowId` (`Guid`), `fkStockItemId` (`Guid`), `ProperyName` (`string`), `PropertyValue` (`string`), `PropertyType` (`string`). |
 
 Use `get_model` to see complete field schemas.
 
@@ -64,68 +66,83 @@ Use `get_model` to see complete field schemas.
 
 | Requirement | Preferred Endpoint | Rationale & Semantics |
 |---|---|---|
-| **Read open-order properties before mutation** | `Orders.GetExtendedProperties` | Returns existing `ExtendedProperty[]` for an order. Essential first step before updating. |
-| **Append a new property to an open order** | `Orders.AddExtendedProperties` | Append-oriented; takes `BasicExtendedProperty[]` without `RowId`. Does NOT update existing keys. |
-| **Replace/update open-order property collection** | `Orders.SetExtendedProperties` | Replacement-oriented; overwrites collection. Perform read-merge-write to preserve existing properties. |
+| **Read open-order properties before mutation** | `Orders.GetExtendedProperties` | Returns existing `List<ExtendedProperty>` for an order. Essential first step before updating. |
+| **Append a new property to an open order** | `Orders.AddExtendedProperties` | Takes `AddExtendedPropertiesRequest` with `BasicExtendedProperty[]`. Does not update properties matching on name/value. |
+| **Replace/update open-order property collection** | `Orders.SetExtendedProperties` | Overwrites collection. Takes `(Guid orderId, ExtendedProperty[] extendedProperties)`. Perform read-merge-write to preserve existing properties. |
 | **Discover available order property names** | `Orders.GetExtendedPropertyNames` | Returns available order extended-property names configured in the account. |
-| **Discover available order property types** | `Orders.GetExtendedPropertyTypes` | Returns available property type category strings (e.g. `Shipping`, `Custom`). |
-| **Read processed-order extended properties** | `ProcessedOrders.GetProcessedOrderExtendedProperties` | Dedicated retrieval endpoint for historical/processed orders. |
-| **Read catalog product extended properties** | `Inventory.GetInventoryItemExtendedProperties` | Retrieves product properties by `inventoryItemId` or `itemNumber`. |
-| **Create catalog product extended properties** | `Inventory.CreateInventoryItemExtendedProperties` | Creates product-level attributes in inventory. |
-| **Update catalog product extended properties** | `Inventory.UpdateInventoryItemExtendedProperties` | Updates existing product-level attributes in inventory. |
-| **Delete catalog product extended properties** | `Inventory.DeleteInventoryItemExtendedProperties` | Removes product-level attributes from inventory. |
+| **Discover available order property types** | `Orders.GetExtendedPropertyTypes` | Returns available order property type category strings (e.g. `Attribute`, `Shipping`, `Info`). |
+| **Read processed-order extended properties** | `ProcessedOrders.GetProcessedOrderExtendedProperties` | Dedicated retrieval endpoint for historical/processed orders (`pkOrderId` Guid). |
+| **Read catalog product extended properties** | `Inventory.GetInventoryItemExtendedProperties` | Retrieves product properties by `inventoryItemId` (Guid) or `itemNumber` (SKU). |
+| **Create catalog product extended properties** | `Inventory.CreateInventoryItemExtendedProperties` | Takes `List<StockItemExtendedPropertyUpsertItem>` to create product attributes. |
+| **Update catalog product extended properties** | `Inventory.UpdateInventoryItemExtendedProperties` | Takes `List<StockItemExtendedPropertyWithSku>` to update product attributes. |
+| **Delete catalog product extended properties** | `Inventory.DeleteInventoryItemExtendedProperties` | Deletes product extended properties by `inventoryItemId` and property names. |
 
 ---
 
 ## Common Operations
 
 - `Orders.GetExtendedProperties` — Retrieve all extended properties for an order by `orderId` (`pkOrderId`).
-- `Orders.AddExtendedProperties` — Append new property entries to an order.
+- `Orders.AddExtendedProperties` — Append new property entries to an order without constructing `RowId`s.
 - `Orders.SetExtendedProperties` — Replace/update the order extended-property collection (requires read-merge-write).
 - `ProcessedOrders.GetProcessedOrderExtendedProperties` — Read extended properties on processed orders.
-- `Inventory.GetInventoryItemExtendedProperties` — Retrieve catalog product attributes.
-- `Inventory.UpdateInventoryItemExtendedProperties` — Update catalog product attributes.
+- `Inventory.GetInventoryItemExtendedProperties` — Retrieve catalog product attributes by item ID or SKU.
+- `Inventory.CreateInventoryItemExtendedProperties` / `UpdateInventoryItemExtendedProperties` — Manage catalog attributes.
 
 ---
 
 ## Canonical Idempotency Pattern (Read-Merge-Write)
 
-Because `AddExtendedProperties` does not update existing properties and `SetExtendedProperties` replaces
-the entire collection, macros must follow the read-merge-write pattern:
+Because `AddExtendedProperties` does not update existing properties matching on name/value and `SetExtendedProperties` replaces the entire collection, macros must follow the read-merge-write pattern:
 
 ```csharp
 const string TargetKey = "ERP_SyncStatus";
 const string TargetValue = "SYNCED";
 
+// Select a property type valid for the target workflow/account (e.g. "Attribute", "Info")
+const string PropertyType = "Attribute";
+
 // 1. Read existing properties
 var existing = Api.Orders.GetExtendedProperties(orderId);
 
-// 2. Find target property by canonical name (defensively case-insensitive)
-var target = existing.FirstOrDefault(p => string.Equals(p.Name, TargetKey, StringComparison.OrdinalIgnoreCase));
+// 2. Apply integration canonical name policy (handling potential duplicate names)
+var matches = existing
+    .Where(p => string.Equals(p.Name, TargetKey, StringComparison.OrdinalIgnoreCase))
+    .ToList();
 
-if (target == null)
+if (matches.Count == 0)
 {
-    // 3a. Property absent -> Append via AddExtendedProperties
+    // 3a. Property absent -> Append via AddExtendedProperties without constructing a RowId
     Api.Orders.AddExtendedProperties(new AddExtendedPropertiesRequest
     {
         OrderId = orderId,
-        ExtendedProperties = new List<BasicExtendedProperty>
+        ExtendedProperties = new[]
         {
-            new BasicExtendedProperty { Name = TargetKey, Value = TargetValue, Type = "Custom" }
+            new BasicExtendedProperty
+            {
+                Name = TargetKey,
+                Value = TargetValue,
+                Type = PropertyType
+            }
         }
     });
 }
-else if (!string.Equals(target.Value, TargetValue, StringComparison.Ordinal))
+else
 {
-    // 3b. Property exists with different value -> Update in memory & write merged collection back
-    target.Value = TargetValue;
-    Api.Orders.SetExtendedProperties(new Orders_SetExtendedPropertiesRequest
+    // 3b. Linnworks can contain duplicate property names; workflow treats first match as canonical
+    var target = matches[0];
+
+    if (!string.Equals(target.Value, TargetValue, StringComparison.Ordinal))
     {
-        OrderId = orderId,
-        ExtendedProperties = existing // writes full merged list preserving RowIds and other keys
-    });
+        target.Value = TargetValue;
+
+        // 3c. Submit merged collection back (SDK signature: Guid orderId, ExtendedProperty[] extendedProperties)
+        Api.Orders.SetExtendedProperties(
+            orderId,
+            existing.ToArray()
+        );
+    }
+    // 3d. Already set with matching value -> Skip write (Idempotent No-op)
 }
-// 3c. Already set -> Skip write (Idempotent No-op)
 ```
 
 ---
@@ -134,7 +151,7 @@ else if (!string.Equals(target.Value, TargetValue, StringComparison.Ordinal))
 
 ### `SetExtendedProperties` is replacement-oriented
 
-`Orders.SetExtendedProperties` overwrites the order's entire extended-property collection with the supplied list. Submitting only a single property will erase all other existing extended properties on that order. Always retrieve current properties via `GetExtendedProperties`, update or add the target property in memory, and submit the complete merged collection.
+`Orders.SetExtendedProperties` overwrites the order's entire extended-property collection with the supplied array. Submitting only a single property will erase all other existing extended properties on that order. Always retrieve current properties via `GetExtendedProperties`, update or add the target property in memory, and submit the complete merged collection.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
 
@@ -149,19 +166,19 @@ else if (!string.Equals(target.Value, TargetValue, StringComparison.Ordinal))
 
 ### `AddExtendedProperties` is append-oriented, not an upsert
 
-Linnworks explicitly documents that `AddExtendedProperties` will not update properties that match on property name and value. For idempotent macros where property names are expected to be unique, verify existence via `GetExtendedProperties` before invoking `AddExtendedProperties`.
+Linnworks explicitly documents that `AddExtendedProperties` will **not** update properties that match on property name and value. Do not treat this endpoint as a name-based upsert, and do not assume property names are uniquely enforced by Linnworks.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
 
 ### Preserve `RowId` when updating existing properties
 
-When updating existing properties with `Orders.SetExtendedProperties`, preserve the `RowId` values returned by Linnworks. Never invent or synthesize artificial `RowId` GUIDs.
+When modifying an existing property with `Orders.SetExtendedProperties`, retain the `RowId` Linnworks returned rather than replacing it with an arbitrary client-generated identifier. Allow Linnworks to assign and return IDs for newly created property records.
 
 **Source:** `sdk_source` — `vendor/LinnworksNetSDK/Controllers/Orders.cs`
 
 ### Normalize property names and namespace macro-owned keys
 
-Treat property names as logical keys and use consistent canonical spelling and casing across all macros (e.g. `ERP_SyncStatus`). Do not intentionally create case variants (such as `sync_status` vs `Sync_Status`). Prefix macro-owned property names with an integration or functional namespace (e.g. `FRAUD_Score`, `3PL_Status`) to prevent collisions with user-entered UI fields or other channel integrations.
+For macro-owned properties, enforce one logical property per canonical property name at the application level. Prefix macro-owned property names with an integration or functional namespace (e.g. `ERP_SyncStatus`, `FRAUD_Score`, `3PL_Status`) to prevent collisions with user-entered UI fields or channel integrations.
 
 **Source:** `macro_convention` — `references/standards/macro_conventions.md`
 
@@ -170,12 +187,6 @@ Treat property names as logical keys and use consistent canonical spelling and c
 The `Orders.SetExtendedProperties` and `Orders.AddExtendedProperties` endpoints are designed for open-order workflows. For historical/processed orders, use `ProcessedOrders.GetProcessedOrderExtendedProperties` for retrieval and verify post-processing mutation support before attempting writes.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/processedorders.json`
-
-### Idempotency is mandatory for rule-triggered macros
-
-Rule-triggered macros may execute repeatedly on the same order while matching conditions remain satisfied. Checking the current property value before writing prevents duplicate records and redundant API calls.
-
-**Source:** `macro_convention` — `references/standards/macro_conventions.md`
 
 ---
 

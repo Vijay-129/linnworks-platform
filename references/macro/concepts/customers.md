@@ -10,38 +10,41 @@ sources:
     ref: vendor/LinnworksNetSDK/Controllers/Customer.cs
   - type: public_api_spec
     ref: vendor/PublicApiSpecs/1.0/orders.json
-  - type: public_api_spec
-    ref: vendor/PublicApiSpecs/1.0/customer.json
   - type: macro_convention
     ref: references/standards/macro_conventions.md
+  - type: linnworks_llms
+    ref: vendor/llms.txt
 ---
 
 ## Purpose
 
-Customer information in Linnworks is primarily associated with orders through `OrderCustomerInfo`,
+Customer and buyer information in Linnworks is primarily associated with individual orders through `OrderCustomerInfo`,
 containing delivery and billing addresses, contact details, and the originating channel buyer username.
 
 Linnworks also exposes CRM and address lookup functionality (`Orders.CustomerLookUp`). However,
 order customer information and CRM address-book records should not be treated as the same object, nor
-do they constitute a globally stable, unified customer identity. Customer data is PII and may be missing,
-masked, or redacted depending on the channel and order lifecycle stage.
+do they constitute a globally stable, unified customer identity. Customer data is Personally Identifiable Information (PII)
+and may be missing, masked, or redacted depending on marketplace privacy policies and order processing lifecycle stage.
 
 ---
 
 ## Architectural Separation: Order Customer Info vs CRM Records
 
 ```
-Order (Open or Processed)
-  │
-  └── OrderCustomerInfo
-        ├── Address (Delivery CustomerAddress)
-        ├── BillingAddress (Billing CustomerAddress)
-        └── ChannelBuyerName (Channel Username)
-              │
-              │  (Optional: saveToCrm = true)
-              ▼
-    Linnworks CRM / Address Book
-    (Searchable via Orders.CustomerLookUp)
+Channel Order Ingestion (DeliveryAddress, BillingAddress, ChannelBuyerName, PIIRedactionDays)
+        │
+        ▼
+Linnworks Order (Open or Processed)
+        │
+        └── OrderCustomerInfo
+              ├── Address (Delivery CustomerAddress)
+              ├── BillingAddress (Billing CustomerAddress)
+              └── ChannelBuyerName (Channel Username)
+                    │
+                    │ Orders.SetOrderCustomerInfo(saveToCrm = true)
+                    ▼
+              Shipping/Delivery Address saved to CRM / Address Book
+              (Searchable via Orders.CustomerLookUp)
 ```
 
 ---
@@ -50,15 +53,15 @@ Order (Open or Processed)
 
 | Field | Type | Meaning & Constraints |
 |---|---|---|
-| `Address.FullName` | `string` | Recipient full delivery name. Not a unique customer key. |
+| `Address.FullName` | `string` | Recipient delivery full name. Not a globally unique customer key. |
 | `Address.Company` | `string` | Company or business name associated with the delivery address. |
-| `Address.EmailAddress` | `string` | Buyer email address. May be a channel-masked proxy email. |
-| `Address.PhoneNumber` | `string` | Contact phone number. Required by certain carrier services. |
+| `Address.EmailAddress` | `string` | Buyer email address. May be a channel-masked proxy email (e.g. Amazon/eBay relay). |
+| `Address.PhoneNumber` | `string` | Contact phone number. Required by certain express courier services. |
 | `Address.Address1` – `Address3` | `string` | Street address lines. |
 | `Address.Town` / `Region` | `string` | City/town and county/state/province. |
 | `Address.PostCode` | `string` | Postal code / ZIP code. |
 | `Address.Country` | `string` | Destination country name string. |
-| `Address.CountryId` | `Guid` (string) | Linnworks system ID for the destination country. |
+| `Address.CountryId` | `Guid` (string) | Linnworks system ID for the destination country (internal `CustomerAddress` model). |
 | `ChannelBuyerName` | `string` | Buyer username on the originating sales channel (e.g. eBay username). |
 
 > [!WARNING]
@@ -70,9 +73,10 @@ Order (Open or Processed)
 
 | Model | Description |
 |---|---|
-| `OrderCustomerInfo` | Per-order customer block containing `ChannelBuyerName`, delivery `Address`, and `BillingAddress`. |
-| `CustomerAddress` | Standardized address/contact model containing: `EmailAddress`, `Address1`, `Address2`, `Address3`, `Town`, `Region`, `PostCode`, `Country`, `Continent`, `FullName`, `Company`, `PhoneNumber`, and `CountryId`. |
-| `Country` | Standardized Linnworks country reference record containing `CountryId`, `CountryName`, and ISO codes. |
+| `OrderCustomerInfo` | Internal per-order customer block containing `ChannelBuyerName`, delivery `Address`, and `BillingAddress`. |
+| `CustomerAddress` | Internal Linnworks customer/address model containing: `EmailAddress`, `Address1`, `Address2`, `Address3`, `Town`, `Region`, `PostCode`, `Country`, `Continent`, `FullName`, `Company`, `PhoneNumber`, and `CountryId`. |
+| Channel Integration `Address` | Incoming channel-order address contract containing: `FullName`, `Company`, `Address1`–`Address3`, `Town`, `Region`, `PostCode`, `Country`, `CountryCode`, `PhoneNumber`, and `EmailAddress`. |
+| `Country` | Country reference model returned by `Orders.GetCountries`: `CountryId` (Guid), `CountryName`, `CountryCode` (ISO), `Continent`, `Currency`, `CustomsRequired`, `TaxRate`, `AddressFormat`, `Regions`. |
 
 Use `get_model` to see complete field schemas.
 
@@ -82,11 +86,11 @@ Use `get_model` to see complete field schemas.
 
 | Requirement | Preferred Endpoint | Rationale & Semantics |
 |---|---|---|
-| **Update complete customer block on an order** | `Orders.SetOrderCustomerInfo` | Sets delivery and billing addresses; optional `saveToCrm` (bool) persists address to CRM. |
+| **Update complete customer block on an order** | `Orders.SetOrderCustomerInfo` | Sets delivery and billing addresses; optional `saveToCrm` (bool) saves the shipping address into CRM. |
 | **Update billing address specifically** | `Orders.UpdateBillingAddress` | Updates only the `BillingAddress` block on an open order. |
-| **Search stored CRM customer addresses** | `Orders.CustomerLookUp` | Searches stored address records by field (`NAME`, `EMAIL`, `POSTCODE`) and search string. |
-| **Discover standardized country definitions** | `Orders.GetCountries` | Returns recognized country definitions, `CountryId` GUIDs, and ISO codes. |
-| **Create standalone customer (SDK/Legacy)** | `Customer.CreateNewCustomer` | SDK-specific helper — verify availability against target account/API version. |
+| **Search stored CRM address-book records** | `Orders.CustomerLookUp` | Searches stored address records by field string and search text. |
+| **Discover standardized country definitions** | `Orders.GetCountries` | Returns recognized country definitions, `CountryId` GUIDs, ISO `CountryCode`, and tax settings. |
+| **Create standalone customer (Legacy/SDK)** | `Customer.CreateNewCustomer` | SDK-specific helper — verify target SDK and account compatibility; do not select automatically. |
 
 ---
 
@@ -110,11 +114,17 @@ Do not assume `FullName`, `EmailAddress`, `PhoneNumber`, or postal address uniqu
 
 **Source:** `macro_convention` — `references/standards/macro_conventions.md`
 
-### Customer PII may be redacted post-despatch
+### `saveToCrm` saves shipping address, not a unified customer profile
 
-Do not assume customer name, address, email, or phone data remains available indefinitely on historical orders. Channel integrations can configure `PIIRedactionDays`, after which personal data is scrubbed. Macros operating on historical processed orders must tolerate null or redacted customer fields.
+When calling `Orders.SetOrderCustomerInfo`, setting `saveToCrm = true` saves the order's shipping/delivery address into the CRM address book. Do not treat this as creating or updating a globally unified customer profile across channels.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
+
+### Customer PII may be redacted after order processing
+
+Channel integrations can specify `PIIRedactionDays` (the number of days after order processing when customer PII should be redacted; if null or not supplied, PII is never redacted). Macros operating on historical processed orders must tolerate null, missing, or redacted customer fields.
+
+**Source:** `linnworks_llms` — `vendor/llms.txt`
 
 ### Do not log raw customer PII in macro logs
 
@@ -124,25 +134,25 @@ Macro logs visible in the Linnworks UI or execution history should identify orde
 
 ### Customer information is order-specific
 
-`OrderCustomerInfo` belongs to the individual order. Modifying customer details on an open order does NOT retroactively update past orders from the same customer. To persist updated shipping details into the account's address book, pass `saveToCrm = true` when calling `Orders.SetOrderCustomerInfo`.
+`OrderCustomerInfo` belongs to the individual order. Modifying customer details on an open order does NOT retroactively update past orders from the same buyer.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
 
-### Phone requirements are shipping-service specific
+### Phone requirements are carrier-service specific
 
-While carrier label generation requests supply the customer's phone number, requirement rules vary by carrier and service. Validate phone number presence when required by specific express carrier profiles rather than applying a universal constraint across all orders.
+While carrier label generation requests supply the customer's phone number, phone presence rules depend on the specific carrier service (e.g. international or express couriers). Do not globally reject orders for missing phone numbers unless the assigned postal service explicitly requires one.
 
-**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
+**Source:** `macro_convention` — `references/standards/macro_conventions.md`
 
 ### Channel email addresses may be masked or restricted
 
-The `EmailAddress` stored on an order originates from the sales channel and may be a temporary relay/proxy email. Do not assume channel email addresses are permanent or suitable for external marketing/communication.
+The `EmailAddress` stored on an order originates from the sales channel and may be a temporary relay/proxy email (e.g. Amazon or eBay relay addresses). Do not assume channel email addresses are permanent customer contact identifiers.
 
-**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
+**Source:** `macro_convention` — `references/standards/macro_conventions.md`
 
-### Do not make shipping decisions from free-text Country alone
+### Do not make routing decisions from free-text Country alone
 
-`CustomerAddress` exposes both `Country` (string) and `CountryId` (Guid), while carrier integrations often evaluate ISO country codes. When implementing international vs domestic routing logic, normalize country values against `Orders.GetCountries` rather than relying on ambiguous free-text string variations (e.g. "UK", "United Kingdom", "GB").
+`CustomerAddress` exposes `Country` (string) and `CountryId` (Guid), while the Channel Integration contract provides `CountryCode` (ISO). When implementing international vs domestic routing logic, normalize country values against `Orders.GetCountries` rather than relying on ambiguous free-text string variations (e.g. `"UK"`, `"United Kingdom"`, `"GB"`).
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
 

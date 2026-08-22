@@ -19,7 +19,7 @@ sources:
 The organizational and workflow staging subsystem for open orders in Linnworks.
 
 Folders provide a visual and operational categorization layer in the Open Orders grid. Operators,
-the Rules Engine, and macros use folders to triage orders (e.g. `Fraud Review`, `Priority Dispatch`,
+the Rules Engine, and macros use folders to triage and stage orders (e.g. `Fraud Review`, `Priority Dispatch`,
 `Awaiting Stock`, `Backorder`, `Printed`).
 
 > [!NOTE]
@@ -32,9 +32,9 @@ the Rules Engine, and macros use folders to triage orders (e.g. `Fraud Review`, 
 
 | Identifier | Type | Description |
 |---|---|---|
-| `folder` / `FolderName` | `string` | **The primary assignment key.** APIs assign and unassign orders using the folder name string, not an ID. |
+| `folder` / `FolderName` | `string` | **The primary assignment key.** APIs assign and unassign orders using the folder name string, not a GUID. |
 | `pkFolderId` | `Guid` (string) | Unique ID of a folder definition record returned by `Orders.GetAvailableFolders`. |
-| `orderIds` | `Guid[]` | List of open order UUIDs (`pkOrderId`) targeted for assignment or unassignment. |
+| `orderIds` | `Guid[]` / `List<Guid>` | List of open order UUIDs (`pkOrderId`) targeted for assignment or unassignment. |
 
 ---
 
@@ -42,9 +42,15 @@ the Rules Engine, and macros use folders to triage orders (e.g. `Fraud Review`, 
 
 | Model | Description |
 |---|---|
-| `OrderFolder` | Folder definition model returned by `GetAvailableFolders`: `pkFolderId` (Guid) and `FolderName` (string). |
-| `Orders_AssignToFolderRequest` | Request payload for `Orders.AssignToFolder`: `orderIds` (`List<Guid>`) and `folder` (string). |
-| `Orders_UnassignToFolderRequest` | Request payload for `Orders.UnassignToFolder`: `orderIds` (`List<Guid>`) and `folder` (string). |
+| `OrderFolder` | Folder definition model returned by `GetAvailableFolders`: `pkFolderId` (`Guid`) and `FolderName` (`string`). |
+| `OpenOrder.FolderName` | Open-order model property exposing an array of strings (`string[]`), representing the order's active folder memberships. |
+| `Orders_AssignToFolderRequest` | OpenAPI request wrapper for `Orders.AssignToFolder`: `orderIds` (`Guid[]`) and `folder` (`string`). |
+| `Orders_UnassignToFolderRequest` | OpenAPI request wrapper for `Orders.UnassignToFolder`: `orderIds` (`Guid[]`) and `folder` (`string`). |
+
+> [!NOTE]
+> **SDK vs. OpenAPI Signatures:**
+> - **.NET SDK:** `Orders.AssignToFolder(List<Guid> orderIds, string folder)` and `Orders.UnassignToFolder(List<Guid> orderIds, string folder)` return `List<Guid>`.
+> - **OpenAPI / Raw HTTP:** Takes `Orders_AssignToFolderRequest` and returns `Guid[]`.
 
 Use `get_model` to see complete field schemas.
 
@@ -54,16 +60,16 @@ Use `get_model` to see complete field schemas.
 
 | Requirement | Preferred Endpoint | Important Semantics | Rate Limit |
 |---|---|---|---|
-| **Discover configured account folders** | `Orders.GetAvailableFolders` | Account-level configuration lookup. Returns available `OrderFolder` records. | 150/min |
-| **Assign folder membership to orders** | `Orders.AssignToFolder` | Takes `orderIds[]` + `folder` name string. Fails on locked/parked orders. | 250/min |
-| **Remove folder membership from orders** | `Orders.UnassignToFolder` | Takes `orderIds[]` + `folder` name string. Fails on locked/parked orders. | 250/min |
-| **Set/replace available-folder configuration** | `Orders.SetAvailableFolders` | Replaces the account-wide list of available folders. Configuration-level only. | 150/min |
+| **Discover configured account folders** | `Orders.GetAvailableFolders` | Account-level configuration lookup. Returns available `List<OrderFolder>` records. | 150/min |
+| **Assign folder membership to orders** | `Orders.AssignToFolder` | Takes `orderIds` + `folder` name string. Returns `List<Guid>` of affected orders. | 250/min |
+| **Remove folder membership from orders** | `Orders.UnassignToFolder` | Takes `orderIds` + `folder` name string. Returns `List<Guid>` of affected orders. | 250/min |
+| **Set available-folder configuration** | `Orders.SetAvailableFolders` | Full-list setter for account-wide available folders (`List<OrderFolder>`). Configuration only. | 150/min |
 
 ---
 
 ## Common Operations
 
-- `Orders.GetAvailableFolders` — Retrieve the global list of active folders configured in the account.
+- `Orders.GetAvailableFolders` — Retrieve the configured folder definitions currently available for order assignment.
 - `Orders.AssignToFolder` — Add an order (or batch of orders) to a designated folder by name.
 - `Orders.UnassignToFolder` — Remove an order (or batch of orders) from a designated folder by name.
 
@@ -71,29 +77,28 @@ Use `get_model` to see complete field schemas.
 
 ## Gotchas & Operational Rules
 
-### `SetAvailableFolders` is account-wide configuration
+### `SetAvailableFolders` is a full-list configuration operation
 
-`Orders.SetAvailableFolders` replaces the account-wide list of available folders that orders can be assigned to.
+`Orders.SetAvailableFolders` sets the account's available folder list.
 - Do NOT call `SetAvailableFolders` to assign an order to a folder; use `Orders.AssignToFolder`.
-- Macros that configure available folders must retrieve the current list via `GetAvailableFolders` and preserve existing folders not owned by the automation.
+- When automation manages available folder configuration, retrieve the current list first via `Orders.GetAvailableFolders` and preserve existing folders not owned by the automation rather than submitting a partial assumed list.
 
-**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
+**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json` | `sdk_source` — `vendor/LinnworksNetSDK/Controllers/Orders.cs`
 
 ### Folder assignment is additive, not an exclusive "move"
 
-An order can belong to multiple folders simultaneously. Calling `Orders.AssignToFolder` adds membership to the specified folder without removing existing folder assignments.
-- If a macro requires exclusive folder membership (moving an order from `Pending` to `Processed`), it must explicitly call `Orders.UnassignToFolder(orderIds, "Pending")` and then `Orders.AssignToFolder(orderIds, "Processed")`.
+An order can belong to multiple folders simultaneously. Open-order models expose `FolderName` as an array of strings (`string[]`). Calling `Orders.AssignToFolder` adds membership to the specified folder without removing existing assignments.
+- If your workflow treats folders as mutually exclusive states (e.g. transitioning an order from `Pending` to `Processed`), enforce that policy explicitly by calling `Orders.UnassignToFolder(orderIds, "Pending")` and then `Orders.AssignToFolder(orderIds, "Processed")`.
 
 **Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
 
 ### Assign and Unassign fail on locked or parked orders
 
-Linnworks explicitly rejects `AssignToFolder` and `UnassignToFolder` if any order in the batch is locked (`order.GeneralInfo.IsLocked == true`) or in a parked state.
-- Filter out locked orders before calling folder assignment endpoints.
-- Do not assume `HoldOrCancel` represents parked state; parked orders utilize specific status tagging (e.g. tag 7 via `Orders.ChangeOrderTag`).
-- Always handle potential API rejection gracefully because an order's lock/parked status can change between read and write.
+`Orders.AssignToFolder` and `Orders.UnassignToFolder` cannot be executed on locked (`order.GeneralInfo.IsLocked == true`) or parked orders (parked status is initialized via tag 7 with `Orders.ChangeOrderTag`).
+- Filter out locked and parked orders before constructing a batch.
+- Do not assume undocumented partial-success behavior for mixed valid/invalid batches.
 
-**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json`
+**Source:** `public_api_spec` — `vendor/PublicApiSpecs/1.0/orders.json` | `sdk_source` — `vendor/LinnworksNetSDK/Controllers/Orders.cs`
 
 ### Folder assignment uses the folder name string
 
@@ -111,7 +116,7 @@ If a macro relies on a specific target folder (e.g. `Fraud Review`), verify its 
 
 ### Batch folder assignment operations
 
-`Orders.AssignToFolder` and `Orders.UnassignToFolder` accept a list of `orderIds`. Always batch order GUIDs (e.g. 50–100 orders per request) rather than making single-order API calls in a tight loop.
+`Orders.AssignToFolder` and `Orders.UnassignToFolder` accept multiple order UUIDs in one request and return the affected `List<Guid>`. Prefer batching compatible orders rather than issuing one API call per order, while keeping batch sizing configurable and respecting the 250 requests/minute rate limit.
 
 **Source:** `macro_convention` — `references/standards/macro_conventions.md`
 
